@@ -1,0 +1,299 @@
+{%- liquid
+  assign section_color = section.settings.color_scheme 
+  assign article_background_color = section.settings.background_color 
+  assign article_position = section.settings.article_position 
+  assign text_size_class = section.settings.text_size 
+  assign text_position = section.settings.text_position 
+  assign font = section.settings.font
+  case section.settings.article_size 
+    when 'third' 
+      assign text_width_desktop = 'lg:col-span-8' 
+      if article_position == 'right' 
+        assign article_width_desktop = 'lg:col-start-9 lg:col-end-13' 
+      else 
+        assign article_width_desktop = 'lg:col-span-4' 
+      endif 
+    when 'half' 
+      assign text_width_desktop = 'lg:col-span-6' 
+      if article_position == 'right' 
+        assign article_width_desktop = 'lg:col-start-7 lg:col-end-13' 
+      else 
+        assign article_width_desktop = 'lg:col-span-6' 
+      endif 
+    when 'two_thirds' 
+      assign text_width_desktop = 'lg:col-span-4' 
+      if article_position == 'right' 
+        assign article_width_desktop = 'lg:col-start-5 lg:col-end-13' 
+      else 
+        assign article_width_desktop = 'lg:col-span-8' 
+      endif 
+  endcase 
+-%}
+
+<section class="grid grid-cols-1 lg:grid-cols-12 grid-flow-row-dense overflow-hidden border-t-grid bg-scheme-text gap-gutter border-grid-color"  data-color-scheme="{{ section_color }}">
+  <div class="order-1 lg:order-0 bg-scheme-background text-scheme-text {{ article_width_desktop }} h-full w-full lg:p-1/8" data-color-scheme="{{ article_background_color }}">
+    {% comment %} <div class="relative min-h-full">
+      {%- if section.settings.image != blank -%}
+        {%- assign image = section.settings.image -%}
+        {%- if fill_image -%}
+          <div class="hidden lg:block">
+            {% render 'image-object' with
+              image: image
+            %}
+          </div>
+          <div class="block lg:hidden">
+            {% render 'responsive-image' with image: image %}
+          </div>
+        {%- else -%}
+          {% render 'responsive-image' with image: image %}
+        {%- endif -%}
+      {%- else -%}
+        <div class="bg-placeholder-bg w-full">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg w-full h-full text-text fill-current' }}
+        </div>
+      {%- endif -%}
+    </div> {% endcomment %}
+    <div class="group block h-full">
+      {%- if section.settings.article.image != blank -%}
+        <div class="full-h bg-scheme-background {% if settings.fill_image_to_border_edge %}border-grid border-grid-color{% else %}pt-2 lg:pt-4 lg:px-4 section-x-padding{% endif %}">
+          <div class="relative border-grid border-scheme-text">
+            <a href="{{ section.settings.cta_link }}" class="increase-target"></a>
+            {% render 'image-crop' with
+              image: section.settings.article.image,
+              ratio: 0
+            %}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div class="py-theme section-x-padding lg:px-4">
+        <p class="mt-4 mb-2 text-lg">
+          {{ section.settings.article.published_at | time_tag: format: 'month_day_year' }}
+        </p>
+
+        <h2 class="font-heading {{ settings.secondary_heading_size }} break-words">{{ section.settings.article.title }}</h2>
+
+        <div class="mt-4">
+          <a class="hover:border-scheme-accent hover:text-scheme-accent px-8 py-2 rounded-full border-text border-scheme-text text-base align-top inline-flex items-center justify-center {% if settings.links_show_underline %}border-b-text border-scheme-text hover:border-scheme-accent pb-1{% endif %}" href="{{ article.url }}" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title }}">
+            <span class="{% if settings.links_uppercase %}uppercase{% endif %}">{{ 'blogs.article.read_more' | t }}{% if settings.links_show_arrow %}&nbsp;&rarr;{% endif %}</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="order-0 lg:order-1 {{ text_width_desktop }} section-x-padding bg-scheme-background text-scheme-text relative lg\:px-4 px-4 py-4 flex {{ text_position }} flex-col justify-between">
+    {% comment %} <div class="{{ text_align }} break-words w-full"> {% endcomment %}
+    {%- if section.settings.subtitle != blank -%}
+      <p class="font-heading {{ settings.secondary_heading_size }} featured">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+
+    <div class="text-center w-full my-32 lg:my-4">
+      {%- assign title = section.settings.title | downcase %}
+      {%- if title != blank -%}
+        <h2 class="font-heading mb-4 {% if title == 'journal' %}journal-font lg:text-11xl text-10xl{% else %} lg:text-8xl text-8xl{% endif %}">{{ title }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.cta_link != blank and section.settings.cta_text != '' -%}
+        <div class="mt-4 text-0">
+          {%- case section.settings.cta_style -%}
+          {%- when 'link' -%}
+            {%- render 'link-underline',
+              section_color: section_color,
+              text: section.settings.cta_text,
+              link: section.settings.button_link
+            -%}
+          {%- when 'button' -%}
+            <a href="{{ section.settings.button_link }}" class="px-8 py-2 rounded-full border-text border-scheme-text inline-flex justify-center items-center text-base px-8 py-2 {% render 'button-style', section_color: section_color %}  {% render 'button-color', section_color: section_color %} ">
+              <span class="{% if settings.button_uppercase %}uppercase{% endif %}">{{ section.settings.cta_text }}{% if settings.buttons_show_arrow %}&nbsp;&rarr;{% endif %}</span>
+            </a>
+          {%- endcase -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.richtext != blank -%}
+    <div class="rte {{ text_size_class }} {% if section.settings.title != '' %}mt-4{% endif %} font-{{ font }}">
+      {{ section.settings.richtext }}
+    </div>
+    {%- endif -%}
+
+    {% comment %} </div> {% endcomment %}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Image with blog article",
+  "settings": [
+    {
+      "type":      "header",
+      "content":   "Content"
+    },
+    {
+      "id": "article",
+      "type": "article",
+      "label": "Blog article"
+    },
+    {
+      "type": "select",
+      "id": "article_position",
+      "label": "Article position on desktop",
+      "default": "right",
+      "options": [
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "article_size",
+      "label": "Article size on desktop",
+      "default": "half",
+      "options": [
+        {
+          "value": "third",
+          "label": "One third"
+        },
+        {
+          "value": "half",
+          "label": "One half"
+        },
+        {
+          "value": "two_thirds",
+          "label": "Two thirds"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "background_color",
+      "label": "Background color",
+      "options": [
+          { "value": "primary", "label": "Primary background"},
+          { "value": "secondary", "label": "Secondary background"},
+          { "value": "tertiary", "label": "Tertiary background"},
+          { "value": "quaternary", "label": "Quaternary background"}
+      ],
+      "default":   "primary"
+    },
+    {
+      "type":      "header",
+      "content":   "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading"
+    },
+    {
+      "type": "richtext",
+      "id": "richtext",
+      "label": "Text",
+      "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Text size",
+      "options": [
+        { "value": "text-sm", "label": "S"},
+        { "value": "text-base", "label": "M"},
+        { "value": "text-lg", "label": "L"},
+        { "value": "text-xl", "label": "XL"},
+        { "value": "text-2xl", "label": "2XL"},
+        { "value": "text-2xl lg:text-3xl", "label": "2XL / desktop 3XL"},
+        { "value": "text-2xl lg:text-4xl", "label": "2XL / desktop 4XL"},
+        { "value": "text-2xl lg:text-5xl", "label": "2XL / desktop 5XL"}
+      ],
+      "default":   "text-base"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "Font",
+      "options": [
+        {
+          "value": "heading",
+          "label": "Heading"
+        },
+        {
+          "value": "body",
+          "label": "Body"
+        }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text position",
+      "options": [
+        { "value": "items-start", "label": "Left"},
+        { "value": "items-center", "label": "Middle"},
+        { "value": "items-end", "label": "Right"}
+      ],
+      "default":   "items-center"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+          { "value": "primary", "label": "Primary"},
+          { "value": "secondary", "label": "Secondary"},
+          { "value": "tertiary", "label": "Tertiary"},
+          { "value": "quaternary", "label": "Quaternary"}
+      ],
+      "default":   "primary"
+    },
+    {
+      "type":      "header",
+      "content":   "Call to action"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "cta_style",
+      "label": "Style",
+      "options": [
+        { "value": "link", "label": "Link"},
+        { "value": "button", "label": "Button"}
+      ],
+      "default":   "link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with blog article"
+    }
+  ]
+}
+{% endschema %}

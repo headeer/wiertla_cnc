@@ -1,0 +1,92 @@
+{% comment %}theme-check-disable UndefinedObject{% endcomment %}
+<section class="page" data-color-scheme="{{ page.handle }}">
+
+  <div class="py-12 bg-scheme-background section-x-padding overflow-x-hidden">
+    <h1 class="lg:text-11xl text-8xl journal-font text-center">{{ section.settings.title }}</h1>
+  </div>
+
+  <div class="uppercase grid grid-cols-1 lg:grid-cols-12 grid-flow-row-dense bg-border gap-gutter overflow-hidden border-t-grid border-b-grid border-grid-color relative">
+    <div class="bg-scheme-background lg:absolute left-0 top-0 text-2xl p-4 section-x-padding z-10">
+      Question
+    </div>
+    <div class="bg-scheme-background lg:col-span-6 py-1/8 px-12 text-center text-3xl relative flex justify-center items-center">
+      <span>
+        {{ section.settings.question }}
+      </span>
+    </div>
+  
+    <div class="lg:col-span-6 bg-scheme-background lg:text-6xl lg:py-1/8 text-4xl relative">
+      <div class="bg-scheme-background lg:absolute left-0 top-0 text-2xl p-4 section-x-padding">
+        pick one
+      </div>
+
+      <div class="border-t-grid border-grid-color cursor-pointer">
+        <div class="hover:bg-scheme-accent border-b-grid border-grid-color section-x-padding text-lg lg:text-2xl py-4 text-left" id="option1">A.  {{ section.settings.option1 }}</div>
+        <div class="hover:bg-scheme-accent border-b-grid border-grid-color section-x-padding text-lg lg:text-2xl py-4 text-left" id="option2">B.  {{ section.settings.option2 }}</div>
+        <div class="hover:bg-scheme-accent lg:border-b-grid border-grid-color section-x-padding text-lg lg:text-2xl py-4 text-left" id="option3">C.  {{ section.settings.option3 }}</div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+{%- render 'header-footer-color-scheme-override', section_color: page.handle -%}
+
+<script>
+  var step = {{ page.handle | split: 'quiz' | last }}
+      step_ = 'step' + step,
+      page = '/pages/quiz' + (parseInt(step, 10) + 1);
+  window.localStorage.setItem(step_, null);
+  document.getElementById('option1').addEventListener('click', (e) => {
+    window.localStorage.setItem(step_, 1);
+    window.location.href = page;
+  });
+
+  document.getElementById('option2').addEventListener('click', (e) => {
+    window.localStorage.setItem(step_, 2);
+    window.location.href = page;
+  });
+
+  document.getElementById('option3').addEventListener('click', (e) => {
+    window.localStorage.setItem(step_, 3);
+    window.location.href = page;
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Pages - Quiz",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Who is your Alter Ego"
+    },
+    {
+      "type": "text",
+      "id": "question",
+      "label": "Question",
+      "default": "Vivamus elementum semper nisi?"
+    },
+    {
+      "type": "text",
+      "id": "option1",
+      "label": "Option1",
+      "default": "Aenean leo ligula porttit"
+    },
+    {
+      "type": "text",
+      "id": "option2",
+      "label": "Option2",
+      "default": "Aenean leo ligula porttit"
+    },
+    {
+      "type": "text",
+      "id": "option3",
+      "label": "Option3",
+      "default": "Aenean leo ligula porttit"
+    }
+  ]
+}
+{% endschema %}

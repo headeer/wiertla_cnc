@@ -1,0 +1,438 @@
+{% comment %}theme-check-disable UndefinedObject{% endcomment %}
+{%- assign section_color = section.settings.color_scheme -%}
+<section class="page" data-color-scheme="{{ section_color }}">
+
+  <div class="pb-theme-quadruple pt-4 bg-scheme-background section-x-padding ">
+    <div>
+      <h1 class="font-heading {{ settings.template_heading_size }} capitalize">{{ page.title }}</h1>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-theme bg-border border-t-grid border-grid-color text-xl">
+    <div class="bg-scheme-background text-scheme-text pb-16">
+      {% for block in section.blocks %}
+        {% assign modulo = forloop.index | modulo: 2 %}
+        {% if modulo == 1 %}
+          <div class="py-4 section-x-padding">
+            {% if block.settings.heading != blank %}
+              <p class="featured-sm pb-8 uppercase">
+                {{ block.settings.heading }}
+              </p>
+            {% endif %}
+            {{ block.settings.content }}
+            {% if forloop.index == 1 %}
+              <div class="my-8 uppercase lg:block hidden">
+                <button id="size_cm" class="invert uppercase border-grid border-grid-color rounded-full px-4 py-1">cm</button>
+                <button id="size_inch" class="uppercase border-grid border-grid-color rounded-full px-4 py-1">inch</button>
+                <table class="w-full size-table" id="table_cm">
+                  <tr>
+                    <th>sizes</th>
+                    <th>s</th>
+                    <th>m</th>
+                    <th>l</th>
+                    <th>xl</th>
+                    <th>xxl</th>
+                  </tr>
+                  <tr>
+                    <td>cm</td>
+                    <td>55</td>
+                    <td>57</td>
+                    <td>59</td>
+                    <td>61</td>
+                    <td>63</td>
+                  </tr>
+                  <tr>
+                    <td>us</td>
+                    <td>6 7/8</td>
+                    <td>7 1/8</td>
+                    <td>7 3/8</td>
+                    <td>7 5/8</td>
+                    <td>7 7/8</td>
+                  </tr>
+                  <tr>
+                    <td>uk</td>
+                    <td>6 3/4</td>
+                    <td>7</td>
+                    <td>7 1/4</td>
+                    <td>7 1/2</td>
+                    <td>7 3/4</td>
+                  </tr>
+                </table>
+
+                <table class="w-full size-table hidden" id="table_inch">
+                  <tr>
+                    <th>sizes</th>
+                    <th>s</th>
+                    <th>m</th>
+                    <th>l</th>
+                    <th>xl</th>
+                    <th>xxl</th>
+                  </tr>
+                  <tr>
+                    <td>inch</td>
+                    <td>21.65</td>
+                    <td>22.44</td>
+                    <td>23.23</td>
+                    <td>24.02</td>
+                    <td>24.8</td>
+                  </tr>
+                  <tr>
+                    <td>us</td>
+                    <td>6 7/8</td>
+                    <td>7 1/8</td>
+                    <td>7 3/8</td>
+                    <td>7 5/8</td>
+                    <td>7 7/8</td>
+                  </tr>
+                  <tr>
+                    <td>uk</td>
+                    <td>6 3/4</td>
+                    <td>7</td>
+                    <td>7 1/4</td>
+                    <td>7 1/2</td>
+                    <td>7 3/4</td>
+                  </tr>
+                </table>
+                
+              </div>
+              <div class="my-8 uppercase lg:hidden size-table-m">
+                <div class="collapsible-tab mt-8">
+                  <div class="text-base lg:text-2xl text-lg  -mx-2 lg:-mx-4 section-x-padding py-2 border-theme-color border-t-grid" x-data="{ open: false }" x-cloak>
+                    <h2 class="text-base lg:text-2xl text-lg" >
+                      <button @click="open = !open" class="text-lg {% if block.settings.heading_text_style == 'heading' %}font-heading {{ settings.base_heading_size }}{% else %}font-body{% endif %} cursor-pointer flex justify-between items-center w-full text-left" :aria-expanded="open ? true : 'false'">
+                        <span class="flex items-center justify-start">
+                          S
+                        </span>
+                        <span class="inline-block w-5 h-5" x-show="!open">{%- render 'icon-plus' %}</span>
+                        <span class="inline-block w-5 h-5" x-show="open">{%- render 'icon-minus' %}</span>
+                      </button>
+                    </h2>
+                    <div class="pr-10  lg:w-1/2 mt-4 lg:-mt-8 lg:ml-auto" x-show="open" id="{{ block.id }}">
+                      <button class="invert uppercase border-grid border-grid-color rounded-full px-4 py-1 size_cm">cm</button>
+                      <button class="uppercase border-grid border-grid-color rounded-full px-4 py-1 size_inch">inch</button>
+                      <table class="w-full size-table">
+                        <tr>
+                          <td>cm</td>
+                          <td>55</td>
+                        </tr>
+                        <tr>
+                          <td>us</td>
+                          <td>6 7/8</td>
+                        </tr>
+                        <tr>
+                          <td>uk</td>
+                          <td>6 3/4</td>
+                        </tr>
+                      </table>
+                      <table class="w-full size-table hidden">
+                        <tr>
+                          <td>inch</td>
+                          <td>21.65</td>
+                        </tr>
+                        <tr>
+                          <td>us</td>
+                          <td>6 7/8</td>
+                        </tr>
+                        <tr>
+                          <td>uk</td>
+                          <td>6 3/4</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="collapsible-tab mt-8">
+                  <div class="text-base lg:text-2xl text-lg  -mx-2 lg:-mx-4 section-x-padding py-2 border-theme-color border-t-grid" x-data="{ open: false }" x-cloak>
+                    <h2 class="text-base lg:text-2xl text-lg}" >
+                      <button @click="open = !open" class="text-lg {% if block.settings.heading_text_style == 'heading' %}font-heading {{ settings.base_heading_size }}{% else %}font-body{% endif %} cursor-pointer flex justify-between items-center w-full text-left" :aria-expanded="open ? true : 'false'">
+                        <span class="flex items-center justify-start">
+                          M
+                        </span>
+                        <span class="inline-block w-5 h-5" x-show="!open">{%- render 'icon-plus' %}</span>
+                        <span class="inline-block w-5 h-5" x-show="open">{%- render 'icon-minus' %}</span>
+                      </button>
+                    </h2>
+                    <div class="pr-10  lg:w-1/2 mt-4 lg:-mt-8 lg:ml-auto" x-show="open" id="{{ block.id }}">
+                      <button class="invert uppercase border-grid border-grid-color rounded-full px-4 py-1 size_cm">cm</button>
+                      <button class="uppercase border-grid border-grid-color rounded-full px-4 py-1 size_inch">inch</button>
+                      <table class="w-full size-table">
+                        <tr>
+                          <td>cm</td>
+                          <td>57</td>
+                        </tr>
+                        <tr>
+                          <td>us</td>
+                          <td>7 1/8</td>
+                        </tr>
+                        <tr>
+                          <td>uk</td>
+                          <td>7</td>
+                        </tr>
+                      </table>
+                      <table class="w-full size-table hidden">
+                        <tr>
+                          <td>inch</td>
+                          <td>22.44</td>
+                        </tr>
+                        <tr>
+                          <td>us</td>
+                          <td>7 1/8</td>
+                        </tr>
+                        <tr>
+                          <td>uk</td>
+                          <td>7</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="collapsible-tab mt-8">
+                  <div class="text-base lg:text-2xl text-lg  -mx-2 lg:-mx-4 section-x-padding py-2 border-theme-color border-t-grid" x-data="{ open: false }" x-cloak>
+                    <h2 class="text-base lg:text-2xl text-lg}" >
+                      <button @click="open = !open" class="text-lg {% if block.settings.heading_text_style == 'heading' %}font-heading {{ settings.base_heading_size }}{% else %}font-body{% endif %} cursor-pointer flex justify-between items-center w-full text-left" :aria-expanded="open ? true : 'false'">
+                        <span class="flex items-center justify-start">
+                          L
+                        </span>
+                        <span class="inline-block w-5 h-5" x-show="!open">{%- render 'icon-plus' %}</span>
+                        <span class="inline-block w-5 h-5" x-show="open">{%- render 'icon-minus' %}</span>
+                      </button>
+                    </h2>
+                    <div class="pr-10  lg:w-1/2 mt-4 lg:-mt-8 lg:ml-auto" x-show="open" id="{{ block.id }}">
+                      <button class="invert uppercase border-grid border-grid-color rounded-full px-4 py-1 size_cm">cm</button>
+                      <button class="uppercase border-grid border-grid-color rounded-full px-4 py-1 size_inch">inch</button>
+                      <table class="w-full size-table">
+                        <tr>
+                          <td>cm</td>
+                          <td>59</td>
+                        </tr>
+                        <tr>
+                          <td>us</td>
+                          <td>7 3/8</td>
+                        </tr>
+                        <tr>
+                          <td>uk</td>
+                          <td>7 1/4</td>
+                        </tr>
+                      </table>
+                      <table class="w-full size-table hidden">
+                        <tr>
+                          <td>inch</td>
+                          <td>23.23</td>
+                        </tr>
+                        <tr>
+                          <td>us</td>
+                          <td>7 3/8</td>
+                        </tr>
+                        <tr>
+                          <td>uk</td>
+                          <td>7 1/4</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="collapsible-tab mt-8">
+                  <div class="text-base lg:text-2xl text-lg  -mx-2 lg:-mx-4 section-x-padding py-2 border-theme-color border-t-grid" x-data="{ open: false }" x-cloak>
+                    <h2 class="text-base lg:text-2xl text-lg}" >
+                      <button @click="open = !open" class="text-lg {% if block.settings.heading_text_style == 'heading' %}font-heading {{ settings.base_heading_size }}{% else %}font-body{% endif %} cursor-pointer flex justify-between items-center w-full text-left" :aria-expanded="open ? true : 'false'">
+                        <span class="flex items-center justify-start">
+                          XL
+                        </span>
+                        <span class="inline-block w-5 h-5" x-show="!open">{%- render 'icon-plus' %}</span>
+                        <span class="inline-block w-5 h-5" x-show="open">{%- render 'icon-minus' %}</span>
+                      </button>
+                    </h2>
+                    <div class="pr-10  lg:w-1/2 mt-4 lg:-mt-8 lg:ml-auto" x-show="open" id="{{ block.id }}">
+                      <button class="invert uppercase border-grid border-grid-color rounded-full px-4 py-1 size_cm">cm</button>
+                      <button class="uppercase border-grid border-grid-color rounded-full px-4 py-1 size_inch">inch</button>
+                      <table class="w-full size-table">
+                        <tr>
+                          <td>cm</td>
+                          <td>61</td>
+                        </tr>
+                        <tr>
+                          <td>us</td>
+                          <td>7 5/8</td>
+                        </tr>
+                        <tr>
+                          <td>uk</td>
+                          <td>7 1/2</td>
+                        </tr>
+                      </table>
+                      <table class="w-full size-table hidden">
+                        <tr>
+                          <td>inch</td>
+                          <td>24.02</td>
+                        </tr>
+                        <tr>
+                          <td>us</td>
+                          <td>7 5/8</td>
+                        </tr>
+                        <tr>
+                          <td>uk</td>
+                          <td>7 1/2</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="collapsible-tab mt-8">
+                  <div class="text-base lg:text-2xl text-lg  -mx-2 lg:-mx-4 section-x-padding py-2 border-theme-color border-t-grid" x-data="{ open: false }" x-cloak>
+                    <h2 class="text-base lg:text-2xl text-lg}" >
+                      <button @click="open = !open" class="text-lg {% if block.settings.heading_text_style == 'heading' %}font-heading {{ settings.base_heading_size }}{% else %}font-body{% endif %} cursor-pointer flex justify-between items-center w-full text-left" :aria-expanded="open ? true : 'false'">
+                        <span class="flex items-center justify-start">
+                          XXL
+                        </span>
+                        <span class="inline-block w-5 h-5" x-show="!open">{%- render 'icon-plus' %}</span>
+                        <span class="inline-block w-5 h-5" x-show="open">{%- render 'icon-minus' %}</span>
+                      </button>
+                    </h2>
+                    <div class="pr-10  lg:w-1/2 mt-4 lg:-mt-8 lg:ml-auto" x-show="open" id="{{ block.id }}">
+                      <button class="invert uppercase border-grid border-grid-color rounded-full px-4 py-1 size_cm">cm</button>
+                      <button class="uppercase border-grid border-grid-color rounded-full px-4 py-1 size_inch">inch</button>
+                      <table class="w-full size-table">
+                        <tr>
+                          <td>cm</td>
+                          <td>63</td>
+                        </tr>
+                        <tr>
+                          <td>us</td>
+                          <td>7 7/8</td>
+                        </tr>
+                        <tr>
+                          <td>uk</td>
+                          <td>7 3/4</td>
+                        </tr>
+                      </table>
+                      <table class="w-full size-table hidden">
+                        <tr>
+                          <td>inch</td>
+                          <td>24.8</td>
+                        </tr>
+                        <tr>
+                          <td>us</td>
+                          <td>7 7/8</td>
+                        </tr>
+                        <tr>
+                          <td>uk</td>
+                          <td>7 3/4</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="bg-scheme-background text-scheme-text">
+      {% for block in section.blocks %}
+        {% assign modulo = forloop.index | modulo: 2 %}
+        {% if modulo == 0 %}
+          <div class="py-4 section-x-padding">
+            {% if block.settings.heading != blank %}
+              <p class="featured-sm pb-8 uppercase">
+                {{ block.settings.heading }}
+              </p>
+            {% endif %}
+            {{ block.settings.content }}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{%- if section.settings.override_header_footer_color_scheme -%}
+  {%- render 'header-footer-color-scheme-override', section_color: section_color -%}
+{%- endif -%}
+
+<script>
+  var cm = document.getElementById('size_cm'),
+      inch = document.getElementById('size_inch'),
+      table_cm = document.getElementById('table_cm'),
+      table_inch = document.getElementById('table_inch');
+
+  cm.addEventListener('click', () => {
+    cm.classList.add('invert');
+    table_cm.classList.remove('hidden');
+    inch.classList.remove('invert');
+    table_inch.classList.add('hidden');
+  })
+
+  inch.addEventListener('click', () => {
+    inch.classList.add('invert');
+    table_inch.classList.remove('hidden');
+    cm.classList.remove('invert');
+    table_cm.classList.add('hidden');
+  })
+
+  document.querySelectorAll('.size_cm').forEach((el) => {
+    el.addEventListener('click', () => {
+      el.classList.add('invert');
+      el.nextElementSibling.classList.remove('invert');
+      el.nextElementSibling.nextElementSibling.classList.remove('hidden');
+      el.nextElementSibling.nextElementSibling.nextElementSibling.classList.add('hidden');
+    });
+  });
+
+  document.querySelectorAll('.size_inch').forEach((el) => {
+    el.addEventListener('click', () => {
+      el.classList.add('invert');
+      el.previousElementSibling.classList.remove('invert');
+      el.nextElementSibling.classList.add('hidden');
+      el.nextElementSibling.nextElementSibling.classList.remove('hidden');
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Pages - Terms",
+  "settings": [
+    {
+      "type":      "header",
+      "content":   "Color"
+    },
+    {
+       "type": "select",
+       "id": "color_scheme",
+       "label": "Color scheme",
+       "options": [
+          { "value": "primary", "label": "Primary"},
+          { "value": "secondary", "label": "Secondary"},
+          { "value": "tertiary", "label": "Tertiary"},
+          { "value": "quaternary", "label": "Quaternary"},
+          { "value": "quinary", "label": "Quinary"}
+       ]
+    },
+    {
+      "type": "checkbox",
+      "id": "override_header_footer_color_scheme",
+      "label": "Use this color scheme for header and footer",
+      "info": "This will only apply to the contact page template",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

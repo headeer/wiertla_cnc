@@ -1,0 +1,18 @@
+<svg width="100%" height="100%" style="overflow:visible;" preserveAspectRatio="none" viewBox="0 0 136 131" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1_175)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.64307 1.42004H129.643V129.58H1.64307V1.42004Z" fill="#F5F5F8" stroke="#112832" stroke-width="3"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M43.353 42.2L36.22 25.963H24.331V31.763L19.575 34.083L18.386 43.36L26.708 45.2L30.275 57.958H36.22L43.353 42.2Z" fill="#FFE500" stroke="#112832" stroke-width="2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M95.4281 58L89.1581 42.554L94.3831 37.038L92.2931 26H104.832L112.143 41.448L105.877 58H95.4281Z" fill="#FFE500" stroke="#112832" stroke-width="2" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M20.1331 82H42.1331V106H20.1331V82Z" fill="#FFE500" stroke="#112832" stroke-width="2"/>
+<path d="M31.1431 97C32.7999 97 34.1431 95.6569 34.1431 94C34.1431 92.3431 32.7999 91 31.1431 91C29.4862 91 28.1431 92.3431 28.1431 94C28.1431 95.6569 29.4862 97 31.1431 97Z" fill="#FFE500" stroke="#112832" stroke-width="2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M56.1331 25H78.1331V49H56.1331V25Z" fill="#FFE500" stroke="#112832" stroke-width="2"/>
+<path d="M67.1431 41C68.7999 41 70.1431 39.6569 70.1431 38C70.1431 36.3431 68.7999 35 67.1431 35C65.4862 35 64.1431 36.3431 64.1431 38C64.1431 39.6569 65.4862 41 67.1431 41Z" fill="#FFE500" stroke="#112832" stroke-width="2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M59.373 105.154V74.3929H64.837L73.716 90.1159L65.516 105.155L59.373 105.154Z" fill="#FFE500" stroke="#112832" stroke-width="2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M105.207 89.4391V74.0391H107.492L113.205 89.4391L106.349 106.024H89.212V94.9341C89.212 93.5221 105.207 89.4391 105.207 89.4391Z" fill="#FFE500" stroke="#112832" stroke-width="2"/>
+</g>
+<defs>
+<clipPath id="clip0_1_175">
+<rect width="136" height="131" fill="white" transform="translate(0.143066)"/>
+</clipPath>
+</defs>
+</svg>

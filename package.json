@@ -1,0 +1,13 @@
+{
+  "name": "wiertla_cnc_shopify",
+  "version": "1.0.0",
+  "description": "Wiertla CNC Shopify Theme",
+  "scripts": {
+    "dev": "shopify theme dev",
+    "pull": "shopify theme pull",
+    "push": "shopify theme push",
+    "check": "shopify theme check"
+  },
+  "author": "",
+  "license": "ISC"
+}

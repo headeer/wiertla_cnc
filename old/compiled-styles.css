@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=League Spartan:wght@400;700");
+@import url("https://api.fontshare.com/css?f[]=league spartan@400,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700");
+@import url("https://api.fontshare.com/css?f[]=montserrat@400,500,700&display=swap");
+
+p,
+ol,
+ul {
+  margin: 0px;
+}
+
+button {
+  padding: 0px;
+}
+
+ol,
+ul {
+  padding-inline-start: 1.5em;
+}
+
+input {
+  background-image: none;
+  background-color: transparent;
+}

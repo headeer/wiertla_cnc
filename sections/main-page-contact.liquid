@@ -1,0 +1,132 @@
+{% comment %}theme-check-disable UndefinedObject{% endcomment %}
+{%- assign section_color = section.settings.color_scheme -%}
+<section class="page" data-color-scheme="{{ section_color }}">
+
+  <div class="pb-theme-quadruple pt-4 bg-scheme-background section-x-padding ">
+    <div>
+      <h1 class="font-heading {{ settings.template_heading_size }} capitalize">{{ page.title }}</h1>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-theme bg-border border-t-grid border-grid-color">    
+    <div class="relative min-h-full">
+      {%- if section.settings.image != blank -%}
+        {%- assign image = section.settings.image -%}
+        <div class="hidden lg:block">
+          {% render 'image-object' with
+            image: image
+          %}
+        </div>
+        <div class="block lg:hidden">
+          {% render 'responsive-image' with image: image %}
+        </div>
+      {%- else -%}
+        <div class="bg-placeholder-bg w-full">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg w-full h-full text-text fill-current' }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="text-scheme-text bg-scheme-background text-2xl">
+      <div class="p-6 pb-1/5 section-x-padding">
+        {{ section.settings.text }}
+      </div>
+      {%- assign formId = 'ContactForm' -%}
+      {% form 'contact', id: formId %}
+        {% render 'form-status', form: form, form_id: formId, section_color: section_color %}
+        
+        <label class="block" for="ContactFormName"></label>
+        <input type="text"
+          placeholder="{{ 'contact.form.name' | t }}"
+          class="w-full section-x-padding py-4 bg-transparent border-b-text border-current"
+          name="contact[name]"
+          id="ContactFormName"
+          value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}"
+          required
+          aria-required="true">
+          
+        <label class="block" for="ContactFormEmail"></label>
+        <input type="email"
+          placeholder="{{ 'contact.form.email' | t }}"
+          name="contact[email]"
+          id="ContactFormEmail"
+          class="w-full section-x-padding py-4 bg-transparent border-b-text border-current {% if form.errors contains 'email' %}border-theme-color{% endif %}"
+          value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+          spellcheck="false"
+          autocomplete="off"
+          autocapitalize="off"
+          required
+          aria-required="true">
+
+        <label class="block" for="ContactFormPhone"></label>
+        <input type="tel"
+          placeholder="{{ 'contact.form.phone' | t }}"
+          name="contact[phone]"
+          id="ContactFormPhone"
+          class="w-full section-x-padding py-4 bg-transparent border-b-text border-current"
+          value="{% if form[phone] %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+          pattern="[0-9\-]*">
+
+        <label class="block" for="ContactFormMessage"></label>
+        <textarea rows="10"
+          placeholder="{{ 'contact.form.message' | t }}"
+          name="contact[body]"
+          id="ContactFormMessage"
+          required
+          aria-required="true"
+          class="block section-x-padding py-4 w-full bg-transparent border-b-text border-current">
+          {%- if form.body -%}
+            {{- form.body -}}
+          {%- endif -%}
+        </textarea>
+
+        <input type="submit" class="contact-submit cursor-pointer text-left section-x-padding py-4 w-full {% render 'button-style', section_color: section_color %}  {% render 'button-color', section_color: section_color %} border-none hover:invert" value="{{ 'contact.form.submit' | t }}">
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{%- if section.settings.override_header_footer_color_scheme -%}
+  {%- render 'header-footer-color-scheme-override', section_color: section_color -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Pages - contact",
+  "settings": [
+    {
+      "type":      "header",
+      "content":   "Color"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+       "type": "select",
+       "id": "color_scheme",
+       "label": "Color scheme",
+       "options": [
+          { "value": "primary", "label": "Primary"},
+          { "value": "secondary", "label": "Secondary"},
+          { "value": "tertiary", "label": "Tertiary"},
+          { "value": "quaternary", "label": "Quaternary"},
+          { "value": "quinary", "label": "Quinary"}
+       ]
+    },
+    {
+      "type": "checkbox",
+      "id": "override_header_footer_color_scheme",
+      "label": "Use this color scheme for header and footer",
+      "info": "This will only apply to the contact page template",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

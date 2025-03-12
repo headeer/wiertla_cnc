@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .font-montserrat {
+    font-family: Montserrat, ui-sans-serif, system-ui, sans-serif;
+  }
+  .font-league-spartan {
+    font-family: "League Spartan", ui-sans-serif, system-ui, sans-serif;
+  }
+}
+.hover-link {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+  transition: width 0.3s ease-in-out;
+}
+
+.hover-link:hover::after {
+  width: 100%;
+}
+.hover-row:hover {
+  background-color: rgba(17, 40, 50, 1);
+  color: white;
+}
+.hover-row:hover button {
+  border: 1px solid white;
+  background-color: rgba(17, 40, 50, 1);
+}
+
+#image-preview {
+  display: none;
+}
+
+.hover-row:hover #image-preview {
+  display: block;
+}
+.active {
+  background: rgba(245, 245, 248, 1);
+
+  color: #112832;
+}
+.category-button .active div {
+  text-decoration: none;
+}
+.category-button {
+  background: transparent;
+}
+
+/* Swiper */
+.pagination-active {
+  background-color: #112832;
+}
+.pagination-inactive {
+  background-color: #e2e2e7;
+}
+.pagination-bar {
+  height: 2px;
+  transition: background-color 0.3s ease;
+}
+/* Swiper end  */

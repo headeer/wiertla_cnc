@@ -1,0 +1,116 @@
+{% comment %}theme-check-disable UndefinedObject{% endcomment %}
+
+<section class="page" data-color-scheme="{{ page.handle }}" data-answers="{{ section.settings.answer }}"
+>
+
+  <div class="py-12 bg-scheme-background section-x-padding overflow-x-hidden">
+    <h1 class="lg:text-11xl text-8xl journal-font text-center">{{ section.settings.title }}</h1>
+  </div>
+
+  <div class="uppercase grid grid-cols-1 lg:grid-cols-12 grid-flow-row-dense bg-border gap-gutter overflow-hidden border-t-grid border-b-grid border-grid-color relative">
+    <div class="bg-scheme-background lg:absolute left-0 top-0 text-2xl p-4 section-x-padding z-10">
+      Your alter ego is ...
+    </div>
+    <div class="bg-scheme-background lg:col-span-6 py-1/8 px-12 text-center text-3xl relative flex justify-center items-center">
+      <span>
+        <span class="text-scheme-accent" data-answer></span>
+      </span>
+    </div>
+  
+    <div class="lg:col-span-6 bg-scheme-background lg:text-6xl lg:py-1/8 text-4xl relative lg:pb-0">
+      <div class="bg-scheme-background lg:absolute left-0 top-0 text-2xl p-4 section-x-padding">
+        Get in touch
+      </div>
+
+      <div class="border-t-grid border-grid-color text-2xl">
+        {% form 'contact', id: formId %}
+          {% render 'form-status', form: form, form_id: formId, section_color: page.handle %}
+          
+          <label class="block" for="ContactFormName"></label>
+          <input type="text"
+            placeholder="{{ 'contact.form.name' | t }}"
+            class="w-full section-x-padding py-4 bg-transparent border-b-text border-current placeholder-current"
+            name="contact[name]"
+            id="ContactFormName"
+            value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}"
+            required
+            aria-required="true">
+            
+          <label class="block" for="ContactFormEmail"></label>
+          <input type="email"
+            placeholder="{{ 'contact.form.email' | t }}"
+            name="contact[email]"
+            id="ContactFormEmail"
+            class="w-full section-x-padding py-4 bg-transparent border-b-text placeholder-current border-current {% if form.errors contains 'email' %}border-theme-color{% endif %}"
+            value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+            spellcheck="false"
+            autocomplete="off"
+            autocapitalize="off"
+            required
+            aria-required="true">
+  
+          <label class="block" for="ContactFormPhone"></label>
+          <input type="tel"
+            placeholder="{{ 'contact.form.phone' | t }}"
+            name="contact[phone]"
+            id="ContactFormPhone"
+            class="w-full section-x-padding py-4 bg-transparent border-b-text border-current placeholder-current"
+            value="{% if form[phone] %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+            pattern="[0-9\-]*">
+  
+          <label class="block" for="ContactFormMessage"></label>
+          <textarea rows="10"
+            placeholder="{{ 'contact.form.message' | t }}"
+            name="contact[body]"
+            id="ContactFormMessage"
+            required
+            aria-required="true"
+            class="block section-x-padding py-4 w-full bg-transparent border-b-text border-current placeholder-current">
+            {%- if form.body -%}
+              {{- form.body -}}
+            {%- endif -%}
+          </textarea>
+  
+          <input type="submit" class="contact-submit cursor-pointer text-left section-x-padding py-4 w-full {% render 'button-style', section_color: section_color %}  {% render 'button-color', section_color: section_color %} border-none" value="{{ 'contact.form.submit' | t }}">
+        {% endform %}
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+{%- render 'header-footer-color-scheme-override', section_color: page.handle -%}
+
+<script>
+  var step1 = window.localStorage.getItem('step1'),
+      step2 = window.localStorage.getItem('step2'),
+      step3 = window.localStorage.getItem('step3'),
+      step4 = window.localStorage.getItem('step4'),
+      step5 = window.localStorage.getItem('step5'),
+      answer = (parseInt(step1, 10) - 1) * (parseInt(step2, 10) - 1) * (parseInt(step3, 10) - 1) * (parseInt(step4, 10) - 1) + parseInt(step5, 10),
+      answers = document.querySelector('section.page').dataset.answers.split("#");
+  
+  console.log(step1+'=>'+step2+'=>'+step3+'=>'+step4+'=>'+step5);
+  document.querySelector('[data-answer]').innerText = answers[answer - 1];
+
+</script>
+
+{% schema %}
+{
+  "name": "Pages - Quiz Result",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Who is your Alter Ego"
+    },
+    {
+      "type": "textarea",
+      "id": "answer",
+      "label": "Answer combination",
+      "info": "Separate each answer by #"
+    }
+  ]
+}
+{% endschema %}
