@@ -1,0 +1,171 @@
+{% comment %}
+  Drill Stats and Navigation Section
+  Displays company statistics and drill category navigation
+{% endcomment %}
+
+<div class="self-stretch">
+  <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-5 bg-gray-100 px-64 py-[60px] min-[1910px]:flex-nowrap">
+    {% for block in section.blocks %}
+      {% if block.type == 'stat' %}
+        <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-5 min-[1910px]:flex-nowrap">
+          {% if block.settings.icon != blank %}
+            {{ block.settings.icon | image_url: width: 128 | image_tag: 
+              loading: 'lazy',
+              class: 'h-32 w-32 flex-shrink-0 object-cover object-center',
+              alt: block.settings.title
+            }}
+          {% endif %}
+          <div class="flex w-80 flex-shrink-0 flex-col gap-y-2.5">
+            <div class="font-league-spartan text-lg font-bold uppercase leading-[17px] tracking-[0.96px]">
+              {{ block.settings.title }}
+            </div>
+            <div {% if block.settings.width %}class="w-{{ block.settings.width }}"{% endif %}>
+              {{ block.settings.description }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="h-20 flex-shrink-0">
+    <div class="-mb-0.5 flex h-20 flex-shrink-0 items-center justify-center border-t-2 border-solid border-zinc-200 bg-gray-100 pb-5 pl-64 pr-72 pt-[18px]">
+      <div class="flex-grow pt-0.5">
+        <div class="flex flex-wrap items-center justify-center gap-x-[60px] gap-y-[19px] min-[1910px]:flex-nowrap">
+          {% for block in section.blocks %}
+            {% if block.type == 'nav_item' %}
+              <div class="flex items-center justify-center gap-x-2.5">
+                {% if block.settings.icon != blank %}
+                  {{ block.settings.icon | image_url: width: 34 | image_tag:
+                    loading: 'lazy',
+                    class: 'h-[34px] w-[34px] flex-shrink-0 object-cover object-center',
+                    alt: block.settings.title
+                  }}
+                {% endif %}
+                <div class="flex-grow [max-width:136px]">
+                  <div class="text-xs font-bold leading-4 tracking-[0.16px]">
+                    {{ block.settings.label }}
+                  </div>
+                  <div>{{ block.settings.title }}</div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Drill Stats & Nav",
+  "tag": "section",
+  "class": "drill-stats-nav-section",
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Statistic",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Statistic Title"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Content Width",
+          "options": [
+            {
+              "value": "60",
+              "label": "60"
+            },
+            {
+              "value": "72",
+              "label": "72"
+            }
+          ],
+          "default": "60"
+        }
+      ]
+    },
+    {
+      "type": "nav_item",
+      "name": "Navigation Item",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "WIERTŁA CNC"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Category Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Drill Stats & Nav",
+      "blocks": [
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat"
+        },
+        {
+          "type": "nav_item"
+        },
+        {
+          "type": "nav_item"
+        },
+        {
+          "type": "nav_item"
+        }
+      ]
+    }
+  ],
+  "settings": []
+}
+{% endschema %}
+
+{% style %}
+.drill-stats-nav-section {
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media screen and (max-width: 1909px) {
+  .drill-stats-nav-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+{% endstyle %} 

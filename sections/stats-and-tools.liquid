@@ -1,0 +1,134 @@
+{% comment %}
+  Stats and Tools Navigation Section
+  Displays company statistics and tool category navigation
+{% endcomment %}
+
+<!-- Stats Section -->
+<div class="self-stretch">
+  <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-5 bg-gray-100 px-64 py-[60px] min-[1910px]:flex-nowrap">
+    <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-5 min-[1910px]:flex-nowrap">
+      <img src="{{ 'image-22.png' | asset_url }}" loading="lazy" class="h-32 w-32 flex-shrink-0 object-cover object-center" alt="Tools icon"/>
+      <div class="flex w-80 flex-shrink-0 flex-col gap-y-2.5">
+        <div class="font-league-spartan text-lg font-bold uppercase leading-[17px] tracking-[0.96px]">
+          {{ section.settings.stat_1_title }}
+        </div>
+        <div class="w-60">
+          {{ section.settings.stat_1_text }}
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-5 min-[1910px]:flex-nowrap">
+      <img src="{{ 'image-23.png' | asset_url }}" loading="lazy" class="h-32 w-32 flex-shrink-0 object-cover object-center" alt="Years icon"/>
+      <div class="flex w-80 flex-shrink-0 flex-col gap-y-2.5">
+        <div class="font-league-spartan text-lg font-bold uppercase leading-[17px] tracking-[0.96px]">
+          {{ section.settings.stat_2_title }}
+        </div>
+        <div>
+          {{ section.settings.stat_2_text }}
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-5 min-[1910px]:flex-nowrap">
+      <img src="{{ 'image-24.png' | asset_url }}" loading="lazy" class="h-32 w-32 flex-shrink-0 object-cover object-center" alt="Quality icon"/>
+      <div class="flex w-80 flex-shrink-0 flex-col gap-y-2.5">
+        <div class="font-league-spartan text-lg font-bold uppercase leading-[17px] tracking-[0.96px]">
+          {{ section.settings.stat_3_title }}
+        </div>
+        <div class="w-72">
+          {{ section.settings.stat_3_text }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tools Navigation -->
+  <div class="h-20 flex-shrink-0">
+    <div class="-mb-0.5 flex h-20 flex-shrink-0 items-center justify-center border-t-2 border-solid border-zinc-200 bg-gray-100 pb-5 pl-64 pr-72 pt-[18px]">
+      <div class="flex-grow pt-0.5">
+        <div class="flex flex-wrap items-center justify-center gap-x-[60px] gap-y-[19px] min-[1910px]:flex-nowrap">
+          {% for block in section.blocks %}
+            {% if block.type == 'tool_category' %}
+              <div class="flex items-center justify-center gap-x-2.5">
+                <img src="{{ block.settings.icon | asset_url }}" loading="lazy" class="h-[34px] w-[34px] flex-shrink-0 object-cover object-center" alt="{{ block.settings.title }}"/>
+                <div class="flex-grow [max-width:136px]">
+                  <div class="text-xs font-bold leading-4 tracking-[0.16px]">
+                    WIERTŁA CNC
+                  </div>
+                  <div>{{ block.settings.title }}</div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Stats and Tools",
+  "settings": [
+    {
+      "type": "text",
+      "id": "stat_1_title",
+      "label": "First Stat Title",
+      "default": "999+ narzędzi CNC"
+    },
+    {
+      "type": "richtext",
+      "id": "stat_1_text",
+      "label": "First Stat Text",
+      "default": "<p>Ponad 1000 szt wierteł CNC</p><p>na stanie magazynowym</p>"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_title",
+      "label": "Second Stat Title",
+      "default": "8 lat na rynku"
+    },
+    {
+      "type": "richtext",
+      "id": "stat_2_text",
+      "label": "Second Stat Text",
+      "default": "<p>Budujemy mocną pozycję</p><p>jako dostawca narzędzi CNC</p>"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_title",
+      "label": "Third Stat Title",
+      "default": "Najwyższa jakość"
+    },
+    {
+      "type": "richtext",
+      "id": "stat_3_text",
+      "label": "Third Stat Text",
+      "default": "<p>Oferujemy markowe wiertła,</p><p>a także dedykowane zamienniki</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tool_category",
+      "name": "Tool Category",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Category Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stats and Tools",
+      "category": "Custom Components"
+    }
+  ]
+}
+{% endschema %} 

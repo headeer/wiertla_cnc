@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
   <link rel="preconnect" href="https://fonts.shopify.com" crossorigin>
   <link rel="preconnect" href="https://monorail-edge.shopifysvc.com">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=League+Spartan:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   {%- liquid
     assign body_font = settings.font_body
@@ -92,6 +95,12 @@
   {% render 'critical-css' %}
   {% render 'social-meta-tags' %}
   {% render 'style-tags', layout: 'theme' %}
+  
+  <!-- Theme styles -->
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  
+  <!-- Wiertla Custom Styles -->
+  {{ 'custom-styles.css' | asset_url | stylesheet_tag }}
 
   {% if template contains 'customers' %}
     <script src="{{ "shopify_common.js" | shopify_asset_url }}" defer="defer"></script>

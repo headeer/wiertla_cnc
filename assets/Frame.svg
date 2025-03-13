@@ -1,0 +1,11 @@
+<svg width="100%" height="100%" style="overflow:visible;" preserveAspectRatio="none" viewBox="0 0 465 507.57" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<path d="M1 181H424V482.571H30C13.9837 482.571 1 469.588 1 453.571V181Z" fill="url(#pattern0_1_232)" stroke="#E2E2E7" stroke-width="2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M423 344L437 330L423 316" fill="white"/>
+<path d="M423 344L437 330L423 316" stroke="#E2E2E7" stroke-width="2"/>
+<defs>
+<pattern id="pattern0_1_232" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_1_232" transform="scale(0.00246305 0.00344828)"/>
+</pattern>
+<image id="image0_1_232" width="406" height="290" xlink:href="/assets/frame-25.png"/>
+</defs>
+</svg>

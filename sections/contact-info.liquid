@@ -1,0 +1,97 @@
+{% comment %}
+  Contact Information Section
+  Displays company contact details
+{% endcomment %}
+
+<div class="max-w-[1440px] mx-auto px-4 py-16">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="contact-card bg-white border-2 border-solid border-zinc-200 rounded-lg p-6">
+      <h3 class="font-league-spartan text-lg font-bold uppercase leading-[17px] tracking-[0.96px] mb-6">
+        {{ section.settings.contact_title }}
+      </h3>
+      <div class="flex flex-col gap-4">
+        <a href="tel:{{ section.settings.phone }}" class="font-montserrat text-base leading-relaxed text-gray-700 hover:text-cyan-950 transition-colors duration-300">
+          {{ section.settings.phone }}
+        </a>
+        <a href="mailto:{{ section.settings.email }}" class="font-montserrat text-base leading-relaxed text-gray-700 hover:text-cyan-950 transition-colors duration-300">
+          {{ section.settings.email }}
+        </a>
+      </div>
+    </div>
+    
+    <div class="contact-card bg-white border-2 border-solid border-zinc-200 rounded-lg p-6">
+      <h3 class="font-league-spartan text-lg font-bold uppercase leading-[17px] tracking-[0.96px] mb-6">
+        {{ section.settings.address_title }}
+      </h3>
+      <div class="font-montserrat text-base leading-relaxed text-gray-700">
+        {{ section.settings.street_address }}<br>
+        {{ section.settings.postal_code }} {{ section.settings.city }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact",
+  "settings": [
+    {
+      "type": "text",
+      "id": "contact_title",
+      "label": "Contact Title",
+      "default": "KONTAKT"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone Number",
+      "default": "+48 600 67 37 36"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email Address",
+      "default": "biuro@hmmetal.pl"
+    },
+    {
+      "type": "text",
+      "id": "address_title",
+      "label": "Address Title",
+      "default": "ADRES"
+    },
+    {
+      "type": "text",
+      "id": "street_address",
+      "label": "Street Address",
+      "default": "ul. Przemysłowa 21"
+    },
+    {
+      "type": "text",
+      "id": "postal_code",
+      "label": "Postal Code",
+      "default": "00-001"
+    },
+    {
+      "type": "text",
+      "id": "city",
+      "label": "City",
+      "default": "Warszawa"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Information"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.contact-card {
+  @apply transition-all duration-300;
+}
+
+.contact-card:hover {
+  @apply shadow-lg;
+}
+{% endstylesheet %} 

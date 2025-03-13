@@ -1,0 +1,90 @@
+{% comment %}
+  Drill FAQ Section
+  Displays frequently asked questions about CNC drills
+{% endcomment %}
+
+<div class="max-w-[1440px] mx-auto px-4 py-16">
+  <h2 class="font-league-spartan text-2xl font-bold uppercase leading-tight tracking-[0.96px] mb-8 text-center">
+    {{ section.settings.title }}
+  </h2>
+  
+  <div class="grid grid-cols-1 gap-6">
+    {% for block in section.blocks %}
+      {% if block.type == 'faq_item' %}
+        <div class="faq-card bg-white border-2 border-solid border-zinc-200 rounded-lg p-6">
+          <h3 class="font-league-spartan text-lg font-bold leading-[17px] tracking-[0.96px] mb-4">
+            {{ block.settings.question }}
+          </h3>
+          <div class="font-montserrat text-base leading-relaxed text-gray-700">
+            {{ block.settings.answer }}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CNC Drills FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Wiertła CNC - najczęściej zadawane pytania"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Jakie wiertła CNC wybrać do metalu?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Wiertła Koronkowe: Idealne do dużych otworów w metalu..."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Drill FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Jakie wiertła CNC wybrać do metalu?",
+            "answer": "Wiertła Koronkowe: Idealne do dużych otworów w metalu. Wiertła koronkowe charakteryzują się konstrukcją, która umożliwia wydajne i szybkie wiercenie nawet w twardych materiałach, minimalizując przy tym uszkodzenia obrabianego materiału. Są często stosowane w przemyśle budowlanym i mechanicznym\n\nWiertła VHM (Węglik Spiekany): Wytrzymałe i długowieczne, doskonałe do twardych metali. Wiertła wykonane z węglika spiekanego cechują się wyjątkową twardością i odpornością na zużycie, co sprawia, że są idealne do wiercenia w trudnych i wymagających warunkach. Są powszechnie używane w branżach, gdzie precyzja i trwałość narzędzi są kluczowe."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Czy wiertła Sandvik 880 są dobre do trudnych materiałów?",
+            "answer": "Tak, wiertła Sandvik 880 są znane ze swojej wydajności i wytrzymałości, co czyni je idealnym wyborem do trudnych materiałów. Wiertła te posiadają zaawansowaną geometrię i powłoki, które zwiększają ich żywotność i efektywność. Dzięki swojej konstrukcji, wiertła Sandvik 880 są w stanie pracować z dużą precyzją nawet w najtwardszych materiałach, co czyni je popularnym wyborem w przemyśle lotniczym i motoryzacyjnym."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.faq-card {
+  @apply transition-all duration-300;
+}
+
+.faq-card:hover {
+  @apply shadow-lg;
+}
+{% endstylesheet %} 

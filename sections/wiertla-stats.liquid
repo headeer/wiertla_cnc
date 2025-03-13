@@ -1,0 +1,1001 @@
+{% comment %}
+  Wiertla Stats Component
+  A component to display stats and achievements for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+<div class="wiertla-stats">
+  <div class="wiertla-stats__container">
+    <div class="wiertla-stats__item">
+      <img src="{{ 'image-36.png' | asset_url }}" alt="Tools" class="wiertla-stats__icon">
+      <div class="wiertla-stats__content">
+        <div class="wiertla-stats__title">999+ narzędzi CNC</div>
+        <div class="wiertla-stats__text">Ponad 1000 szt wierteł CNC na stanie magazynowym</div>
+      </div>
+    </div>
+    <div class="wiertla-stats__item">
+      <img src="{{ 'image-38.png' | asset_url }}" alt="Years" class="wiertla-stats__icon">
+      <div class="wiertla-stats__content">
+        <div class="wiertla-stats__title">8 lat na rynku</div>
+        <div class="wiertla-stats__text">Budujemy mocną pozycję jako dostawca narzędzi CNC</div>
+      </div>
+    </div>
+    <div class="wiertla-stats__item">
+      <img src="{{ 'image-24.png' | asset_url }}" alt="Quality" class="wiertla-stats__icon">
+      <div class="wiertla-stats__content">
+        <div class="wiertla-stats__title">Najwyższa jakość</div>
+        <div class="wiertla-stats__text">Oferujemy markowe wiertła, a także dedykowane zamienniki</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Latest Products Section -->
+<div class="latest-products">
+  <div class="latest-products__title">
+    Najnowsze w naszej ofercie
+  </div>
+  <div class="latest-products__subtitle">
+    Stale poszerzamy stan magazynowy, aktualizując ofertę o nowe modele wierteł CNC
+  </div>
+  
+  <div class="latest-products__swiper swiper">
+    <div class="swiper-wrapper">
+      {% assign all_products = collections.all.products | sort: 'created_at' | reverse %}
+      {% for product in all_products limit: 8 %}
+        <div class="swiper-slide">
+          <a href="{{ product.url }}" class="product-card">
+            <div class="product-card__top">
+              <div class="product-card__image-container">
+                <img 
+                  src="{{ product.featured_image | img_url: '68x68', crop: 'center' }}" 
+                  alt="{{ product.title }}"
+                  class="product-card__image"
+                  width="34"
+                  height="34"
+                  loading="lazy"
+                >
+              </div>
+              <div class="product-card__fi">
+                fi ⌀ {{ product.metafields.custom.fi | default: 'N/A' }}
+              </div>
+              <div class="product-card__dimension">
+                {{ product.metafields.custom.dimension | default: 'N/A' }}
+              </div>
+            </div>
+            
+            <div class="product-card__symbol">
+              {{ product.metafields.custom.symbol | default: product.sku | default: 'N/A' }}
+            </div>
+            
+            <div class="product-card__bottom">
+              <div class="product-card__vendor">
+                {{ product.vendor }}
+              </div>
+              <div class="product-card__price-container">
+                <div class="product-card__price">
+                  {% if product.price_varies %}
+                    {{ product.price_min | money }}
+                  {% else %}
+                    {{ product.price | money }}
+                  {% endif %}
+                </div>
+                {% if product.metafields.custom.rent_tool %}
+                  <div class="product-card__rent">
+                    rent a tool
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="12" viewBox="0 0 17 12" fill="none">
+                      <path d="M10.5 12L9.1 10.55L12.65 7H0.5V5H12.65L9.1 1.45L10.5 0L16.5 6L10.5 12Z" fill="#112832"/>
+                    </svg>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <div class="swiper-navigation">
+      <div class="swiper-button-prev"></div>
+      <div class="pagination-container">
+        {% assign total_slides = all_products.size %}
+        {% if total_slides > 5 %}{% assign total_slides = 5 %}{% endif %}
+        {% for i in (1..total_slides) %}
+          <div class="pagination-bar {% if forloop.first %}pagination-active{% else %}pagination-inactive{% endif %}" data-index="{{ forloop.index0 }}"></div>
+        {% endfor %}
+      </div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Rent Tools Section -->
+<div class="rent-tools">
+  <div class="rent-tools__lines"></div>
+  <div class="rent-tools__content">
+    <div class="rent-tools__title">
+      Wypożyczaj wiertła CNC
+    </div>
+    <div class="rent-tools__title">
+      na korzystnych warunkach
+    </div>
+    
+    <div class="rent-tools__icons">
+      <div>
+        <img src="{{ 'Ksztat8Kopia.svg' | asset_url }}" alt="Icon 1">
+      </div>
+      <div>
+        <img src="{{ 'Group7.svg' | asset_url }}" alt="Icon 2">
+      </div>
+      <div>
+        <img src="{{ 'Ksztat16Kopia.svg' | asset_url }}" alt="Icon 3">
+      </div>
+      <div>
+        <img src="{{ 'Frame6.svg' | asset_url }}" alt="Icon 4">
+      </div>
+      <div>
+        <img src="{{ 'Ksztat13Kopia.svg' | asset_url }}" alt="Icon 5">
+      </div>
+      <div>
+        <img src="{{ 'Ksztat13Kopia1.svg' | asset_url }}" alt="Icon 6">
+      </div>
+    </div>
+    
+    <div class="rent-tools__description">
+      Stale zwiększając jakość i komfort korzystania z naszej oferty, udostępniamy możliwość wypożyczenia wierteł CNC.
+    </div>
+    
+    <a href="{{ section.settings.rent_tools_link }}" class="rent-tools__button">
+      Dowiedz się więcej
+      <img src="{{ 'Refresh_24dp_5F6368_FILL0_wght400_GRAD0_opsz.svg' | asset_url }}" class="h-7 w-7 flex-shrink-0" alt="Arrow">
+    </a>
+  </div>
+</div>
+
+<!-- FAQ Section -->
+<div class="faq">
+  <div class="faq__container">
+    <div class="faq__columns">
+      <!-- Column 1 -->
+      <div class="faq__column">
+        <div class="faq__main-title">
+          Wiertła CNC - najczęściej zadawane pytania
+        </div>
+        <div class="faq__item">
+          <div class="faq__title">
+            1. Jakie wiertła CNC wybrać do metalu?
+          </div>
+          <div class="faq__text">
+            <p>
+              <span class="faq__bold">Wiertła Koronkowe</span>: Idealne do dużych otworów w metalu. Wiertła koronkowe charakteryzują się konstrukcją, która umożliwia wydajne i szybkie wiercenie nawet w twardych materiałach, minimalizując przy tym uszkodzenia obrabianego materiału. Są często stosowane w przemyśle budowlanym i mechanicznym
+            </p>
+          </div>
+          <div class="faq__text">
+            <p>
+              <span class="faq__bold">Wiertła VHM </span>(Węglik Spiekany): Wytrzymałe i długowieczne, doskonałe do twardych metali. Wiertła wykonane z węglika spiekanego cechują się wyjątkową twardością i odpornością na zużycie, co sprawia, że są idealne do wiercenia w trudnych i wymagających warunkach. Są powszechnie używane w branżach, gdzie precyzja i trwałość narzędzi są kluczowe.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="faq__column">
+        <div class="faq__item">
+          <div class="faq__title">
+            2. Czy wiertła Sandvik 880 są dobre do trudnych materiałów?
+          </div>
+          <div class="faq__text">
+            <p>
+              Tak, wiertła <span class="faq__bold">Sandvik 880 </span>są znane ze swojej wydajności i wytrzymałości, co czyni je idealnym wyborem do trudnych materiałów. Wiertła te posiadają zaawansowaną geometrię i powłoki, które zwiększają ich żywotność i efektywność. Dzięki swojej konstrukcji, wiertła Sandvik 880 są w stanie pracować z dużą precyzją nawet w najtwardszych materiałach, co czyni je popularnym wyborem w przemyśle lotniczym i motoryzacyjnym.
+            </p>
+          </div>
+        </div>
+        <div class="faq__item">
+          <div class="faq__title">
+            4. Jakie są zastosowania wierteł płytkowych?
+          </div>
+          <div class="faq__text">
+            <p>
+              <span class="faq__bold">Wiertła płytkowe </span>są wszechstronne i znajdują zastosowanie w wielu różnych dziedzinach. Idealnie nadają się do obróbki materiałów kompozytowych, metali kolorowych oraz tworzyw sztucznych. Dzięki swojej konstrukcji zapewniają wysoką precyzję i długą żywotność, co czyni je niezastąpionymi w przemyśle lotniczym, motoryzacyjnym oraz przy produkcji urządzeń elektronicznych.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 3 -->
+      <div class="faq__column">
+        <div class="faq__item">
+          <div class="faq__title">
+            3. Jakie są zalety wierteł KSEM?
+          </div>
+          <div class="faq__text">
+            <p>
+              Wiertła <span class="faq__bold">KSEM </span>oferują innowacyjne rozwiązania, które zapewniają doskonałe rezultaty nawet w najtwardszych materiałach. Dzięki zaawansowanej technologii, wiertła te umożliwiają szybką i efektywną obróbkę, minimalizując przy tym czas przestoju maszyn. Wiertła KSEM są zaprojektowane z myślą o maksymalnej wydajności, co sprawia, że są one idealnym wyborem do produkcji masowej i zastosowań, gdzie precyzja jest kluczowa.
+            </p>
+          </div>
+        </div>
+        <div class="faq__item">
+          <div class="faq__title">
+            5. Dlaczego warto wybierać wiertła AMEC?
+          </div>
+          <div class="faq__text">
+            <p>
+              <span class="faq__bold">Wiertła AMEC </span>są synonimem jakości i niezawodności w przemyśle. Dzięki zaawansowanej technologii produkcji, oferują one doskonałe rezultaty wiercenia w najtrudniejszych warunkach. Wiertła AMEC są projektowane z myślą o długiej żywotności i minimalnych kosztach eksploatacji, co sprawia, że są one idealnym wyborem do intensywnych zastosowań przemysłowych, takich jak obróbka metali, produkcja części precyzyjnych oraz prace montażowe.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Category Descriptions Section -->
+<div class="category-desc">
+  <div class="category-desc__title">
+    Opisy kategorii na stronie wiertła cnc
+  </div>
+  
+  <div class="category-desc__container">
+    <div class="category-desc__columns">
+      <!-- Column 1 -->
+      <div class="category-desc__column">
+        <div class="category-desc__item">
+          <div class="category-desc__header">
+            <img src="{{ 'image-36.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="Wiertła Koronkowe">
+            <div class="category-desc__name">Wiertła Koronkowe</div>
+          </div>
+          <div class="category-desc__text">
+            <p>Wiertła koronkowe są nieocenione w pracach, które wymagają wiercenia dużych otworów. Nasza oferta obejmuje wiertła koronkowe o różnej średnicy, które świetnie sprawdzają się zarówno w metalu, jak i betonie. Ich zaawansowana konstrukcja zapewnia szybkie i efektywne wiercenie z minimalnym uszkodzeniem obrabianego materiału. Idealne do zastosowań budowlanych i przemysłowych, wiertła koronkowe są niezawodnym wyborem dla profesjonalistów.</p>
+          </div>
+        </div>
+
+        <div class="category-desc__item">
+          <div class="category-desc__header">
+            <img src="{{ 'image-37.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="SanDavik 880">
+            <div class="category-desc__name">SanDavik 880</div>
+          </div>
+          <div class="category-desc__text">
+            <p>Wiertła Sandvik 880 to synonim jakości i niezawodności. Zaprojektowane z myślą o najwyższej wydajności, wiertła te są doskonałe do wiercenia w najtwardszych materiałach. Ich zaawansowana geometria i powłoki ochronne zapewniają długą żywotność i stabilność pracy. Idealne do zastosowań przemysłowych, wiertła Sandvik 880 są świadomym wyborem profesjonalistów na całym świecie.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="category-desc__column">
+        <div class="category-desc__item">
+          <div class="category-desc__header">
+            <img src="{{ 'image-38.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="Wiertła PŁYTKOWE">
+            <div class="category-desc__name">Wiertła PŁYTKOWE</div>
+          </div>
+          <div class="category-desc__text">
+            <p>Wiertła płytkowe zapewniają niezrównaną precyzję i trwałość. Dzięki swojej konstrukcji, doskonale nadają się do obróbki materiałów kompozytowych i metali kolorowych. Wiertła płytkowe oferują stabilność i dokładność, co jest niezbędne w precyzyjnych pracach obróbczych. W naszej ofercie znajdziesz szeroki wybór wierteł płytkowych, które sprostają nawet najbardziej wymagającym zadaniom.</p>
+          </div>
+        </div>
+
+        <div class="category-desc__item">
+          <div class="category-desc__header">
+            <img src="{{ 'image-39.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="Wiertła AMEC">
+            <div class="category-desc__name">Wiertła AMEC</div>
+          </div>
+          <div class="category-desc__text">
+            <p>Specjalistyczne wiertła AMEC to narzędzia o najwyższej precyzji, przeznaczone do zastosowań przemysłowych. Dzięki zaawansowanej technologii produkcji, wiertła te oferują doskonałe rezultaty nawet w najbardziej wymagających warunkach. Nasza oferta obejmuje szeroki wybór wierteł AMEC, które sprostają wszelkim potrzebom obróbczych.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 3 -->
+      <div class="category-desc__column">
+        <div class="category-desc__item">
+          <div class="category-desc__header">
+            <img src="{{ 'image-40.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="Wiertła VHM">
+            <div class="category-desc__name">Wiertła VHM <span class="category-desc__subtitle">(Węglik Spiekany)</span></div>
+          </div>
+          <div class="category-desc__text">
+            <p>Wiertła VHM, wykonane z węglika spiekanego, to narzędzia o wyjątkowej trwałości i wydajności. Są one idealne do intensywnych prac obróbczych w trudnych warunkach. Wiertła VHM cechują się wysoką odpornością na zużycie, co gwarantuje długą żywotność narzędzia i mniejsze przestoje w produkcji. Sprawdzą się doskonale w przemyśle metalowym i narzędziowym.</p>
+          </div>
+        </div>
+
+        <div class="category-desc__item">
+          <div class="category-desc__header">
+            <img src="{{ 'image-41.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="Wiertła KSEM">
+            <div class="category-desc__name">Wiertła KSEM</div>
+          </div>
+          <div class="category-desc__text">
+            <p>Innowacyjne wiertła KSEM zapewniają doskonałe rezultaty wiercenia, nawet w najtwardszych materiałach. Dzięki unikalnym rozwiązaniom konstrukcyjnym, wiertła KSEM umożliwiają szybkie i efektywne wiercenie, minimalizując przy tym czas przestoju maszyn. Są one idealnym wyborem do produkcji masowej i precyzyjnych prac obróbczych.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wiertla Stats",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Featured Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 5,
+      "label": "Number of products to show"
+    },
+    {
+      "type": "url",
+      "id": "rent_tools_link",
+      "label": "Rent Tools Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wiertla Stats",
+      "category": "Custom Components"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.wiertla-stats {
+  background-color: #F5F5F8;
+  padding: 60px 0;
+}
+
+.wiertla-stats__container {
+  max-width: 1420px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.wiertla-stats__item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.wiertla-stats__icon {
+  width: 128px;
+  height: 128px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.wiertla-stats__content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 320px;
+}
+
+.wiertla-stats__title {
+  font-family: "League Spartan";
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+}
+
+.wiertla-stats__text {
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.48px;
+  color: #112832;
+}
+
+@media (max-width: 1024px) {
+  .wiertla-stats__container {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wiertla-stats__container {
+    padding: 0 16px;
+  }
+  
+  .wiertla-stats__item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Latest Products Section */
+.latest-products {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 12px;
+  position: relative;
+}
+
+.latest-products__title {
+  font-family: "League Spartan";
+  padding-top: 60px;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 17px;
+  letter-spacing: 0.96px;
+  color: black;
+}
+
+.latest-products__subtitle {
+  padding-top: 10px;
+  margin-bottom: 40px;
+}
+
+.latest-products__swiper {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+}
+
+.product-card {
+  width: 264px;
+  height: 102px;
+  padding: 10px;
+}
+
+.product-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 34px;
+  margin-bottom: 0;
+}
+
+.product-card__image-container {
+  min-width: 34px;
+  max-height: 34px;
+  width: 34px;
+  height: 34px;
+  border-top: 2px solid #112832;
+  border-bottom: 2px solid #112832;
+}
+
+.product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card__fi {
+  flex-grow: 1;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  border: 2px solid #112832;
+  border-left: 0;
+  border-right: 0;
+  padding: 4px 8px;
+  font-size: 14px;
+}
+
+.product-card__dimension {
+  flex-grow: 1;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  border: 2px solid #112832;
+  padding: 4px 12px;
+  font-size: 14px;
+}
+
+.product-card__symbol {
+  height: 34px;
+  border: 2px solid #E5E7EB;
+  border-top: 0;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.product-card__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 34px;
+}
+
+.product-card__vendor {
+  flex-grow: 1;
+  height: 34px;
+  border-left: 2px solid #E5E7EB;
+  border-bottom: 2px solid #E5E7EB;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.product-card__price-container {
+  display: flex;
+  align-items: center;
+  height: 34px;
+  border: 2px solid #E5E7EB;
+  border-top: 0;
+  border-bottom-right-radius: 15px;
+}
+
+.product-card__price {
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+.product-card__rent {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border: 2px solid #112832;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16px;
+  margin-right: 4px;
+  background: white;
+}
+
+/* Swiper Navigation Styles */
+.swiper {
+  padding: 0;
+  margin-bottom: 40px;
+}
+
+/* Navigation Container */
+.swiper-navigation {
+  position: relative;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Swiper Navigation Styles */
+.swiper-button-next,
+.swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  background: none;
+  border: none;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 24px;
+  font-weight: bold;
+  color: #112832;
+}
+
+.swiper-button-next {
+  right: calc(50% - 80px);
+}
+
+.swiper-button-prev {
+  left: calc(50% - 80px);
+}
+
+.swiper-button-disabled {
+  opacity: 0.35;
+}
+
+/* Custom Pagination */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 120px;
+  margin: 0 auto;
+}
+
+.pagination-bar {
+  width: 32px;
+  height: 2px;
+  background-color: #112832;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.pagination-inactive {
+  opacity: 0.2;
+}
+
+.pagination-active {
+  opacity: 1;
+  height: 4px;
+}
+
+/* Rent Tools Section Styles */
+.rent-tools {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 68px;
+  width: 100%;
+}
+
+.rent-tools__content {
+  position: relative;
+  z-index: 2;
+  border: 2px solid #E5E7EB;
+  background: white;
+  padding: 40px;
+  text-align: center;
+  max-width: 842px;
+}
+
+.rent-tools__title {
+  font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 6%;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.rent-tools__description {
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 3%;
+  text-align: center;
+  margin: 11px 0;
+  padding: 0 40px;
+}
+
+.rent-tools__button {
+  font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 6%;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  background: #FCD34D;
+  border: 2px solid #112832;
+  border-radius: 40px;
+  padding: 8.5px 15px 8.5px 20px;
+  margin-top: 12px;
+}
+
+.rent-tools__lines {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  border-bottom: 2px solid #E5E7EB;
+}
+
+.rent-tools__icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin: 24px 0;
+  padding: 0 20px;
+}
+
+.rent-tools__icons > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.rent-tools__icons img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.rent-tools__icons img:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .rent-tools__icons {
+    gap: 24px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+  
+  .rent-tools__icons > div {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* FAQ Section Styles */
+.faq {
+  padding-top: 56px;
+}
+
+.faq__container {
+  background-color: #F5F5F8;
+  padding: 60px 0;
+}
+
+.faq__columns {
+  max-width: 1420px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.faq__column {
+  flex: 1;
+  min-width: 320px;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.faq__main-title {
+  font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 6%;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.faq__title {
+  font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 6%;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.faq__text {
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 3%;
+  margin-bottom: 15px;
+}
+
+.faq__bold {
+  font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+  .faq__columns {
+    padding: 0 32px;
+  }
+  
+  .faq__column {
+    min-width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .faq__columns {
+    padding: 0 16px;
+  }
+  
+  .faq__column {
+    min-width: 100%;
+  }
+}
+
+/* Category Descriptions Section */
+.category-desc {
+  padding: 60px 64px;
+}
+
+.category-desc__title {
+  font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 17px;
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.category-desc__container {
+  max-width: 1420px;
+  margin: 0 auto;
+}
+
+.category-desc__columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.category-desc__column {
+  flex: 1;
+  min-width: 320px;
+  max-width: 458px;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+.category-desc__item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category-desc__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.category-desc__icon {
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.category-desc__name {
+  font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: normal;
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+
+.category-desc__subtitle {
+  font-family: "Montserrat";
+  font-weight: 400;
+  font-size: 16px;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.category-desc__text {
+  font-family: "Montserrat";
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.48px;
+}
+
+@media (max-width: 1910px) {
+  .category-desc__columns {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 1024px) {
+  .category-desc {
+    padding: 40px 32px;
+  }
+  
+  .category-desc__column {
+    gap: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .category-desc {
+    padding: 30px 16px;
+  }
+  
+  .category-desc__column {
+    min-width: 100%;
+    gap: 32px;
+  }
+  
+  .category-desc__header {
+    flex-wrap: wrap;
+  }
+}
+{% endstylesheet %}
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js" defer></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  new Swiper('.latest-products__swiper', {
+    loop: false,
+    slidesPerView: 1,
+    spaceBetween: 20,
+    watchOverflow: true,
+    observer: true,
+    observeParents: true,
+    
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+      },
+      1024: {
+        slidesPerView: 3,
+      },
+      1280: {
+        slidesPerView: 4,
+      },
+      1536: {
+        slidesPerView: 5,
+      }
+    },
+    
+    on: {
+      init: function() {
+        updatePaginationBars(this.realIndex);
+      },
+      slideChange: function() {
+        updatePaginationBars(this.realIndex);
+      }
+    }
+  });
+
+  function updatePaginationBars(activeIndex) {
+    const paginationBars = document.querySelectorAll('.pagination-bar');
+    paginationBars.forEach((bar, index) => {
+      if (index === activeIndex) {
+        bar.classList.add('pagination-active');
+        bar.classList.remove('pagination-inactive');
+      } else {
+        bar.classList.add('pagination-inactive');
+        bar.classList.remove('pagination-active');
+      }
+    });
+  }
+
+  const paginationBars = document.querySelectorAll('.pagination-bar');
+  paginationBars.forEach((bar) => {
+    bar.addEventListener('click', () => {
+      const index = parseInt(bar.getAttribute('data-index'));
+      const swiper = document.querySelector('.latest-products__swiper').swiper;
+      if (swiper) {
+        swiper.slideTo(index);
+      }
+    });
+  });
+});
+</script> 

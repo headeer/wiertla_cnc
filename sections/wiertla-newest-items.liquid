@@ -1,0 +1,282 @@
+{% comment %}
+  Wiertla Newest Items Component
+  A component to display the newest products for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+<div class="wiertla-section wiertla-newest-items">
+  <div class="wiertla-container">
+    {% if section.settings.title != blank %}
+      <h2 class="wiertla-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    
+    {% if section.settings.subtitle != blank %}
+      <div class="wiertla-newest-items__subtitle">{{ section.settings.subtitle }}</div>
+    {% endif %}
+    
+    <div class="wiertla-newest-items__grid">
+      {% if section.settings.collection != blank %}
+        {% assign collection = collections[section.settings.collection] %}
+        {% assign products = collection.products %}
+      {% else %}
+        {% assign products = collections.all.products %}
+      {% endif %}
+      
+      {% assign limit = section.settings.product_limit | default: 4 %}
+      {% assign sort_by = section.settings.sort_by | default: 'created-descending' %}
+      
+      {% case sort_by %}
+        {% when 'created-descending' %}
+          {% assign sorted_products = products | sort: 'created_at' | reverse %}
+        {% when 'price-ascending' %}
+          {% assign sorted_products = products | sort: 'price' %}
+        {% when 'price-descending' %}
+          {% assign sorted_products = products | sort: 'price' | reverse %}
+        {% when 'title-ascending' %}
+          {% assign sorted_products = products | sort: 'title' %}
+        {% when 'title-descending' %}
+          {% assign sorted_products = products | sort: 'title' | reverse %}
+        {% when 'best-selling' %}
+          {% assign sorted_products = products | sort: 'best_selling' %}
+        {% else %}
+          {% assign sorted_products = products %}
+      {% endcase %}
+      
+      {% for product in sorted_products limit: limit %}
+        <div class="wiertla-newest-items__item">
+          <a href="{{ product.url }}" class="wiertla-newest-items__link">
+            <div class="wiertla-newest-items__image-container">
+              {% if product.featured_image != blank %}
+                <img 
+                  src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}" 
+                  alt="{{ product.featured_image.alt | default: product.title }}"
+                  loading="lazy"
+                  class="wiertla-newest-items__image"
+                >
+              {% else %}
+                <div class="wiertla-newest-items__placeholder">
+                  {{ 'product-1' | placeholder_svg_tag: 'wiertla-newest-items__placeholder-svg' }}
+                </div>
+              {% endif %}
+              
+              {% if section.settings.show_sale_badge and product.compare_at_price > product.price %}
+                <div class="wiertla-newest-items__badge wiertla-newest-items__badge--sale">
+                  {{ section.settings.sale_badge_text }}
+                </div>
+              {% endif %}
+              
+              {% if section.settings.show_sold_out_badge and product.available == false %}
+                <div class="wiertla-newest-items__badge wiertla-newest-items__badge--sold-out">
+                  {{ section.settings.sold_out_badge_text }}
+                </div>
+              {% endif %}
+            </div>
+            
+            <div class="wiertla-newest-items__content">
+              {% if section.settings.show_vendor and product.vendor != blank %}
+                <div class="wiertla-newest-items__vendor">
+                  {{ product.vendor }}
+                </div>
+              {% endif %}
+              
+              <h3 class="wiertla-newest-items__title">
+                {{ product.title }}
+              </h3>
+              
+              <div class="wiertla-newest-items__price-container">
+                {% if product.compare_at_price > product.price %}
+                  <span class="wiertla-newest-items__price wiertla-newest-items__price--sale">
+                    {{ product.price | money }}
+                  </span>
+                  <span class="wiertla-newest-items__price wiertla-newest-items__price--compare">
+                    {{ product.compare_at_price | money }}
+                  </span>
+                {% else %}
+                  <span class="wiertla-newest-items__price">
+                    {{ product.price | money }}
+                  </span>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+          
+          {% if section.settings.show_quick_add %}
+            <div class="wiertla-newest-items__quick-add">
+              <form method="post" action="/cart/add" class="wiertla-newest-items__form">
+                <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="wiertla-newest-items__quick-add-button" {% unless product.available %}disabled{% endunless %}>
+                  {% if product.available %}
+                    {{ section.settings.quick_add_text }}
+                  {% else %}
+                    {{ section.settings.sold_out_text }}
+                  {% endif %}
+                </button>
+              </form>
+            </div>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="wiertla-newest-items__empty">
+          <p>{{ section.settings.no_products_text }}</p>
+        </div>
+      {% endfor %}
+    </div>
+    
+    {% if section.settings.show_view_all and section.settings.view_all_link != blank %}
+      <div class="wiertla-newest-items__view-all">
+        <a href="{{ section.settings.view_all_link }}" class="wiertla-newest-items__view-all-link">
+          {{ section.settings.view_all_text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wiertla Newest Items",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "New Arrivals"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Check out our latest products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "If no collection is selected, products will be pulled from all products"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "label": "Number of Products",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "sort_by",
+      "label": "Sort Products By",
+      "options": [
+        {
+          "value": "created-descending",
+          "label": "Date, newest to oldest"
+        },
+        {
+          "value": "created-ascending",
+          "label": "Date, oldest to newest"
+        },
+        {
+          "value": "price-ascending",
+          "label": "Price, low to high"
+        },
+        {
+          "value": "price-descending",
+          "label": "Price, high to low"
+        },
+        {
+          "value": "title-ascending",
+          "label": "Alphabetically, A-Z"
+        },
+        {
+          "value": "title-descending",
+          "label": "Alphabetically, Z-A"
+        },
+        {
+          "value": "best-selling",
+          "label": "Best selling"
+        }
+      ],
+      "default": "created-descending"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show Vendor",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_badge",
+      "label": "Show Sale Badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sale_badge_text",
+      "label": "Sale Badge Text",
+      "default": "Sale"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sold_out_badge",
+      "label": "Show Sold Out Badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sold_out_badge_text",
+      "label": "Sold Out Badge Text",
+      "default": "Sold Out"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show Quick Add Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "quick_add_text",
+      "label": "Quick Add Button Text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "text",
+      "id": "sold_out_text",
+      "label": "Sold Out Button Text",
+      "default": "Sold Out"
+    },
+    {
+      "type": "text",
+      "id": "no_products_text",
+      "label": "No Products Text",
+      "default": "No products found"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All Link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Text",
+      "default": "View All Products"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link",
+      "default": "/collections/all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wiertla Newest Items",
+      "category": "Custom Components"
+    }
+  ]
+}
+{% endschema %} 

@@ -1,0 +1,222 @@
+{% comment %}
+  Wiertla Menu Component
+  A responsive navigation menu for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+{% assign section_id = section.id %}
+
+<nav class="wiertla-nav font-league-spartan">
+  <div class="wiertla-nav__container">
+    <div class="wiertla-nav__links">
+      <a href="#" class="wiertla-nav__link">wiertła</a>
+      <a href="#" class="wiertla-nav__link">płytki</a>
+      <a href="#" class="wiertla-nav__link">koronki</a>
+    </div>
+    <div class="wiertla-nav__links">
+      <a href="#" class="wiertla-nav__link">PL</a>
+      <a href="#" class="wiertla-nav__link">EN</a>
+      <a href="#" class="wiertla-nav__link">DE</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wiertla-logo-container">
+  <div class="wiertla-logo font-league-spartan">
+    wiertla-cnc.com
+  </div>
+</div>
+
+<div class="wiertla-contact">
+  <div class="wiertla-contact__container">
+    <div class="wiertla-contact__info">
+      <div class="wiertla-contact__item">
+        <img src="{{ 'Ico_phone.svg' | asset_url }}" alt="Phone icon" class="wiertla-contact__icon">
+        <a href="tel:48600673736" class="wiertla-contact__link">+48 600 67 37 36</a>
+      </div>
+      <div class="wiertla-contact__item">
+        <img src="{{ 'Ico_mail.svg' | asset_url }}" alt="Email icon" class="wiertla-contact__icon">
+        <a href="mailto:biuro@hmmetal.pl" class="wiertla-contact__link">biuro@hmmetal.pl</a>
+      </div>
+    </div>
+    <div class="wiertla-contact__links">
+      <a href="#" class="wiertla-contact__link">kup</a>
+      <a href="#" class="wiertla-contact__link">wypożycz</a>
+      <a href="#" class="wiertla-contact__link">Regenereuj</a>
+      <a href="#" class="wiertla-contact__link">naostrz</a>
+    </div>
+  </div>
+</div>
+
+<div class="wiertla-menu">
+  <div class="wiertla-container wiertla-menu__container">
+    <div class="wiertla-menu__logo">
+      <a href="/">
+        {% if section.settings.logo != blank %}
+          <img src="{{ section.settings.logo | img_url: '150x' }}" alt="{{ shop.name }}" class="wiertla-menu__logo-image">
+        {% else %}
+          <span class="wiertla-menu__logo-text">{{ shop.name }}</span>
+        {% endif %}
+      </a>
+    </div>
+    
+    <nav class="wiertla-menu__nav">
+      {% for link in section.settings.menu.links %}
+        <div class="wiertla-menu__nav-item">
+          <a href="{{ link.url }}">{{ link.title }}</a>
+          
+          {% if link.links.size > 0 %}
+            <div class="wiertla-menu__dropdown">
+              {% for child_link in link.links %}
+                <a href="{{ child_link.url }}" class="wiertla-menu__dropdown-item">{{ child_link.title }}</a>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </nav>
+    
+    <button class="wiertla-menu__mobile-toggle" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="wiertla-menu__mobile-toggle-icon">☰</span>
+    </button>
+  </div>
+  
+  <div id="mobile-menu" class="wiertla-menu__mobile" hidden>
+    <div class="wiertla-container">
+      {% for link in section.settings.menu.links %}
+        <div class="wiertla-menu__mobile-item">
+          <a href="{{ link.url }}">{{ link.title }}</a>
+          
+          {% if link.links.size > 0 %}
+            <button class="wiertla-menu__mobile-dropdown-toggle" aria-expanded="false">+</button>
+            <div class="wiertla-menu__mobile-dropdown" hidden>
+              {% for child_link in link.links %}
+                <a href="{{ child_link.url }}" class="wiertla-menu__mobile-dropdown-item">{{ child_link.title }}</a>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileToggle = document.querySelector('.wiertla-menu__mobile-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileToggle && mobileMenu) {
+      mobileToggle.addEventListener('click', function() {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !expanded);
+        mobileMenu.hidden = expanded;
+      });
+    }
+    
+    const dropdownToggles = document.querySelectorAll('.wiertla-menu__mobile-dropdown-toggle');
+    
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function() {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !expanded);
+        this.textContent = expanded ? '+' : '-';
+        this.nextElementSibling.hidden = expanded;
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Wiertla Menu",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone Number",
+      "default": "+48 600 67 37 36"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email Address",
+      "default": "biuro@hmmetal.pl"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wiertla Menu",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.wiertla-logo-container {
+  display: flex;
+  height: 74px;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.wiertla-contact {
+  height: 69px;
+  background-color: white;
+  padding: 20px 10px;
+  margin-top: -1px;
+}
+
+.wiertla-contact__container {
+  max-width: 1420px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 64px;
+}
+
+.wiertla-contact__info {
+  display: flex;
+  gap: 30px;
+}
+
+.wiertla-contact__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wiertla-contact__icon {
+  width: 24px;
+  height: 24px;
+}
+
+.wiertla-contact__links {
+  display: flex;
+  gap: 30px;
+}
+
+.wiertla-contact__link {
+  color: var(--color-cyan-950);
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.wiertla-contact__link:hover {
+  text-decoration: underline;
+}
+{% endstylesheet %} 

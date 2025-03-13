@@ -1,0 +1,77 @@
+{
+  "sections": {
+    "wiertla_logos": {
+      "name": "Zaufani Partnerzy",
+      "settings": {
+        "title": {
+          "label": "Tytuł",
+          "default": "Nasi Zaufani Partnerzy"
+        },
+        "subtitle": {
+          "label": "Podtytuł",
+          "default": "Współpracujemy z najlepszymi markami w branży"
+        }
+      },
+      "brands": {
+        "sandvik": "Sandvik",
+        "seco": "Seco",
+        "walter": "Walter",
+        "kennametal": "Kennametal",
+        "iscar": "Iscar"
+      },
+      "presets": {
+        "name": "Zaufani Partnerzy",
+        "category": "Sekcje Niestandardowe"
+      }
+    },
+    "wiertla_categories": {
+      "name": "Kategorie Sklepu",
+      "settings": {
+        "title": {
+          "label": "Tytuł",
+          "default": "Kategorie Produktów"
+        },
+        "subtitle": {
+          "label": "Podtytuł",
+          "default": "Przeglądaj naszą szeroką ofertę narzędzi i akcesoriów CNC"
+        },
+        "view_all_link": {
+          "label": "Link do Wszystkich"
+        }
+      },
+      "blocks": {
+        "category": {
+          "name": "Kategoria",
+          "settings": {
+            "name": {
+              "label": "Nazwa Kategorii",
+              "info": "Nazwa kategorii"
+            },
+            "icon": {
+              "label": "Ikona Kategorii",
+              "info": "Użyj emoji lub ikony tekstowej"
+            },
+            "link": {
+              "label": "Link Kategorii"
+            },
+            "count": {
+              "label": "Liczba Produktów"
+            }
+          }
+        }
+      },
+      "categories": {
+        "drill_bits": "Wiertła",
+        "end_mills": "Frezy",
+        "lathe_tools": "Narzędzia Tokarskie",
+        "tool_holders": "Uchwyty Narzędziowe"
+      },
+      "products": "produktów",
+      "view_all": "Zobacz Wszystkie Kategorie",
+      "presets": {
+        "name": "Kategorie Sklepu",
+        "category": "Sekcje Niestandardowe"
+      }
+    }
+  }
+}

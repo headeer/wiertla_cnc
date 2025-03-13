@@ -1,0 +1,107 @@
+{% comment %}
+  Wiertla SEO Text Component
+  A component to display SEO-friendly text content for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+<div class="wiertla-section wiertla-seo-text">
+  <div class="wiertla-container">
+    {% if section.settings.title != blank %}
+      <h2 class="wiertla-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    
+    <div class="wiertla-seo-text__content">
+      {% if section.settings.text != blank %}
+        {{ section.settings.text }}
+      {% endif %}
+      
+      {% if section.settings.show_read_more and section.settings.expanded_text != blank %}
+        <div class="wiertla-seo-text__expandable" id="seo-text-expandable-{{ section.id }}" aria-hidden="true" hidden>
+          {{ section.settings.expanded_text }}
+        </div>
+        
+        <button 
+          class="wiertla-seo-text__toggle" 
+          aria-expanded="false" 
+          aria-controls="seo-text-expandable-{{ section.id }}"
+          data-show-text="{{ section.settings.read_more_text }}"
+          data-hide-text="{{ section.settings.read_less_text }}"
+        >
+          {{ section.settings.read_more_text }}
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% if section.settings.show_read_more and section.settings.expanded_text != blank %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleButton = document.querySelector('.wiertla-seo-text__toggle');
+      const expandableContent = document.getElementById('seo-text-expandable-{{ section.id }}');
+      
+      if (toggleButton && expandableContent) {
+        toggleButton.addEventListener('click', function() {
+          const expanded = this.getAttribute('aria-expanded') === 'true';
+          this.setAttribute('aria-expanded', !expanded);
+          expandableContent.hidden = expanded;
+          expandableContent.setAttribute('aria-hidden', expanded);
+          
+          this.textContent = expanded 
+            ? this.getAttribute('data-show-text') 
+            : this.getAttribute('data-hide-text');
+        });
+      }
+    });
+  </script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Wiertla SEO Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "About Wiertla CNC Tools"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text Content",
+      "default": "<p>Wiertla CNC specializes in high-quality CNC tools and accessories for professional machinists and hobbyists alike. Our extensive range of products includes drill bits, end mills, lathe tools, and more, all designed to deliver precision and durability for your machining projects.</p><p>With years of experience in the industry, we understand the importance of reliable tools that can withstand the demands of modern CNC machining. That's why we source our products from trusted manufacturers and subject them to rigorous quality control measures.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_read_more",
+      "label": "Show Read More Button",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "expanded_text",
+      "label": "Expanded Text Content",
+      "info": "This content will be hidden initially and shown when the Read More button is clicked",
+      "default": "<p>Our commitment to customer satisfaction extends beyond just providing quality tools. We offer expert advice, competitive pricing, and fast shipping to ensure you have what you need, when you need it.</p><p>Whether you're a professional machine shop, a small business, or a DIY enthusiast, Wiertla CNC has the tools and expertise to help you achieve the best results in your CNC projects. Browse our catalog today and discover why machinists across the country trust Wiertla CNC for their tooling needs.</p>"
+    },
+    {
+      "type": "text",
+      "id": "read_more_text",
+      "label": "Read More Text",
+      "default": "Read More"
+    },
+    {
+      "type": "text",
+      "id": "read_less_text",
+      "label": "Read Less Text",
+      "default": "Read Less"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wiertla SEO Text",
+      "category": "Custom Components"
+    }
+  ]
+}
+{% endschema %} 

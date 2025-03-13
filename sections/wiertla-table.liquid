@@ -1,0 +1,337 @@
+{% comment %}
+  Wiertla Table Component
+  A responsive table component for displaying product data for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+<div class="wiertla-section wiertla-table">
+  <div class="wiertla-container">
+    {% if section.settings.title != blank %}
+      <h2 class="wiertla-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    
+    {% if section.settings.subtitle != blank %}
+      <div class="wiertla-table__subtitle">{{ section.settings.subtitle }}</div>
+    {% endif %}
+    
+    <div class="wiertla-table__wrapper">
+      <table class="wiertla-table__container">
+        <thead class="wiertla-table__header">
+          <tr>
+            {% for block in section.blocks %}
+              {% if block.type == 'column' %}
+                <th class="wiertla-table__header-cell" {{ block.shopify_attributes }}>
+                  {{ block.settings.column_title }}
+                  
+                  {% if block.settings.show_sort %}
+                    <button class="wiertla-table__sort-button" data-column="{{ block.settings.column_id }}">
+                      <span class="wiertla-table__sort-icon">↕</span>
+                    </button>
+                  {% endif %}
+                </th>
+              {% endif %}
+            {% endfor %}
+            
+            {% if section.settings.show_actions %}
+              <th class="wiertla-table__header-cell wiertla-table__header-actions">
+                {{ section.settings.actions_column_title }}
+              </th>
+            {% endif %}
+          </tr>
+        </thead>
+        
+        <tbody class="wiertla-table__body">
+          {% for i in (1..section.settings.sample_rows) %}
+            <tr class="wiertla-table__row">
+              {% for block in section.blocks %}
+                {% if block.type == 'column' %}
+                  <td class="wiertla-table__cell" data-label="{{ block.settings.column_title }}" {{ block.shopify_attributes }}>
+                    {% case block.settings.sample_data_type %}
+                      {% when 'text' %}
+                        {{ block.settings.sample_text }}
+                      {% when 'number' %}
+                        {{ block.settings.sample_number }}
+                      {% when 'price' %}
+                        {{ block.settings.sample_price | money }}
+                      {% when 'image' %}
+                        {% if block.settings.sample_image != blank %}
+                          <img 
+                            src="{{ block.settings.sample_image | img_url: '100x100' }}" 
+                            alt="{{ block.settings.column_title }}"
+                            loading="lazy"
+                            class="wiertla-table__image"
+                          >
+                        {% else %}
+                          <div class="wiertla-table__image-placeholder"></div>
+                        {% endif %}
+                    {% endcase %}
+                  </td>
+                {% endif %}
+              {% endfor %}
+              
+              {% if section.settings.show_actions %}
+                <td class="wiertla-table__cell wiertla-table__cell-actions" data-label="{{ section.settings.actions_column_title }}">
+                  <div class="wiertla-table__actions">
+                    {% if section.settings.show_view %}
+                      <a href="#" class="wiertla-table__action-button wiertla-table__view-button">
+                        {{ section.settings.view_button_text }}
+                      </a>
+                    {% endif %}
+                    
+                    {% if section.settings.show_add_to_cart %}
+                      <button type="button" class="wiertla-table__action-button wiertla-table__add-button">
+                        {{ section.settings.add_button_text }}
+                      </button>
+                    {% endif %}
+                  </div>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+    {% if section.settings.show_pagination %}
+      <div class="wiertla-table__pagination">
+        <a href="#" class="wiertla-table__page-link" aria-label="Previous page">«</a>
+        <a href="#" class="wiertla-table__page-link active">1</a>
+        <a href="#" class="wiertla-table__page-link">2</a>
+        <a href="#" class="wiertla-table__page-link">3</a>
+        <span class="wiertla-table__page-ellipsis">...</span>
+        <a href="#" class="wiertla-table__page-link">10</a>
+        <a href="#" class="wiertla-table__page-link" aria-label="Next page">»</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sortButtons = document.querySelectorAll('.wiertla-table__sort-button');
+    
+    sortButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        const column = this.getAttribute('data-column');
+        const table = this.closest('.wiertla-table__container');
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        const headerCell = this.closest('th');
+        const isAscending = headerCell.classList.contains('sort-asc');
+        
+        // Remove sort classes from all headers
+        table.querySelectorAll('th').forEach(th => {
+          th.classList.remove('sort-asc', 'sort-desc');
+        });
+        
+        // Add sort class to current header
+        headerCell.classList.add(isAscending ? 'sort-desc' : 'sort-asc');
+        
+        // Sort the rows
+        rows.sort(function(rowA, rowB) {
+          const cellA = rowA.querySelector(`td[data-label="${headerCell.textContent.trim()}"]`);
+          const cellB = rowB.querySelector(`td[data-label="${headerCell.textContent.trim()}"]`);
+          
+          if (!cellA || !cellB) return 0;
+          
+          const valueA = cellA.textContent.trim();
+          const valueB = cellB.textContent.trim();
+          
+          if (isAscending) {
+            return valueA.localeCompare(valueB, undefined, { numeric: true });
+          } else {
+            return valueB.localeCompare(valueA, undefined, { numeric: true });
+          }
+        });
+        
+        // Reorder the rows
+        const tbody = table.querySelector('tbody');
+        rows.forEach(function(row) {
+          tbody.appendChild(row);
+        });
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Wiertla Table",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Product Specifications"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Compare our products and find the perfect match for your needs"
+    },
+    {
+      "type": "range",
+      "id": "sample_rows",
+      "label": "Sample Rows",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_actions",
+      "label": "Show Actions Column",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "actions_column_title",
+      "label": "Actions Column Title",
+      "default": "Actions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view",
+      "label": "Show View Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_button_text",
+      "label": "View Button Text",
+      "default": "View"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_to_cart",
+      "label": "Show Add to Cart Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "add_button_text",
+      "label": "Add to Cart Button Text",
+      "default": "Add"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show Pagination",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Table Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "column_title",
+          "label": "Column Title",
+          "default": "Product Name"
+        },
+        {
+          "type": "text",
+          "id": "column_id",
+          "label": "Column ID",
+          "default": "product_name",
+          "info": "Used for sorting and filtering"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sort",
+          "label": "Enable Sorting",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "sample_data_type",
+          "label": "Sample Data Type",
+          "options": [
+            {
+              "value": "text",
+              "label": "Text"
+            },
+            {
+              "value": "number",
+              "label": "Number"
+            },
+            {
+              "value": "price",
+              "label": "Price"
+            },
+            {
+              "value": "image",
+              "label": "Image"
+            }
+          ],
+          "default": "text"
+        },
+        {
+          "type": "text",
+          "id": "sample_text",
+          "label": "Sample Text",
+          "default": "Sample Product",
+          "info": "Used if Sample Data Type is set to 'Text'"
+        },
+        {
+          "type": "number",
+          "id": "sample_number",
+          "label": "Sample Number",
+          "default": 42,
+          "info": "Used if Sample Data Type is set to 'Number'"
+        },
+        {
+          "type": "number",
+          "id": "sample_price",
+          "label": "Sample Price",
+          "default": 1999,
+          "info": "Used if Sample Data Type is set to 'Price'"
+        },
+        {
+          "type": "image_picker",
+          "id": "sample_image",
+          "label": "Sample Image",
+          "info": "Used if Sample Data Type is set to 'Image'"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wiertla Table",
+      "category": "Custom Components",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "column_title": "Product",
+            "column_id": "product",
+            "sample_data_type": "text",
+            "sample_text": "CNC Drill Bit"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "column_title": "Diameter",
+            "column_id": "diameter",
+            "sample_data_type": "number",
+            "sample_number": 10
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "column_title": "Price",
+            "column_id": "price",
+            "sample_data_type": "price",
+            "sample_price": 29.99
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} 

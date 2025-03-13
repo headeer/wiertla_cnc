@@ -38,7 +38,7 @@
       "login_form_submit": "Betreten",
       "signup_form_email_label": "E-Mail",
       "signup_form_success": "Wir senden dir eine E-Mail, kurz bevor wir eröffnen!",
-      "admin_link_html": "Bist du der Shop-Inhaber? <a href=\"\/admin\" class=\"text-link\">Logge dich hier ein<\/a>",
+      "admin_link_html": "Bist du der Shop-Inhaber? <a href=\"/admin\" class=\"text-link\">Logge dich hier ein</a>",
       "password_link": "Mit Passwort betreten",
       "powered_by_shopify_html": "Dieser Shop wird von {{ shopify }} angetrieben"
     },
@@ -97,7 +97,7 @@
       "method": "Zahlungsmethoden"
     },
     "country": {
-      "dropdown_label": "Land\/Region"
+      "dropdown_label": "Land/Region"
     },
     "language": {
       "dropdown_label": "Sprache"
@@ -113,7 +113,7 @@
       "pause_slideshow": "Slideshow pausieren",
       "rotate_slideshow": "Diashow abspielen",
       "load_slide": "Folie {{ slide_number }} laden",
-      "navigation_instructions": "Nutze die linken\/rechten Pfeile, um durch die Slideshow zu navigieren, oder wische nach links bzw. rechts, wenn du ein mobiles Gerät verwendest"
+      "navigation_instructions": "Nutze die linken/rechten Pfeile, um durch die Slideshow zu navigieren, oder wische nach links bzw. rechts, wenn du ein mobiles Gerät verwendest"
     },
     "featured_product": {
       "title": "Vorgestelltes Produkt",
@@ -124,7 +124,7 @@
     "map": {
       "address_error": "Kann die Adresse nicht finden",
       "address_no_results": "Keine Ergebnisse für diese Adresse",
-      "address_query_limit_html": "Du hast die Nutzungsgrenze der Google-API überschritten. Du solltest über ein Upgrade auf einen <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Premium-Plan<\/a> nachdenken.",
+      "address_query_limit_html": "Du hast die Nutzungsgrenze der Google-API überschritten. Du solltest über ein Upgrade auf einen <a href=\"https://developers.google.com/maps/premium/usage-limits\">Premium-Plan</a> nachdenken.",
       "auth_error_html": "Es gab ein Problem bei der Authentifizierung deineses Google Maps-Kontos.",
       "section_heading": "Standort"
     },
@@ -136,6 +136,79 @@
     },
     "header": {
       "announcement_bar_label": "Ankündigung"
+    },
+    "wiertla_logos": {
+      "name": "Vertrauenswürdige Partner",
+      "settings": {
+        "title": {
+          "label": "Titel",
+          "default": "Unsere Vertrauenswürdigen Partner"
+        },
+        "subtitle": {
+          "label": "Untertitel",
+          "default": "Wir arbeiten mit den besten Marken der Branche"
+        }
+      },
+      "brands": {
+        "sandvik": "Sandvik",
+        "seco": "Seco",
+        "walter": "Walter",
+        "kennametal": "Kennametal",
+        "iscar": "Iscar"
+      },
+      "presets": {
+        "name": "Vertrauenswürdige Partner",
+        "category": "Benutzerdefinierte Abschnitte"
+      }
+    },
+    "wiertla_categories": {
+      "name": "Shop-Kategorien",
+      "settings": {
+        "title": {
+          "label": "Titel",
+          "default": "Nach Kategorie Einkaufen"
+        },
+        "subtitle": {
+          "label": "Untertitel",
+          "default": "Durchsuchen Sie unsere große Auswahl an CNC-Werkzeugen und Zubehör"
+        },
+        "view_all_link": {
+          "label": "Alle Anzeigen Link"
+        }
+      },
+      "blocks": {
+        "category": {
+          "name": "Kategorie",
+          "settings": {
+            "name": {
+              "label": "Kategoriename",
+              "info": "Name der Kategorie"
+            },
+            "icon": {
+              "label": "Kategoriesymbol",
+              "info": "Verwenden Sie ein Emoji oder Textsymbol"
+            },
+            "link": {
+              "label": "Kategorielink"
+            },
+            "count": {
+              "label": "Produktanzahl"
+            }
+          }
+        }
+      },
+      "categories": {
+        "drill_bits": "Bohrer",
+        "end_mills": "Schaftfräser",
+        "lathe_tools": "Drehwerkzeuge",
+        "tool_holders": "Werkzeughalter"
+      },
+      "products": "Produkte",
+      "view_all": "Alle Kategorien Anzeigen",
+      "presets": {
+        "name": "Shop-Kategorien",
+        "category": "Benutzerdefinierte Abschnitte"
+      }
     }
   },
   "blogs": {
@@ -176,15 +249,15 @@
     "general": {
       "title": "Warenkorb",
       "note": "Einen Hinweis zu Ihrer Bestellung hinzufügen",
-      "removed_item_html": "<span class=\"cart__removed-product-details\">({{ quantity }}) {{ link }}<\/span> aus deinem Warenkorb entfernt.",
+      "removed_item_html": "<span class=\"cart__removed-product-details\">({{ quantity }}) {{ link }}</span> aus deinem Warenkorb entfernt.",
       "remove": "Entfernen",
       "subtotal": "Zwischensumme",
       "new_subtotal": "Neue Zwischensumme",
       "savings": "Du sparst",
       "taxes_and_shipping_at_checkout": "Steuern und Versandkosten werden beim Checkout berechnet",
-      "taxes_and_shipping_policy_at_checkout_html": "zzgl. MwSt. und <a href=\"{{ link }}\">Versandkosten<\/a>",
+      "taxes_and_shipping_policy_at_checkout_html": "zzgl. MwSt. und <a href=\"{{ link }}\">Versandkosten</a>",
       "taxes_included_but_shipping_at_checkout": "inkl. MwSt. und zzgl. Versandkosten",
-      "taxes_included_and_shipping_policy_html": "inkl. MwSt. zzgl. <a href=\"{{ link }}\">Versandkosten<\/a>",
+      "taxes_included_and_shipping_policy_html": "inkl. MwSt. zzgl. <a href=\"{{ link }}\">Versandkosten</a>",
       "update": "Warenkorb aktualisieren",
       "checkout": "Checkout",
       "empty": "Dein Warenkorb ist im Moment leer.",
@@ -282,7 +355,7 @@
       "address1": "Adresse",
       "address2": "Wohnung, Zimmer usw.",
       "city": "Stadt",
-      "country": "Land \/ Region",
+      "country": "Land / Region",
       "province": "Bundesland",
       "zip": "PLZ",
       "phone": "Telefon",
@@ -415,15 +488,15 @@
       "vendor": "Verkäufer",
       "quantity_minimum_message": "Die Menge muss 1 oder mehr sein",
       "include_taxes": "inkl. MwSt.",
-      "shipping_policy_html": "zzgl. <a href=\"{{ link }}\">Versandkosten<\/a>",
+      "shipping_policy_html": "zzgl. <a href=\"{{ link }}\">Versandkosten</a>",
       "unit_price_label": "Einzelpreis",
       "view_cart": "Warenkorb einsehen",
       "availability": "Verfügbarkeit",
       "from_lowest_price_html": "von {{ lowest_price }}",
       "on_sale_from_html": "Im Angebot ab {{ price }}",
-      "add_to_cart_confirm_html": "<a data-after-add-cart-trigger href=\"{{ cart_url }}\">Ansicht Warenkorb<\/a> or <a href=\"{{ link_url }}\">weiter einkaufen<\/a>",
+      "add_to_cart_confirm_html": "<a data-after-add-cart-trigger href=\"{{ cart_url }}\">Ansicht Warenkorb</a> oder <a href=\"{{ link_url }}\">weiter einkaufen</a>",
       "view_in_space": "In deinem Bereich ansehen",
-      "view_in_space_label": "„Ansicht in deinem Raum“ lädt den Artikel im Augmented-Reality-Fenster",
+      "view_in_space_label": "Ansicht in deinem Raum lädt den Artikel im Augmented-Reality-Fenster",
       "read_more": "Weiterlesen"
     }
   },
@@ -449,8 +522,8 @@
       "check_other_stores": "Verfügbarkeit in anderen Shops überprüfen",
       "pick_up_available": "Abholung verfügbar",
       "pick_up_currently_unavailable": "Abholung derzeit nicht verfügbar",
-      "pick_up_available_at_html": "Abholung bei <strong>{{ location_name }}<\/strong> verfügbar",
-      "pick_up_unavailable_at_html": "Abholung bei <strong>{{ location_name }}<\/strong> derzeit nicht verfügbar"
+      "pick_up_available_at_html": "Abholung bei <strong>{{ location_name }}</strong> verfügbar",
+      "pick_up_unavailable_at_html": "Abholung bei <strong>{{ location_name }}</strong> derzeit nicht verfügbar"
     }
   },
   "date_formats": {

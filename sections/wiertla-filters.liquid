@@ -1,0 +1,255 @@
+{% comment %}
+  Wiertla Filters Component
+  A component to filter products for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+<div class="wiertla-section wiertla-filters">
+  <div class="wiertla-container">
+    {% if section.settings.title != blank %}
+      <h2 class="wiertla-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    
+    <form action="{{ section.settings.form_action | default: '/collections/all' }}" method="get" class="wiertla-filters__form">
+      <div class="wiertla-filters__container">
+        {% for block in section.blocks %}
+          <div class="wiertla-filters__group" {{ block.shopify_attributes }}>
+            <label for="filter-{{ block.id }}" class="wiertla-filters__label">
+              {{ block.settings.filter_label }}
+            </label>
+            
+            {% case block.type %}
+              {% when 'select' %}
+                <select id="filter-{{ block.id }}" name="{{ block.settings.filter_name }}" class="wiertla-filters__select">
+                  <option value="">{{ block.settings.placeholder }}</option>
+                  {% assign options = block.settings.options | split: ',' %}
+                  {% for option in options %}
+                    <option value="{{ option | strip | handleize }}">{{ option | strip }}</option>
+                  {% endfor %}
+                </select>
+              
+              {% when 'range' %}
+                <div class="wiertla-filters__range">
+                  <input 
+                    type="number" 
+                    id="filter-{{ block.id }}-min" 
+                    name="{{ block.settings.filter_name }}_min" 
+                    placeholder="{{ block.settings.min_placeholder }}"
+                    min="{{ block.settings.min_value }}"
+                    max="{{ block.settings.max_value }}"
+                    step="{{ block.settings.step }}"
+                    class="wiertla-filters__range-input"
+                  >
+                  <span class="wiertla-filters__range-separator">-</span>
+                  <input 
+                    type="number" 
+                    id="filter-{{ block.id }}-max" 
+                    name="{{ block.settings.filter_name }}_max" 
+                    placeholder="{{ block.settings.max_placeholder }}"
+                    min="{{ block.settings.min_value }}"
+                    max="{{ block.settings.max_value }}"
+                    step="{{ block.settings.step }}"
+                    class="wiertla-filters__range-input"
+                  >
+                </div>
+              
+              {% when 'checkbox_group' %}
+                <div class="wiertla-filters__checkbox-group">
+                  {% assign options = block.settings.options | split: ',' %}
+                  {% for option in options %}
+                    {% assign option_stripped = option | strip %}
+                    {% assign option_id = option_stripped | handleize %}
+                    <div class="wiertla-filters__checkbox-item">
+                      <input 
+                        type="checkbox" 
+                        id="filter-{{ block.id }}-{{ option_id }}" 
+                        name="{{ block.settings.filter_name }}[]" 
+                        value="{{ option_id }}"
+                        class="wiertla-filters__checkbox"
+                      >
+                      <label for="filter-{{ block.id }}-{{ option_id }}" class="wiertla-filters__checkbox-label">
+                        {{ option_stripped }}
+                      </label>
+                    </div>
+                  {% endfor %}
+                </div>
+            {% endcase %}
+          </div>
+        {% endfor %}
+      </div>
+      
+      <div class="wiertla-filters__actions">
+        <button type="submit" class="wiertla-filters__button">
+          {{ section.settings.button_label }}
+        </button>
+        
+        {% if section.settings.show_reset %}
+          <button type="reset" class="wiertla-filters__reset">
+            {{ section.settings.reset_label }}
+          </button>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wiertla Filters",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Filter Products"
+    },
+    {
+      "type": "url",
+      "id": "form_action",
+      "label": "Form Action URL",
+      "info": "Where the filter form should submit to. Default is /collections/all"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Filter Button Label",
+      "default": "Apply Filters"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reset",
+      "label": "Show Reset Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "reset_label",
+      "label": "Reset Button Label",
+      "default": "Reset"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Dropdown Filter",
+      "settings": [
+        {
+          "type": "text",
+          "id": "filter_label",
+          "label": "Filter Label",
+          "default": "Category"
+        },
+        {
+          "type": "text",
+          "id": "filter_name",
+          "label": "Filter Parameter Name",
+          "default": "category",
+          "info": "This will be used as the URL parameter name"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder Text",
+          "default": "Select a category"
+        },
+        {
+          "type": "text",
+          "id": "options",
+          "label": "Options (comma-separated)",
+          "default": "Drill Bits, End Mills, Lathe Tools, Tool Holders"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "name": "Range Filter",
+      "settings": [
+        {
+          "type": "text",
+          "id": "filter_label",
+          "label": "Filter Label",
+          "default": "Price Range"
+        },
+        {
+          "type": "text",
+          "id": "filter_name",
+          "label": "Filter Parameter Name",
+          "default": "price",
+          "info": "This will be used as the URL parameter name"
+        },
+        {
+          "type": "text",
+          "id": "min_placeholder",
+          "label": "Minimum Value Placeholder",
+          "default": "Min"
+        },
+        {
+          "type": "text",
+          "id": "max_placeholder",
+          "label": "Maximum Value Placeholder",
+          "default": "Max"
+        },
+        {
+          "type": "number",
+          "id": "min_value",
+          "label": "Minimum Possible Value",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "max_value",
+          "label": "Maximum Possible Value",
+          "default": 1000
+        },
+        {
+          "type": "number",
+          "id": "step",
+          "label": "Step Size",
+          "default": 1
+        }
+      ]
+    },
+    {
+      "type": "checkbox_group",
+      "name": "Checkbox Group Filter",
+      "settings": [
+        {
+          "type": "text",
+          "id": "filter_label",
+          "label": "Filter Label",
+          "default": "Material"
+        },
+        {
+          "type": "text",
+          "id": "filter_name",
+          "label": "Filter Parameter Name",
+          "default": "material",
+          "info": "This will be used as the URL parameter name"
+        },
+        {
+          "type": "text",
+          "id": "options",
+          "label": "Options (comma-separated)",
+          "default": "Steel, Carbide, HSS, Titanium"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wiertla Filters",
+      "category": "Custom Components",
+      "blocks": [
+        {
+          "type": "select"
+        },
+        {
+          "type": "range"
+        },
+        {
+          "type": "checkbox_group"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} 

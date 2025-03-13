@@ -1,0 +1,81 @@
+{% comment %}
+  Wiertla Banner Component
+  A banner with image and overlay text for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+{% assign section_id = section.id %}
+
+<div class="wiertla-banner">
+  <div class="wiertla-banner__text font-league-spartan">
+    NOWE • UŻYWANE • POTESTOWE
+  </div>
+  <div class="wiertla-banner__title font-league-spartan">
+    Markowe wiertła CNC w super cenie
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wiertla Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "NOWE • UŻYWANE • POTESTOWE"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Markowe wiertła CNC w super cenie"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wiertla Banner",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.wiertla-banner {
+  max-width: 1420px;
+  margin: 0 auto;
+}
+
+.wiertla-banner__text {
+  font-size: 18px;
+  line-height: 17px;
+  letter-spacing: 0.96px;
+  padding-top: 56px;
+}
+
+.wiertla-banner__title {
+  font-family: "League Spartan";
+  font-size: 144px;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  padding-top: 30px;
+}
+
+@media (max-width: 1024px) {
+  .wiertla-banner__title {
+    font-size: 72px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wiertla-banner__title {
+    font-size: 48px;
+  }
+  
+  .wiertla-banner {
+    padding: 0 32px;
+  }
+}
+{% endstylesheet %} 

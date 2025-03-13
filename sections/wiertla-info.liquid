@@ -1,0 +1,212 @@
+{% comment %}
+  Wiertla Info Component
+  A component to display information blocks for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+<div class="wiertla-section wiertla-info">
+  <div class="wiertla-container">
+    {% if section.settings.title != blank %}
+      <h2 class="wiertla-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    
+    {% if section.settings.subtitle != blank %}
+      <div class="wiertla-info__subtitle">{{ section.settings.subtitle }}</div>
+    {% endif %}
+    
+    <div class="wiertla-info__grid">
+      {% for block in section.blocks %}
+        <div class="wiertla-info__item" {{ block.shopify_attributes }}>
+          {% if block.settings.icon_type == 'image' and block.settings.icon_image != blank %}
+            <div class="wiertla-info__icon-container">
+              <img 
+                src="{{ block.settings.icon_image | img_url: '100x100' }}" 
+                alt="{{ block.settings.title }}"
+                loading="lazy"
+                class="wiertla-info__icon-image"
+              >
+            </div>
+          {% elsif block.settings.icon_type == 'svg' and block.settings.icon_svg != blank %}
+            <div class="wiertla-info__icon">
+              {{ block.settings.icon_svg }}
+            </div>
+          {% else %}
+            <div class="wiertla-info__icon">
+              <span class="wiertla-info__icon-placeholder">
+                {% case block.settings.icon_placeholder %}
+                  {% when 'shipping' %}
+                    🚚
+                  {% when 'support' %}
+                    🛠️
+                  {% when 'returns' %}
+                    ↩️
+                  {% when 'warranty' %}
+                    🛡️
+                  {% when 'quality' %}
+                    ✓
+                  {% else %}
+                    ℹ️
+                {% endcase %}
+              </span>
+            </div>
+          {% endif %}
+          
+          <h3 class="wiertla-info__title">{{ block.settings.title }}</h3>
+          
+          <div class="wiertla-info__text">
+            {{ block.settings.text }}
+          </div>
+          
+          {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+            <a href="{{ block.settings.button_link }}" class="wiertla-info__button">
+              {{ block.settings.button_label }}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wiertla Info",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Why Choose Us"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Discover the benefits of shopping with Wiertla CNC"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "info_block",
+      "name": "Info Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Fast Shipping"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>We deliver your orders quickly and reliably to ensure you get your tools when you need them.</p>"
+        },
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon Type",
+          "options": [
+            {
+              "value": "image",
+              "label": "Image"
+            },
+            {
+              "value": "svg",
+              "label": "SVG Code"
+            },
+            {
+              "value": "placeholder",
+              "label": "Placeholder Icon"
+            }
+          ],
+          "default": "placeholder"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon Image",
+          "info": "Used if Icon Type is set to 'Image'"
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "SVG Icon Code",
+          "info": "Used if Icon Type is set to 'SVG'"
+        },
+        {
+          "type": "select",
+          "id": "icon_placeholder",
+          "label": "Placeholder Icon",
+          "info": "Used if Icon Type is set to 'Placeholder'",
+          "options": [
+            {
+              "value": "shipping",
+              "label": "Shipping"
+            },
+            {
+              "value": "support",
+              "label": "Support"
+            },
+            {
+              "value": "returns",
+              "label": "Returns"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty"
+            },
+            {
+              "value": "quality",
+              "label": "Quality"
+            },
+            {
+              "value": "info",
+              "label": "Information"
+            }
+          ],
+          "default": "shipping"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wiertla Info",
+      "category": "Custom Components",
+      "blocks": [
+        {
+          "type": "info_block",
+          "settings": {
+            "title": "Fast Shipping",
+            "icon_placeholder": "shipping"
+          }
+        },
+        {
+          "type": "info_block",
+          "settings": {
+            "title": "Expert Support",
+            "icon_placeholder": "support"
+          }
+        },
+        {
+          "type": "info_block",
+          "settings": {
+            "title": "Easy Returns",
+            "icon_placeholder": "returns"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} 

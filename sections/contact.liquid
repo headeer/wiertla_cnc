@@ -1,0 +1,147 @@
+{% schema %}
+{
+  "name": "Contact",
+  "settings": [
+    {
+      "type": "text",
+      "id": "contact_title",
+      "label": "Contact Title",
+      "default": "KONTAKT"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone Number",
+      "default": "+48 600 67 37 36"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email Address",
+      "default": "biuro@hmmetal.pl"
+    },
+    {
+      "type": "text",
+      "id": "address_title",
+      "label": "Address Title",
+      "default": "ADRES"
+    },
+    {
+      "type": "text",
+      "id": "street_address",
+      "label": "Street Address",
+      "default": "ul. Przemysłowa 21"
+    },
+    {
+      "type": "text",
+      "id": "postal_code",
+      "label": "Postal Code",
+      "default": "00-001"
+    },
+    {
+      "type": "text",
+      "id": "city",
+      "label": "City",
+      "default": "Warszawa"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="contact-section">
+  <div class="contact-container">
+    <div class="contact-info">
+      <h2 class="contact-title">{{ section.settings.contact_title }}</h2>
+      <div class="contact-details">
+        <a href="tel:{{ section.settings.phone }}" class="contact-link">{{ section.settings.phone }}</a>
+        <a href="mailto:{{ section.settings.email }}" class="contact-link">{{ section.settings.email }}</a>
+      </div>
+    </div>
+    <div class="address-info">
+      <h2 class="address-title">{{ section.settings.address_title }}</h2>
+      <div class="address-details">
+        <p>{{ section.settings.street_address }}</p>
+        <p>{{ section.settings.postal_code }} {{ section.settings.city }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.contact-section {
+  padding: 60px 0;
+  background-color: #F5F5F8;
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.contact-info,
+.address-info {
+  flex: 1;
+}
+
+.contact-title,
+.address-title {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #112832;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.contact-details,
+.address-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-link {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  color: #112832;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+  color: #FFD600;
+}
+
+.address-details p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  color: #112832;
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .contact-title,
+  .address-title {
+    font-size: 20px;
+  }
+  
+  .contact-link,
+  .address-details p {
+    font-size: 16px;
+  }
+}
+</style> 

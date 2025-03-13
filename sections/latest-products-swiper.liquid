@@ -1,0 +1,166 @@
+{% comment %}
+  Latest Products Swiper Section
+  Displays latest products in a swiper carousel
+{% endcomment %}
+
+<!-- Latest Products Section -->
+<div class="max-w-[1440px] flex justify-start flex-col w-full pl-3">
+  <div class="font-league-spartan self-stretch pt-[60px] text-lg font-bold uppercase leading-[17px] tracking-[0.96px] text-black">
+    {{ section.settings.title }}
+  </div>
+  <div class="self-stretch pt-2.5 mb-10">
+    {{ section.settings.subtitle }}
+  </div>
+</div>
+
+<!-- Swiper Section -->
+<div class="swiper-container max-w-full 2xl:max-w-[1440px] overflow-hidden mx-auto">
+  <div class="swiper-wrapper" id="swiper-wrapper">
+    {% for product in collections[section.settings.collection].products limit: section.settings.products_limit %}
+      <div class="swiper-slide">
+        <div class="product-card">
+          <img src="{{ product.featured_image | img_url: '300x300', crop: 'center' }}" alt="{{ product.title }}" class="product-image">
+          <h3 class="product-title font-league-spartan text-lg font-bold uppercase leading-[17px] tracking-[0.96px]">{{ product.title }}</h3>
+          <p class="product-price font-montserrat text-base text-cyan-950">{{ product.price | money }}</p>
+          {% if product.available %}
+            <button class="add-to-cart-button flex items-center justify-center gap-x-[22px] rounded-[40px] border-2 border-solid border-cyan-950 bg-yellow-300 py-[8.5px] pl-5 pr-[15px]">
+              <span class="font-league-spartan text-left text-lg font-bold uppercase leading-[17px] tracking-[0.96px]">Dodaj do koszyka</span>
+              <img src="{{ 'cart-icon.svg' | asset_url }}" class="h-7 w-7 flex-shrink-0" alt="Cart">
+            </button>
+          {% else %}
+            <button class="out-of-stock-button flex items-center justify-center gap-x-[22px] rounded-[40px] border-2 border-solid border-gray-200 bg-gray-100 py-[8.5px] pl-5 pr-[15px]" disabled>
+              <span class="font-league-spartan text-left text-lg font-bold uppercase leading-[17px] tracking-[0.96px] text-gray-500">Niedostępny</span>
+            </button>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Swiper Navigation -->
+<div class="flex relative mt-8 flex-wrap items-center max-w-[540px] mx-auto justify-center gap-x-5 gap-y-px self-stretch pt-7 min-[1910px]:flex-nowrap">
+  <object data="{{ 'Arrow_back_ios_24dp_5F6368_FILL0_wght400_GRAD0_opsz.svg' | asset_url }}" class="swiper-button-prev !h-auto !top-[38px] !-left-16 absolute flex-shrink-0 cursor-pointer"></object>
+  <div class="flex items-center justify-center gap-8">
+    <div class="pagination-bar w-36 flex-shrink-0 pagination-active mr-2"></div>
+    <div class="flex w-32 flex-shrink-0 flex-col items-end">
+      <div class="pagination-bar w-[152px] flex-shrink-0 pagination-inactive"></div>
+    </div>
+    <div class="flex w-32 flex-shrink-0 flex-col items-end">
+      <div class="ml-2.5 pagination-bar w-36 flex-shrink-0 pagination-inactive"></div>
+    </div>
+  </div>
+  <object data="{{ 'Arrow_forward_ios_24dp_5F6368_FILL0_wght400_GRAD0_opsz.svg' | asset_url }}" class="swiper-button-next !h-auto !top-[38px] !-right-16 w-[22px] flex-shrink-0 cursor-pointer"></object>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  new Swiper('.swiper-container', {
+    slidesPerView: 3,
+    spaceBetween: 30,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 20
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 30
+      },
+      1024: {
+        slidesPerView: 3,
+        spaceBetween: 30
+      }
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Latest Products Swiper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Najnowsze w naszej ofercie"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "Stale poszerzamy stan magazynowy, aktualizując ofertę o nowe modele wierteł CNC"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection to Display"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 9,
+      "label": "Number of Products to Show"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Latest Products Swiper",
+      "category": "Product Listings"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.product-card {
+  @apply border-2 border-solid border-zinc-200 rounded-lg p-5 text-center bg-white;
+}
+
+.product-image {
+  @apply w-full h-auto mb-4 object-cover object-center;
+}
+
+.pagination-bar {
+  @apply h-1 rounded-sm;
+}
+
+.pagination-active {
+  @apply bg-cyan-950;
+}
+
+.pagination-inactive {
+  @apply bg-gray-200 opacity-50;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  @apply transition-opacity duration-300;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  @apply opacity-80;
+}
+.swiper-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.swiper-button-disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+{% endstylesheet %} 

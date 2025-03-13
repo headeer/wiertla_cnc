@@ -1,0 +1,120 @@
+{% schema %}
+{
+  "name": "Drill Categories",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title",
+          "default": "Wiertła Koronkowe"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Category Description",
+          "default": "<p>Wiertła koronkowe są nieocenione w pracach, które wymagają wiercenia dużych otworów.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Drill Categories",
+      "blocks": [
+        {
+          "type": "category"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div class="drill-categories">
+  <div class="drill-categories__container">
+    {% for block in section.blocks %}
+      {% if block.type == 'category' %}
+        <div class="drill-category" {{ block.shopify_attributes }}>
+          <h3 class="drill-category__title">{{ block.settings.title }}</h3>
+          <div class="drill-category__description">
+            {{ block.settings.description }}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.drill-categories {
+  padding: 80px 0;
+  background-color: #FFFFFF;
+}
+
+.drill-categories__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+}
+
+.drill-category {
+  background: #F5F5F8;
+  border-radius: 8px;
+  padding: 30px;
+  transition: transform 0.3s ease;
+}
+
+.drill-category:hover {
+  transform: translateY(-5px);
+}
+
+.drill-category__title {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #112832;
+  margin-bottom: 20px;
+}
+
+.drill-category__description {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #112832;
+}
+
+.drill-category__description p {
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .drill-categories {
+    padding: 40px 0;
+  }
+
+  .drill-categories__container {
+    grid-template-columns: 1fr;
+  }
+
+  .drill-category {
+    padding: 20px;
+  }
+
+  .drill-category__title {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .drill-category__description {
+    font-size: 14px;
+  }
+}
+</style> 

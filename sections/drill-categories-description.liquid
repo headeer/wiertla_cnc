@@ -1,0 +1,78 @@
+{% comment %}
+  Drill Categories Description Section
+  Displays detailed descriptions of different CNC drill categories
+{% endcomment %}
+
+<div class="max-w-[1440px] mx-auto px-4 py-16">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for block in section.blocks %}
+      {% if block.type == 'category' %}
+        <div class="category-card bg-white border-2 border-solid border-zinc-200 rounded-lg p-6">
+          <h3 class="font-league-spartan text-lg font-bold uppercase leading-[17px] tracking-[0.96px] mb-4">
+            {{ block.settings.title }}
+          </h3>
+          <div class="font-montserrat text-base leading-relaxed text-gray-700">
+            {{ block.settings.description }}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Drill Categories",
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Drill Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title",
+          "default": "Wiertła Koronkowe"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Category Description",
+          "default": "Wiertła koronkowe są nieocenione w pracach, które wymagają wiercenia dużych otworów..."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Drill Categories Description",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Wiertła Koronkowe",
+            "description": "Wiertła koronkowe są nieocenione w pracach, które wymagają wiercenia dużych otworów. Nasza oferta obejmuje wiertła koronkowe o różnej średnicy, które świetnie sprawdzają się zarówno w metalu, jak i betonie. Ich zaawansowana konstrukcja zapewnia szybkie i efektywne wiercenie z minimalnym uszkodzeniem obrabianego materiału. Idealne do zastosowań budowlanych i przemysłowych, wiertła koronkowe są niezawodnym wyborem dla profesjonalistów."
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "SanDavik 880",
+            "description": "Wiertła Sandvik 880 to synonim jakości i niezawodności. Zaprojektowane z myślą o najwyższej wydajności, wiertła te są doskonałe do wiercenia w najtwardszych materiałach. Ich zaawansowana geometria i powłoki ochronne zapewniają długą żywotność i stabilność pracy. Idealne do zastosowań przemysłowych, wiertła Sandvik 880 są świadomym wyborem profesjonalistów na całym świecie."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.category-card {
+  @apply transition-shadow duration-300;
+}
+
+.category-card:hover {
+  @apply shadow-lg;
+}
+{% endstylesheet %} 

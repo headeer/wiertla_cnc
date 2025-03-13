@@ -1,0 +1,127 @@
+{% comment %}
+  Rental Promotion Section
+  Displays information about CNC drill rental services
+{% endcomment %}
+
+<div class="flex items-start justify-center self-stretch pt-[68px]">
+  <div class="flex flex-col items-center pt-0.5">
+    <div class="h-36 w-[539px] flex-shrink-0 border-b-2 border-solid border-zinc-200"></div>
+  </div>
+  <div class="flex flex-col items-center">
+    <div class="mr-px flex flex-col items-center justify-center gap-y-2 border-2 border-solid border-zinc-200 bg-white py-10 text-center">
+      <div class="font-league-spartan self-stretch text-lg font-bold uppercase leading-[17px] tracking-[0.96px]">
+        {{ section.settings.title_line_1 }}
+      </div>
+      <div class="font-league-spartan self-stretch text-lg font-bold uppercase leading-[17px] tracking-[0.96px]">
+        {{ section.settings.title_line_2 }}
+      </div>
+      <div class="flex items-end justify-center gap-x-3 pt-[11px]">
+        {% for block in section.blocks %}
+          {% if block.type == 'rental_icon' %}
+            <div class="flex flex-col items-center text-center">
+              <object data="{{ block.settings.icon | asset_url }}" class="h-[34px] w-7 flex-shrink-0"></object>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="flex flex-col justify-center self-stretch pt-[11px] [max-width:842px] px-40">
+        <div class="text-center">
+          {{ section.settings.description }}
+        </div>
+      </div>
+      <div class="flex items-end justify-center pt-3">
+        <a href="{{ section.settings.button_link }}" class="flex items-center justify-center gap-x-[22px] rounded-[40px] border-2 border-solid border-cyan-950 bg-yellow-300 py-[8.5px] pl-5 pr-[15px] text-center hover:opacity-90 transition-opacity duration-300">
+          <div class="font-league-spartan text-left text-lg font-bold uppercase leading-[17px] tracking-[0.96px]">
+            {{ section.settings.button_text }}
+          </div>
+          <object data="{{ 'Refresh_24dp_5F6368_FILL0_wght400_GRAD0_opsz.svg' | asset_url }}" class="h-7 w-7 flex-shrink-0"></object>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col items-center pt-0.5">
+    <div class="mr-px h-36 w-[539px] flex-shrink-0 border-b-2 border-solid border-zinc-200"></div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Rental Promotion",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_line_1",
+      "label": "Title Line 1",
+      "default": "Wypożyczaj wiertła CNC"
+    },
+    {
+      "type": "text",
+      "id": "title_line_2",
+      "label": "Title Line 2",
+      "default": "na korzystnych warunkach"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Stale zwiększając jakość i komfort korzystania z naszej oferty, udostępniamy możliwość wypożyczenia wierteł CNC.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Dowiedz się więcej"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "rental_icon",
+      "name": "Rental Icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rental Promotion",
+      "category": "Promotional"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.rental-promotion {
+  @apply bg-white border-2 border-solid border-zinc-200 rounded-lg;
+}
+
+.rental-promotion__button {
+  @apply transition-opacity duration-300;
+}
+
+.rental-promotion__button:hover {
+  @apply opacity-90;
+}
+
+@media (max-width: 1024px) {
+  .rental-promotion {
+    @apply px-4;
+  }
+}
+
+@media (max-width: 768px) {
+  .rental-promotion {
+    @apply px-2;
+  }
+}
+{% endstylesheet %} 

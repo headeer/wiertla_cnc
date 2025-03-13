@@ -46,6 +46,227 @@
   --color-scheme-accent--overlay: var(--color-{{ section.settings.color_scheme }}-accent--overlay);
   --color-scheme-accent-placeholder: var(--color-{{ section.settings.color_scheme }}-text-placeholder);
 }
+
+/* Footer Styles */
+.footer__top {
+  background-color: #112832;
+  color: #F3F4F6;
+  padding: 60px 64px;
+}
+
+.footer__container {
+  max-width: 1420px;
+  margin: 0 auto;
+}
+
+.footer__content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+  justify-content: center;
+}
+
+.footer__info {
+  flex: 1;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer__title {
+  font-family: "League Spartan";
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 17px;
+  letter-spacing: 0.96px;
+}
+
+.footer__description {
+  font-family: "Montserrat";
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.footer__contact-title {
+  font-family: "League Spartan";
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 24px;
+  letter-spacing: 0.96px;
+  text-decoration: underline;
+}
+
+.footer__contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer__icon {
+  width: 26px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.footer__link {
+  color: #F3F4F6;
+  text-decoration: underline;
+}
+
+.footer__address {
+  flex: 0 0 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer__address-title {
+  font-family: "League Spartan";
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 24px;
+  letter-spacing: 0.96px;
+}
+
+.footer__address-content {
+  font-family: "Montserrat";
+  font-size: 16px;
+  line-height: 22px;
+}
+
+/* Footer Bottom */
+.footer__bottom {
+  background-color: #FCD34D;
+  padding: 20px 30px;
+  position: relative;
+}
+
+.footer__bottom-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.footer__copyright {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer__brand {
+  font-family: "League Spartan";
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 24px;
+  letter-spacing: 0.96px;
+}
+
+.footer__year {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.16px;
+  font-weight: 700;
+}
+
+.footer__credits {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer__design-by {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.16px;
+  font-weight: 700;
+}
+
+.footer__designer {
+  font-family: "League Spartan";
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 24px;
+  letter-spacing: 0.96px;
+}
+
+.footer__scroll-top {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  background-color: #FCD34D;
+  border: 2px solid #112832;
+  border-radius: 40px;
+  padding: 8.5px 15px 8.5px 20px;
+  cursor: pointer;
+}
+
+.footer__scroll-top span {
+  font-family: "League Spartan";
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 17px;
+  letter-spacing: 0.96px;
+}
+
+.footer__scroll-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1024px) {
+  .footer__top {
+    padding: 40px 32px;
+  }
+  
+  .footer__content {
+    gap: 24px;
+  }
+  
+  .footer__info {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer__top {
+    padding: 30px 16px;
+  }
+  
+  .footer__bottom {
+    padding: 15px;
+  }
+  
+  .footer__bottom-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .footer__scroll-top {
+    position: relative;
+    bottom: auto;
+    margin-top: 20px;
+  }
+}
 </style>
 
 <footer class="bg-scheme-background text-scheme-text" data-section-id="{{ section.id }}" data-section-type="footer" data-color-scheme="footer">
@@ -220,163 +441,273 @@
   </style>
 {% endif %}
 
-{% schema %}
-  {
-    "name": "Footer",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "logo",
-        "label": "Logo image"
-      },
-      {
-        "type": "range",
-        "id": "logo_max_width",
-        "min": 50,
-        "max": 250,
-        "step": 5,
-        "unit": "px",
-        "label": "Logo width",
-        "default": 100
-      },
-      {
-        "type": "checkbox",
-        "id": "show_payment_icons",
-        "label": "Show payment icons"
-      },
-      {
-        "type": "header",
-        "content": "Language Selector",
-        "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_locale_selector",
-        "label": "Show language selector",
-        "default": true
-      },
-      {
-        "type": "header",
-        "content": "Country/region selector",
-        "info": "To add a country/region, go to your [payment settings.](/admin/settings/payments)"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_country_selector",
-        "label": "Show country/region selector",
-        "default": true
-      },
-      {
-        "type": "header",
-        "content": "Text"
-      },
-      {
-        "type": "text",
-        "id": "text_heading",
-        "label": "Heading"
-      },
-      {
-        "id": "text_text",
-        "type": "richtext",
-        "label": "Text",
-        "default": "<p>Use this to add additional information about your store, e.g. address / contact details.</p>"
-      },
-      {
-        "type": "header",
-        "content": "Social"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_social",
-        "label": "Show social media"
-      },
-      {
-        "type": "text",
-        "id": "social_title",
-        "label": "Social heading"
-      },
-      {
-        "type": "header",
-        "content": "Newsletter"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_newsletter",
-        "label": "Show newsletter",
-        "default": true
-      },
-      {
-        "type": "text",
-        "id": "newsletter_section_title",
-        "label": "Heading"
-      },
-      {
-        "type": "richtext",
-        "id": "newsletter_subheading",
-        "label": "Subheading",
-        "default": "<p>Receive special offers and first look at new products.</p>"
-      },
-      {
-        "type": "select",
-        "id": "newsletter_color_scheme",
-        "label": "Newsletter color scheme",
-        "options": [
-            { "value": "primary", "label": "Primary"},
-            { "value": "secondary", "label": "Secondary"},
-            { "value": "tertiary", "label": "Tertiary"},
-            { "value": "quaternary", "label": "Quaternary"}
-        ],
-        "default":   "secondary"
-      },
-      {
-        "type":      "header",
-        "content":   "Layout"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_grid_border",
-        "label": "Show grid border",
-        "default": false
-      },
-      {
-        "type":      "header",
-        "content":   "Colors"
-      },
-      {
-        "type": "select",
-        "id": "color_scheme",
-        "label": "Color scheme",
-        "options": [
-            { "value": "primary", "label": "Primary"},
-            { "value": "secondary", "label": "Secondary"},
-            { "value": "tertiary", "label": "Tertiary"},
-            { "value": "quaternary", "label": "Quaternary"}
-        ],
-        "default":   "primary"
-      }
-    ],
-    "blocks": [
-      {
-        "type": "menu",
-        "name": "Menu",
-        "limit": 5,
-        "settings": [
-          {
-            "type": "link_list",
-            "id": "main_linklist",
-            "label": "Menu",
-            "default": "footer",
-            "info": "This menu won't show dropdown items"
-          },
-          {
-            "type": "checkbox",
-            "id": "show_heading",
-            "label": "Show heading",
-            "default": true
-          }
-        ]
-      }
-    ]
-  }
+<!-- Footer Section -->
+<div class="footer">
+  <div class="footer__top">
+    <div class="footer__container">
+      <div class="footer__content">
+        <div class="footer__info">
+          <div class="footer__title">
+            Wiertła CNC - Markowe Wiertła w Super Cenach
+          </div>
+          <div class="footer__description">
+            <p>
+              Oferujemy szeroki wybór wierteł CNC od renomowanych producentów takich jak Sandvik, Guhring, Arno oraz wiele innych. Nasze produkty charakteryzują się wysoką jakością, precyzją wykonania oraz konkurencyjnymi cenami. W ofercie znajdują się wiertła o różnych średnicach i zastosowaniach, idealne zarówno do profesjonalnych warsztatów, jak i do zastosowań hobbystycznych.
+            </p>
+          </div>
+        </div>
+        
+        <div class="footer__contact">
+          <div class="footer__contact-title">
+            KONTAKT
+          </div>
+          <div class="footer__contact-item">
+            <img src="{{ 'Frame7.svg' | asset_url }}" alt="Phone icon" class="footer__icon">
+            <a href="tel:+48600673736" class="footer__link">+48 600 67 37 36</a>
+          </div>
+          <div class="footer__contact-item">
+            <img src="{{ 'Ico_mail1.svg' | asset_url }}" alt="Email icon" class="footer__icon">
+            <a href="mailto:biuro@hmmetal.pl" class="footer__link">biuro@hmmetal.pl</a>
+          </div>
+        </div>
+        
+        <div class="footer__address">
+          <div class="footer__address-title">
+            ADRES
+          </div>
+          <div class="footer__address-content">
+            <p>{{ section.settings.address_line1 }}</p>
+            <p>{{ section.settings.address_line2 }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer__bottom">
+    <div class="footer__bottom-container">
+      <div class="footer__copyright">
+        <div class="footer__brand">{{ section.settings.brand_name }}</div>
+        <div class="footer__year">© {% if section.settings.copyright_year %}{{ section.settings.copyright_year }}{% else %}{{ 'now' | date: "%Y" }}{% endif %}</div>
+      </div>
+      
+      <div class="footer__credits">
+        <div class="footer__design-by">DESIGN BY</div>
+        <div class="footer__designer">{{ section.settings.designer_name }}</div>
+      </div>
+    </div>
+    
+    <button onclick="scrollToTop()" class="footer__scroll-top">
+      <span>Do góry</span>
+      <img src="{{ 'Ico_arrow-up.svg' | asset_url }}" alt="Scroll to top" class="footer__scroll-icon">
+    </button>
+  </div>
+</div>
+<style>
+footer.bg-scheme-background.text-scheme-text {
+display: none;
+}</style>
+<script>
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+</script>
 
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 50,
+      "max": 250,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 100
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons"
+    },
+    {
+      "type": "header",
+      "content": "Language Selector",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_locale_selector",
+      "label": "Show language selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Country/region selector",
+      "info": "To add a country/region, go to your [payment settings.](/admin/settings/payments)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_selector",
+      "label": "Show country/region selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "text_heading",
+      "label": "Heading"
+    },
+    {
+      "id": "text_text",
+      "type": "richtext",
+      "label": "Text",
+      "default": "<p>Use this to add additional information about your store, e.g. address / contact details.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Social"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social media"
+    },
+    {
+      "type": "text",
+      "id": "social_title",
+      "label": "Social heading"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show newsletter",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_section_title",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "newsletter_subheading",
+      "label": "Subheading",
+      "default": "<p>Receive special offers and first look at new products.</p>"
+    },
+    {
+      "type": "select",
+      "id": "newsletter_color_scheme",
+      "label": "Newsletter color scheme",
+      "options": [
+          { "value": "primary", "label": "Primary"},
+          { "value": "secondary", "label": "Secondary"},
+          { "value": "tertiary", "label": "Tertiary"},
+          { "value": "quaternary", "label": "Quaternary"}
+      ],
+      "default":   "secondary"
+    },
+    {
+      "type":      "header",
+      "content":   "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_grid_border",
+      "label": "Show grid border",
+      "default": false
+    },
+    {
+      "type":      "header",
+      "content":   "Colors"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+          { "value": "primary", "label": "Primary"},
+          { "value": "secondary", "label": "Secondary"},
+          { "value": "tertiary", "label": "Tertiary"},
+          { "value": "quaternary", "label": "Quaternary"}
+      ],
+      "default":   "primary"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand Name",
+      "default": "wiertla-cnc.com"
+    },
+    {
+      "type": "text",
+      "id": "copyright_year",
+      "label": "Copyright Year",
+      "default": "2024"
+    },
+    {
+      "type": "text",
+      "id": "designer_name",
+      "label": "Designer Name",
+      "default": "Kresky"
+    },
+    {
+      "type": "text",
+      "id": "address_line1",
+      "label": "Address Line 1",
+      "default": "ul. Przykładowa 123"
+    },
+    {
+      "type": "text",
+      "id": "address_line2",
+      "label": "Address Line 2",
+      "default": "00-000 Miasto"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "main_linklist",
+          "label": "Menu",
+          "default": "footer",
+          "info": "This menu won't show dropdown items"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_heading",
+          "label": "Show heading",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "category": "Footer"
+    }
+  ]
+}
 {% endschema %}

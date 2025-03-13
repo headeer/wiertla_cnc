@@ -1,0 +1,152 @@
+{% comment %}
+  Wiertla Search Component
+  A search form for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+{% assign section_id = section.id %}
+
+<div class="wiertla-search">
+  <div class="wiertla-search__container">
+    <div class="wiertla-search__label font-league-spartan">
+      wyszukaj wiertła
+    </div>
+    
+    <div class="wiertla-search__input-group">
+      <img src="{{ 'Ico_search.svg' | asset_url }}" alt="Search" class="wiertla-search__icon">
+      <input 
+        type="text" 
+        class="wiertla-search__input"
+        placeholder="Wpisz szukaną frazę (fi / nazwa / symbol / producent)"
+      >
+    </div>
+
+    <button class="wiertla-search__button font-league-spartan">
+      <span>szukaj</span>
+      <img src="{{ 'Ico_search1.svg' | asset_url }}" alt="Search" class="wiertla-search__button-icon">
+    </button>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wiertla Search",
+  "settings": [
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Search Placeholder",
+      "default": "Wpisz szukaną frazę (fi / nazwa / symbol / producent)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wiertla Search",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.wiertla-search {
+  max-width: 1420px;
+  margin: 0 auto;
+  padding: 30px 64px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wiertla-search__container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.wiertla-search__icon {
+  width: 20px;
+height: 22px;
+
+}
+.wiertla-search__label {
+  font-size: 18px;
+  line-height: 17px;
+  letter-spacing: 0.96px;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.wiertla-search__input-group {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--color-gray-200);
+  border-radius: 30px;
+  padding: 12px 15px;
+}
+
+.wiertla-search__icon {
+  width: 20px;
+  height: 22px;
+}
+
+.wiertla-search__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.wiertla-search__button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  background-color: var(--color-yellow-300);
+  border: 2px solid var(--color-cyan-950);
+  border-radius: 40px;
+  padding: 12px 20px;
+  font-size: 18px;
+  line-height: 17px;
+  letter-spacing: 0.96px;
+  cursor: pointer;
+  width: 220px;
+   font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 6%;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  background: #FCD34D;
+  border: 2px solid #112832;
+  border-radius: 40px;
+  padding: 8.5px 15px 8.5px 20px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.wiertla-search__button-icon {
+  width: 20px;
+  height: 22px;
+}
+
+@media (max-width: 768px) {
+  .wiertla-search {
+    padding: 20px 32px;
+    flex-direction: column;
+  }
+  
+  .wiertla-search__container {
+    flex-direction: column;
+  }
+  
+  .wiertla-search__button {
+    width: 100%;
+  }
+}
+{% endstylesheet %} 

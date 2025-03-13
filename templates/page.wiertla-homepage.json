@@ -1,0 +1,85 @@
+{
+  "sections": {
+    "wiertla-banner": {
+      "type": "wiertla-banner",
+      "settings": {
+        "title": "Precision CNC Tools for Every Project",
+        "text": "<p>High-quality tools and accessories for professional machinists and hobbyists</p>",
+        "button_label": "Shop Now",
+        "button_link": "/collections/all"
+      }
+    },
+    "wiertla-search": {
+      "type": "wiertla-search",
+      "settings": {
+        "title": "Find the Perfect Tool",
+        "placeholder": "Search for drill bits, end mills, and more...",
+        "button_label": "Search",
+        "show_popular_searches": true,
+        "popular_searches_label": "Popular Searches",
+        "popular_searches": "Drill Bits, End Mills, Lathe Tools, Tool Holders"
+      }
+    },
+    "wiertla-logos": {
+      "type": "wiertla-logos",
+      "blocks": {
+        "logo-1": {
+          "type": "logo",
+          "settings": {
+            "logo_alt_text": "Sandvik",
+            "open_in_new_tab": true
+          }
+        },
+        "logo-2": {
+          "type": "logo",
+          "settings": {
+            "logo_alt_text": "Seco",
+            "open_in_new_tab": true
+          }
+        },
+        "logo-3": {
+          "type": "logo",
+          "settings": {
+            "logo_alt_text": "Walter",
+            "open_in_new_tab": true
+          }
+        },
+        "logo-4": {
+          "type": "logo",
+          "settings": {
+            "logo_alt_text": "Kennametal",
+            "open_in_new_tab": true
+          }
+        },
+        "logo-5": {
+          "type": "logo",
+          "settings": {
+            "logo_alt_text": "Iscar",
+            "open_in_new_tab": true
+          }
+        }
+      },
+      "block_order": ["logo-1", "logo-2", "logo-3", "logo-4", "logo-5"],
+      "settings": {
+        "title": "Our Trusted Partners",
+        "subtitle": "We work with the best brands in the industry"
+      }
+    },
+
+    "wiertla-categories": {
+      "type": "wiertla-categories",
+      "settings": {}
+    },
+    "wiertla-stats": {
+      "type": "wiertla-stats",
+      "settings": {}
+    }
+  },
+  "order": [
+    "wiertla-banner",
+    "wiertla-search",
+    "wiertla-logos",
+    "wiertla-categories",
+    "wiertla-stats"
+  ]
+}

@@ -38,7 +38,7 @@
       "login_form_submit": "Enter",
       "signup_form_email_label": "Email",
       "signup_form_success": "We will send you an email right before we open!",
-      "admin_link_html": "Are you the store owner? <a href=\"\/admin\" class=\"text-link\">Log in here<\/a>",
+      "admin_link_html": "Are you the store owner? <a href=\"/admin\" class=\"text-link\">Log in here</a>",
       "password_link": "Enter using password",
       "powered_by_shopify_html": "This shop will be powered by {{ shopify }}"
     },
@@ -60,8 +60,8 @@
       "no_results": "Try checking your spelling or using different words.",
       "empty_search_message": "Search field cannot be empty",
       "results_with_count": {
-        "one": "{{ count }} result for “{{ terms }}”",
-        "other": "{{ count }} results for “{{ terms }}”"
+        "one": "{{ count }} result for \"{{ terms }}\"",
+        "other": "{{ count }} results for \"{{ terms }}\""
       },
       "title": "Search our site",
       "placeholder": "Search",
@@ -97,7 +97,7 @@
       "method": "Payment methods"
     },
     "country": {
-      "dropdown_label": "Country\/region"
+      "dropdown_label": "Country/region"
     },
     "language": {
       "dropdown_label": "Language"
@@ -116,7 +116,7 @@
       "pause_slideshow": "Pause slideshow",
       "rotate_slideshow": "Play slideshow",
       "load_slide": "Load slide {{ slide_number }}",
-      "navigation_instructions": "Use left\/right arrows to navigate the slideshow or swipe left\/right if using a mobile device"
+      "navigation_instructions": "Use left/right arrows to navigate the slideshow or swipe left/right if using a mobile device"
     },
     "featured_product": {
       "title": "Featured product",
@@ -127,7 +127,7 @@
     "map": {
       "address_error": "Error looking up that address",
       "address_no_results": "No results for that address",
-      "address_query_limit_html": "You have exceeded the Google API usage limit. Consider upgrading to a <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Premium Plan<\/a>.",
+      "address_query_limit_html": "You have exceeded the Google API usage limit. Consider upgrading to a <a href=\"https://developers.google.com/maps/premium/usage-limits\">Premium Plan</a>.",
       "auth_error_html": "There was a problem authenticating your Google Maps account.",
       "section_heading": "Location"
     },
@@ -136,6 +136,79 @@
       "pause": "Pause {{ video_title }} video",
       "resume": "Resume {{ video_title }} video",
       "close": "Close {{ video_title }} video"
+    },
+    "wiertla_logos": {
+      "name": "Trusted Partners",
+      "settings": {
+        "title": {
+          "label": "Title",
+          "default": "Our Trusted Partners"
+        },
+        "subtitle": {
+          "label": "Subtitle",
+          "default": "We work with the best brands in the industry"
+        }
+      },
+      "brands": {
+        "sandvik": "Sandvik",
+        "seco": "Seco",
+        "walter": "Walter",
+        "kennametal": "Kennametal",
+        "iscar": "Iscar"
+      },
+      "presets": {
+        "name": "Trusted Partners",
+        "category": "Custom Sections"
+      }
+    },
+    "wiertla_categories": {
+      "name": "Shop Categories",
+      "settings": {
+        "title": {
+          "label": "Title",
+          "default": "Shop by Category"
+        },
+        "subtitle": {
+          "label": "Subtitle",
+          "default": "Browse our wide selection of CNC tools and accessories"
+        },
+        "view_all_link": {
+          "label": "View All Link"
+        }
+      },
+      "blocks": {
+        "category": {
+          "name": "Category",
+          "settings": {
+            "name": {
+              "label": "Category Name",
+              "info": "Name of the category"
+            },
+            "icon": {
+              "label": "Category Icon",
+              "info": "Use an emoji or text icon"
+            },
+            "link": {
+              "label": "Category Link"
+            },
+            "count": {
+              "label": "Product Count"
+            }
+          }
+        }
+      },
+      "categories": {
+        "drill_bits": "Drill Bits",
+        "end_mills": "End Mills",
+        "lathe_tools": "Lathe Tools",
+        "tool_holders": "Tool Holders"
+      },
+      "products": "products",
+      "view_all": "View All Categories",
+      "presets": {
+        "name": "Shop Categories",
+        "category": "Custom Sections"
+      }
     }
   },
   "blogs": {
@@ -176,15 +249,15 @@
     "general": {
       "title": "Cart",
       "note": "Add a note to your order",
-      "removed_item_html": "Removed <span class=\"cart__removed-product-details\">({{ quantity }}) {{ link }}<\/span> from your cart.",
+      "removed_item_html": "Removed <span class=\"cart__removed-product-details\">({{ quantity }}) {{ link }}</span> from your cart.",
       "remove": "Remove",
       "subtotal": "Subtotal",
       "new_subtotal": "New subtotal",
       "savings": "You're saving",
       "taxes_and_shipping_at_checkout": "Taxes and shipping calculated at checkout",
-      "taxes_and_shipping_policy_at_checkout_html": "Taxes and <a href=\"{{ link }}\">shipping<\/a> calculated at checkout",
+      "taxes_and_shipping_policy_at_checkout_html": "Taxes and <a href=\"{{ link }}\">shipping</a> calculated at checkout",
       "taxes_included_but_shipping_at_checkout": "Tax included and shipping calculated at checkout",
-      "taxes_included_and_shipping_policy_html": "Tax included. <a href=\"{{ link }}\">Shipping<\/a> calculated at checkout.",
+      "taxes_included_and_shipping_policy_html": "Tax included. <a href=\"{{ link }}\">Shipping</a> calculated at checkout.",
       "update": "Update",
       "checkout": "Check out",
       "empty": "Your cart is currently empty.",
@@ -282,9 +355,9 @@
       "address1": "Address",
       "address2": "Apartment, suite, etc.",
       "city": "City",
-      "country": "Country\/Region",
+      "country": "Country/Region",
       "province": "Province",
-      "zip": "Postal\/Zip Code",
+      "zip": "Postal/Zip Code",
       "phone": "Phone",
       "set_default": "Set as default address",
       "add": "Add Address",
@@ -368,12 +441,12 @@
     },
     "onboarding": {
       "product_title": "Your product's name",
-      "product_description": "This area is used to describe your product’s details. Tell customers about the look, feel, and style of your product. Add details on color, materials used, sizing, and where it was made.",
+      "product_description": "This area is used to describe your product's details. Tell customers about the look, feel, and style of your product. Add details on color, materials used, sizing, and where it was made.",
       "collection_title": "Your collection's name",
       "blog_title": "Your post's title",
-      "blog_excerpt": "Your store hasn’t published any blog posts yet. A blog can be used to talk about new product launches, tips, or other news you want to share with your customers. You can check out Shopify’s ecommerce blog for inspiration and advice for your own store and blog.",
+      "blog_excerpt": "Your store hasn't published any blog posts yet. A blog can be used to talk about new product launches, tips, or other news you want to share with your customers. You can check out Shopify's ecommerce blog for inspiration and advice for your own store and blog.",
       "blog_author": "Author name",
-      "no_content": "This section doesn’t currently include any content. Add content to this section using the sidebar."
+      "no_content": "This section doesn't currently include any content. Add content to this section using the sidebar."
     }
   },
   "layout": {
@@ -416,11 +489,11 @@
       "vendor": "Vendor",
       "quantity_minimum_message": "Quantity must be 1 or more",
       "include_taxes": "Tax included.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Shipping<\/a> calculated at checkout.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout.",
       "unit_price_label": "Unit price",
       "view_cart": "View cart",
       "on_sale_from_html": "On Sale from {{ price }}",
-      "add_to_cart_confirm_html": "<a data-after-add-cart-trigger href=\"{{ cart_url }}\">View cart<\/a> or <a href=\"{{ link_url }}\">continue shopping<\/a>",
+      "add_to_cart_confirm_html": "<a data-after-add-cart-trigger href=\"{{ cart_url }}\">View cart</a> or <a href=\"{{ link_url }}\">continue shopping</a>",
       "view_in_space": "View in your space",
       "view_in_space_label": "View in your space, loads item in augmented reality window",
       "color_swatch_trigger": "Color",
@@ -433,8 +506,8 @@
       "check_other_stores": "Check availability at other stores",
       "pick_up_available": "Pickup available",
       "pick_up_currently_unavailable": "Pickup currently unavailable",
-      "pick_up_available_at_html": "Pickup available at <strong>{{ location_name }}<\/strong>",
-      "pick_up_unavailable_at_html": "Pickup currently unavailable at <strong>{{ location_name }}<\/strong>"
+      "pick_up_available_at_html": "Pickup available at <strong>{{ location_name }}</strong>",
+      "pick_up_unavailable_at_html": "Pickup currently unavailable at <strong>{{ location_name }}</strong>"
     }
   },
   "gift_cards": {

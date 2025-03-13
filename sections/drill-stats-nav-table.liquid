@@ -1,0 +1,320 @@
+{% comment %}
+  Drill Stats and Navigation Table Component
+  Displays company statistics and drill category navigation in a table format
+{% endcomment %}
+
+<div class="drill-stats-table">
+  <div class="stats-section">
+    <div class="stat-group">
+      <div class="stat-cell">
+        <img src="/assets/image-36.png" loading="lazy" alt="Tools" class="stat-icon">
+        <div class="stat-content">
+          <div class="stat-title">999+ narzędzi CNC</div>
+          <div class="stat-description">
+            <span>
+              <p>Ponad 1000 szt wierteł CNC</p>
+              <p>na stanie magazynowym</p>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-group">
+      <div class="stat-cell">
+        <img src="/assets/image-38.png" loading="lazy" alt="Years" class="stat-icon">
+        <div class="stat-content">
+          <div class="stat-title">8 lat na rynku</div>
+          <div class="stat-description">
+            <span>
+              <p>Budujemy mocną pozycję</p>
+              <p>jako dostawca narzędzi CNC</p>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-group">
+      <div class="stat-cell">
+        <img src="/assets/image-24.png" loading="lazy" alt="Quality" class="stat-icon">
+        <div class="stat-content">
+          <div class="stat-title">Najwyższa jakość</div>
+          <div class="stat-description">
+            <span>
+              <p>Oferujemy markowe wiertła,</p>
+              <p>a także dedykowane zamienniki</p>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-container">
+      <div class="nav-items">
+        <div class="nav-item">
+          <a href="#" class="nav-link wiertla-categories__icon-item active" data-category="wszystkie">
+            <div class="nav-content">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>Wszystkie</div>
+            </div>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link wiertla-categories__icon-item" data-category="koronkowe">
+            <div class="nav-content">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>Koronkowe</div>
+            </div>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link wiertla-categories__icon-item" data-category="plytkowe">
+            <div class="nav-content">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>Płytkowe</div>
+            </div>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link wiertla-categories__icon-item" data-category="vhm">
+            <div class="nav-content">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>VHM</div>
+            </div>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link wiertla-categories__icon-item" data-category="sandvik">
+            <div class="nav-content">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>SanDavik 880</div>
+            </div>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link wiertla-categories__icon-item" data-category="amec">
+            <div class="nav-content">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>AMEC</div>
+            </div>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-link wiertla-categories__icon-item" data-category="ksem">
+            <div class="nav-content">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>KSEM</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Drill Stats Table",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Drill Stats Table",
+      "category": "Custom Components"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.drill-stats-table {
+  align-self: stretch;
+}
+
+.stats-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  background-color: rgb(243 244 246);
+  padding: 60px 16rem;
+}
+
+.stat-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.stat-cell {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.stat-icon {
+  height: 8rem;
+  width: 8rem;
+  flex-shrink: 0;
+  object-fit: cover;
+  object-position: center;
+}
+
+.stat-content {
+  display: flex;
+  width: 20rem;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.stat-title {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 17px;
+  letter-spacing: 0.96px;
+}
+
+.stat-description {
+  width: 15rem;
+}
+
+.nav-section {
+  height: 5rem;
+  flex-shrink: 0;
+}
+
+.nav-container {
+  margin-bottom: -0.125rem;
+  display: flex;
+  height: 5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-top: 2px solid rgb(228 228 231);
+  background-color: rgb(243 244 246);
+  padding: 1.125rem 18rem 1.25rem 16rem;
+}
+
+.nav-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 3.75rem 1.25rem;
+  flex-grow: 1;
+  padding-top: 0.125rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.nav-link:not(.active) {
+  text-decoration: underline;
+}
+
+.nav-content {
+  flex-grow: 1;
+  max-width: 8.5rem;
+}
+
+.nav-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1rem;
+  letter-spacing: 0.16px;
+}
+
+@media (min-width: 1910px) {
+  .stats-section,
+  .nav-items {
+    flex-wrap: nowrap;
+  }
+}
+
+@media (max-width: 1909px) {
+  .stats-section,
+  .nav-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const navLinks = document.querySelectorAll('.wiertla-categories__icon-item');
+  const producerDropdown = document.querySelector('.wiertla-categories__producer-select');
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Remove active class from all links
+      navLinks.forEach(l => l.classList.remove('active'));
+      
+      // Add active class to clicked link
+      this.classList.add('active');
+      
+      const category = this.getAttribute('data-category');
+      
+      // Update dropdown if it exists
+      if (producerDropdown) {
+        producerDropdown.value = category;
+        
+        // Trigger change event on dropdown
+        const event = new Event('change');
+        producerDropdown.dispatchEvent(event);
+      }
+      
+      // Sort table based on category
+      sortTableByCategory(category);
+    });
+  });
+  
+  function sortTableByCategory(category) {
+    const table = document.querySelector('.wiertla-categories__table');
+    if (!table) return;
+    
+    const rows = Array.from(table.querySelectorAll('tr:not(:first-child)'));
+    const tbody = table.querySelector('tbody');
+    
+    if (category === 'wszystkie') {
+      // Reset to original order
+      rows.sort((a, b) => {
+        return parseInt(a.getAttribute('data-original-index')) - parseInt(b.getAttribute('data-original-index'));
+      });
+    } else {
+      // Sort by selected category
+      rows.sort((a, b) => {
+        const aProducer = a.querySelector('[data-producer]')?.getAttribute('data-producer').toLowerCase();
+        const bProducer = b.querySelector('[data-producer]')?.getAttribute('data-producer').toLowerCase();
+        
+        if (aProducer === category) return -1;
+        if (bProducer === category) return 1;
+        return 0;
+      });
+    }
+    
+    // Clear and repopulate table
+    rows.forEach(row => tbody.appendChild(row));
+  }
+});
+</script> 
