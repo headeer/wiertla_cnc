@@ -261,54 +261,63 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const navLinks = document.querySelectorAll('.wiertla-categories__icon-item');
-  const producerDropdown = document.querySelector('.wiertla-categories__producer-select');
   
-  navLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      
-      // Remove active class from all links
-      navLinks.forEach(l => l.classList.remove('active'));
-      
-      // Add active class to clicked link
-      this.classList.add('active');
-      
-      const category = this.getAttribute('data-category');
-      
-      // Update dropdown if it exists
-      if (producerDropdown) {
-        producerDropdown.value = category;
+  // Only add event listeners if we have navigation links
+  if (navLinks && navLinks.length > 0) {
+    const producerDropdown = document.querySelector('.wiertla-categories__producer-select');
+    
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
         
-        // Trigger change event on dropdown
-        const event = new Event('change');
-        producerDropdown.dispatchEvent(event);
-      }
-      
-      // Sort table based on category
-      sortTableByCategory(category);
+        // Remove active class from all links
+        navLinks.forEach(l => l.classList.remove('active'));
+        
+        // Add active class to clicked link
+        this.classList.add('active');
+        
+        const category = this.getAttribute('data-category');
+        
+        // Update dropdown if it exists
+        if (producerDropdown) {
+          producerDropdown.value = category;
+          
+          // Trigger change event on dropdown
+          const event = new Event('change');
+          producerDropdown.dispatchEvent(event);
+        }
+        
+        // Sort table based on category
+        sortTableByCategory(category);
+      });
     });
-  });
+  }
   
   function sortTableByCategory(category) {
     const table = document.querySelector('.wiertla-categories__table');
     if (!table) return;
     
     const rows = Array.from(table.querySelectorAll('tr:not(:first-child)'));
+    if (rows.length === 0) return;
+    
     const tbody = table.querySelector('tbody');
+    if (!tbody) return;
     
     if (category === 'wszystkie') {
       // Reset to original order
       rows.sort((a, b) => {
-        return parseInt(a.getAttribute('data-original-index')) - parseInt(b.getAttribute('data-original-index'));
+        const aIndex = parseInt(a.getAttribute('data-original-index')) || 0;
+        const bIndex = parseInt(b.getAttribute('data-original-index')) || 0;
+        return aIndex - bIndex;
       });
     } else {
       // Sort by selected category
       rows.sort((a, b) => {
-        const aProducer = a.querySelector('[data-producer]')?.getAttribute('data-producer').toLowerCase();
-        const bProducer = b.querySelector('[data-producer]')?.getAttribute('data-producer').toLowerCase();
+        const aProducer = a.querySelector('[data-producer]')?.getAttribute('data-producer')?.toLowerCase() || '';
+        const bProducer = b.querySelector('[data-producer]')?.getAttribute('data-producer')?.toLowerCase() || '';
         
-        if (aProducer === category) return -1;
-        if (bProducer === category) return 1;
+        if (aProducer.includes(category)) return -1;
+        if (bProducer.includes(category)) return 1;
         return 0;
       });
     }

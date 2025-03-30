@@ -75,18 +75,23 @@
 }
 
 .footer__title {
-  font-family: "League Spartan";
-  font-size: 18px;
+  font-family: 'League Spartan', sans-serif;
   font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  line-height: 17px;
-  letter-spacing: 0.96px;
+  color: #F5F5F8;
+  margin-bottom: 20px;
 }
 
 .footer__description {
-  font-family: "Montserrat";
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
   font-size: 16px;
   line-height: 22px;
+  letter-spacing: 0.03em;
+  color: #F5F5F8;
 }
 
 .footer__contact {
@@ -96,13 +101,14 @@
 }
 
 .footer__contact-title {
-  font-family: "League Spartan";
-  font-size: 18px;
+  font-family: 'League Spartan', sans-serif;
   font-weight: 700;
-  text-transform: uppercase;
+  font-size: 18px;
   line-height: 24px;
-  letter-spacing: 0.96px;
-  text-decoration: underline;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #F5F5F8;
+  margin-bottom: 16px;
 }
 
 .footer__contact-item {
@@ -448,32 +454,32 @@
       <div class="footer__content">
         <div class="footer__info">
           <div class="footer__title">
-            Wiertła CNC - Markowe Wiertła w Super Cenach
+            {{ 'footer.main_title' | t }}
           </div>
           <div class="footer__description">
             <p>
-              Oferujemy szeroki wybór wierteł CNC od renomowanych producentów takich jak Sandvik, Guhring, Arno oraz wiele innych. Nasze produkty charakteryzują się wysoką jakością, precyzją wykonania oraz konkurencyjnymi cenami. W ofercie znajdują się wiertła o różnych średnicach i zastosowaniach, idealne zarówno do profesjonalnych warsztatów, jak i do zastosowań hobbystycznych.
+              {{ 'footer.main_description' | t }}
             </p>
           </div>
         </div>
         
         <div class="footer__contact">
           <div class="footer__contact-title">
-            KONTAKT
+            {{ 'footer.contact.title' | t }}
           </div>
           <div class="footer__contact-item">
-            <img src="{{ 'Frame7.svg' | asset_url }}" alt="Phone icon" class="footer__icon">
-            <a href="tel:+48600673736" class="footer__link">+48 600 67 37 36</a>
+            <img src="{{ 'Frame7.svg' | asset_url }}" alt="{{ 'footer.contact.phone_icon_alt' | t }}" class="footer__icon">
+            <a href="tel:{{ section.settings.phone_number }}" class="footer__link">{{ section.settings.phone_number }}</a>
           </div>
           <div class="footer__contact-item">
-            <img src="{{ 'Ico_mail1.svg' | asset_url }}" alt="Email icon" class="footer__icon">
-            <a href="mailto:biuro@hmmetal.pl" class="footer__link">biuro@hmmetal.pl</a>
+            <img src="{{ 'Ico_mail1.svg' | asset_url }}" alt="{{ 'footer.contact.email_icon_alt' | t }}" class="footer__icon">
+            <a href="mailto:{{ section.settings.email }}" class="footer__link">{{ section.settings.email }}</a>
           </div>
         </div>
         
         <div class="footer__address">
           <div class="footer__address-title">
-            ADRES
+            {{ 'footer.address.title' | t }}
           </div>
           <div class="footer__address-content">
             <p>{{ section.settings.address_line1 }}</p>
@@ -492,14 +498,14 @@
       </div>
       
       <div class="footer__credits">
-        <div class="footer__design-by">DESIGN BY</div>
+        <div class="footer__design-by">{{ 'footer.credits.design_by' | t }}</div>
         <div class="footer__designer">{{ section.settings.designer_name }}</div>
       </div>
     </div>
     
     <button onclick="scrollToTop()" class="footer__scroll-top">
-      <span>Do góry</span>
-      <img src="{{ 'Ico_arrow-up.svg' | asset_url }}" alt="Scroll to top" class="footer__scroll-icon">
+      <span>{{ 'footer.scroll_to_top' | t }}</span>
+      <img src="{{ 'Ico_arrow-up.svg' | asset_url }}" alt="{{ 'footer.scroll_icon_alt' | t }}" class="footer__scroll-icon">
     </button>
   </div>
 </div>
@@ -679,6 +685,18 @@ function scrollToTop() {
       "id": "address_line2",
       "label": "Address Line 2",
       "default": "00-000 Miasto"
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Phone Number",
+      "default": "+48 600 67 37 36"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email Address",
+      "default": "biuro@hmmetal.pl"
     }
   ],
   "blocks": [

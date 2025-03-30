@@ -6,24 +6,24 @@
 <div class="wiertla-stats">
   <div class="wiertla-stats__container">
     <div class="wiertla-stats__item">
-      <img src="{{ 'image-36.png' | asset_url }}" alt="Tools" class="wiertla-stats__icon">
+      <img src="{{ 'image-36.png' | asset_url }}" alt="{{ 'wiertla_stats.tools_icon_alt' | t }}" class="wiertla-stats__icon">
       <div class="wiertla-stats__content">
-        <div class="wiertla-stats__title">999+ narzędzi CNC</div>
-        <div class="wiertla-stats__text">Ponad 1000 szt wierteł CNC na stanie magazynowym</div>
+        <div class="wiertla-stats__title">{{ 'wiertla_stats.tools_title' | t }}</div>
+        <div class="wiertla-stats__text">{{ 'wiertla_stats.tools_text' | t }}</div>
       </div>
     </div>
     <div class="wiertla-stats__item">
-      <img src="{{ 'image-38.png' | asset_url }}" alt="Years" class="wiertla-stats__icon">
+      <img src="{{ 'image-38.png' | asset_url }}" alt="{{ 'wiertla_stats.years_icon_alt' | t }}" class="wiertla-stats__icon">
       <div class="wiertla-stats__content">
-        <div class="wiertla-stats__title">8 lat na rynku</div>
-        <div class="wiertla-stats__text">Budujemy mocną pozycję jako dostawca narzędzi CNC</div>
+        <div class="wiertla-stats__title">{{ 'wiertla_stats.years_title' | t }}</div>
+        <div class="wiertla-stats__text">{{ 'wiertla_stats.years_text' | t }}</div>
       </div>
     </div>
     <div class="wiertla-stats__item">
-      <img src="{{ 'image-24.png' | asset_url }}" alt="Quality" class="wiertla-stats__icon">
+      <img src="{{ 'image-24.png' | asset_url }}" alt="{{ 'wiertla_stats.quality_icon_alt' | t }}" class="wiertla-stats__icon">
       <div class="wiertla-stats__content">
-        <div class="wiertla-stats__title">Najwyższa jakość</div>
-        <div class="wiertla-stats__text">Oferujemy markowe wiertła, a także dedykowane zamienniki</div>
+        <div class="wiertla-stats__title">{{ 'wiertla_stats.quality_title' | t }}</div>
+        <div class="wiertla-stats__text">{{ 'wiertla_stats.quality_text' | t }}</div>
       </div>
     </div>
   </div>
@@ -32,10 +32,10 @@
 <!-- Latest Products Section -->
 <div class="latest-products">
   <div class="latest-products__title">
-    Najnowsze w naszej ofercie
+    {{ 'wiertla_stats.latest_products.title' | t }}
   </div>
   <div class="latest-products__subtitle">
-    Stale poszerzamy stan magazynowy, aktualizując ofertę o nowe modele wierteł CNC
+    {{ 'wiertla_stats.latest_products.subtitle' | t }}
   </div>
   
   <div class="latest-products__swiper swiper">
@@ -81,7 +81,7 @@
                 </div>
                 {% if product.metafields.custom.rent_tool %}
                   <div class="product-card__rent">
-                    rent a tool
+                    {{ 'wiertla_stats.rent_tool_text' | t }}
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="12" viewBox="0 0 17 12" fill="none">
                       <path d="M10.5 12L9.1 10.55L12.65 7H0.5V5H12.65L9.1 1.45L10.5 0L16.5 6L10.5 12Z" fill="#112832"/>
                     </svg>
@@ -113,40 +113,40 @@
   <div class="rent-tools__lines"></div>
   <div class="rent-tools__content">
     <div class="rent-tools__title">
-      Wypożyczaj wiertła CNC
+      {{ 'wiertla_stats.rent_tools.title_line1' | t }}
     </div>
     <div class="rent-tools__title">
-      na korzystnych warunkach
+      {{ 'wiertla_stats.rent_tools.title_line2' | t }}
     </div>
     
     <div class="rent-tools__icons">
       <div>
-        <img src="{{ 'Ksztat8Kopia.svg' | asset_url }}" alt="Icon 1">
+        <img src="{{ 'Ksztat8Kopia.svg' | asset_url }}" alt="{{ 'wiertla_stats.rent_tools.icon1_alt' | t }}">
       </div>
       <div>
-        <img src="{{ 'Group7.svg' | asset_url }}" alt="Icon 2">
+        <img src="{{ 'Group7.svg' | asset_url }}" alt="{{ 'wiertla_stats.rent_tools.icon2_alt' | t }}">
       </div>
       <div>
-        <img src="{{ 'Ksztat16Kopia.svg' | asset_url }}" alt="Icon 3">
+        <img src="{{ 'Ksztat16Kopia.svg' | asset_url }}" alt="{{ 'wiertla_stats.rent_tools.icon3_alt' | t }}">
       </div>
       <div>
-        <img src="{{ 'Frame6.svg' | asset_url }}" alt="Icon 4">
+        <img src="{{ 'Frame6.svg' | asset_url }}" alt="{{ 'wiertla_stats.rent_tools.icon4_alt' | t }}">
       </div>
       <div>
-        <img src="{{ 'Ksztat13Kopia.svg' | asset_url }}" alt="Icon 5">
+        <img src="{{ 'Ksztat13Kopia.svg' | asset_url }}" alt="{{ 'wiertla_stats.rent_tools.icon5_alt' | t }}">
       </div>
       <div>
-        <img src="{{ 'Ksztat13Kopia1.svg' | asset_url }}" alt="Icon 6">
+        <img src="{{ 'Ksztat13Kopia1.svg' | asset_url }}" alt="{{ 'wiertla_stats.rent_tools.icon6_alt' | t }}">
       </div>
     </div>
     
     <div class="rent-tools__description">
-      Stale zwiększając jakość i komfort korzystania z naszej oferty, udostępniamy możliwość wypożyczenia wierteł CNC.
+      {{ 'wiertla_stats.rent_tools.description' | t }}
     </div>
     
     <a href="{{ section.settings.rent_tools_link }}" class="rent-tools__button">
-      Dowiedz się więcej
-      <img src="{{ 'Refresh_24dp_5F6368_FILL0_wght400_GRAD0_opsz.svg' | asset_url }}" class="h-7 w-7 flex-shrink-0" alt="Arrow">
+      {{ 'wiertla_stats.rent_tools.learn_more' | t }}
+      <img src="{{ 'Refresh_24dp_5F6368_FILL0_wght400_GRAD0_opsz.svg' | asset_url }}" class="h-7 w-7 flex-shrink-0" alt="{{ 'wiertla_stats.rent_tools.arrow_alt' | t }}">
     </a>
   </div>
 </div>
@@ -158,20 +158,20 @@
       <!-- Column 1 -->
       <div class="faq__column">
         <div class="faq__main-title">
-          Wiertła CNC - najczęściej zadawane pytania
+          {{ 'wiertla_stats.faq.main_title' | t }}
         </div>
         <div class="faq__item">
           <div class="faq__title">
-            1. Jakie wiertła CNC wybrać do metalu?
+            {{ 'wiertla_stats.faq.question1.title' | t }}
           </div>
           <div class="faq__text">
-            <p>
-              <span class="faq__bold">Wiertła Koronkowe</span>: Idealne do dużych otworów w metalu. Wiertła koronkowe charakteryzują się konstrukcją, która umożliwia wydajne i szybkie wiercenie nawet w twardych materiałach, minimalizując przy tym uszkodzenia obrabianego materiału. Są często stosowane w przemyśle budowlanym i mechanicznym
+            <p></p>
+              <span class="faq__bold">{{ 'wiertla_stats.faq.question1.subtitle1' | t }}</span>: {{ 'wiertla_stats.faq.question1.text1' | t }}
             </p>
           </div>
           <div class="faq__text">
             <p>
-              <span class="faq__bold">Wiertła VHM </span>(Węglik Spiekany): Wytrzymałe i długowieczne, doskonałe do twardych metali. Wiertła wykonane z węglika spiekanego cechują się wyjątkową twardością i odpornością na zużycie, co sprawia, że są idealne do wiercenia w trudnych i wymagających warunkach. Są powszechnie używane w branżach, gdzie precyzja i trwałość narzędzi są kluczowe.
+              <span class="faq__bold">{{ 'wiertla_stats.faq.question1.subtitle2' | t }}</span>: {{ 'wiertla_stats.faq.question1.text2' | t }}
             </p>
           </div>
         </div>
@@ -181,21 +181,21 @@
       <div class="faq__column">
         <div class="faq__item">
           <div class="faq__title">
-            2. Czy wiertła Sandvik 880 są dobre do trudnych materiałów?
+            {{ 'wiertla_stats.faq.question2.title' | t }}
           </div>
           <div class="faq__text">
             <p>
-              Tak, wiertła <span class="faq__bold">Sandvik 880 </span>są znane ze swojej wydajności i wytrzymałości, co czyni je idealnym wyborem do trudnych materiałów. Wiertła te posiadają zaawansowaną geometrię i powłoki, które zwiększają ich żywotność i efektywność. Dzięki swojej konstrukcji, wiertła Sandvik 880 są w stanie pracować z dużą precyzją nawet w najtwardszych materiałach, co czyni je popularnym wyborem w przemyśle lotniczym i motoryzacyjnym.
+              {{ 'wiertla_stats.faq.question2.text' | t }}
             </p>
           </div>
         </div>
         <div class="faq__item">
           <div class="faq__title">
-            4. Jakie są zastosowania wierteł płytkowych?
+            {{ 'wiertla_stats.faq.question4.title' | t }}
           </div>
           <div class="faq__text">
             <p>
-              <span class="faq__bold">Wiertła płytkowe </span>są wszechstronne i znajdują zastosowanie w wielu różnych dziedzinach. Idealnie nadają się do obróbki materiałów kompozytowych, metali kolorowych oraz tworzyw sztucznych. Dzięki swojej konstrukcji zapewniają wysoką precyzję i długą żywotność, co czyni je niezastąpionymi w przemyśle lotniczym, motoryzacyjnym oraz przy produkcji urządzeń elektronicznych.
+              <span class="faq__bold">{{ 'wiertla_stats.faq.question4.subtitle' | t }}</span> {{ 'wiertla_stats.faq.question4.text' | t }}
             </p>
           </div>
         </div>
@@ -205,21 +205,21 @@
       <div class="faq__column">
         <div class="faq__item">
           <div class="faq__title">
-            3. Jakie są zalety wierteł KSEM?
+            {{ 'wiertla_stats.faq.question3.title' | t }}
           </div>
           <div class="faq__text">
             <p>
-              Wiertła <span class="faq__bold">KSEM </span>oferują innowacyjne rozwiązania, które zapewniają doskonałe rezultaty nawet w najtwardszych materiałach. Dzięki zaawansowanej technologii, wiertła te umożliwiają szybką i efektywną obróbkę, minimalizując przy tym czas przestoju maszyn. Wiertła KSEM są zaprojektowane z myślą o maksymalnej wydajności, co sprawia, że są one idealnym wyborem do produkcji masowej i zastosowań, gdzie precyzja jest kluczowa.
+              {{ 'wiertla_stats.faq.question3.text' | t }}
             </p>
           </div>
         </div>
         <div class="faq__item">
           <div class="faq__title">
-            5. Dlaczego warto wybierać wiertła AMEC?
+            {{ 'wiertla_stats.faq.question5.title' | t }}
           </div>
           <div class="faq__text">
             <p>
-              <span class="faq__bold">Wiertła AMEC </span>są synonimem jakości i niezawodności w przemyśle. Dzięki zaawansowanej technologii produkcji, oferują one doskonałe rezultaty wiercenia w najtrudniejszych warunkach. Wiertła AMEC są projektowane z myślą o długiej żywotności i minimalnych kosztach eksploatacji, co sprawia, że są one idealnym wyborem do intensywnych zastosowań przemysłowych, takich jak obróbka metali, produkcja części precyzyjnych oraz prace montażowe.
+              <span class="faq__bold">{{ 'wiertla_stats.faq.question5.subtitle' | t }}</span> {{ 'wiertla_stats.faq.question5.text' | t }}
             </p>
           </div>
         </div>
@@ -231,7 +231,7 @@
 <!-- Category Descriptions Section -->
 <div class="category-desc">
   <div class="category-desc__title">
-    Opisy kategorii na stronie wiertła cnc
+    {{ 'wiertla_stats.category_desc.title' | t }}
   </div>
   
   <div class="category-desc__container">
@@ -240,11 +240,11 @@
       <div class="category-desc__column">
         <div class="category-desc__item">
           <div class="category-desc__header">
-            <img src="{{ 'image-36.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="Wiertła Koronkowe">
-            <div class="category-desc__name">Wiertła Koronkowe</div>
+            <img src="{{ 'image-36.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="{{ 'wiertla_stats.category_desc.crown_drills.icon_alt' | t }}">
+            <div class="category-desc__name">{{ 'wiertla_stats.category_desc.crown_drills.title' | t }}</div>
           </div>
           <div class="category-desc__text">
-            <p>Wiertła koronkowe są nieocenione w pracach, które wymagają wiercenia dużych otworów. Nasza oferta obejmuje wiertła koronkowe o różnej średnicy, które świetnie sprawdzają się zarówno w metalu, jak i betonie. Ich zaawansowana konstrukcja zapewnia szybkie i efektywne wiercenie z minimalnym uszkodzeniem obrabianego materiału. Idealne do zastosowań budowlanych i przemysłowych, wiertła koronkowe są niezawodnym wyborem dla profesjonalistów.</p>
+            <p>{{ 'wiertla_stats.category_desc.crown_drills.text' | t }}</p>
           </div>
         </div>
 
@@ -380,7 +380,7 @@
   font-size: 18px;
   font-weight: 700;
   line-height: 17px;
-  letter-spacing: 0.96px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
@@ -389,7 +389,7 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 22px;
-  letter-spacing: 0.48px;
+  letter-spacing: 0.06em;
   color: #112832;
 }
 
@@ -428,7 +428,7 @@
   font-weight: 700;
   text-transform: uppercase;
   line-height: 17px;
-  letter-spacing: 0.96px;
+  letter-spacing: 0.06em;
   color: black;
 }
 
@@ -545,7 +545,7 @@
   border-radius: 14px;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.16px;
+  letter-spacing: 0.01em;
   margin-right: 4px;
   background: white;
 }
@@ -650,7 +650,7 @@
   font-weight: 700;
   font-size: 18px;
   line-height: 16.6px;
-  letter-spacing: 6%;
+  letter-spacing: 0.06em;
   text-align: center;
   text-transform: uppercase;
   margin-bottom: 8px;
@@ -661,7 +661,7 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 22px;
-  letter-spacing: 3%;
+  letter-spacing: 0.03em;
   text-align: center;
   margin: 11px 0;
   padding: 0 40px;
@@ -672,7 +672,8 @@
   font-weight: 700;
   font-size: 18px;
   line-height: 16.6px;
-  letter-spacing: 6%;
+  letter-spacing: 0.06em;
+  height: 50px;
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
@@ -763,33 +764,39 @@
 }
 
 .faq__main-title {
-  font-family: "League Spartan";
+  font-family: 'League Spartan', sans-serif;
   font-weight: 700;
   font-size: 18px;
   line-height: 16.6px;
-  letter-spacing: 6%;
-  text-align: center;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-bottom: 24px;
+  color: #112832;
+  margin-bottom: 30px;
+  text-align: left;
 }
 
 .faq__title {
-  font-family: "League Spartan";
+  font-family: 'League Spartan', sans-serif;
   font-weight: 700;
   font-size: 18px;
   line-height: 16.6px;
-  letter-spacing: 6%;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  color: #112832;
+  margin-bottom: 20px;
 }
 
 .faq__text {
-  font-family: "Montserrat";
+  font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 22px;
-  letter-spacing: 3%;
-  margin-bottom: 15px;
+  letter-spacing: 0.03em;
+  color: #112832;
+}
+
+.faq__text strong {
+  font-weight: 700;
 }
 
 .faq__bold {
@@ -822,16 +829,14 @@
 }
 
 .category-desc__title {
-  font-family: "League Spartan";
+  font-family: 'League Spartan', sans-serif;
   font-weight: 700;
   font-size: 18px;
-  line-height: 17px;
-  letter-spacing: 0.96px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-bottom: 40px;
-  max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
+  color: #112832;
+  margin-bottom: 30px;
 }
 
 .category-desc__container {
@@ -875,13 +880,14 @@
 }
 
 .category-desc__name {
-  font-family: "League Spartan";
+  font-family: 'League Spartan', sans-serif;
   font-weight: 700;
   font-size: 18px;
-  line-height: normal;
-  letter-spacing: 0.96px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  text-decoration: underline;
+  color: #112832;
+  margin-bottom: 20px;
 }
 
 .category-desc__subtitle {
@@ -893,10 +899,16 @@
 }
 
 .category-desc__text {
-  font-family: "Montserrat";
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
   font-size: 16px;
   line-height: 22px;
-  letter-spacing: 0.48px;
+  letter-spacing: 0.03em;
+  color: #112832;
+}
+
+.category-desc__text strong {
+  font-weight: 700;
 }
 
 @media (max-width: 1910px) {

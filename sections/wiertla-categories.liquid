@@ -15,6 +15,32 @@
 {% paginate selected_collection.products by 2000 %}
 <div class="wiertla-categories">
   <div class="wiertla-categories__container">
+  
+
+      <!-- Mobile Icons -->
+      <div class="wiertla-categories__mobile-icons">
+        <div class="wiertla-categories__icon-item">
+          <img src="{{ 'ico_koronkowe.svg' | asset_url }}" alt="Koronkowe" style="max-height: 23px; width: auto;">
+          <span>Koronkowe</span>
+        </div>
+        <div class="wiertla-categories__icon-item">
+          <img src="{{ 'ico_plytkowe.svg' | asset_url }}" alt="Płytkowe" style="max-height: 23px; width: auto;">
+          <span>Płytkowe</span>
+        </div>
+        <div class="wiertla-categories__icon-item">
+          <img src="{{ 'ico_vhm.svg' | asset_url }}" alt="VHM" style="max-height: 23px; width: auto;">
+          <span>VHM</span>
+        </div>
+        <div class="wiertla-categories__icon-item">
+          <img src="{{ 'ico_sandvik.svg' | asset_url }}" alt="Sandvik" style="max-height: 23px; width: auto;">
+          <span>Sandvik</span>
+        </div>
+      </div>
+    </div>
+
+  
+
+
     <!-- New Category Tabs -->
     <div class="wiertla-categories__tabs">
       <button class="wiertla-categories__tab active">PŁYTKI DO WIERTEŁ</button>
@@ -100,35 +126,39 @@
     <div class="wiertla-categories__content">
       <!-- Left Column -->
       <div class="wiertla-categories__left-column">
-        <div class="wiertla-search__container-top">
+        <button class="wiertla-categories__fullscreen-btn">
+          <img src="{{ 'zoom_in_map.svg' | asset_url }}" alt="Fullscreen" class="wiertla-categories__fullscreen-icon">
+          Wyświetl tabelę na całej stronie
+        </button>
+        <div class="wiertla-categories__search">
           <div class="wiertla-search__input-group">
-            <input type="text" class="wiertla-search__input" placeholder="Wpisz szukaną frazę (fi / nazwa / symbol / producent)">
-            <div class="wiertla-search__icon-wrapper">
-              <img src="{{ 'Ico_search1.svg' | asset_url }}" alt="Search" class="wiertla-search__icon">
-            </div>
+            <button type="button" class="wiertla-search__submit" aria-label="{{ 'general.search.submit' | t }}">
+              <svg width="23" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2"/>
+                <path d="M14 14L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <input
+              type="search"
+              id="CategorySearch"
+              class="wiertla-search__input"
+              placeholder="Wpisz nazwę lub symbol wiertła"
+              autocomplete="off"
+              aria-label="{{ 'general.search.category_label' | t }}"
+            >
+            <button type="button" class="wiertla-search__clear" aria-label="{{ 'general.search.clear' | t }}">
+              <svg width="23" height="20" viewBox="0 0 14 14" fill="none">
+                <path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          
           </div>
-        </div>
-
-        <!-- Preview Component -->
-        <div class="wiertla-categories__preview">
-          <h5 class="wiertla-categories__preview-title">zobacz obraz poglądowy</h5>
-          <div class="wiertla-categories__preview-image">
-            <img src="{{ 'table_koronkowe.png' | asset_url }}" alt="Preview" id="preview-image" class="wiertla-categories__preview-img" />
-            <img src="{{ 'table_vhm.png' | asset_url }}" alt="Preview" id="preview-image" class="wiertla-categories__preview-img" />
-            <img src="{{ 'table_ksem.png' | asset_url }}" alt="Preview" id="preview-image" class="wiertla-categories__preview-img" />
-            <img src="{{ 'table_plytkowe.png' | asset_url }}" alt="Preview" id="preview-image" class="wiertla-categories__preview-img" />
-            <img src="{{ 'table_amec.png' | asset_url }}" alt="Preview" id="preview-image" class="wiertla-categories__preview-img" />
-            <img src="{{ 'table_sandavik.png' | asset_url }}" alt="Preview" id="preview-image" class="wiertla-categories__preview-img" />
-          </div>
-          <p class="wiertla-categories__preview-text">
-            Najedź kursorem na wiertło w tabeli,<br>
-            aby wyświetlić tu powiększony podgląd
-          </p>
         </div>
       </div>
 
       <!-- Right Column -->
       <div class="wiertla-categories__right-column">
+       
         <!-- Filters -->
       
 
@@ -174,10 +204,226 @@
   </div>
 </div>
 
+<!-- Mobile Category Navigation -->
+<div class="wiertla-categories__mobile-nav">
+  <div class="wiertla-categories__scroll-container">
+    <div class="wiertla-categories__icons mobile">
+      <div class="wiertla-categories__icon-item">
+        <img src="{{ 'ico_big_koronkowe.svg' | asset_url }}" alt="Koronkowe" class="wiertla-categories__icon">
+        <span class="wiertla-categories__icon-label">KORONKOWE</span>
+      </div>
+      <div class="wiertla-categories__icon-item">
+        <img src="{{ 'ico_big_plytkowe.svg' | asset_url }}" alt="Płytkowe" class="wiertla-categories__icon">
+        <span class="wiertla-categories__icon-label">PŁYTKOWE</span>
+      </div>
+      <div class="wiertla-categories__icon-item">
+        <img src="{{ 'ico_big_vhm.svg' | asset_url }}" alt="VH" class="wiertla-categories__icon">
+        <span class="wiertla-categories__icon-label">VHM</span>
+      </div>
+      <div class="wiertla-categories__icon-item">
+        <img src="{{ 'ico_big_sandvik.svg' | asset_url }}" alt="Sandvik 880" class="wiertla-categories__icon">
+        <span class="wiertla-categories__icon-label">SANDVIK 880</span>
+      </div>
+      <div class="wiertla-categories__icon-item">
+        <img src="{{ 'ico_big_amec.svg' | asset_url }}" alt="AMEC" class="wiertla-categories__icon">
+        <span class="wiertla-categories__icon-label">AMEC</span>
+      </div>
+      <div class="wiertla-categories__icon-item">
+        <img src="{{ 'ico_big_ksem.svg' | asset_url }}" alt="KSEM" class="wiertla-categories__icon">
+        <span class="wiertla-categories__icon-label">KSEM</span>
+      </div>
+      <div class="wiertla-categories__icon-item">
+        <img src="{{ 'ico_big_all.svg' | asset_url }}" alt="Wszystkie" class="wiertla-categories__icon">
+        <span class="wiertla-categories__icon-label">WSZYSTKIE</span>
+      </div>
+    </div>
+  </div>
+  <div class="wiertla-categories__scroll-indicator">
+    <span class="wiertla-categories__scroll-dot active"></span>
+    <span class="wiertla-categories__scroll-dot"></span>
+    <span class="wiertla-categories__scroll-dot"></span>
+  </div>
+</div>
+
+<!-- Mobile Filter Controls -->
+<div class="wiertla-categories__mobile-controls">
+  <button class="wiertla-categories__mobile-filter-btn">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M4 4h16v2.67l-6.67 6.67v5.66l-2.66 2v-7.66L4 6.67V4z" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <span>Filtruj</span>
+  </button>
+  
+  <div class="wiertla-categories__mobile-per-page">
+    <span class="wiertla-categories__per-page-label">Pokaż</span>
+    <div class="wiertla-categories__per-page-buttons">
+      <button class="wiertla-categories__per-page-button active" data-value="20">20</button>
+      <button class="wiertla-categories__per-page-button" data-value="50">50</button>
+      <button class="wiertla-categories__per-page-button" data-value="100">100</button>
+    </div>
+    <span class="wiertla-categories__per-page-label">/ na stronę</span>
+  </div>
+</div>
+
+<!-- Mobile Filter Modal -->
+<div class="wiertla-categories__mobile-filter-modal">
+  <div class="wiertla-categories__mobile-filter-header">
+    <div class="wiertla-categories__mobile-filter-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M4 4h16v2.67l-6.67 6.67v5.66l-2.66 2v-7.66L4 6.67V4z" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <h3>Filtruj wiertła w tabeli</h3>
+    </div>
+    <button class="wiertla-categories__mobile-filter-close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="wiertla-categories__mobile-filter-content">
+    <div class="wiertla-categories__mobile-filters">
+      <select class="wiertla-categories__filter" data-filter="type">
+        <option value="">Typ wiertła</option>
+        <option value="VW">Koronkowe (VW)</option>
+        <option value="PR">Płytkowe (PR)</option>
+        <option value="WW">VHM (WW)</option>
+        <option value="PS">Sandvik 880 (PS)</option>
+        <option value="WK">KSEM (WK)</option>
+        <option value="WV">AMEC (WV)</option>
+      </select>
+      <select class="wiertla-categories__filter" data-filter="crown">
+        <option value="">Wykaz koronek</option>
+        <option value="KK">KK</option>
+        <option value="KI">KI</option>
+        <option value="KS">KS</option>
+        <option value="KT">KT</option>
+        <option value="KA">KA</option>
+      </select>
+      <select class="wiertla-categories__filter" data-filter="manufacturer">
+        <option value="">Producent</option>
+        <option value="Sandvik">Sandvik</option>
+        <option value="AMEC">AMEC</option>
+        <option value="KSEM">KSEM</option>
+      </select>
+      
+      <button class="wiertla-categories__mobile-filter-show">
+        <span>Pokaż</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M21 12L13 4V9C7 10 4 15 3 20C5.5 16.5 9 14.9 13 14.9V20L21 12Z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </button>
+      
+      <button class="wiertla-categories__mobile-sort-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M3 7H21M6 12H18M9 17H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Sortuj wiertła</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Rent Modal -->
+<div class="wiertla-categories__mobile-rent-modal">
+  <div class="wiertla-categories__mobile-rent-header">
+    <div class="wiertla-categories__mobile-rent-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2"/>
+        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2"/>
+        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <h3>Wypożycz wiertło</h3>
+    </div>
+    <button class="wiertla-categories__mobile-rent-close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="wiertla-categories__mobile-rent-content">
+    <p class="wiertla-categories__mobile-rent-text">
+      Oferujemy naszym partnerom, możliwość wypożyczenia wybranego wiertła na wybrany termin i czas.
+      <br><br>
+      Skontaktuj się z nami, aby ustalić szczegóły<br>
+      lub wyślij zapytanie o preferowany termin.
+    </p>
+    
+    <div class="wiertla-categories__mobile-rent-contact">
+      <a href="tel:+48123456789" class="wiertla-categories__mobile-rent-link">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span>+48 123 456 789</span>
+      </a>
+      
+      <a href="mailto:info@example.com" class="wiertla-categories__mobile-rent-link">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2"/>
+          <path d="M22 6l-10 7-10-7" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span>info@example.com</span>
+      </a>
+    </div>
+    
+    <button class="wiertla-categories__mobile-rent-form-btn">
+      <span>Zapytaj o dostępny termin</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M21 12L13 4V9C7 10 4 15 3 20C5.5 16.5 9 14.9 13 14.9V20L21 12Z" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
+    
+    <form class="wiertla-categories__mobile-rent-form">
+      <h4>SKORZYSTAJ Z FORMULARZA</h4>
+      
+      <div class="wiertla-categories__form-group">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <input type="text" placeholder="Osoba kontaktowa" required>
+      </div>
+      
+      <div class="wiertla-categories__form-group">
+        <input type="text" placeholder="Nazwa firmy" required>
+      </div>
+      
+      <div class="wiertla-categories__form-row">
+        <input type="tel" placeholder="Nr telefonu" required>
+        <input type="email" placeholder="E-mail" required>
+      </div>
+      
+      <div class="wiertla-categories__form-group">
+        <input type="text" placeholder="Symbol wiertła" required>
+      </div>
+      
+      <div class="wiertla-categories__form-group">
+        <input type="text" placeholder="Wpisz preferowany termin wypożyczenia" required>
+      </div>
+      
+      <button type="submit" class="wiertla-categories__form-submit">
+        <span>Wyślij wiadomość</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M21 12L13 4V9C7 10 4 15 3 20C5.5 16.5 9 14.9 13 14.9V20L21 12Z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </button>
+    </form>
+    
+    <div class="wiertla-categories__form-success">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <path d="M44 24L36 16L38.8 13.2L44 18.4L56.8 5.6L59.6 8.4L44 24Z" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <h4>Dziękujemy za wysłanie zapytania</h4>
+      <p>Czas na odpowiedź wynosi zwykle 24 godziny w dni robocze. Jeśli potrzebujesz wiertła szybciej, zadzwoń.</p>
+    </div>
+  </div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // Store all products data
-  const allProducts = [
+  allProducts = [
     {% for product in selected_collection.products %}
       {
         id: {{ product.id | json }},
@@ -187,191 +433,371 @@ document.addEventListener('DOMContentLoaded', function() {
         vendor: {{ product.vendor | json }},
         price: {{ product.price | money_without_trailing_zeros | json }},
         available: {{ product.available | json }},
-        diameter: {{ product.metafields.custom.diameter.value | json }},
+        fi: {{ product.metafields.custom.diameter.value | json }},
         length: {{ product.metafields.custom.length.value | json }},
         symbol: {{ product.metafields.custom.symbol.value | json }},
-        rentable: {{ product.metafields.custom.rentable.value | json }}
+        rentable: {{ product.metafields.custom.rentable.value | json }},
+        image: {{ product.featured_image | img_url: '100x' | json }}
       }{% unless forloop.last %},{% endunless %}
     {% endfor %}
   ];
 
-  // Log debug info
-  console.log('Collection info:', {
-    size: {{ selected_collection.products_count | json }},
-    loadedProducts: allProducts.length
-  });
-
-  // Pagination state
+  // Initialize variables
   let currentPage = 1;
-  let itemsPerPage = {{ items_per_page }};
-  let totalPages = Math.ceil(allProducts.length / itemsPerPage);
+  let itemsPerPage = 20;
+  let totalPages = 1;
+  let selectedCategory = 'wszystkie';
 
-  // DOM elements
-  const tableBody = document.getElementById('productsTableBody');
-  const prevButton = document.getElementById('prevPage');
-  const nextButton = document.getElementById('nextPage');
-  const resultsCount = document.getElementById('resultsCount');
-  const perPageButtons = document.querySelectorAll('.wiertla-categories__per-page-button');
-
-  // Function to update pagination state
-  function updatePaginationState(newItemsPerPage) {
-    itemsPerPage = parseInt(newItemsPerPage);
-    totalPages = Math.ceil(allProducts.length / itemsPerPage);
-    currentPage = 1; // Reset to first page when changing items per page
-    renderProducts();
+  // Function to handle pagination
+  function handlePagination(page) {
+    currentPage = page;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const productsToRender = filterProductsByCategory(allProducts, selectedCategory).slice(startIndex, endIndex);
+    renderProducts(productsToRender);
+    updatePaginationUI();
+    updateResultsCount();
   }
 
-  // Function to render products for current page
-  function renderProducts(productsToRender = allProducts) {
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    const pageProducts = productsToRender.slice(start, end);
+  // Function to filter products by selected category
+  function filterProductsByCategory(products, category) {
+    if (category === 'wszystkie') {
+      return products;
+    }
+    return products.filter(product => {
+      const vendor = (product.vendor || '').toLowerCase();
+      return vendor.includes(category);
+    });
+  }
+
+  // Function to handle items per page change
+  function handleItemsPerPageChange(newItemsPerPage) {
+    itemsPerPage = parseInt(newItemsPerPage);
+    currentPage = 1;
+    const filteredProducts = filterProductsByCategory(allProducts, selectedCategory);
+    totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    handlePagination(1);
+  }
+
+  // Function to handle category change
+  function handleCategoryChange(category) {
+    selectedCategory = category;
+    currentPage = 1;
+    const filteredProducts = filterProductsByCategory(allProducts, category);
+    totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    handlePagination(1);
+  }
+
+  // Function to update pagination UI
+  function updatePaginationUI() {
+    // Simple pagination (prev/next)
+    const prevButton = document.getElementById('prevPage');
+    const nextButton = document.getElementById('nextPage');
     
-    // Clear current table content
+    if (prevButton && nextButton) {
+      const filteredProducts = filterProductsByCategory(allProducts, selectedCategory);
+      totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+      
+      prevButton.disabled = currentPage === 1;
+      nextButton.disabled = currentPage === totalPages || totalPages === 0;
+      
+      prevButton.addEventListener('click', () => {
+        if (currentPage > 1) {
+          handlePagination(currentPage - 1);
+        }
+      });
+      
+      nextButton.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          handlePagination(currentPage + 1);
+        }
+      });
+    }
+  }
+
+  // Function to update results count
+  function updateResultsCount() {
+    const resultsCountElement = document.getElementById('resultsCount');
+    if (resultsCountElement) {
+      const filteredProducts = filterProductsByCategory(allProducts, selectedCategory);
+      const startIndex = (currentPage - 1) * itemsPerPage + 1;
+      const endIndex = Math.min(startIndex + itemsPerPage - 1, filteredProducts.length);
+      const totalItems = filteredProducts.length;
+      
+      if (totalItems === 0) {
+        resultsCountElement.textContent = '0 z 0';
+      } else {
+        resultsCountElement.textContent = `${startIndex}-${endIndex} z ${totalItems}`;
+      }
+    }
+  }
+
+  // Update the renderProducts function
+  function renderProducts(productsToRender = []) {
+    const tableBody = document.getElementById('productsTableBody');
+    if (!tableBody) return;
+    
     tableBody.innerHTML = '';
-    
-    if (pageProducts.length === 0) {
-      tableBody.innerHTML = `
-        <tr>
-          <td colspan="7" style="text-align: center; padding: 30px;">Brak produktów do wyświetlenia</td>
-        </tr>
-      `;
-      resultsCount.textContent = `0 - 0 z ${productsToRender.length}`;
+
+    if (productsToRender.length === 0) {
+      const tr = document.createElement('tr');
+      tr.className = 'wiertla-categories__table-row';
+      const td = document.createElement('td');
+      td.colSpan = 7;
+      td.textContent = 'Brak produktów do wyświetlenia';
+      td.style.textAlign = 'center';
+      td.style.padding = '20px';
+      tr.appendChild(td);
+      tableBody.appendChild(tr);
       return;
     }
 
-    // Render products
-    pageProducts.forEach(product => {
-      if (product.available) {
-        const row = document.createElement('tr');
-        row.className = 'wiertla-categories__table-row';
-        row.setAttribute('data-product-id', product.id);
-        row.onclick = () => window.location.href = product.url;
+    productsToRender.forEach((product, index) => {
+      const tr = document.createElement('tr');
+      tr.className = 'wiertla-categories__table-row';
+      tr.setAttribute('data-original-index', index);
+      tr.setAttribute('data-product-id', product.id);
+      
+      // Add click event to navigate to product page
+      tr.addEventListener('click', () => {
+        window.location.href = product.url;
+      });
+
+      // Create type/image cell
+      const typeCell = document.createElement('td');
+      if (product.image) {
+        const img = document.createElement('img');
+        img.src = product.image;
+        img.alt = product.title || '';
+        img.loading = 'lazy';
+        typeCell.appendChild(img);
+      } else {
+        // Fallback icon based on vendor/category
+        const vendor = (product.vendor || '').toLowerCase();
+        let iconPath = '/assets/table_';
         
-        row.innerHTML = `
-          <td>${product.type || ''}</td>
-          <td>${product.diameter || ''}</td>
-          <td>${product.length || ''}</td>
-          <td>${product.symbol || ''}</td>
-          <td>${product.vendor}</td>
-          <td>${product.price}</td>
-          <td>
-            ${product.rentable ? '<span class="wiertla-categories__rent-icon">R</span>' : ''}
-            <img src="{{ 'table_arrow.svg' | asset_url }}" alt="Arrow" class="wiertla-categories__table-arrow">
-          </td>
-        `;
+        if (vendor.includes('koronkowe')) {
+          iconPath += 'koronkowe.png';
+        } else if (vendor.includes('plytkowe')) {
+          iconPath += 'plytkowe.png';
+        } else if (vendor.includes('vhm')) {
+          iconPath += 'vhm.png';
+        } else if (vendor.includes('sandvik') || vendor.includes('sandavik')) {
+          iconPath += 'sandavik.png';
+        } else if (vendor.includes('amec')) {
+          iconPath += 'amec.png';
+        } else if (vendor.includes('ksem')) {
+          iconPath += 'ksem.png';
+        } else {
+          // Default icon
+          iconPath += 'vhm.png';
+        }
         
-        tableBody.appendChild(row);
+        const img = document.createElement('img');
+        img.src = iconPath;
+        img.alt = vendor;
+        img.loading = 'lazy';
+        typeCell.appendChild(img);
       }
+      typeCell.setAttribute('data-label', 'Typ');
+      tr.appendChild(typeCell);
+      
+      // Create diameter cell
+      const fiCell = document.createElement('td');
+      fiCell.textContent = product.fi || '-';
+      fiCell.setAttribute('data-label', '⌀ Fi');
+      tr.appendChild(fiCell);
+      
+      // Create length cell
+      const lengthCell = document.createElement('td');
+      lengthCell.textContent = product.length || '-';
+      lengthCell.setAttribute('data-label', 'D/mm');
+      tr.appendChild(lengthCell);
+      
+      // Create symbol cell
+      const symbolCell = document.createElement('td');
+      symbolCell.textContent = product.symbol || '-';
+      symbolCell.setAttribute('data-label', 'Symbol');
+      tr.appendChild(symbolCell);
+      
+      // Create vendor cell
+      const vendorCell = document.createElement('td');
+      vendorCell.textContent = product.vendor || '-';
+      vendorCell.setAttribute('data-label', 'Producent');
+      vendorCell.setAttribute('data-producer', (product.vendor || '').toLowerCase());
+      tr.appendChild(vendorCell);
+      
+      // Create price cell
+      const priceCell = document.createElement('td');
+      priceCell.textContent = product.price || '-';
+      priceCell.setAttribute('data-label', 'Cena netto');
+      tr.appendChild(priceCell);
+      
+      // Create action cell
+      const actionCell = document.createElement('td');
+      const arrowImg = document.createElement('img');
+      arrowImg.src = '/assets/table_arrow.svg';
+      arrowImg.alt = 'View';
+      arrowImg.className = 'wiertla-categories__table-arrow';
+      actionCell.appendChild(arrowImg);
+      
+      if (product.rentable) {
+        const rentIcon = document.createElement('span');
+        rentIcon.className = 'wiertla-categories__rent-icon';
+        rentIcon.textContent = 'R';
+        rentIcon.title = 'Dostępne do wypożyczenia';
+        actionCell.appendChild(rentIcon);
+      }
+      
+      tr.appendChild(actionCell);
+      
+      // Add mobile view containers
+      const mobileTopRow = document.createElement('div');
+      mobileTopRow.className = 'wiertla-categories__table-row-top';
+      
+      const mobileTypeIcon = typeCell.cloneNode(true);
+      const mobileDummyIcon = document.createElement('div');
+      mobileDummyIcon.className = 'wiertla-categories__table-dummy-icon';
+      
+      if (product.rentable) {
+        const rentIcon = document.createElement('span');
+        rentIcon.className = 'wiertla-categories__rent-icon';
+        rentIcon.textContent = 'R';
+        mobileDummyIcon.appendChild(rentIcon);
+      }
+      
+      const mobileFiCell = fiCell.cloneNode(true);
+      const mobileLengthCell = lengthCell.cloneNode(true);
+      const mobileSymbolCell = symbolCell.cloneNode(true);
+      
+      mobileTopRow.appendChild(mobileTypeIcon);
+      mobileTopRow.appendChild(mobileDummyIcon);
+      mobileTopRow.appendChild(mobileFiCell);
+      mobileTopRow.appendChild(mobileLengthCell);
+      mobileTopRow.appendChild(mobileSymbolCell);
+      
+      const mobileBottomRow = document.createElement('div');
+      mobileBottomRow.className = 'wiertla-categories__table-row-bottom';
+      
+      const mobileVendorCell = vendorCell.cloneNode(true);
+      const mobilePriceCell = priceCell.cloneNode(true);
+      
+      mobileBottomRow.appendChild(mobileVendorCell);
+      mobileBottomRow.appendChild(mobilePriceCell);
+      
+      tr.appendChild(mobileTopRow);
+      tr.appendChild(mobileBottomRow);
+      
+      tableBody.appendChild(tr);
     });
-
-    // Update results count
-    resultsCount.textContent = `${start + 1} - ${Math.min(end, productsToRender.length)} z ${productsToRender.length}`;
-    
-    // Update pagination buttons
-    prevButton.disabled = currentPage === 1;
-    nextButton.disabled = currentPage === totalPages;
   }
 
-  // Event listeners for pagination
-  prevButton.addEventListener('click', () => {
-    if (currentPage > 1) {
-      currentPage--;
-      renderProducts();
-    }
-  });
+  // Initialize the table with first page
+  document.addEventListener('DOMContentLoaded', function() {
+    // Store all products data
+    allProducts = [
+      {% for product in selected_collection.products %}
+        {
+          id: {{ product.id | json }},
+          title: {{ product.title | json }},
+          url: {{ product.url | json }},
+          type: {{ product.type | json }},
+          vendor: {{ product.vendor | json }},
+          price: {{ product.price | money_without_trailing_zeros | json }},
+          available: {{ product.available | json }},
+          fi: {{ product.metafields.custom.diameter.value | json }},
+          length: {{ product.metafields.custom.length.value | json }},
+          symbol: {{ product.metafields.custom.symbol.value | json }},
+          rentable: {{ product.metafields.custom.rentable.value | json }},
+          image: {{ product.featured_image | img_url: '100x' | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ];
 
-  nextButton.addEventListener('click', () => {
-    if (currentPage < totalPages) {
-      currentPage++;
-      renderProducts();
+    if (allProducts.length === 0) {
+      // If no products, display empty state
+      renderProducts([]);
+      updateResultsCount();
+      return;
     }
-  });
 
-  // Handle per page selection
-  perPageButtons.forEach(button => {
-    button.addEventListener('click', function(e) {
-      e.preventDefault();
-      const newItemsPerPage = this.getAttribute('data-value');
-      
-      // Update active state
-      perPageButtons.forEach(btn => btn.classList.remove('active'));
-      this.classList.add('active');
-      
-      // Update pagination and render
-      updatePaginationState(newItemsPerPage);
+    // Initialize category filter links
+    const categoryLinks = document.querySelectorAll('.wiertla-categories__icon-item');
+    categoryLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Remove active class from all links
+        categoryLinks.forEach(l => l.classList.remove('active'));
+        
+        // Add active class to clicked link
+        this.classList.add('active');
+        
+        const category = this.getAttribute('data-category') || 'wszystkie';
+        handleCategoryChange(category);
+      });
     });
-  });
-
-  // Initialize table with default items per page
-  renderProducts();
-
-  // Search functionality
-  const searchInput = document.querySelector('.wiertla-search__input');
-
-  function performSearch(searchTerm) {
-    const filteredProducts = allProducts.filter(product => {
-      const searchString = searchTerm.toLowerCase();
-      return (
-        (product.title && product.title.toLowerCase().includes(searchString)) ||
-        (product.type && product.type.toLowerCase().includes(searchString)) ||
-        (product.vendor && product.vendor.toLowerCase().includes(searchString)) ||
-        (product.symbol && product.symbol.toLowerCase().includes(searchString))
-      );
-    });
-
-    currentPage = 1;
-    totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-    renderProducts(filteredProducts);
-  }
-
-  searchInput.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter') {
-      performSearch(searchInput.value.trim());
-    }
-  });
-
-  // Handle filters
-  const filters = document.querySelectorAll('.wiertla-categories__filter');
-  const filterButton = document.querySelector('.wiertla-categories__filter-button');
-
-  function applyFilters() {
-    let filteredProducts = [...allProducts];
     
-    filters.forEach(filter => {
-      const filterType = filter.getAttribute('data-filter');
-      const filterValue = filter.value;
-      
-      if (filterValue) {
-        filteredProducts = filteredProducts.filter(product => {
-          switch(filterType) {
-            case 'type':
-              return product.type === filterValue;
-            case 'manufacturer':
-              return product.vendor === filterValue;
-            // Add other filter cases as needed
-            default:
-              return true;
+    // Initialize producer dropdown if it exists
+    const producerDropdown = document.querySelector('.wiertla-categories__producer-select');
+    if (producerDropdown) {
+      producerDropdown.addEventListener('change', function() {
+        const category = this.value;
+        
+        // Update active category in nav links
+        categoryLinks.forEach(link => {
+          if (link.getAttribute('data-category') === category) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
           }
         });
-      }
+        
+        handleCategoryChange(category);
+      });
+    }
+    
+    // Initialize with first page of items
+    handleItemsPerPageChange(20);
+    
+    // Add event listeners for items per page buttons
+    const perPageButtons = document.querySelectorAll('.wiertla-categories__per-page-button');
+    perPageButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const newItemsPerPage = button.getAttribute('data-value');
+        perPageButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        handleItemsPerPageChange(newItemsPerPage);
+      });
     });
-
-    currentPage = 1;
-    totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-    renderProducts(filteredProducts);
-  }
-
-  filters.forEach(filter => {
-    filter.addEventListener('change', applyFilters);
+    
+    // Initialize search functionality
+    const searchInput = document.querySelector('.wiertla-categories__search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        if (searchTerm.length > 0) {
+          const filteredProducts = allProducts.filter(product => {
+            return (
+              (product.title && product.title.toLowerCase().includes(searchTerm)) ||
+              (product.vendor && product.vendor.toLowerCase().includes(searchTerm)) ||
+              (product.symbol && product.symbol.toLowerCase().includes(searchTerm)) ||
+              (product.fi && product.fi.toString().includes(searchTerm))
+            );
+          });
+          currentPage = 1;
+          totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+          renderProducts(filteredProducts.slice(0, itemsPerPage));
+          updatePaginationUI();
+          updateResultsCount();
+        } else {
+          handleCategoryChange(selectedCategory);
+        }
+      });
+    }
   });
 
-  filterButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    filters.forEach(filter => filter.value = '');
-    currentPage = 1;
-    renderProducts();
-  });
+  // ... rest of the existing code ...
 });
 </script>
 
@@ -379,6 +805,23 @@ document.addEventListener('DOMContentLoaded', function() {
 {% render 'drill-stats-nav' %}
 
 {% endpaginate %}
+
+<!-- Add fullscreen mode container at the end of the file, before closing wiertla-categories div -->
+<div class="wiertla-categories__fullscreen-mode">
+  <div class="wiertla-categories__fullscreen-header">
+    <div class="wiertla-categories__fullscreen-title">
+      <h2>Przeglądaj wiertła w tabeli</h2>
+      <p>Stale poszerzamy stan magazynowy, aktualizując ofertę o nowe modele wierteł CNC</p>
+    </div>
+    <button class="wiertla-categories__fullscreen-close">
+      <span>Zamknij tryb pełnoekranowy</span>
+      <img src="{{ 'zoom_out_map.svg' | asset_url }}" alt="Exit Fullscreen" class="wiertla-categories__fullscreen-icon">
+    </button>
+  </div>
+  <div class="wiertla-categories__fullscreen-content">
+    <!-- Filters and table will be cloned here by JavaScript -->
+  </div>
+</div>
 
 {% schema %}
 {
@@ -425,7 +868,12 @@ document.addEventListener('DOMContentLoaded', function() {
 .wiertla-categories__tabs {
   display: flex;
   gap: 15px;
-  margin-bottom: 20px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.wiertla-categories__status-filters, .wiertla-categories__icons, .wiertla-categories__filters, .wiertla-categories__content, .category-desc, .faq {
+    max-width: 1440px;
+  margin: 0 auto;
 }
 
 .wiertla-categories__tab {
@@ -455,7 +903,9 @@ document.addEventListener('DOMContentLoaded', function() {
 .wiertla-categories__status-filters {
   display: flex;
   gap: 10px;
-  margin-bottom: 30px;
+  padding-bottom: 30px;
+  background: #F5F5F8;
+  padding-top: 20px;
 }
 
 .wiertla-categories__status-filter {
@@ -487,8 +937,9 @@ document.addEventListener('DOMContentLoaded', function() {
   justify-content: space-between;
   align-items: center;
   gap: 0;
-  margin-bottom: 40px;
+  padding-bottom: 40px;
   position: relative;
+  background:#F5F5F8;
 }
 
 .wiertla-categories__icon-item {
@@ -545,66 +996,121 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 /* Search Styles */
-.wiertla-search__container-top {
-  margin-bottom: 20px;
+.wiertla-categories__search {
   width: 100%;
-}
-
-.wiertla-search__input-group {
-  position: relative;
+  margin-bottom: 24px;
   display: flex;
   align-items: center;
-  width: 100%;
+  gap: 10px;
 }
 
-.wiertla-search__input {
-  width: 100%;
-  height: 40px;
-  padding: 8px 40px 8px 12px;
-  border: 2px solid #112832;
-  border-radius: 4px;
-  font-family: "Montserrat";
-  font-size: 14px;
-  line-height: 22px;
-}
-
-.wiertla-search__icon-wrapper {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.wiertla-search__icon {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-}
-
-.wiertla-search__button {
+.wiertla-categories__search .wiertla-search__label {
   font-family: "League Spartan";
   font-weight: 700;
   font-size: 18px;
   line-height: 16.6px;
   letter-spacing: 6%;
   text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  gap: 22px;
-  background: #FCD34D;
-  border: 2px solid #112832;
-  border-radius: 40px;
-  padding: 8.5px 15px 8.5px 20px;
-  cursor: pointer;
-  transition: opacity 0.3s;
+  color: #112832;
+  display: block;
 }
 
-.wiertla-search__button:hover {
-  opacity: 0.9;
+.wiertla-categories__search .wiertla-search__input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.wiertla-categories__search .wiertla-search__input {
+  width: 100%;
+  height: 50px;
+  border: 2px solid #E2E2E7;
+  border-radius: 30px;
+  padding: 11px 17px 11px 50px;
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0.03em;
+  color: #112832;
+}
+
+.wiertla-categories__search .wiertla-search__input::placeholder {
+  color: #112832;
+}
+
+.wiertla-categories__search .wiertla-search__submit {
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 23px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #112832;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wiertla-categories__search .wiertla-search__clear {
+  position: absolute;
+  right: 220px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 23px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #112832;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wiertla-categories__search .wiertla-search__clear.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.wiertla-categories__search .wiertla-search__button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 220px;
+  height: 50px;
+  border: 2px solid #112832;
+  border-radius: 40px;
+  background: #FFE500;
+  padding: 11px 17px 11px 22px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  cursor: pointer;
+}
+
+.wiertla-categories__search .wiertla-search__button-text {
+  font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 6%;
+  text-transform: uppercase;
+  color: #112832;
+}
+
+.wiertla-categories__search .wiertla-search__button-icon {
+  width: 23px;
+  height: 20px;
 }
 
 /* Preview Component Styles */
@@ -723,35 +1229,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* Table Styles */
 .wiertla-categories__table-container {
-  background: white;
-  padding: 20px;
-  border-radius: 0 0 30px 30px;
-  margin-top: 20px;
-  max-height: 800px;
-  overflow-y: auto;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -16px;
+  padding: 0 16px;
+  scrollbar-width: thin;
 }
 
 .wiertla-categories__table {
-  width: 100%;
-  border-collapse: collapse;
+  min-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .wiertla-categories__table th {
   padding: 16px;
   text-align: left;
-  border-bottom: 1px solid var(--color-gray-200);
+  border-bottom: 2px solid #E2E2E7;
+  border-right: 2px solid #E2E2E7;
   font-family: 'League Spartan', sans-serif;
   font-weight: 700;
   font-size: 18px;
   line-height: 100%;
   letter-spacing: 0.06em;
   color: #112832;
+  background: white;
+}
+
+.wiertla-categories__table th:first-child {
+  border-top-left-radius: 15px;
+}
+
+.wiertla-categories__table th:last-child {
+  border-top-right-radius: 15px;
+  border-right: none;
 }
 
 .wiertla-categories__table td {
   padding: 6.5px 17px;
   text-align: left;
-  border-bottom: 1px solid var(--color-gray-200);
+  border-bottom: 2px solid #E2E2E7;
+  border-right: 2px solid #E2E2E7;
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-size: 16px;
@@ -759,6 +1278,11 @@ document.addEventListener('DOMContentLoaded', function() {
   letter-spacing: 0.03em;
   color: #112832;
   cursor: pointer;
+  background: #F5F5F8;
+}
+
+.wiertla-categories__table td:last-child {
+  border-right: none;
 }
 
 .wiertla-categories__table-row:hover {
@@ -767,17 +1291,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .wiertla-categories__table-row:hover td {
   color: #F5F5F8;
+  background-color: #112832;
 }
 
 .wiertla-categories__table-row td:last-child {
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-content: flex-end;
 }
 
 .wiertla-categories__table-arrow {
   width: 24px;
   height: 24px;
+  transition: transform 0.3s ease;
+}
+
+.wiertla-categories__table-row:hover .wiertla-categories__table-arrow {
+  transform: translateX(5px);
+}
+
+.wiertla-categories__table-row td:last-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.wiertla-categories__rent-icon {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: inherit;
 }
 
 /* Results Count Styles */
@@ -822,13 +1367,13 @@ document.addEventListener('DOMContentLoaded', function() {
   justify-content: center;
   gap: 20px;
   margin-top: 40px;
+  position: relative;
 }
 
 .wiertla-categories__pagination-button {
-  width: 207px;
+  width: 132px;
   height: 50px;
   padding: 11px 22px;
-  gap: 22px;
   border-radius: 40px;
   background: #112832;
   color: #F5F5F8;
@@ -843,20 +1388,51 @@ document.addEventListener('DOMContentLoaded', function() {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.wiertla-categories__pagination-button::before,
+.wiertla-categories__pagination-button::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#prevPage::before {
+  left: 10px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22' fill='none'%3E%3Cpath d='M7.3556 20.1673L5.72852 18.5402L13.2681 11.0007L5.72852 3.46107L7.3556 1.83398L16.5223 11.0007L7.3556 20.1673Z' fill='%23F5F5F8' transform='rotate(180 11 11)'/%3E%3C/svg%3E");
+}
+
+#nextPage::after {
+  right: 10px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22' fill='none'%3E%3Cpath d='M7.3556 20.1673L5.72852 18.5402L13.2681 11.0007L5.72852 3.46107L7.3556 1.83398L16.5223 11.0007L7.3556 20.1673Z' fill='%23F5F5F8'/%3E%3C/svg%3E");
 }
 
 .wiertla-categories__pagination-button:hover {
   opacity: 0.9;
 }
 
-.wiertla-categories__pagination-button.disabled {
+.wiertla-categories__pagination-button[disabled] {
   background: #E2E2E7;
   color: #445D68;
   cursor: not-allowed;
   opacity: 0.7;
 }
 
-.wiertla-categories__pagination-button.disabled:hover {
+.wiertla-categories__pagination-button[disabled]::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22' fill='none'%3E%3Cpath d='M7.3556 20.1673L5.72852 18.5402L13.2681 11.0007L5.72852 3.46107L7.3556 1.83398L16.5223 11.0007L7.3556 20.1673Z' fill='%23445D68' transform='rotate(180 11 11)'/%3E%3C/svg%3E");
+}
+
+.wiertla-categories__pagination-button[disabled]::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22' fill='none'%3E%3Cpath d='M7.3556 20.1673L5.72852 18.5402L13.2681 11.0007L5.72852 3.46107L7.3556 1.83398L16.5223 11.0007L7.3556 20.1673Z' fill='%23445D68'/%3E%3C/svg%3E");
+}
+
+.wiertla-categories__pagination-button[disabled]:hover {
   opacity: 0.7;
 }
 
@@ -903,4 +1479,2642 @@ document.addEventListener('DOMContentLoaded', function() {
     justify-content: center;
   }
 }
-{% endstylesheet %} 
+
+.wiertla-categories__content .wiertla-search__input-group {
+  width: 425px;
+  height: 50px;
+  gap: 10px;
+  padding: 11px 17px;
+}
+
+.wiertla-categories__title {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.wiertla-categories__description {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.03em;
+  color: #112832;
+  margin-bottom: 30px;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .wiertla-categories__search {
+    margin-bottom: 16px;
+  }
+
+  .wiertla-categories__search .wiertla-search__input {
+    height: 50px;
+    font-size: 16px;
+    padding: 0 50px;
+  }
+
+  .wiertla-categories__search .wiertla-search__clear,
+  .wiertla-categories__search .wiertla-search__submit {
+    width: 50px;
+    height: 50px;
+  }
+
+  .wiertla-categories__search .wiertla-search__clear {
+    right: 50px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  .wiertla-categories__search .wiertla-search__clear,
+  .wiertla-categories__search .wiertla-search__submit {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Mobile Card Layout */
+@media screen and (max-width: 768px) {
+  .wiertla-categories__table,
+  .wiertla-categories__table thead,
+  .wiertla-categories__table tbody,
+  .wiertla-categories__table th,
+  .wiertla-categories__table td,
+  .wiertla-categories__table tr {
+    display: block;
+  }
+
+  .wiertla-categories__table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .wiertla-categories__table tr {
+    width: 100%;
+    max-width: 264px;
+    height: 102px;
+    padding: 10px;
+    margin: 0 auto 16px;
+    display: grid;
+    grid-template-rows: 34px 1fr;
+    gap: 14px;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(17, 40, 50, 0.05);
+  }
+
+  .wiertla-categories__table-row-top {
+    display: grid;
+    grid-template-columns: 34px 34px repeat(3, 1fr);
+    gap: 10px;
+    align-items: center;
+    height: 34px;
+  }
+
+  .wiertla-categories__table-row-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .wiertla-categories__table td {
+    padding: 0;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    line-height: 100%;
+    color: #112832;
+    height: 100%;
+  }
+
+  .wiertla-categories__table td:first-child {
+    width: 34px;
+    height: 34px;
+    border-top: 2px solid #112832;
+    border-bottom: 2px solid #112832;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .wiertla-categories__table td:first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .wiertla-categories__table-dummy-icon {
+    width: 34px;
+    height: 34px;
+    border-top: 2px solid #112832;
+    border-bottom: 2px solid #112832;
+  }
+
+  .wiertla-categories__table-dummy-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .wiertla-categories__table td[data-label="⌀ Fi"],
+  .wiertla-categories__table td[data-label="Długość"],
+  .wiertla-categories__table td[data-label="Symbol"],
+  .wiertla-categories__table td[data-label="Cena"] {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+  }
+
+  .wiertla-categories__table td[data-label="Producent"] {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    color: #445D68;
+  }
+
+  .wiertla-categories__table td[data-label="Symbol"] {
+    justify-content: flex-end;
+  }
+}
+
+/* Prevent border doubling where cells meet */
+@media screen and (max-width: 768px) {
+  .wiertla-categories__table td:not(:first-child) {
+    margin-left: -2px;
+  }
+  
+  .wiertla-categories__table td:not(:last-child) {
+    margin-right: -2px;
+  }
+}
+
+/* Tablet Adjustments */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .wiertla-categories__table-container {
+    margin: 0;
+    padding: 0;
+  }
+
+  .wiertla-categories__table th,
+  .wiertla-categories__table td {
+    padding: 12px 8px;
+  }
+
+  .wiertla-categories__table th:first-child,
+  .wiertla-categories__table td:first-child {
+    padding-left: 16px;
+  }
+
+  .wiertla-categories__table th:last-child,
+  .wiertla-categories__table td:last-child {
+    padding-right: 16px;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  .wiertla-categories__table-row {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .wiertla-categories__table-row:active {
+    background-color: #112832;
+  }
+
+  .wiertla-categories__table-row:active td {
+    color: #F5F5F8;
+  }
+}
+
+/* Scrollbar Styling */
+.wiertla-categories__table-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.wiertla-categories__table-container::-webkit-scrollbar-track {
+  background: #F5F5F8;
+  border-radius: 3px;
+}
+
+.wiertla-categories__table-container::-webkit-scrollbar-thumb {
+  background: #E2E2E7;
+  border-radius: 3px;
+}
+
+.wiertla-categories__table-container::-webkit-scrollbar-thumb:hover {
+  background: #112832;
+}
+
+/* Enhanced Responsive Variables */
+:root {
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 40px;
+  
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 15px;
+  --border-radius-xl: 30px;
+  
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Refined Breakpoints */
+@media (max-width: 1440px) {
+  .wiertla-categories__container {
+    padding: 0 var(--spacing-lg);
+  }
+}
+
+@media (max-width: 1200px) {
+  .wiertla-categories__icons {
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  
+  .wiertla-categories__icon {
+    padding: 0 var(--spacing-sm);
+  }
+}
+
+@media (max-width: 1024px) {
+  .wiertla-categories {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .wiertla-categories__container {
+    padding: 0 var(--spacing-md);
+  }
+  
+  .wiertla-categories__content {
+    gap: var(--spacing-lg);
+  }
+  
+  .wiertla-categories__tabs {
+    gap: var(--spacing-sm);
+  }
+  
+  .wiertla-categories__tab {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .wiertla-categories {
+    padding: var(--spacing-md) 0;
+  }
+
+  .wiertla-categories__container {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .wiertla-categories__icons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md);
+  }
+  
+  .wiertla-categories__icon-item::after {
+    display: none;
+  }
+  
+  .wiertla-categories__icon-label {
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
+/* Enhanced Card Layout for Mobile */
+@media screen and (max-width: 768px) {
+  .wiertla-categories__table tr {
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  }
+
+  .wiertla-categories__table tr:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .wiertla-categories__table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    gap: var(--spacing-sm);
+  }
+
+  .wiertla-categories__table td:before {
+    position: static;
+    width: auto;
+    min-width: 100px;
+    padding: 0;
+    color: #757575;
+  }
+
+  .wiertla-categories__table td:last-child {
+    background: rgba(17, 40, 50, 0.03);
+    justify-content: flex-end;
+    border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+  }
+  
+  /* Enhanced Touch Feedback */
+  .wiertla-categories__table-row {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .wiertla-categories__table-row::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 70%);
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.4s ease-out, opacity 0.3s ease-out;
+    pointer-events: none;
+  }
+
+  .wiertla-categories__table-row:active::after {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 1;
+  }
+}
+
+/* Enhanced Filter Responsiveness */
+@media (max-width: 768px) {
+  .wiertla-categories__filters {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+  }
+
+  .wiertla-categories__filters-left {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+
+  .wiertla-categories__filter {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .wiertla-categories__filter-button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .wiertla-categories__filters-right {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .wiertla-categories__per-page-buttons {
+    order: -1;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: var(--spacing-sm);
+  }
+}
+
+/* Enhanced Touch Interactions */
+@media (hover: none) {
+  .wiertla-categories__tab,
+  .wiertla-categories__status-filter,
+  .wiertla-categories__filter-button,
+  .wiertla-categories__per-page-button,
+  .wiertla-categories__pagination-button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .wiertla-categories__tab:active,
+  .wiertla-categories__status-filter:active,
+  .wiertla-categories__filter-button:active,
+  .wiertla-categories__per-page-button:active {
+    transform: scale(0.96);
+    transition: transform 0.2s ease;
+  }
+
+  .wiertla-categories__pagination-button:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+/* Improved Scrollbar for Touch Devices */
+@media (hover: none) {
+  .wiertla-categories__table-container {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .wiertla-categories__table-container::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Loading State Animations */
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+.wiertla-categories__table-row.loading {
+  animation: shimmer 1s linear infinite;
+  background: linear-gradient(to right, #f6f7f8 8%, #edeef1 18%, #f6f7f8 33%);
+  background-size: 800px 104px;
+}
+
+/* Mobile Navigation Styles */
+.wiertla-categories__mobile-nav {
+  display: none;
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+}
+
+.wiertla-categories__scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: var(--spacing-sm);
+}
+
+.wiertla-categories__scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.wiertla-categories__icons.mobile {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: 0 var(--spacing-sm);
+  width: max-content;
+}
+
+.wiertla-categories__scroll-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--spacing-sm);
+}
+
+.wiertla-categories__scroll-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #E2E2E7;
+  transition: background-color var(--transition-fast);
+}
+
+.wiertla-categories__scroll-dot.active {
+  background-color: #112832;
+}
+
+/* Mobile Filter Button */
+.wiertla-categories__mobile-filter-btn {
+  display: none;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: #112832;
+  color: #F5F5F8;
+  border: none;
+  border-radius: var(--border-radius-xl);
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.wiertla-categories__mobile-filter-btn:active {
+  background-color: #1a3d4d;
+}
+
+/* Mobile Filter Modal */
+.wiertla-categories__mobile-filter-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #FFFFFF;
+  z-index: 1000;
+  flex-direction: column;
+}
+
+.wiertla-categories__mobile-filter-modal.active {
+  display: flex;
+}
+
+.wiertla-categories__mobile-filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: 2px solid #E2E2E7;
+}
+
+.wiertla-categories__mobile-filter-header h3 {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  margin: 0;
+}
+
+.wiertla-categories__mobile-filter-close {
+  background: none;
+  border: none;
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  color: #112832;
+}
+
+.wiertla-categories__mobile-filter-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+}
+
+.wiertla-categories__mobile-filter-footer {
+  padding: var(--spacing-md);
+  border-top: 2px solid #E2E2E7;
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.wiertla-categories__mobile-filter-apply,
+.wiertla-categories__mobile-filter-reset {
+  flex: 1;
+  height: 50px;
+  border-radius: var(--border-radius-xl);
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.wiertla-categories__mobile-filter-apply {
+  background: #112832;
+  color: #F5F5F8;
+  border: none;
+}
+
+.wiertla-categories__mobile-filter-reset {
+  background: #F5F5F8;
+  color: #112832;
+  border: 2px solid #112832;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .wiertla-categories__icons:not(.mobile) {
+    display: none;
+  }
+
+  .wiertla-categories__mobile-nav {
+    display: block;
+  }
+
+  .wiertla-categories__mobile-filter-btn {
+    display: flex;
+  }
+
+  .wiertla-categories__filters {
+    display: none;
+  }
+
+  .wiertla-categories__icon-item {
+    flex: 0 0 auto;
+    width: 120px;
+  }
+
+  .wiertla-categories__icon {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+  }
+
+  .wiertla-categories__icon-label {
+    font-size: 12px;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  .wiertla-categories__mobile-filter-btn:active,
+  .wiertla-categories__mobile-filter-apply:active,
+  .wiertla-categories__mobile-filter-reset:active {
+    transform: scale(0.98);
+  }
+
+  .wiertla-categories__mobile-filter-close:active {
+    transform: scale(0.9);
+  }
+}
+
+/* Mobile Controls */
+.wiertla-categories__mobile-controls {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: #FFFFFF;
+  margin-bottom: var(--spacing-md);
+}
+
+.wiertla-categories__mobile-per-page {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* Filter Modal Styles */
+.wiertla-categories__mobile-filter-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #FFFFFF;
+  z-index: 1000;
+  flex-direction: column;
+}
+
+.wiertla-categories__mobile-filter-modal.active {
+  display: flex;
+}
+
+.wiertla-categories__mobile-filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: 2px solid #E2E2E7;
+}
+
+.wiertla-categories__mobile-filter-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.wiertla-categories__mobile-filter-title h3 {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0;
+}
+
+.wiertla-categories__mobile-filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+}
+
+.wiertla-categories__mobile-filter-show,
+.wiertla-categories__mobile-sort-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  height: 50px;
+  background: #FFE500;
+  border: 2px solid #112832;
+  border-radius: var(--border-radius-xl);
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #112832;
+}
+
+/* Rent Modal Styles */
+.wiertla-categories__mobile-rent-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #FFFFFF;
+  z-index: 1000;
+  flex-direction: column;
+}
+
+.wiertla-categories__mobile-rent-modal.active {
+  display: flex;
+}
+
+.wiertla-categories__mobile-rent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: 2px solid #E2E2E7;
+}
+
+.wiertla-categories__mobile-rent-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.wiertla-categories__mobile-rent-title h3 {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0;
+}
+
+.wiertla-categories__mobile-rent-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+}
+
+.wiertla-categories__mobile-rent-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #112832;
+  margin-bottom: var(--spacing-lg);
+}
+
+.wiertla-categories__mobile-rent-contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.wiertla-categories__mobile-rent-link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: #112832;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+}
+
+.wiertla-categories__mobile-rent-form-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 50px;
+  padding: 0 var(--spacing-md);
+  background: #FFE500;
+  border: 2px solid #112832;
+  border-radius: var(--border-radius-xl);
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #112832;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Rent Form Styles */
+.wiertla-categories__mobile-rent-form {
+  display: none;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.wiertla-categories__mobile-rent-form.active {
+  display: flex;
+}
+
+.wiertla-categories__mobile-rent-form h4 {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0 0 var(--spacing-md);
+}
+
+.wiertla-categories__form-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+}
+
+.wiertla-categories__form-group input {
+  flex: 1;
+  height: 50px;
+  padding: 0 var(--spacing-md);
+  border: 2px solid #E2E2E7;
+  border-radius: var(--border-radius-xl);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+}
+
+.wiertla-categories__form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+}
+
+.wiertla-categories__form-submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 50px;
+  padding: 0 var(--spacing-md);
+  background: #FFE500;
+  border: 2px solid #112832;
+  border-radius: var(--border-radius-xl);
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #112832;
+}
+
+.wiertla-categories__form-submit.sent {
+  background: transparent;
+  border-color: #FFE500;
+  pointer-events: none;
+}
+
+/* Success Message Styles */
+.wiertla-categories__form-success {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg) 0;
+}
+
+.wiertla-categories__form-success.active {
+  display: flex;
+}
+
+.wiertla-categories__form-success h4 {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0;
+}
+
+.wiertla-categories__form-success p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #445D68;
+  margin: 0;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .wiertla-categories__mobile-controls {
+    display: flex;
+  }
+  
+  .wiertla-categories__filters {
+    display: none;
+  }
+  
+  .wiertla-categories__table-row:first-child .wiertla-categories__rent-icon {
+    display: inline-flex;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  .wiertla-categories__mobile-filter-btn:active,
+  .wiertla-categories__mobile-filter-show:active,
+  .wiertla-categories__mobile-sort-btn:active,
+  .wiertla-categories__mobile-rent-form-btn:active,
+  .wiertla-categories__form-submit:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Category Tabs Responsive */
+@media (max-width: 768px) {
+  .wiertla-categories__tabs {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: 0 var(--spacing-sm);
+  }
+
+  .wiertla-categories__tab {
+    width: 100%;
+    height: 42px;
+    font-size: 16px;
+    border-width: 2px;
+  }
+}
+
+/* Status Filters Responsive */
+@media (max-width: 768px) {
+  .wiertla-categories__status-filters {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
+  .wiertla-categories__status-filter {
+    width: calc(50% - var(--spacing-sm));
+    min-width: 120px;
+    font-size: 16px;
+    height: 38px;
+  }
+}
+
+/* Category Icons Desktop Responsive */
+@media (max-width: 768px) {
+  .wiertla-categories__icons:not(.mobile) {
+    display: none;
+  }
+}
+
+/* Preview Component Responsive */
+@media (max-width: 768px) {
+  .wiertla-categories__preview {
+    padding: var(--spacing-sm);
+    margin: 0 var(--spacing-sm);
+  }
+
+  .wiertla-categories__preview-title {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .wiertla-categories__preview-image {
+    margin: var(--spacing-md) 0;
+  }
+
+  .wiertla-categories__preview-text {
+    font-size: 14px;
+    text-align: center;
+    br {
+      display: none;
+    }
+  }
+}
+
+/* Results Count and Pagination Responsive */
+@media (max-width: 768px) {
+  .wiertla-categories__results {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .wiertla-categories__results-wrapper {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .wiertla-categories__results-count {
+    justify-content: center;
+  }
+
+  .wiertla-categories__results-text,
+  .wiertla-categories__results-numbers {
+    font-size: 14px;
+  }
+
+  .wiertla-categories__simple-pagination {
+    width: 100%;
+  }
+
+  .wiertla-categories__pagination-button {
+    flex: 1;
+    min-width: 120px;
+    height: 42px;
+    font-size: 14px;
+    padding: 0;
+  }
+}
+
+/* General Layout Improvements */
+@media (max-width: 768px) {
+  .wiertla-categories {
+    padding: var(--spacing-sm) 0;
+  }
+
+  .wiertla-categories__content {
+    gap: var(--spacing-md);
+  }
+
+  .wiertla-categories__left-column {
+    margin: 0 var(--spacing-sm);
+  }
+
+  .wiertla-categories__right-column {
+    padding: 0 var(--spacing-sm);
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  .wiertla-categories__tab:active,
+  .wiertla-categories__status-filter:active {
+    transform: scale(0.98);
+  }
+
+  .wiertla-categories__preview {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}
+
+/* Top Navigation Bar */
+.wiertla-top-nav {
+  background-color: #112832;
+  padding: 10px 0;
+}
+
+.wiertla-top-nav__container {
+  max-width: 1420px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wiertla-top-nav__menu {
+  display: flex;
+  gap: 20px;
+}
+
+.wiertla-top-nav__link {
+  color: #F5F5F8;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.wiertla-top-nav__link:hover {
+  color: #FFE500;
+}
+
+.wiertla-top-nav__lang {
+  display: flex;
+  gap: 10px;
+}
+
+.wiertla-top-nav__lang-link {
+  color: #F5F5F8;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.wiertla-top-nav__lang-link.active {
+  color: #FFE500;
+}
+
+/* Header */
+.wiertla-header {
+  background-color: #FFFFFF;
+  padding: 10px 0;
+}
+
+.wiertla-header__container {
+  max-width: 1420px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wiertla-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wiertla-header__logo img {
+  width: 100px;
+  height: auto;
+}
+
+.wiertla-header__actions {
+  display: flex;
+  gap: 10px;
+}
+
+.wiertla-header__action {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #112832;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.wiertla-header__action:hover {
+  color: #FFE500;
+}
+
+.wiertla-header__action svg {
+  width: 24px;
+  height: 24px;
+}
+
+.wiertla-search-box {
+  background-color: #FFFFFF;
+  padding: 20px 0;
+}
+
+.wiertla-search-box__title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: #112832;
+  margin-bottom: 10px;
+}
+
+.wiertla-search-box__input-group {
+  display: flex;
+  align-items: center;
+  border: 2px solid #E2E2E7;
+  border-radius: 4px;
+  transition: border-color 0.2s ease;
+}
+
+.wiertla-search-box__input-group:focus-within {
+  border-color: #000;
+}
+
+.wiertla-search-box__input {
+  width: 100%;
+  height: 44px;
+  padding: 0 44px;
+  border: none;
+  background: none;
+  font-size: 16px;
+  line-height: 1.5;
+  color: inherit;
+}
+
+.wiertla-search-box__input:focus {
+  outline: none;
+}
+
+.wiertla-search-box__input::placeholder {
+  color: #757575;
+}
+
+.wiertla-search-box__button {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #757575;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.wiertla-search-box__button:hover {
+  color: #000;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  /* Top Navigation */
+  .wiertla-top-nav__container {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .wiertla-top-nav__menu {
+    gap: 10px;
+  }
+  
+  .wiertla-top-nav__link,
+  .wiertla-top-nav__lang-link {
+    font-size: 14px;
+  }
+
+  /* Header */
+  .wiertla-header__container {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .wiertla-header__logo img {
+    width: 80px;
+  }
+  
+  .wiertla-header__actions {
+    gap: 5px;
+  }
+  
+  .wiertla-header__action svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Search Box */
+  .wiertla-search-box {
+    background: #F5F5F8;
+    border-radius: 30px;
+    padding: 22px 19px;
+    margin: 0 var(--spacing-sm);
+  }
+  
+  .wiertla-search-box__title {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .wiertla-search-box__input-group {
+    margin-bottom: 10px;
+  }
+  
+  .wiertla-search-box__input {
+    width: 100%;
+    height: 50px;
+    border-radius: 30px;
+    padding: 0 20px;
+    background: #FFFFFF;
+  }
+  
+  .wiertla-search-box__button {
+    position: static;
+    transform: none;
+    width: 100%;
+    height: 50px;
+    background: #FFE500;
+    border: 2px solid #112832;
+    border-radius: 30px;
+    color: #112832;
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  /* Category Tabs */
+  .wiertla-categories__tab {
+    font-size: 14px;
+  }
+  
+  .wiertla-categories__tabs button:nth-child(1)::after {
+    content: 'Płytki';
+  }
+  
+  .wiertla-categories__tabs button:nth-child(2)::after {
+    content: 'Koronki';
+  }
+  
+  .wiertla-categories__tabs button:nth-child(3)::after {
+    content: 'Regeneracja';
+  }
+  
+  .wiertla-categories__tabs button span {
+    display: none;
+  }
+
+  /* Category Icons */
+  .wiertla-categories__icons.mobile {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    width: 100%;
+  }
+  
+  .wiertla-categories__icon-item {
+    width: 100%;
+  }
+  
+  /* Reorder icons for mobile */
+  .wiertla-categories__icons.mobile .wiertla-categories__icon-item:last-child {
+    order: -1; /* Move "Wszystkie" to the start */
+  }
+  
+  .wiertla-categories__icon-label {
+    font-size: 12px;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  .wiertla-search-box__button:active {
+    transform: scale(0.98);
+  }
+  
+  .wiertla-header__action:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Stats Section */
+.wiertla-categories__stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.wiertla-categories__stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.wiertla-categories__stat-number {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1;
+  color: #112832;
+}
+
+.wiertla-categories__stat-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: #445D68;
+  margin-top: 5px;
+}
+
+/* Categories Grid */
+.wiertla-categories__categories {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.wiertla-categories__category-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+.wiertla-categories__category-column:not(:last-child) {
+  border-right: none;
+  padding-right: 0;
+}
+
+.wiertla-categories__category-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: #F5F5F8;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.wiertla-categories__category-item img {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.wiertla-categories__category-item span {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #112832;
+  flex-grow: 1;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .wiertla-categories__categories {
+    gap: 15px;
+  }
+
+  .wiertla-categories__category-column {
+    border-bottom: none;
+    padding-bottom: 15px;
+  }
+
+  .wiertla-categories__category-item {
+    padding: 15px;
+  }
+
+  .wiertla-categories__category-item img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .wiertla-categories__category-item span {
+    font-size: 16px;
+  }
+}
+
+/* Latest Products Slider */
+.wiertla-categories__latest {
+  margin-bottom: 40px;
+}
+
+.wiertla-categories__latest h2 {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: #112832;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.wiertla-categories__slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.wiertla-categories__slide {
+  flex: 0 0 calc(66.666% - 10px); /* Shows 1.5 items */
+  scroll-snap-align: start;
+  background: #F5F5F8;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.wiertla-categories__slide img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.wiertla-categories__slide h3 {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #112832;
+  margin-bottom: 10px;
+}
+
+.wiertla-categories__slide p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #445D68;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .wiertla-categories__stats {
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .wiertla-categories__stat-number {
+    font-size: 36px;
+  }
+
+  .wiertla-categories__stat-text {
+    font-size: 16px;
+  }
+
+  .wiertla-categories__categories {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .wiertla-categories__category-column {
+    border-right: none !important;
+    padding-right: 0;
+    border-bottom: 2px dashed #E2E2E7;
+    padding-bottom: 20px;
+  }
+
+  .wiertla-categories__category-column:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .wiertla-categories__slide {
+    flex: 0 0 calc(85% - 10px); /* Shows 1.5 items on mobile */
+  }
+}
+
+<style>
+@media (max-width: 768px) {
+  .wiertla-categories__per-page-label {
+    display: none;
+  }
+  
+  .wiertla-categories__table tr {
+    display: flex;
+    flex-direction: column;
+    background: #F5F5F8;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .wiertla-categories__table td {
+    padding: 12px 16px;
+    border: none;
+    border-bottom: 1px solid #E2E2E7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .wiertla-categories__table td:last-child {
+    border-bottom: none;
+    justify-content: flex-end;
+  }
+
+  .wiertla-categories__table-arrow {
+    max-height: 24px;
+    width: auto;
+  }
+}
+
+.wiertla-categories__pagination-button::before,
+.wiertla-categories__pagination-button::after {
+  display: none;
+}
+
+.wiertla-categories__slider .wiertla-categories__table-arrow {
+  max-height: 24px;
+  width: auto;
+}
+
+html[lang="pl"] {
+  font-family: 'Montserrat', sans-serif;
+}
+</style>
+
+/* Header Styles */
+.wiertla-categories__header {
+  margin-bottom: 40px;
+  background: #F5F5F8;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.wiertla-categories__stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.wiertla-categories__stat-item {
+  text-align: center;
+}
+
+.wiertla-categories__stat-number {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #112832;
+  display: block;
+}
+
+.wiertla-categories__stat-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: #445D68;
+  display: block;
+  margin-top: 5px;
+}
+
+.wiertla-categories__mobile-icons {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .wiertla-categories__header {
+    margin: 0;
+    padding: 15px;
+    border-radius: 0;
+  }
+
+  .wiertla-categories__stats {
+    margin-bottom: 20px;
+  }
+
+  .wiertla-categories__stat-number {
+    font-size: 28px;
+  }
+
+  .wiertla-categories__stat-text {
+    font-size: 14px;
+  }
+
+  .wiertla-categories__mobile-icons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 15px 0;
+  }
+
+  .wiertla-categories__mobile-icons .wiertla-categories__icon-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+  }
+
+  .wiertla-categories__mobile-icons .wiertla-categories__icon-item img {
+    max-height: 23px;
+    width: auto;
+  }
+
+  .wiertla-categories__mobile-icons .wiertla-categories__icon-item span {
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #112832;
+  }
+}
+
+/* Product Card Table Row Styles */
+.wiertla-categories__table-row {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.wiertla-categories__table-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(17, 40, 50, 0.1);
+}
+
+@media (max-width: 768px) {
+  .wiertla-categories__table tr {
+    width: 100%;
+    max-width: 264px;
+    height: 102px;
+    padding: 10px;
+    margin: 0 auto 16px;
+    display: grid;
+    grid-template-rows: 34px 1fr;
+    gap: 14px;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(17, 40, 50, 0.05);
+  }
+
+  .wiertla-categories__table-row-top {
+    display: grid;
+    grid-template-columns: 34px 34px repeat(3, 1fr);
+    gap: 10px;
+    align-items: center;
+    height: 34px;
+  }
+
+  .wiertla-categories__table-row-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .wiertla-categories__table td {
+    padding: 0;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    line-height: 100%;
+    color: #112832;
+    height: 100%;
+  }
+
+  .wiertla-categories__table td:first-child {
+    width: 34px;
+    height: 34px;
+    border-top: 2px solid #112832;
+    border-bottom: 2px solid #112832;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .wiertla-categories__table td:first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .wiertla-categories__table-dummy-icon {
+    width: 34px;
+    height: 34px;
+    border-top: 2px solid #112832;
+    border-bottom: 2px solid #112832;
+  }
+
+  .wiertla-categories__table-dummy-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .wiertla-categories__table td[data-label="⌀ Fi"],
+  .wiertla-categories__table td[data-label="Długość"],
+  .wiertla-categories__table td[data-label="Symbol"],
+  .wiertla-categories__table td[data-label="Cena"] {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+  }
+
+  .wiertla-categories__table td[data-label="Producent"] {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    color: #445D68;
+  }
+
+  .wiertla-categories__table td[data-label="Symbol"] {
+    justify-content: flex-end;
+  }
+
+  .wiertla-categories__rent-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: #FFE500;
+    border: 1px solid #112832;
+    border-radius: 4px;
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 100%;
+    color: #112832;
+    margin-right: 6px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .wiertla-categories__table-row {
+    width: 100%;
+    max-width: 264px;
+    height: 102px;
+    padding: 10px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(17, 40, 50, 0.05);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+  }
+
+  .wiertla-categories__table-row td {
+    padding: 0;
+    border: none;
+    font-size: 14px;
+  }
+
+  .wiertla-categories__table-row td:first-child {
+    display: flex;
+    align-items: center;
+    height: 34px;
+    margin-bottom: 8px;
+  }
+
+  .wiertla-categories__table-row td img {
+    width: 34px;
+    height: 34px;
+    object-fit: cover;
+    border-top: 2px solid #112832;
+    border-bottom: 2px solid #112832;
+  }
+
+  .wiertla-categories__table-row td:not(:first-child) {
+    font-size: 12px;
+    line-height: 1.2;
+    color: #112832;
+  }
+
+  .wiertla-categories__table-row .wiertla-categories__price {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .wiertla-categories__table-row .wiertla-categories__rent-icon {
+    width: auto;
+    height: 20px;
+    margin-left: 8px;
+  }
+}
+
+/* Fullscreen Button Styles */
+.wiertla-categories__fullscreen-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 50px;
+  padding: 0 17px;
+  margin-bottom: 24px;
+  background: white;
+  border: 2px solid #E2E2E7;
+  border-radius: 30px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0.03em;
+  color: #112832;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wiertla-categories__fullscreen-btn:hover {
+  border-color: #112832;
+}
+
+.wiertla-categories__fullscreen-icon {
+  width: 23px;
+  height: 20px;
+}
+
+/* Fullscreen Mode Styles */
+.wiertla-categories__fullscreen-mode {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #FFFFFF;
+  z-index: 1000;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.wiertla-categories__fullscreen-mode.active {
+  display: block;
+}
+
+.wiertla-categories__fullscreen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.wiertla-categories__fullscreen-title h2 {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+  margin-bottom: 10px;
+}
+
+.wiertla-categories__fullscreen-title p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.03em;
+  color: #112832;
+  max-width: 510px;
+}
+
+.wiertla-categories__fullscreen-close {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+  padding: 11px 17px;
+  background: #FFE500;
+  border: 2px solid #112832;
+  border-radius: 30px;
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  color: #112832;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wiertla-categories__fullscreen-close:hover {
+  background: #FFD500;
+}
+
+.wiertla-categories__fullscreen-content {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .wiertla-categories__fullscreen-mode {
+    padding: 20px;
+  }
+
+  .wiertla-categories__fullscreen-header {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .wiertla-categories__fullscreen-close {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Desktop Table Styles */
+@media (min-width: 769px) {
+  .wiertla-categories__table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .wiertla-categories__table th,
+  .wiertla-categories__table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #E2E2E7;
+  }
+
+  .wiertla-categories__table tr:hover {
+    background-color: #F7F7F9;
+  }
+
+  .wiertla-categories__table td:first-child {
+    width: auto;
+    height: auto;
+    border: none;
+  }
+
+  /* Hide mobile containers on desktop */
+  .wiertla-categories__table-row-top,
+  .wiertla-categories__table-row-bottom {
+    display: none;
+  }
+}
+
+/* Mobile Table Styles */
+@media (max-width: 768px) {
+  .wiertla-categories__table tr {
+    width: 100%;
+    max-width: 264px;
+    height: 102px;
+    padding: 10px;
+    margin: 0 auto 16px;
+    display: grid;
+    grid-template-rows: 34px 1fr;
+    gap: 14px;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(17, 40, 50, 0.05);
+  }
+
+  /* Hide regular table cells on mobile */
+  .wiertla-categories__table tr > td {
+    display: none;
+  }
+
+  .wiertla-categories__table-row-top {
+    display: grid;
+    grid-template-columns: 34px repeat(3, 1fr);
+    gap: 10px;
+    align-items: center;
+    height: 34px;
+  }
+
+  .wiertla-categories__table-row-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .wiertla-categories__table td {
+    padding: 0;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    line-height: 100%;
+    color: #112832;
+    height: 100%;
+  }
+
+  .wiertla-categories__table td:first-child {
+    width: 34px;
+    height: 34px;
+    border: 2px solid #112832;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .wiertla-categories__table td:first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .wiertla-categories__table td[data-label="⌀ Fi"],
+  .wiertla-categories__table td[data-label="Długość"],
+  .wiertla-categories__table td[data-label="Cena"] {
+    justify-content: center;
+    font-weight: 500;
+  }
+
+  .wiertla-categories__table td[data-label="Producent"],
+  .wiertla-categories__table td[data-label="Symbol"] {
+    background: #F7F7F9;
+    border-radius: 4px;
+    padding: 8px;
+    height: 34px;
+    font-weight: 500;
+  }
+}
+
+/* Top Categories Search - at the top of categories */
+.wiertla-categories-top-search {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.wiertla-categories-top-search .wiertla-search__label {
+  font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.wiertla-categories-top-search .wiertla-search__input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.wiertla-categories-top-search .wiertla-search__input {
+  width: 100%;
+  height: 50px;
+  border: 2px solid #E2E2E7;
+  border-radius: 30px;
+  padding: 11px 17px 11px 50px;
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0.03em;
+  color: #112832;
+}
+
+.wiertla-categories-top-search .wiertla-search__submit {
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 23px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #112832;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wiertla-categories-top-search .wiertla-search__clear {
+  position: absolute;
+  right: 220px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 23px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #112832;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wiertla-categories-top-search .wiertla-search__clear.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.wiertla-categories-top-search .wiertla-search__button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 220px;
+  height: 50px;
+  border: 2px solid #112832;
+  border-radius: 40px;
+  background: #FFE500;
+  padding: 11px 17px 11px 22px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  cursor: pointer;
+}
+
+.wiertla-categories-top-search .wiertla-search__button-text {
+  font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+}
+
+/* Left Column Table Search - keep original styles */
+.wiertla-categories__search {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.wiertla-categories__search .wiertla-search__label {
+  font-family: "League Spartan";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.wiertla-categories__search .wiertla-search__input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.wiertla-categories__search .wiertla-search__input {
+  width: 100%;
+  height: 40px;
+  padding: 8px 40px;
+  border: 1px solid #E2E2E7;
+  border-radius: 4px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+}
+
+.wiertla-categories__search .wiertla-search__submit,
+.wiertla-categories__search .wiertla-search__clear {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 8px;
+  color: #757575;
+  cursor: pointer;
+}
+
+.wiertla-categories__search .wiertla-search__submit {
+  left: 0;
+}
+
+.wiertla-categories__search .wiertla-search__clear {
+  right: 0;
+}
+{% endstylesheet %}
+
+{% javascript %}
+// Initialize variables
+let allProducts = [];
+let currentPage = 1;
+let itemsPerPage = 20;
+let totalPages = 1;
+let selectedCategory = 'wszystkie';
+
+// Function to handle pagination
+function handlePagination(page) {
+  currentPage = page;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const productsToRender = filterProductsByCategory(allProducts, selectedCategory).slice(startIndex, endIndex);
+  renderProducts(productsToRender);
+  updatePaginationUI();
+  updateResultsCount();
+}
+
+// Function to filter products by selected category
+function filterProductsByCategory(products, category) {
+  if (category === 'wszystkie') {
+    return products;
+  }
+  return products.filter(product => {
+    const vendor = (product.vendor || '').toLowerCase();
+    return vendor.includes(category);
+  });
+}
+
+// Function to handle items per page change
+function handleItemsPerPageChange(newItemsPerPage) {
+  itemsPerPage = parseInt(newItemsPerPage);
+  currentPage = 1;
+  const filteredProducts = filterProductsByCategory(allProducts, selectedCategory);
+  totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  handlePagination(1);
+}
+
+// Function to handle category change
+function handleCategoryChange(category) {
+  selectedCategory = category;
+  currentPage = 1;
+  const filteredProducts = filterProductsByCategory(allProducts, category);
+  totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  handlePagination(1);
+}
+
+// Function to update pagination UI
+function updatePaginationUI() {
+  // Simple pagination (prev/next)
+  const prevButton = document.getElementById('prevPage');
+  const nextButton = document.getElementById('nextPage');
+  
+  if (prevButton && nextButton) {
+    const filteredProducts = filterProductsByCategory(allProducts, selectedCategory);
+    totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    
+    prevButton.disabled = currentPage === 1;
+    nextButton.disabled = currentPage === totalPages || totalPages === 0;
+    
+    prevButton.addEventListener('click', () => {
+      if (currentPage > 1) {
+        handlePagination(currentPage - 1);
+      }
+    });
+    
+    nextButton.addEventListener('click', () => {
+      if (currentPage < totalPages) {
+        handlePagination(currentPage + 1);
+      }
+    });
+  }
+}
+
+// Function to update results count
+function updateResultsCount() {
+  const resultsCountElement = document.getElementById('resultsCount');
+  if (resultsCountElement) {
+    const filteredProducts = filterProductsByCategory(allProducts, selectedCategory);
+    const startIndex = (currentPage - 1) * itemsPerPage + 1;
+    const endIndex = Math.min(startIndex + itemsPerPage - 1, filteredProducts.length);
+    const totalItems = filteredProducts.length;
+    
+    if (totalItems === 0) {
+      resultsCountElement.textContent = '0 z 0';
+    } else {
+      resultsCountElement.textContent = `${startIndex}-${endIndex} z ${totalItems}`;
+    }
+  }
+}
+
+// Update the renderProducts function
+function renderProducts(productsToRender = []) {
+  const tableBody = document.getElementById('productsTableBody');
+  if (!tableBody) return;
+  
+  tableBody.innerHTML = '';
+
+  if (productsToRender.length === 0) {
+    const tr = document.createElement('tr');
+    tr.className = 'wiertla-categories__table-row';
+    const td = document.createElement('td');
+    td.colSpan = 7;
+    td.textContent = 'Brak produktów do wyświetlenia';
+    td.style.textAlign = 'center';
+    td.style.padding = '20px';
+    tr.appendChild(td);
+    tableBody.appendChild(tr);
+    return;
+  }
+
+  productsToRender.forEach((product, index) => {
+    const tr = document.createElement('tr');
+    tr.className = 'wiertla-categories__table-row';
+    tr.setAttribute('data-original-index', index);
+    tr.setAttribute('data-product-id', product.id);
+    
+    // Add click event to navigate to product page
+    tr.addEventListener('click', () => {
+      window.location.href = product.url;
+    });
+
+    // Create type/image cell
+    const typeCell = document.createElement('td');
+    if (product.image) {
+      const img = document.createElement('img');
+      img.src = product.image;
+      img.alt = product.title || '';
+      img.loading = 'lazy';
+      typeCell.appendChild(img);
+    } else {
+      // Fallback icon based on vendor/category
+      const vendor = (product.vendor || '').toLowerCase();
+      let iconPath = '/assets/table_';
+      
+      if (vendor.includes('koronkowe')) {
+        iconPath += 'koronkowe.png';
+      } else if (vendor.includes('plytkowe')) {
+        iconPath += 'plytkowe.png';
+      } else if (vendor.includes('vhm')) {
+        iconPath += 'vhm.png';
+      } else if (vendor.includes('sandvik') || vendor.includes('sandavik')) {
+        iconPath += 'sandavik.png';
+      } else if (vendor.includes('amec')) {
+        iconPath += 'amec.png';
+      } else if (vendor.includes('ksem')) {
+        iconPath += 'ksem.png';
+      } else {
+        // Default icon
+        iconPath += 'vhm.png';
+      }
+      
+      const img = document.createElement('img');
+      img.src = iconPath;
+      img.alt = vendor;
+      img.loading = 'lazy';
+      typeCell.appendChild(img);
+    }
+    typeCell.setAttribute('data-label', 'Typ');
+    tr.appendChild(typeCell);
+    
+    // Create diameter cell
+    const fiCell = document.createElement('td');
+    fiCell.textContent = product.fi || '-';
+    fiCell.setAttribute('data-label', '⌀ Fi');
+    tr.appendChild(fiCell);
+    
+    // Create length cell
+    const lengthCell = document.createElement('td');
+    lengthCell.textContent = product.length || '-';
+    lengthCell.setAttribute('data-label', 'D/mm');
+    tr.appendChild(lengthCell);
+    
+    // Create symbol cell
+    const symbolCell = document.createElement('td');
+    symbolCell.textContent = product.symbol || '-';
+    symbolCell.setAttribute('data-label', 'Symbol');
+    tr.appendChild(symbolCell);
+    
+    // Create vendor cell
+    const vendorCell = document.createElement('td');
+    vendorCell.textContent = product.vendor || '-';
+    vendorCell.setAttribute('data-label', 'Producent');
+    vendorCell.setAttribute('data-producer', (product.vendor || '').toLowerCase());
+    tr.appendChild(vendorCell);
+    
+    // Create price cell
+    const priceCell = document.createElement('td');
+    priceCell.textContent = product.price || '-';
+    priceCell.setAttribute('data-label', 'Cena netto');
+    tr.appendChild(priceCell);
+    
+    // Create action cell
+    const actionCell = document.createElement('td');
+    const arrowImg = document.createElement('img');
+    arrowImg.src = '/assets/table_arrow.svg';
+    arrowImg.alt = 'View';
+    arrowImg.className = 'wiertla-categories__table-arrow';
+    actionCell.appendChild(arrowImg);
+    
+    if (product.rentable) {
+      const rentIcon = document.createElement('span');
+      rentIcon.className = 'wiertla-categories__rent-icon';
+      rentIcon.textContent = 'R';
+      rentIcon.title = 'Dostępne do wypożyczenia';
+      actionCell.appendChild(rentIcon);
+    }
+    
+    tr.appendChild(actionCell);
+    
+    // Add mobile view containers
+    const mobileTopRow = document.createElement('div');
+    mobileTopRow.className = 'wiertla-categories__table-row-top';
+    
+    const mobileTypeIcon = typeCell.cloneNode(true);
+    const mobileDummyIcon = document.createElement('div');
+    mobileDummyIcon.className = 'wiertla-categories__table-dummy-icon';
+    
+    if (product.rentable) {
+      const rentIcon = document.createElement('span');
+      rentIcon.className = 'wiertla-categories__rent-icon';
+      rentIcon.textContent = 'R';
+      mobileDummyIcon.appendChild(rentIcon);
+    }
+    
+    const mobileFiCell = fiCell.cloneNode(true);
+    const mobileLengthCell = lengthCell.cloneNode(true);
+    const mobileSymbolCell = symbolCell.cloneNode(true);
+    
+    mobileTopRow.appendChild(mobileTypeIcon);
+    mobileTopRow.appendChild(mobileDummyIcon);
+    mobileTopRow.appendChild(mobileFiCell);
+    mobileTopRow.appendChild(mobileLengthCell);
+    mobileTopRow.appendChild(mobileSymbolCell);
+    
+    const mobileBottomRow = document.createElement('div');
+    mobileBottomRow.className = 'wiertla-categories__table-row-bottom';
+    
+    const mobileVendorCell = vendorCell.cloneNode(true);
+    const mobilePriceCell = priceCell.cloneNode(true);
+    
+    mobileBottomRow.appendChild(mobileVendorCell);
+    mobileBottomRow.appendChild(mobilePriceCell);
+    
+    tr.appendChild(mobileTopRow);
+    tr.appendChild(mobileBottomRow);
+    
+    tableBody.appendChild(tr);
+  });
+}
+
+// Initialize the table with first page
+document.addEventListener('DOMContentLoaded', function() {
+  // Store all products data
+  allProducts = [
+    {% for product in selected_collection.products %}
+      {
+        id: {{ product.id | json }},
+        title: {{ product.title | json }},
+        url: {{ product.url | json }},
+        type: {{ product.type | json }},
+        vendor: {{ product.vendor | json }},
+        price: {{ product.price | money_without_trailing_zeros | json }},
+        available: {{ product.available | json }},
+        fi: {{ product.metafields.custom.diameter.value | json }},
+        length: {{ product.metafields.custom.length.value | json }},
+        symbol: {{ product.metafields.custom.symbol.value | json }},
+        rentable: {{ product.metafields.custom.rentable.value | json }},
+        image: {{ product.featured_image | img_url: '100x' | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+
+  if (allProducts.length === 0) {
+    // If no products, display empty state
+    renderProducts([]);
+    updateResultsCount();
+    return;
+  }
+
+  // Initialize category filter links
+  const categoryLinks = document.querySelectorAll('.wiertla-categories__icon-item');
+  categoryLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Remove active class from all links
+      categoryLinks.forEach(l => l.classList.remove('active'));
+      
+      // Add active class to clicked link
+      this.classList.add('active');
+      
+      const category = this.getAttribute('data-category') || 'wszystkie';
+      handleCategoryChange(category);
+    });
+  });
+  
+  // Initialize producer dropdown if it exists
+  const producerDropdown = document.querySelector('.wiertla-categories__producer-select');
+  if (producerDropdown) {
+    producerDropdown.addEventListener('change', function() {
+      const category = this.value;
+      
+      // Update active category in nav links
+      categoryLinks.forEach(link => {
+        if (link.getAttribute('data-category') === category) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+      
+      handleCategoryChange(category);
+    });
+  }
+  
+  // Initialize with first page of items
+  handleItemsPerPageChange(20);
+  
+  // Add event listeners for items per page buttons
+  const perPageButtons = document.querySelectorAll('.wiertla-categories__per-page-button');
+  perPageButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const newItemsPerPage = button.getAttribute('data-value');
+      perPageButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      handleItemsPerPageChange(newItemsPerPage);
+    });
+  });
+  
+  // Initialize search functionality
+  const searchInput = document.querySelector('.wiertla-categories__search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase().trim();
+      if (searchTerm.length > 0) {
+        const filteredProducts = allProducts.filter(product => {
+          return (
+            (product.title && product.title.toLowerCase().includes(searchTerm)) ||
+            (product.vendor && product.vendor.toLowerCase().includes(searchTerm)) ||
+            (product.symbol && product.symbol.toLowerCase().includes(searchTerm)) ||
+            (product.fi && product.fi.toString().includes(searchTerm))
+          );
+        });
+        currentPage = 1;
+        totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+        renderProducts(filteredProducts.slice(0, itemsPerPage));
+        updatePaginationUI();
+        updateResultsCount();
+      } else {
+        handleCategoryChange(selectedCategory);
+      }
+    });
+  }
+});
+{% endjavascript %}

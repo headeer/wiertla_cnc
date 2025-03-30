@@ -57,16 +57,19 @@
       }
     },
     "search": {
-      "no_results": "Try checking your spelling or using different words.",
+      "label": "Search",
+      "placeholder": "Enter search term...",
+      "category_label": "Search in categories",
+      "category_placeholder": "Enter product name, diameter, symbol, or manufacturer",
+      "clear": "Clear search",
+      "submit": "Search",
+      "no_results": "No results found",
       "empty_search_message": "Search field cannot be empty",
       "results_with_count": {
         "one": "{{ count }} result for \"{{ terms }}\"",
         "other": "{{ count }} results for \"{{ terms }}\""
       },
       "title": "Search our site",
-      "placeholder": "Search",
-      "submit": "Submit",
-      "close": "Close search",
       "heading": {
         "one": "Search result",
         "other": "Search results"
@@ -528,5 +531,113 @@
   },
   "date_formats": {
     "month_day_year": "%B %d, %Y"
+  },
+  "footer": {
+    "main_title": "CNC Drills - Brand Drills at Great Prices",
+    "main_description": "We offer a wide selection of CNC drills from renowned manufacturers such as Sandvik, Guhring, Arno, and many others. Our products are characterized by high quality, precision manufacturing, and competitive prices. The offer includes drills of various diameters and applications, perfect for both professional workshops and hobby applications.",
+    "contact": {
+      "title": "CONTACT",
+      "phone_icon_alt": "Phone icon",
+      "email_icon_alt": "Email icon"
+    },
+    "address": {
+      "title": "ADDRESS"
+    },
+    "credits": {
+      "design_by": "DESIGN BY"
+    },
+    "scroll_to_top": "Back to top",
+    "scroll_icon_alt": "Scroll to top"
+  },
+  "wiertla_stats": {
+    "tools_icon_alt": "Tools",
+    "tools_title": "999+ CNC tools",
+    "tools_text": "Over 1000 CNC drills in stock",
+    "years_icon_alt": "Years of experience",
+    "years_title": "8 years in the market",
+    "years_text": "Building a strong position as a CNC tools supplier",
+    "quality_icon_alt": "Quality",
+    "quality_title": "Highest quality",
+    "quality_text": "We offer brand-name drills and dedicated alternatives",
+    "latest_products": {
+      "title": "Latest in our offer",
+      "subtitle": "We continuously expand our stock, updating the offer with new CNC drill models"
+    },
+    "rent_tool_text": "rent a tool",
+    "rent_tools": {
+      "title_line1": "Rent CNC drills",
+      "title_line2": "on favorable terms",
+      "icon1_alt": "Icon 1",
+      "icon2_alt": "Icon 2",
+      "icon3_alt": "Icon 3",
+      "icon4_alt": "Icon 4",
+      "icon5_alt": "Icon 5",
+      "icon6_alt": "Icon 6",
+      "description": "Continuously improving the quality and comfort of using our offer, we provide the possibility to rent CNC drills.",
+      "learn_more": "Learn more",
+      "arrow_alt": "Arrow"
+    },
+    "faq": {
+      "main_title": "CNC Drills - Frequently Asked Questions",
+      "question1": {
+        "title": "1. Which CNC drills to choose for metal?",
+        "subtitle1": "Crown Drills",
+        "text1": "Perfect for large holes in metal. Crown drills feature a design that enables efficient and fast drilling even in hard materials, minimizing workpiece damage. They are commonly used in construction and mechanical industries",
+        "subtitle2": "VHM Drills",
+        "text2": "(Solid Carbide): Durable and long-lasting, excellent for hard metals. Drills made of solid carbide are characterized by exceptional hardness and wear resistance, making them ideal for drilling in difficult and demanding conditions. They are commonly used in industries where precision and tool durability are crucial."
+      },
+      "question2": {
+        "title": "2. Are Sandvik 880 drills good for difficult materials?",
+        "text": "Yes, Sandvik 880 drills are known for their efficiency and durability, making them an ideal choice for difficult materials. These drills feature advanced geometry and coatings that increase their lifespan and effectiveness. Thanks to their design, Sandvik 880 drills can work with high precision even in the hardest materials, making them a popular choice in aerospace and automotive industries."
+      },
+      "question3": {
+        "title": "3. What are the advantages of KSEM drills?",
+        "text": "KSEM drills offer innovative solutions that provide excellent results even in the hardest materials. Thanks to advanced technology, these drills enable fast and efficient machining while minimizing machine downtime. KSEM drills are designed with maximum efficiency in mind, making them an ideal choice for mass production and applications where precision is crucial."
+      },
+      "question4": {
+        "title": "4. What are the applications of indexable drills?",
+        "subtitle": "Indexable drills",
+        "text": "are versatile and find applications in many different fields. They are perfect for machining composite materials, non-ferrous metals, and plastics. Thanks to their design, they provide high precision and long life, making them indispensable in aerospace, automotive, and electronic device manufacturing."
+      },
+      "question5": {
+        "title": "5. Why choose AMEC drills?",
+        "subtitle": "AMEC drills",
+        "text": "are synonymous with quality and reliability in the industry. Thanks to advanced production technology, they offer excellent drilling results in the most demanding conditions. AMEC drills are designed with long life and minimal operating costs in mind, making them an ideal choice for intensive industrial applications such as metal machining, precision parts production, and assembly work."
+      }
+    },
+    "category_desc": {
+      "title": "Category descriptions on the CNC drills page",
+      "crown_drills": {
+        "icon_alt": "Crown Drills",
+        "title": "Crown Drills",
+        "text": "Crown drills are invaluable in work that requires drilling large holes. Our offer includes crown drills of various diameters that work great in both metal and concrete. Their advanced design ensures fast and efficient drilling with minimal workpiece damage. Perfect for construction and industrial applications, crown drills are a reliable choice for professionals."
+      }
+    }
+  },
+  "wiertla_banner": {
+    "subtitle": "NEW • USED • TESTED",
+    "title": "Brand CNC Drills at Great Prices"
+  },
+  "header": {
+    "nav": {
+      "drills": "drills",
+      "plates": "plates",
+      "crowns": "crowns"
+    },
+    "languages": {
+      "polish": "PL",
+      "english": "EN",
+      "german": "DE"
+    },
+    "contact": {
+      "phone_icon_alt": "Phone icon",
+      "email_icon_alt": "Email icon"
+    },
+    "actions": {
+      "buy": "buy",
+      "rent": "rent",
+      "regenerate": "regenerate",
+      "sharpen": "sharpen"
+    }
   }
 }

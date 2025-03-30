@@ -7,10 +7,10 @@
 
 <div class="wiertla-banner">
   <div class="wiertla-banner__text font-league-spartan">
-    NOWE • UŻYWANE • POTESTOWE
+    {{ 'wiertla_banner.subtitle' | t }}
   </div>
   <div class="wiertla-banner__title font-league-spartan">
-    Markowe wiertła CNC w super cenie
+    {{ 'wiertla_banner.title' | t }}
   </div>
 </div>
 
@@ -47,9 +47,13 @@
 }
 
 .wiertla-banner__text {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
   font-size: 18px;
-  line-height: 17px;
-  letter-spacing: 0.96px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
   padding-top: 56px;
 }
 

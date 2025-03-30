@@ -3,6 +3,16 @@
 {% endcomment %}
 
 <style>
+  /* CSS Custom Properties */
+  :root {
+    --header-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --mobile-menu-transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --header-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --mobile-menu-width: 100%;
+    --mobile-menu-padding: 80px 16px 20px;
+  }
+
+  /* Base styles */
   .header {
     position: relative;
     z-index: 50;
@@ -10,24 +20,109 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.96px;
+    will-change: transform;
   }
 
+  /* Sticky Header */
+  .header--sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: translateY(-100%);
+    transition: transform var(--header-transition);
+    background: #FCD34D;
+    box-shadow: var(--header-shadow);
+  }
+
+  .header--sticky.is-visible {
+    transform: translateY(0);
+  }
+
+  /* Mobile menu button with improved touch area */
+  .header__mobile-menu-button {
+    display: none;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    border-radius: 50%;
+    transition: background-color var(--header-transition);
+  }
+
+  .header__mobile-menu-button:hover {
+    background-color: rgba(17, 40, 50, 0.1);
+  }
+
+  .header__mobile-menu-button:active {
+    background-color: rgba(17, 40, 50, 0.2);
+  }
+
+  .header__mobile-menu-icon {
+    position: relative;
+    width: 24px;
+    height: 2px;
+    background: #112832;
+    transition: all var(--header-transition);
+  }
+
+  .header__mobile-menu-icon::before,
+  .header__mobile-menu-icon::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background: #112832;
+    transition: all var(--header-transition);
+    left: 0;
+  }
+
+  .header__mobile-menu-icon::before {
+    top: -8px;
+  }
+
+  .header__mobile-menu-icon::after {
+    bottom: -8px;
+  }
+
+  .header__mobile-menu-button.active .header__mobile-menu-icon {
+    background: transparent;
+  }
+
+  .header__mobile-menu-button.active .header__mobile-menu-icon::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  .header__mobile-menu-button.active .header__mobile-menu-icon::after {
+    bottom: 0;
+    transform: rotate(-45deg);
+  }
+
+  /* Header sections */
   .header__top {
     background-color: #FCD34D;
+    position: relative;
   }
 
   .header__container {
     max-width: 1420px;
     margin: 0 auto;
+    padding: 0 var(--desktop-edge-spacing, 64px);
   }
 
   .header__top-content {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     padding: 13px 0 9px;
+    position: relative;
   }
 
+  /* Navigation with hover effects */
   .header__nav-links {
     display: flex;
     align-items: center;
@@ -42,22 +137,60 @@
   }
 
   .header__link {
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
     font-size: 18px;
-    line-height: 17px;
+    line-height: 100%;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: #112832;
+    position: relative;
     text-decoration: none;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    transition: color var(--header-transition);
+  }
+
+  .header__link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #112832;
+    transition: width var(--header-transition);
   }
 
   .header__link:hover {
-    text-decoration: underline;
+    color: rgba(17, 40, 50, 0.8);
   }
 
+  .header__link:hover::after {
+    width: 100%;
+  }
+
+  .header__link:focus {
+    outline: 2px solid #112832;
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  .header__link.active::after {
+    width: 100%;
+    opacity: 0.5;
+  }
+
+  /* Enhanced Logo */
   .header__logo {
     height: 74px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     background: white;
+    transition: height var(--header-transition);
   }
 
   .header__logo-container {
@@ -72,6 +205,12 @@
     position: relative;
     z-index: 1;
     margin-bottom: -6px;
+    transition: all var(--header-transition);
+  }
+
+  .header__logo-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   .header__logo-text {
@@ -80,11 +219,14 @@
     text-align: center;
     color: #112832;
     text-decoration: none;
+    transition: font-size var(--header-transition);
   }
 
+  /* Bottom section */
   .header__bottom {
     background-color: white;
     border-top: 1px solid #E5E7EB;
+    transition: transform var(--header-transition);
   }
 
   .header__bottom-content {
@@ -95,6 +237,7 @@
     padding: 0 10px;
   }
 
+  /* Contact and Actions */
   .header__contact {
     display: flex;
     align-items: center;
@@ -105,6 +248,11 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    transition: transform var(--header-transition);
+  }
+
+  .header__contact-item:hover {
+    transform: translateY(-1px);
   }
 
   .header__contact-icon {
@@ -119,14 +267,80 @@
     gap: 30px;
   }
 
- 
+  /* Enhanced Mobile Menu */
+  .header__mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--mobile-menu-width);
+    height: 100vh;
+    background: #FCD34D;
+    padding: var(--mobile-menu-padding);
+    transform: translateX(-100%);
+    transition: transform var(--mobile-menu-transition);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    opacity: 0;
+    visibility: hidden;
+  }
 
+  .header__mobile-menu.active {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .header__mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .header__mobile-nav .header__link {
+    font-size: 24px;
+    padding: 12px 0;
+  }
+
+  .header__mobile-contact {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(17, 40, 50, 0.2);
+  }
+
+  .header__mobile-contact .header__contact-item {
+    padding: 12px 0;
+  }
+
+  .header__mobile-actions {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .header__mobile-actions .header__link {
+    font-size: 20px;
+    padding: 12px 0;
+  }
+
+  .header__mobile-languages {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(17, 40, 50, 0.2);
+    display: flex;
+    gap: 24px;
+  }
+
+  /* Responsive styles with improved transitions */
   @media (max-width: 1024px) {
+    .header__container {
+      padding: 0 var(--tablet-edge-spacing, 32px);
+    }
+
     .header__nav-links,
-    .header__lang-links,
-    .header__contact,
-    .header__actions {
-      gap: 15px;
+    .header__lang-links {
+      gap: 20px;
     }
 
     .header__logo-container {
@@ -138,95 +352,219 @@
       font-size: 36px;
     }
 
-    .header__bottom-content {
-      height: auto;
-      padding: 15px 10px;
+    .header__contact,
+    .header__actions {
+      gap: 20px;
     }
   }
 
   @media (max-width: 768px) {
-    .header__top-content,
-    .header__bottom-content {
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      padding: 15px 0;
+    .header__container {
+      padding: 0 var(--mobile-edge-spacing, 16px);
     }
 
-    .header__nav-links,
-    .header__lang-links {
+    .header__mobile-menu-button {
+      display: flex;
+      align-items: center;
       justify-content: center;
     }
 
+    .header__nav-links,
+    .header__lang-links,
     .header__contact,
     .header__actions {
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
+      display: none;
     }
 
-    .header__bottom-content {
-      padding: 20px 10px;
+    .header__mobile-menu {
+      display: block;
     }
+
+    .header__top-content {
+      padding: 10px 0;
+      align-items: center;
+      height: 64px;
+    }
+
+    .header__logo {
+      height: 60px;
+    }
+
+    .header__logo-container {
+      height: 70px;
+      padding: 12px 18px;
+      border-width: 4px;
+    }
+
+    .header__logo-text {
+      font-size: 32px;
+    }
+
+    .header__bottom {
+      display: none;
+    }
+
+    /* Mobile-specific animations */
+    .header__mobile-nav .header__link,
+    .header__mobile-actions .header__link,
+    .header__mobile-languages .header__link {
+      transform: translateX(-20px);
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .header__mobile-menu.active .header__link {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    /* Staggered animation for menu items */
+    .header__mobile-nav .header__link:nth-child(1) { transition-delay: 0.1s; }
+    .header__mobile-nav .header__link:nth-child(2) { transition-delay: 0.15s; }
+    .header__mobile-nav .header__link:nth-child(3) { transition-delay: 0.2s; }
+    .header__mobile-actions .header__link:nth-child(1) { transition-delay: 0.25s; }
+    .header__mobile-actions .header__link:nth-child(2) { transition-delay: 0.3s; }
+    .header__mobile-actions .header__link:nth-child(3) { transition-delay: 0.35s; }
+    .header__mobile-actions .header__link:nth-child(4) { transition-delay: 0.4s; }
   }
+
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .header {
+      color-scheme: light; /* Force light mode for header */
+    }
+}
 </style>
 
-<header class="header">
+<header class="header" data-header>
   <div class="header__top">
     <div class="header__container">
       <div class="header__top-content">
         <div class="header__nav-links">
-          <a href="/collections/wiertla" class="header__link">wiertła</a>
-          <a href="/collections/plytki" class="header__link">płytki</a>
-          <a href="/collections/koronki" class="header__link">koronki</a>
-        </div>
-        <div class="header__lang-links">
-          <a href="#" class="header__link" data-lang="pl">PL</a>
-          <a href="#" class="header__link" data-lang="en">EN</a>
-          <a href="#" class="header__link" data-lang="de">DE</a>
-        </div>
-      </div>
+          <a href="/collections/wiertla" class="header__link">{{ 'header.nav.drills' | t }}</a>
+          <a href="/collections/plytki" class="header__link">{{ 'header.nav.plates' | t }}</a>
+          <a href="/collections/koronki" class="header__link">{{ 'header.nav.crowns' | t }}</a>
     </div>
-  </div>
+        <div class="header__lang-links">
+          <a href="#" class="header__link" data-lang="pl">{{ 'header.languages.polish' | t }}</a>
+          <a href="#" class="header__link" data-lang="en">{{ 'header.languages.english' | t }}</a>
+          <a href="#" class="header__link" data-lang="de">{{ 'header.languages.german' | t }}</a>
+                  </div>
+              </div>
+            </div>
+          </div>
 
   <div class="header__logo">
     <div class="header__logo-container">
       <a href="{{ routes.root_url }}" class="header__logo-text">
-        wiertla-cnc.com
+        {{ section.settings.logo_text }}
       </a>
     </div>
-  </div>
+        </div>
 
   <div class="header__bottom">
     <div class="header__container">
       <div class="header__bottom-content">
         <div class="header__contact">
           <div class="header__contact-item">
-            <img src="{{ 'Ico_phone.svg' | asset_url }}" class="header__contact-icon" alt="Phone icon">
-            <a href="tel:48600673736" class="header__link">+48 600 67 37 36</a>
+            <img src="{{ 'ico_phone.svg' | asset_url }}" class="header__contact-icon" alt="{{ 'header.contact.phone_icon_alt' | t }}">
+            <a href="tel:{{ section.settings.phone }}" class="header__link">{{ section.settings.phone }}</a>
           </div>
           <div class="header__contact-item">
-            <img src="{{ 'Ico_mail.svg' | asset_url }}" class="header__contact-icon" alt="Email icon">
-            <a href="mailto:biuro@hmmetal.pl" class="header__link">biuro@hmmetal.pl</a>
+            <img src="{{ 'ico_mail.svg' | asset_url }}" class="header__contact-icon" alt="{{ 'header.contact.email_icon_alt' | t }}">
+            <a href="mailto:{{ section.settings.email }}" class="header__link">{{ section.settings.email }}</a>
           </div>
         </div>
         <div class="header__actions">
-          <a href="/collections/all" class="header__link">kup</a>
-          <a href="/pages/wypozycz" class="header__link">wypożycz</a>
-          <a href="/pages/regeneruj" class="header__link">Regenereuj</a>
-          <a href="/pages/naostrz" class="header__link">naostrz</a>
+          <a href="/collections/all" class="header__link">{{ 'header.actions.buy' | t }}</a>
+          <a href="/pages/wypozycz" class="header__link">{{ 'header.actions.rent' | t }}</a>
+          <a href="/pages/regeneruj" class="header__link">{{ 'header.actions.regenerate' | t }}</a>
+          <a href="/pages/naostrz" class="header__link">{{ 'header.actions.sharpen' | t }}</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const header = document.querySelector('[data-header]');
+  const mobileMenuButton = document.querySelector('.header__mobile-menu-button');
+  const mobileMenu = document.querySelector('.header__mobile-menu');
+  let lastScrollTop = 0;
+  
+  // Mobile menu toggle
+  mobileMenuButton.addEventListener('click', function() {
+    const isActive = this.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = isActive ? 'hidden' : '';
+    
+    // Accessibility
+    mobileMenu.setAttribute('aria-hidden', !isActive);
+    this.setAttribute('aria-expanded', isActive);
+  });
+
+  // Close mobile menu on escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+      mobileMenuButton.click();
+    }
+  });
+
+  // Sticky header logic
+  function handleScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollDiff = scrollTop - lastScrollTop;
+    
+    // Add sticky class when scrolling down
+    if (scrollTop > 100) {
+      header.classList.add('header--sticky');
+      
+      if (scrollDiff > 0) {
+        // Scrolling down
+        header.classList.remove('is-visible');
+      } else {
+        // Scrolling up
+        header.classList.add('is-visible');
+      }
+    } else {
+      header.classList.remove('header--sticky', 'is-visible');
+    }
+    
+    lastScrollTop = scrollTop;
+  }
+
+  // Throttle scroll event
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        handleScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // Close mobile menu on resize if open
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+        mobileMenuButton.click();
+      }
+    }, 250);
+  });
+});
+</script>
 
 {% schema %}
-{
-  "name": "Header",
-  "settings": [
-    {
-      "type": "header",
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "header",
       "content": "Logo Settings"
     },
     {
@@ -234,9 +572,9 @@
       "id": "logo_text",
       "label": "Logo Text",
       "default": "wiertla-cnc.com"
-    },
-    {
-      "type": "header",
+      },
+      {
+        "type": "header",
       "content": "Contact Information"
     },
     {
@@ -256,7 +594,7 @@
     {
       "name": "Header",
       "category": "Header"
-    }
-  ]
-}
+      }
+    ]
+  }
 {% endschema %}

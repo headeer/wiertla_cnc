@@ -1,0 +1,121 @@
+{
+  "footer": {
+    "main_title": "Wiertła CNC - Markowe Wiertła w Super Cenach",
+    "main_description": "Oferujemy szeroki wybór wierteł CNC od renomowanych producentów takich jak Sandvik, Guhring, Arno oraz wiele innych. Nasze produkty charakteryzują się wysoką jakością, precyzją wykonania oraz konkurencyjnymi cenami. W ofercie znajdują się wiertła o różnych średnicach i zastosowaniach, idealne zarówno do profesjonalnych warsztatów, jak i do zastosowań hobbystycznych.",
+    "contact": {
+      "title": "KONTAKT",
+      "phone_icon_alt": "Ikona telefonu",
+      "email_icon_alt": "Ikona email"
+    },
+    "address": {
+      "title": "ADRES"
+    },
+    "credits": {
+      "design_by": "DESIGN BY"
+    },
+    "scroll_to_top": "Do góry",
+    "scroll_icon_alt": "Przewiń do góry"
+  },
+  "wiertla_stats": {
+    "tools_icon_alt": "Narzędzia",
+    "tools_title": "999+ narzędzi CNC",
+    "tools_text": "Ponad 1000 szt wierteł CNC na stanie magazynowym",
+    "years_icon_alt": "Lata doświadczenia",
+    "years_title": "8 lat na rynku",
+    "years_text": "Budujemy mocną pozycję jako dostawca narzędzi CNC",
+    "quality_icon_alt": "Jakość",
+    "quality_title": "Najwyższa jakość",
+    "quality_text": "Oferujemy markowe wiertła, a także dedykowane zamienniki",
+    "latest_products": {
+      "title": "Najnowsze w naszej ofercie",
+      "subtitle": "Stale poszerzamy stan magazynowy, aktualizując ofertę o nowe modele wierteł CNC"
+    },
+    "rent_tool_text": "wypożycz narzędzie",
+    "rent_tools": {
+      "title_line1": "Wypożyczaj wiertła CNC",
+      "title_line2": "na korzystnych warunkach",
+      "icon1_alt": "Ikona 1",
+      "icon2_alt": "Ikona 2",
+      "icon3_alt": "Ikona 3",
+      "icon4_alt": "Ikona 4",
+      "icon5_alt": "Ikona 5",
+      "icon6_alt": "Ikona 6",
+      "description": "Stale zwiększając jakość i komfort korystania z naszej oferty, udostępniamy możliwość wypożyczenia wierteł CNC.",
+      "learn_more": "Dowiedz się więcej",
+      "arrow_alt": "Strzałka"
+    },
+    "faq": {
+      "main_title": "Wiertła CNC - najczęściej zadawane pytania",
+      "question1": {
+        "title": "1. Jakie wiertła CNC wybrać do metalu?",
+        "subtitle1": "Wiertła Koronkowe",
+        "text1": "Idealne do dużych otworów w metalu. Wiertła koronkowe charakteryzują się konstrukcją, która umożliwia wydajne i szybkie wiercenie nawet w twardych materiałach, minimalizując przy tym uszkodzenia obrabianego materiału. Są często stosowane w przemyśle budowlanym i mechanicznym",
+        "subtitle2": "Wiertła VHM",
+        "text2": "(Węglik Spiekany): Wytrzymałe i długowieczne, doskonałe do twardych metali. Wiertła wykonane z węglika spiekanego cechują się wyjątkową twardością i odpornością na zużycie, co sprawia, że są idealne do wiercenia w trudnych i wymagających warunkach. Są powszechnie używane w branżach, gdzie precyzja i trwałość narzędzi są kluczowe."
+      },
+      "question2": {
+        "title": "2. Czy wiertła Sandvik 880 są dobre do trudnych materiałów?",
+        "text": "Tak, wiertła Sandvik 880 są znane ze swojej wydajności i wytrzymałości, co czyni je idealnym wyborem do trudnych materiałów. Wiertła te posiadają zaawansowaną geometrię i powłoki, które zwiększają ich żywotność i efektywność. Dzięki swojej konstrukcji, wiertła Sandvik 880 są w stanie pracować z dużą precyzją nawet w najtwardszych materiałach, co czyni je popularnym wyborem w przemyśle lotniczym i motoryzacyjnym."
+      },
+      "question3": {
+        "title": "3. Jakie są zalety wierteł KSEM?",
+        "text": "Wiertła KSEM oferują innowacyjne rozwiązania, które zapewniają doskonałe rezultaty nawet w najtwardszych materiałach. Dzięki zaawansowanej technologii, wiertła te umożliwiają szybką i efektywną obróbkę, minimalizując przy tym czas przestoju maszyn. Wiertła KSEM są zaprojektowane z myślą o maksymalnej wydajności, co sprawia, że są one idealnym wyborem do produkcji masowej i zastosowań, gdzie precyzja jest kluczowa."
+      },
+      "question4": {
+        "title": "4. Jakie są zastosowania wierteł płytkowych?",
+        "subtitle": "Wiertła płytkowe",
+        "text": "są wszechstronne i znajdują zastosowanie w wielu różnych dziedzinach. Idealnie nadają się do obróbki materiałów kompozytowych, metali kolorowych oraz tworzyw sztucznych. Dzięki swojej konstrukcji zapewniają wysoką precyzję i długą żywotność, co czyni je niezastąpionymi w przemyśle lotniczym, motoryzacyjnym oraz przy produkcji urządzeń elektronicznych."
+      },
+      "question5": {
+        "title": "5. Dlaczego warto wybierać wiertła AMEC?",
+        "subtitle": "Wiertła AMEC",
+        "text": "są synonimem jakości i niezawodności w przemyśle. Dzięki zaawansowanej technologii produkcji, oferują one doskonałe rezultaty wiercenia w najtrudniejszych warunkach. Wiertła AMEC są projektowane z myślą o długiej żywotności i minimalnych kosztach eksploatacji, co sprawia, że są one idealnym wyborem do intensywnych zastosowań przemysłowych, takich jak obróbka metali, produkcja części precyzyjnych oraz prace montażowe."
+      }
+    },
+    "category_desc": {
+      "title": "Opisy kategorii na stronie wiertła cnc",
+      "crown_drills": {
+        "icon_alt": "Wiertła Koronkowe",
+        "title": "Wiertła Koronkowe",
+        "text": "Wiertła koronkowe są nieocenione w pracach, które wymagają wiercenia dużych otworów. Nasza oferta obejmuje wiertła koronkowe o różnej średnicy, które świetnie sprawdzają się zarówno w metalu, jak i betonie. Ich zaawansowana konstrukcja zapewnia szybkie i efektywne wiercenie z minimalnym uszkodzeniem obrabianego materiału. Idealne do zastosowań budowlanych i przemysłowych, wiertła koronkowe są niezawodnym wyborem dla profesjonalistów."
+      }
+    }
+  },
+  "wiertla_banner": {
+    "subtitle": "NOWE • UŻYWANE • POTESTOWE",
+    "title": "Markowe wiertła CNC w super cenie"
+  },
+  "header": {
+    "nav": {
+      "drills": "wiertła",
+      "plates": "płytki",
+      "crowns": "koronki"
+    },
+    "languages": {
+      "polish": "PL",
+      "english": "EN",
+      "german": "DE"
+    },
+    "contact": {
+      "phone_icon_alt": "Ikona telefonu",
+      "email_icon_alt": "Ikona email"
+    },
+    "actions": {
+      "buy": "kup",
+      "rent": "wypożycz",
+      "regenerate": "regeneruj",
+      "sharpen": "naostrz"
+    }
+  },
+  "general": {
+    "search": {
+      "label": "Szukaj",
+      "placeholder": "Wpisz szukaną frazę...",
+      "category_label": "Szukaj w kategoriach",
+      "category_placeholder": "Wpisz nazwę, średnicę, symbol lub producenta",
+      "clear": "Wyczyść",
+      "submit": "Szukaj",
+      "no_results": "Nie znaleziono wyników"
+    }
+  }
+}

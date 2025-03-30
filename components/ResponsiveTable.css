@@ -1,0 +1,71 @@
+/* Base styles */
+.responsive-table-container {
+  width: 100%;
+}
+
+.table-controls {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.search-input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.pagination-controls {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination-controls button {
+  padding: 0.5rem 1rem;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile specific styles */
+.mobile-table-wrapper {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mobile-header {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Responsive behavior - you can adjust these breakpoints as needed */
+@media (max-width: 767px) {
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-table-wrapper {
+    display: block;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-table-wrapper {
+    display: none;
+  }
+
+  .desktop-table {
+    display: block;
+  }
+}
