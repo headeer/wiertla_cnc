@@ -1,0 +1,668 @@
+{% comment %}
+  Wiertla Categories Scripts Component
+  JavaScript functionality for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+{% javascript %}
+console.log('Script loading - checking collection...');
+
+{% if selected_collection %}
+console.log('Selected collection exists:', '{{ selected_collection.title }}');
+console.log('Products in collection:', {{ selected_collection.products_count }});
+{% else %}
+console.error('ERROR: No selected collection found!');
+{% endif %}
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM loaded - initializing table and preview functionality');
+  
+  // Initialize product table data
+  let allProducts = [
+    {% for product in selected_collection.products %}
+      {
+        id: {{ product.id | json }},
+        title: {{ product.title | json }},
+        url: {{ product.url | json }},
+        type: {{ product.type | json }},
+        vendor: {{ product.vendor | json }},
+        price: {{ product.price | money_without_trailing_zeros | json }},
+        available: {{ product.available | json }},
+        fi: {{ product.metafields.custom.diameter.value | json }},
+        length: {{ product.metafields.custom.length.value | json }},
+        symbol: {{ product.metafields.custom.symbol.value | json }},
+        rentable: {{ product.metafields.custom.rentable.value | json }},
+        image: {{ product.featured_image | img_url: '100x' | json }},
+        large_image: {{ product.featured_image | img_url: '425x' | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+  
+  console.log('Products loaded:', allProducts.length);
+  if (allProducts.length > 0) {
+    console.log('First product:', allProducts[0]);
+    if (allProducts.length >= 3) {
+      console.log('First 3 products:', allProducts.slice(0, 3));
+    }
+  } else {
+    console.error('No products loaded from collection!');
+  }
+
+  // Create hover preview element
+  const hoverPreview = document.createElement('div');
+  hoverPreview.className = 'wiertla-categories__hover-preview';
+  hoverPreview.innerHTML = `
+    <div class="wiertla-categories__hover-preview-inner">
+      <img src="" alt="Preview" class="wiertla-categories__hover-preview-img">
+      <div class="wiertla-categories__hover-preview-arrow"></div>
+    </div>
+  `;
+  document.body.appendChild(hoverPreview);
+  
+  // Set search input placeholder
+  const searchInput = document.querySelector('.wiertla-search__input');
+  if (searchInput) {
+    searchInput.placeholder = "fi / nazwa / symbol / producent";
+  }
+  
+  // Initialize variables
+  let currentPage = 1;
+  let itemsPerPage = 20;
+  let totalPages = 1;
+  let selectedCategory = 'wszystkie';
+  let currentFilters = {
+    type: '',
+    crown: '',
+    manufacturer: '',
+    search: ''
+  };
+
+  // Store filter context for global access by event listeners
+  const filterContext = {
+    get currentPage() { return currentPage; },
+    set currentPage(val) { currentPage = val; },
+    get itemsPerPage() { return itemsPerPage; },
+    set itemsPerPage(val) { itemsPerPage = val; },
+    get totalPages() { return totalPages; },
+    set totalPages(val) { totalPages = val; },
+    get selectedCategory() { return selectedCategory; },
+    set selectedCategory(val) { selectedCategory = val; },
+    get currentFilters() { return currentFilters; },
+    applyFilters: function() {
+      applyFilters();
+    }
+  };
+
+  // Make necessary functions globally available
+  window.handleCategoryChange = function(category) {
+    console.log('Global handleCategoryChange called with:', category);
+    selectedCategory = category;
+    currentPage = 1;
+    applyFilters();
+  };
+  
+  window.handleItemsPerPageChange = function(newItemsPerPage) {
+    console.log('Global handleItemsPerPageChange called with:', newItemsPerPage);
+    itemsPerPage = parseInt(newItemsPerPage);
+    currentPage = 1;
+    applyFilters();
+  };
+
+  // Store the filter context in the script element
+  const mainScript = document.currentScript;
+  mainScript.setAttribute('data-filter-script', 'true');
+  mainScript._filterContext = filterContext;
+  
+  // Calculate initial totalPages
+  totalPages = Math.ceil(allProducts.length / itemsPerPage);
+  console.log('Initial setup - Total pages:', totalPages);
+  
+  // Generate table HTML
+  function generateTable(products) {
+    const tableBody = document.getElementById('productsTableBody');
+    if (!tableBody) {
+      console.error('Table body element not found!');
+      return;
+    }
+    
+    tableBody.innerHTML = '';
+    
+    console.log('Generating table with products:', products.length);
+    
+    if (products.length === 0) {
+      const noResultsRow = document.createElement('tr');
+      noResultsRow.innerHTML = '<td colspan="7" style="text-align: center; padding: 20px;">Brak wyników spełniających kryteria</td>';
+      tableBody.appendChild(noResultsRow);
+      return;
+    }
+    
+    products.forEach(product => {
+      const row = document.createElement('tr');
+      row.className = 'wiertla-categories__table-row';
+      row.setAttribute('data-product-id', product.id);
+      
+      row.innerHTML = `
+        <td>${product.type || '-'}</td>
+        <td>${product.fi || '-'}</td>
+        <td>${product.length || '-'}</td>
+        <td>${product.symbol || '-'}</td>
+        <td>${product.vendor || '-'}</td>
+        <td>${product.price}</td>
+        <td>
+          <a href="${product.url}" class="wiertla-categories__product-link">
+            <img src="{{ 'ico_info.svg' | asset_url }}" alt="Info" width="24" height="24">
+          </a>
+        </td>
+      `;
+      
+      if (product.image) {
+        row.setAttribute('data-image', product.large_image);
+        
+        row.addEventListener('mouseenter', function(e) {
+          const image = this.getAttribute('data-image');
+          const imageElement = hoverPreview.querySelector('img');
+          imageElement.src = image;
+          
+          hoverPreview.classList.add('active');
+          updatePreviewPosition(e);
+          
+          // Also update preview area in layout
+          const previewContainer = document.querySelector('.wiertla-categories__preview-image img');
+          if (previewContainer) {
+            previewContainer.src = image;
+          }
+        });
+        
+        row.addEventListener('mousemove', updatePreviewPosition);
+        
+        row.addEventListener('mouseleave', function() {
+          hoverPreview.classList.remove('active');
+          
+          // Reset preview back to default
+          const previewContainer = document.querySelector('.wiertla-categories__preview-image img');
+          if (previewContainer) {
+            previewContainer.src = "{{ 'custom_icons.png' | asset_url }}";
+          }
+        });
+      }
+      
+      tableBody.appendChild(row);
+    });
+    
+    // Update result count
+    const resultsCount = document.getElementById('resultsCount');
+    if (resultsCount) {
+      const startIndex = (currentPage - 1) * itemsPerPage + 1;
+      const endIndex = Math.min(startIndex + products.length - 1, allProducts.length);
+      resultsCount.textContent = `${startIndex}-${endIndex} z ${allProducts.length}`;
+    }
+    
+    // Table rows hover effect for normal state
+    const tableRows = document.querySelectorAll('.wiertla-categories__table-row');
+    tableRows.forEach(row => {
+      row.addEventListener('click', function(e) {
+        if (e.target.tagName !== 'A' && e.target.tagName !== 'IMG') {
+          const link = this.querySelector('.wiertla-categories__product-link');
+          if (link) {
+            window.location.href = link.getAttribute('href');
+          }
+        }
+      });
+    });
+  }
+  
+  // Update hover preview position
+  function updatePreviewPosition(e) {
+    const previewWidth = hoverPreview.offsetWidth;
+    const previewHeight = hoverPreview.offsetHeight;
+    
+    let left = e.pageX - previewWidth - 20;
+    let top = e.pageY - (previewHeight / 2);
+    
+    // Make sure preview stays in viewport
+    if (left < 0) {
+      left = e.pageX + 20;
+    }
+    
+    if (top < 0) {
+      top = 0;
+    } else if (top + previewHeight > window.innerHeight) {
+      top = window.innerHeight - previewHeight;
+    }
+    
+    hoverPreview.style.left = left + 'px';
+    hoverPreview.style.top = top + 'px';
+  }
+  
+  // Filter products based on current filters
+  function filterProducts() {
+    return allProducts.filter(product => {
+      // Filter by category
+      if (selectedCategory !== 'wszystkie') {
+        if (selectedCategory === 'koronkowe' && product.type !== 'VW') return false;
+        if (selectedCategory === 'plytkowe' && product.type !== 'PR') return false;
+        if (selectedCategory === 'vhm' && product.type !== 'WW') return false;
+        if (selectedCategory === 'sandvik' && product.type !== 'PS') return false;
+        if (selectedCategory === 'amec' && product.type !== 'WV') return false;
+        if (selectedCategory === 'ksem' && product.type !== 'WK') return false;
+      }
+      
+      // Filter by type
+      if (currentFilters.type && product.type !== currentFilters.type) return false;
+      
+      // Filter by crown
+      if (currentFilters.crown && (!product.symbol || !product.symbol.includes(currentFilters.crown))) return false;
+      
+      // Filter by manufacturer
+      if (currentFilters.manufacturer && product.vendor !== currentFilters.manufacturer) return false;
+      
+      // Filter by search
+      if (currentFilters.search) {
+        const searchTerm = currentFilters.search.toLowerCase();
+        const title = (product.title || '').toLowerCase();
+        const symbol = (product.symbol || '').toLowerCase();
+        const vendor = (product.vendor || '').toLowerCase();
+        const fi = String(product.fi || '').toLowerCase();
+        
+        if (!title.includes(searchTerm) && 
+            !symbol.includes(searchTerm) && 
+            !vendor.includes(searchTerm) &&
+            !fi.includes(searchTerm)) {
+          return false;
+        }
+      }
+      
+      return true;
+    });
+  }
+  
+  // Apply filters and pagination
+  function applyFilters() {
+    const filteredProducts = filterProducts();
+    totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    
+    if (currentPage > totalPages) {
+      currentPage = totalPages > 0 ? totalPages : 1;
+    }
+    
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const productsToShow = filteredProducts.slice(startIndex, endIndex);
+    
+    generateTable(productsToShow);
+    updatePaginationButtons();
+    
+    // If fullscreen is active, update it too
+    const fullscreenMode = document.querySelector('.wiertla-categories__fullscreen-mode');
+    if (fullscreenMode && fullscreenMode.classList.contains('active')) {
+      applyFullscreenFilters();
+    }
+    
+    console.log('Applied filters - Products to show:', productsToShow.length);
+  }
+  
+  // Update pagination button states
+  function updatePaginationButtons() {
+    const prevButton = document.getElementById('prevPage');
+    const nextButton = document.getElementById('nextPage');
+    
+    if (prevButton) {
+      prevButton.disabled = currentPage <= 1;
+    }
+    
+    if (nextButton) {
+      nextButton.disabled = currentPage >= totalPages;
+    }
+  }
+  
+  // Handle pagination button clicks
+  const prevButton = document.getElementById('prevPage');
+  const nextButton = document.getElementById('nextPage');
+  
+  if (prevButton) {
+    prevButton.addEventListener('click', function() {
+      if (currentPage > 1) {
+        currentPage--;
+        applyFilters();
+      }
+    });
+  }
+  
+  if (nextButton) {
+    nextButton.addEventListener('click', function() {
+      if (currentPage < totalPages) {
+        currentPage++;
+        applyFilters();
+      }
+    });
+  }
+  
+  // Handle search input
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      currentFilters.search = this.value.trim();
+      currentPage = 1;
+      applyFilters();
+    });
+  }
+  
+  // Handle fullscreen button
+  const fullscreenBtn = document.querySelector('.wiertla-categories__fullscreen-btn');
+  const fullscreenMode = document.querySelector('.wiertla-categories__fullscreen-mode');
+  const fullscreenClose = document.querySelector('.wiertla-categories__fullscreen-close');
+  const fullscreenContent = document.querySelector('.wiertla-categories__fullscreen-content');
+  
+  if (fullscreenBtn && fullscreenMode && fullscreenContent) {
+    fullscreenBtn.addEventListener('click', function() {
+      // Clone filters and table
+      const filters = document.querySelector('.wiertla-categories__filters').cloneNode(true);
+      const tableContainer = document.querySelector('.wiertla-categories__table-container').cloneNode(true);
+      const resultsContainer = document.querySelector('.wiertla-categories__results').cloneNode(true);
+      
+      // Update IDs in cloned content to avoid duplicates
+      const newTableBody = tableContainer.querySelector('#productsTableBody');
+      if (newTableBody) {
+        newTableBody.id = 'fullscreenProductsTableBody';
+      }
+      
+      const newResultsCount = resultsContainer.querySelector('#resultsCount');
+      if (newResultsCount) {
+        newResultsCount.id = 'fullscreenResultsCount';
+      }
+      
+      const newPrevButton = resultsContainer.querySelector('#prevPage');
+      if (newPrevButton) {
+        newPrevButton.id = 'fullscreenPrevPage';
+      }
+      
+      const newNextButton = resultsContainer.querySelector('#nextPage');
+      if (newNextButton) {
+        newNextButton.id = 'fullscreenNextPage';
+      }
+      
+      // Create fullscreen layout
+      const fullscreenLayout = document.createElement('div');
+      fullscreenLayout.className = 'wiertla-categories__fullscreen-layout';
+      
+      // Create left and right columns
+      const leftColumn = document.createElement('div');
+      leftColumn.className = 'wiertla-categories__fullscreen-left';
+      
+      const rightColumn = document.createElement('div');
+      rightColumn.className = 'wiertla-categories__fullscreen-right';
+      
+      // Add preview component to left column
+      leftColumn.innerHTML = `
+        <h3 class="wiertla-categories__preview-title">ZOBACZ OBRAZ POGLĄDOWY</h3>
+        <div class="wiertla-categories__preview-image">
+          <img src="{{ 'custom_icons.png' | asset_url }}" alt="Preview" class="wiertla-categories__preview-img">
+        </div>
+        <p class="wiertla-categories__preview-text">Najedź kursorem na wiertło w tabeli, aby wyświetlić tu powiększony podgląd</p>
+      `;
+      
+      // Add filters and table to right column
+      rightColumn.appendChild(filters);
+      rightColumn.appendChild(tableContainer);
+      
+      // Assemble the layout
+      fullscreenLayout.appendChild(leftColumn);
+      fullscreenLayout.appendChild(rightColumn);
+      
+      // Clear and update fullscreen content
+      fullscreenContent.innerHTML = '';
+      fullscreenContent.appendChild(fullscreenLayout);
+      fullscreenContent.appendChild(resultsContainer);
+      
+      // Show fullscreen mode
+      fullscreenMode.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      // Re-apply filters to the cloned table
+      applyFullscreenFilters();
+      
+      // Add event listeners to cloned elements
+      addFullscreenEventListeners();
+    });
+    
+    if (fullscreenClose) {
+      fullscreenClose.addEventListener('click', function() {
+        fullscreenMode.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    }
+  }
+  
+  function applyFullscreenFilters() {
+    const filteredProducts = filterProducts();
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const productsToShow = filteredProducts.slice(startIndex, endIndex);
+    
+    const tableBody = document.getElementById('fullscreenProductsTableBody');
+    if (!tableBody) {
+      console.error('Fullscreen table body element not found!');
+      return;
+    }
+    
+    tableBody.innerHTML = '';
+    
+    if (productsToShow.length === 0) {
+      const noResultsRow = document.createElement('tr');
+      noResultsRow.innerHTML = '<td colspan="7" style="text-align: center; padding: 20px;">Brak wyników spełniających kryteria</td>';
+      tableBody.appendChild(noResultsRow);
+      return;
+    }
+    
+    productsToShow.forEach(product => {
+      const row = document.createElement('tr');
+      row.className = 'wiertla-categories__table-row';
+      row.setAttribute('data-product-id', product.id);
+      
+      row.innerHTML = `
+        <td>${product.type || '-'}</td>
+        <td>${product.fi || '-'}</td>
+        <td>${product.length || '-'}</td>
+        <td>${product.symbol || '-'}</td>
+        <td>${product.vendor || '-'}</td>
+        <td>${product.price}</td>
+        <td>
+          <a href="${product.url}" class="wiertla-categories__product-link">
+            <img src="{{ 'ico_info.svg' | asset_url }}" alt="Info" width="24" height="24">
+          </a>
+        </td>
+      `;
+      
+      if (product.image) {
+        row.setAttribute('data-image', product.large_image);
+        
+        // Using mouseover for fullscreen mode to avoid conflicts
+        row.addEventListener('mouseover', function() {
+          const image = this.getAttribute('data-image');
+          const imageElement = document.querySelector('.wiertla-categories__fullscreen-left img');
+          if (imageElement) {
+            imageElement.src = image;
+          }
+        });
+      }
+      
+      row.addEventListener('click', function(e) {
+        if (e.target.tagName !== 'A' && e.target.tagName !== 'IMG') {
+          const link = this.querySelector('.wiertla-categories__product-link');
+          if (link) {
+            window.location.href = link.getAttribute('href');
+          }
+        }
+      });
+      
+      tableBody.appendChild(row);
+    });
+    
+    // Update result count in fullscreen mode
+    const resultsCount = document.getElementById('fullscreenResultsCount');
+    if (resultsCount) {
+      const startIndex = (currentPage - 1) * itemsPerPage + 1;
+      const endIndex = Math.min(startIndex + productsToShow.length - 1, filteredProducts.length);
+      resultsCount.textContent = `${startIndex}-${endIndex} z ${filteredProducts.length}`;
+    }
+    
+    // Update pagination buttons
+    const prevButton = document.getElementById('fullscreenPrevPage');
+    const nextButton = document.getElementById('fullscreenNextPage');
+    
+    if (prevButton) {
+      prevButton.disabled = currentPage <= 1;
+    }
+    
+    if (nextButton) {
+      nextButton.disabled = currentPage >= totalPages;
+    }
+  }
+  
+  function addFullscreenEventListeners() {
+    // Handle fullscreen pagination
+    const prevButton = document.getElementById('fullscreenPrevPage');
+    const nextButton = document.getElementById('fullscreenNextPage');
+    
+    if (prevButton) {
+      prevButton.addEventListener('click', function() {
+        if (currentPage > 1) {
+          currentPage--;
+          applyFilters(); // Update main view
+          applyFullscreenFilters(); // Update fullscreen view
+        }
+      });
+    }
+    
+    if (nextButton) {
+      nextButton.addEventListener('click', function() {
+        if (currentPage < totalPages) {
+          currentPage++;
+          applyFilters(); // Update main view
+          applyFullscreenFilters(); // Update fullscreen view
+        }
+      });
+    }
+    
+    // Handle fullscreen filters
+    const filterSelects = document.querySelectorAll('.wiertla-categories__fullscreen-content .wiertla-categories__filter');
+    filterSelects.forEach(select => {
+      select.addEventListener('change', function() {
+        const filterType = this.getAttribute('data-filter');
+        currentFilters[filterType] = this.value;
+        currentPage = 1;
+        applyFilters(); // Update main view
+        applyFullscreenFilters(); // Update fullscreen view
+      });
+    });
+    
+    // Handle fullscreen per-page buttons
+    const perPageButtons = document.querySelectorAll('.wiertla-categories__fullscreen-content .wiertla-categories__per-page-button');
+    perPageButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const value = parseInt(this.getAttribute('data-value'));
+        
+        // Update active button
+        perPageButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Update items per page
+        itemsPerPage = value;
+        currentPage = 1;
+        
+        applyFilters(); // Update main view
+        applyFullscreenFilters(); // Update fullscreen view
+      });
+    });
+    
+    // Handle fullscreen filter buttons
+    const filterButtons = document.querySelectorAll('.wiertla-categories__fullscreen-content .wiertla-categories__filter-button');
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const filterType = this.getAttribute('data-filter');
+        
+        // Update active button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Update selected category
+        selectedCategory = filterType;
+        currentPage = 1;
+        
+        applyFilters(); // Update main view
+        applyFullscreenFilters(); // Update fullscreen view
+      });
+    });
+  }
+  
+  // Add event delegation for filter icons
+  document.addEventListener('click', function(event) {
+    const iconItem = event.target.closest('.wiertla-categories__icon-item');
+    if (iconItem) {
+      const imgAlt = iconItem.querySelector('img').alt.toLowerCase();
+      console.log('Icon clicked:', imgAlt);
+      
+      let category = 'wszystkie';
+      
+      if (imgAlt.includes('koronkowe')) {
+        category = 'koronkowe';
+      } else if (imgAlt.includes('płytkowe') || imgAlt.includes('plytkowe')) {
+        category = 'plytkowe';
+      } else if (imgAlt.includes('vhm')) {
+        category = 'vhm';
+      } else if (imgAlt.includes('sandvik')) {
+        category = 'sandvik';
+      } else if (imgAlt.includes('amec')) {
+        category = 'amec';
+      } else if (imgAlt.includes('ksem')) {
+        category = 'ksem';
+      } else if (imgAlt.includes('wszystkie')) {
+        category = 'wszystkie';
+      }
+      
+      selectedCategory = category;
+      currentPage = 1;
+      applyFilters();
+    }
+  });
+  
+  // Add event delegation for filter buttons and dropdowns
+  document.addEventListener('click', function(event) {
+    const filterButton = event.target.closest('.wiertla-categories__filter-button');
+    if (filterButton) {
+      const allFilterButtons = document.querySelectorAll('.wiertla-categories__filter-button');
+      allFilterButtons.forEach(btn => btn.classList.remove('active'));
+      filterButton.classList.add('active');
+      
+      selectedCategory = filterButton.getAttribute('data-filter');
+      currentPage = 1;
+      applyFilters();
+    }
+    
+    const perPageButton = event.target.closest('.wiertla-categories__per-page-button');
+    if (perPageButton) {
+      const allPerPageButtons = document.querySelectorAll('.wiertla-categories__per-page-button');
+      allPerPageButtons.forEach(btn => btn.classList.remove('active'));
+      perPageButton.classList.add('active');
+      
+      itemsPerPage = parseInt(perPageButton.getAttribute('data-value'));
+      currentPage = 1;
+      applyFilters();
+    }
+  });
+  
+  // Add change event listeners for all filter dropdowns
+  document.addEventListener('change', function(event) {
+    const filterSelect = event.target.closest('.wiertla-categories__filter');
+    if (filterSelect) {
+      const filterType = filterSelect.getAttribute('data-filter');
+      if (filterType) {
+        currentFilters[filterType] = filterSelect.value;
+        currentPage = 1;
+        applyFilters();
+      }
+    }
+  });
+  
+  // Initial table population
+  applyFilters();
+});
+{% endjavascript %} 

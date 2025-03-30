@@ -1,0 +1,74 @@
+{% comment %}
+  Wiertla Categories Filters Component
+  A reusable component to display the category filters for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+<!-- New Category Icons -->
+<div class="wiertla-categories__icons">
+  <div class="wiertla-categories__icon-item">
+    <img src="{{ 'ico_big_koronkowe.svg' | asset_url }}" alt="Koronkowe" class="wiertla-categories__icon">
+    <span class="wiertla-categories__icon-label">KORONKOWE</span>
+  </div>
+  <div class="wiertla-categories__icon-item">
+    <img src="{{ 'ico_big_plytkowe.svg' | asset_url }}" alt="Płytkowe" class="wiertla-categories__icon">
+    <span class="wiertla-categories__icon-label">PŁYTKOWE</span>
+  </div>
+  <div class="wiertla-categories__icon-item">
+    <img src="{{ 'ico_big_vhm.svg' | asset_url }}" alt="VH" class="wiertla-categories__icon">
+    <span class="wiertla-categories__icon-label">VHM</span>
+  </div>
+  <div class="wiertla-categories__icon-item">
+    <img src="{{ 'ico_big_sandvik.svg' | asset_url }}" alt="Sandvik 880" class="wiertla-categories__icon">
+    <span class="wiertla-categories__icon-label">SANDVIK 880</span>
+  </div>
+  <div class="wiertla-categories__icon-item">
+    <img src="{{ 'ico_big_amec.svg' | asset_url }}" alt="AMEC" class="wiertla-categories__icon">
+    <span class="wiertla-categories__icon-label">AMEC</span>
+  </div>
+  <div class="wiertla-categories__icon-item">
+    <img src="{{ 'ico_big_ksem.svg' | asset_url }}" alt="KSEM" class="wiertla-categories__icon">
+    <span class="wiertla-categories__icon-label">KSEM</span>
+  </div>
+  <div class="wiertla-categories__icon-item">
+    <img src="{{ 'ico_big_all.svg' | asset_url }}" alt="Wszystkie" class="wiertla-categories__icon">
+    <span class="wiertla-categories__icon-label">WSZYSTKIE</span>
+  </div>
+</div>
+<div class="wiertla-categories__filters">
+  <div class="wiertla-categories__filters-left">
+    <button class="wiertla-categories__filter-button active" data-filter="wszystkie">Wszystkie</button>
+    <select class="wiertla-categories__filter" data-filter="type">
+      <option value="">Typ wiertła</option>
+      <option value="VW">Koronkowe (VW)</option>
+      <option value="PR">Płytkowe (PR)</option>
+      <option value="WW">VHM (WW)</option>
+      <option value="PS">Sandvik 880 (PS)</option>
+      <option value="WK">KSEM (WK)</option>
+      <option value="WV">AMEC (WV)</option>
+    </select>
+    <select class="wiertla-categories__filter" data-filter="crown">
+      <option value="">Wykaz koronek</option>
+      <option value="KK">KK</option>
+      <option value="KI">KI</option>
+      <option value="KS">KS</option>
+      <option value="KT">KT</option>
+      <option value="KA">KA</option>
+    </select>
+    <select class="wiertla-categories__filter" data-filter="manufacturer">
+      <option value="">Producent</option>
+      <option value="Sandvik">Sandvik</option>
+      <option value="AMEC">AMEC</option>
+      <option value="KSEM">KSEM</option>
+    </select>
+  </div>
+
+  <div class="wiertla-categories__filters-right">
+    <span class="wiertla-categories__per-page-label">Pokaż</span>
+    <div class="wiertla-categories__per-page-buttons">
+      <button class="wiertla-categories__per-page-button active" data-value="20">20</button>
+      <button class="wiertla-categories__per-page-button" data-value="50">50</button>
+      <button class="wiertla-categories__per-page-button" data-value="100">100</button>
+    </div>
+    <span class="wiertla-categories__per-page-label">/ na stronę</span>
+  </div>
+</div> 

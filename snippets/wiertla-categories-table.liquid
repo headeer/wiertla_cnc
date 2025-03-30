@@ -1,0 +1,40 @@
+{% comment %}
+  Wiertla Categories Table Component
+  A reusable component to display the product table for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+<div class="wiertla-categories__table-container">
+  <table class="wiertla-categories__table">
+    <thead>
+      <tr>
+        <th>Typ</th>
+        <th>⌀ Fi</th>
+        <th>D/mm</th>
+        <th>Symbol</th>
+        <th>Producent</th>
+        <th>Cena netto</th>
+      </tr>
+    </thead>
+    <tbody id="productsTableBody">
+      <!-- Products will be inserted here by JavaScript -->
+    </tbody>
+  </table>
+</div>
+
+<!-- Results Count and Pagination -->
+<div class="wiertla-categories__results">
+  <div class="wiertla-categories__results-wrapper">
+    <div class="wiertla-categories__results-count">
+      <span class="wiertla-categories__results-text">Wyświetlono wyniki </span>
+      <span class="wiertla-categories__results-numbers" id="resultsCount"></span>
+    </div>
+    <div class="wiertla-categories__simple-pagination">
+      <button class="wiertla-categories__pagination-button" id="prevPage" disabled>
+        <span>pokaż poprzednie</span>
+      </button>
+      <button class="wiertla-categories__pagination-button" id="nextPage">
+        <span>pokaż następne</span>
+      </button>
+    </div>
+  </div>
+</div>

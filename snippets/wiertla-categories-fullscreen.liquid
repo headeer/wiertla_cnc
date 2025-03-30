@@ -1,0 +1,20 @@
+{% comment %}
+  Wiertla Categories Fullscreen Component
+  A reusable component to display the fullscreen mode for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+<div class="wiertla-categories__fullscreen-mode">
+  <div class="wiertla-categories__fullscreen-header">
+    <div class="wiertla-categories__fullscreen-title">
+      <h2>Przeglądaj wiertła w tabeli</h2>
+      <p>Stale poszerzamy stan magazynowy, aktualizując ofertę o nowe modele wierteł CNC</p>
+    </div>
+    <button class="wiertla-categories__fullscreen-close">
+      <span>Zamknij tryb pełnoekranowy</span>
+      <img src="{{ 'zoom_out_map.svg' | asset_url }}" alt="Exit Fullscreen" class="wiertla-categories__fullscreen-icon">
+    </button>
+  </div>
+  <div class="wiertla-categories__fullscreen-content wiertla-categories__fullscreen-container">
+    <!-- Filters and table will be cloned here by JavaScript -->
+  </div>
+</div> 
