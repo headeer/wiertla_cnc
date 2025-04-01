@@ -189,6 +189,12 @@ window.WiertlaTranslations = {
       scroll_icon_alt: "Ikona strzałki w górę",
       copyright: "© 2023 wiertla-cnc.com. Wszelkie prawa zastrzeżone.",
     },
+
+    // Wiertla Banner
+    wiertla_banner: {
+      subtitle: "NOWE • UŻYWANE • POTESTOWE",
+      title: "Markowe wiertła CNC w super cenie",
+    },
   },
 
   en: {
@@ -375,6 +381,12 @@ window.WiertlaTranslations = {
       scroll_to_top: "Back to top",
       scroll_icon_alt: "Arrow up icon",
       copyright: "© 2023 wiertla-cnc.com. All rights reserved.",
+    },
+
+    // Wiertla Banner
+    wiertla_banner: {
+      subtitle: "NEW • USED • TESTED",
+      title: "Brand CNC Drills at Great Prices",
     },
   },
 
@@ -564,6 +576,12 @@ window.WiertlaTranslations = {
       scroll_to_top: "Zurück nach oben",
       scroll_icon_alt: "Pfeil nach oben Symbol",
       copyright: "© 2023 wiertla-cnc.com. Alle Rechte vorbehalten.",
+    },
+
+    // Wiertla Banner
+    wiertla_banner: {
+      subtitle: "NEU • GEBRAUCHT • GETESTET",
+      title: "Marken-CNC-Bohrer zu Top-Preisen",
     },
   },
 };
