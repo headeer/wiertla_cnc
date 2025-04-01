@@ -1,0 +1,57 @@
+<!-- Mobile Header with Filter Button -->
+<div class="wiertla-categories__mobile-header mobile">
+  <div class="wiertla-categories__mobile-title">
+    <h2>{{ section.settings.title }}</h2>
+  </div>
+  
+  <div class="wiertla-categories__mobile-header-actions">
+    <button type="button" class="wiertla-categories__mobile-filter-button" id="mobile-filter-button-trigger" onclick="return window.openFilterModal();">
+      <img src="{{ 'icon_filter.svg' | asset_url }}" alt="Filter" class="wiertla-categories__icon">
+      <span>Filtruj</span>
+    </button>
+    
+    <div class="wiertla-categories__mobile-pagination">
+      <div class="wiertla-categories__mobile-per-page-buttons">
+        <button class="wiertla-categories__mobile-per-page-button active" data-items="20" data-value="20">20</button>
+        <button class="wiertla-categories__mobile-per-page-button" data-items="50" data-value="50">50</button>
+        <button class="wiertla-categories__mobile-per-page-button" data-items="100" data-value="100">100</button>
+      </div>
+      <div class="wiertla-categories__mobile-per-page-label">/ na stronę</div>
+    </div>
+  </div>
+</div> 
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get all mobile per-page buttons
+    const mobilePerPageButtons = document.querySelectorAll('.wiertla-categories__mobile-per-page-button');
+    
+    // Add click event listeners to each button
+    mobilePerPageButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        mobilePerPageButtons.forEach(function(btn) {
+          btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        button.classList.add('active');
+        
+        // Get the items per page value
+        const itemsPerPage = parseInt(button.getAttribute('data-items') || button.getAttribute('data-value'));
+        
+        // Update the global itemsPerPage variable and reset to first page
+        if (window.itemsPerPage !== undefined && itemsPerPage && !isNaN(itemsPerPage)) {
+          window.itemsPerPage = itemsPerPage;
+          window.currentPage = 1;
+          
+          // Apply the filters to refresh the table
+          if (typeof window.applyFilters === 'function') {
+            window.applyFilters();
+            console.log('Changed items per page to:', itemsPerPage);
+          }
+        }
+      });
+    });
+  });
+</script> 

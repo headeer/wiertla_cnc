@@ -119,6 +119,11 @@
 
   {{ content_for_header }}
   {% render 'judgeme_core' %}
+  
+  <!-- Translation System -->
+  <script src="{{ 'translations.js' | asset_url }}" defer></script>
+  <script src="{{ 'translation-system.js' | asset_url }}" defer></script>
+  <script src="{{ 'section-translators.js' | asset_url }}" defer></script>
 </head>
 
 <body id="{{ page_title | handle }}" class="template-{{ template.name | handle }} {% if settings.buttons_show_arrow %}show-button-arrows{% endif %}">

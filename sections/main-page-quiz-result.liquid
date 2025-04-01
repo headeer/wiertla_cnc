@@ -90,7 +90,6 @@
       answer = (parseInt(step1, 10) - 1) * (parseInt(step2, 10) - 1) * (parseInt(step3, 10) - 1) * (parseInt(step4, 10) - 1) + parseInt(step5, 10),
       answers = document.querySelector('section.page').dataset.answers.split("#");
   
-  console.log(step1+'=>'+step2+'=>'+step3+'=>'+step4+'=>'+step5);
   document.querySelector('[data-answer]').innerText = answers[answer - 1];
 
 </script>

@@ -129,7 +129,10 @@
     gap: 30px;
     padding-bottom: 5px;
   }
+@media screen and (max-width: 768px) {
+    padding-bottom: 0;
 
+}
   .header__lang-links {
     display: flex;
     align-items: center;
@@ -225,7 +228,6 @@
   /* Bottom section */
   .header__bottom {
     background-color: white;
-    border-top: 1px solid #E5E7EB;
     transition: transform var(--header-transition);
   }
 
@@ -340,9 +342,11 @@
 
     .header__nav-links,
     .header__lang-links {
-      gap: 20px;
+      gap: 0;
     }
-
+.header__link {
+  padding: 0 4px;
+}
     .header__logo-container {
       height: 80px;
       padding: 15px 20px;
@@ -373,7 +377,6 @@
     .header__lang-links,
     .header__contact,
     .header__actions {
-      display: none;
     }
 
     .header__mobile-menu {
@@ -383,7 +386,7 @@
     .header__top-content {
       padding: 10px 0;
       align-items: center;
-      height: 64px;
+      height: 40px;
     }
 
     .header__logo {
@@ -426,6 +429,169 @@
     .header__mobile-actions .header__link:nth-child(2) { transition-delay: 0.3s; }
     .header__mobile-actions .header__link:nth-child(3) { transition-delay: 0.35s; }
     .header__mobile-actions .header__link:nth-child(4) { transition-delay: 0.4s; }
+    .swiper-navigation .swiper-button-next::after, .swiper-navigation .swiper-button-prev::after {
+      font-size: 12px;
+    } 
+     .swiper-navigation .swiper-button-next, .swiper-navigation .swiper-button-prev {
+      top: 100%;
+    } 
+       .header__mobile-menu-links {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 97px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      background: white;
+      padding: 0px 0px;
+      border-top: 1px solid #F5F5F8;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 40;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header__mobile-menu-links.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    .header__mobile-menu-link {
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 100%;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: underline;
+      color: #112832;
+      padding: 8px 4px;
+      flex: 1 0 20%;
+      text-align: center;
+    }
+    
+    .header__mobile-icons {
+      display: flex;
+      align-items: center;
+      height: 44px;
+    }
+    .header__mobile-icons >button, .header__mobile-icons > a {
+      width: 100%;
+    } 
+    .header__mobile-icons img {
+      width: 100%;
+
+    }
+    .wiertla-banner {
+      padding: 0 15px;
+    }
+    .header__mobile-icon-button {
+      background: none;
+      border: none;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    
+    .header__menu-icon.open {
+      display: none;
+    }
+    
+    .header__mobile-menu-button.active .header__menu-icon.closed {
+      display: none;
+    }
+    
+    .header__mobile-menu-button.active .header__menu-icon.open {
+      display: block;
+    }
+
+    /* Toast notification for phone number copy */
+    .header__toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      background-color: #112832;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 4px;
+      z-index: 9999;
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    .header__toast.active {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    
+    .header__bottom {
+      display: none;
+    }
+    
+    .header__nav-links,
+    .header__lang-links {
+    }
+    
+    .header__top {
+    }
+    
+    .header__logo {
+      height: auto;
+      padding: 10px 0;
+          display: flex;
+          flex-direction: row;
+    justify-content: space-around;
+    }
+    
+    .header__logo-container {
+      height: auto;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+              padding: 8px 4px;
+      border-radius: 0;
+      height: 44px;
+      margin-bottom: 0;
+      box-shadow: none;
+      background: #FCD34D;
+      max-width: 187px;
+              border-radius: 60px;
+
+    }
+    
+    .header__logo-text {
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 100%;
+      letter-spacing: 0;
+      text-align: center;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: League Spartan;
+font-weight: 700;
+font-size: 18px;
+line-height: 100%;
+letter-spacing: 0%;
+text-align: center;
+
+    }
+  }
+  
+  /* Desktop-only styles */
+  @media (min-width: 769px) {
+    .header__mobile-icons,
+    .header__mobile-menu-links {
+      display: none;
+    }
   }
 
   /* Dark mode support */
@@ -441,26 +607,42 @@
     <div class="header__container">
       <div class="header__top-content">
         <div class="header__nav-links">
-          <a href="/collections/wiertla" class="header__link">{{ 'header.nav.drills' | t }}</a>
-          <a href="/collections/plytki" class="header__link">{{ 'header.nav.plates' | t }}</a>
-          <a href="/collections/koronki" class="header__link">{{ 'header.nav.crowns' | t }}</a>
+          <a href="/collections/wiertla" class="header__link" data-translate="header.nav.drills">{{ 'header.nav.drills' | t }}</a>
+          <a href="/collections/plytki" class="header__link" data-translate="header.nav.plates">{{ 'header.nav.plates' | t }}</a>
+          <a href="/collections/koronki" class="header__link" data-translate="header.nav.crowns">{{ 'header.nav.crowns' | t }}</a>
     </div>
         <div class="header__lang-links">
-          <a href="#" class="header__link" data-lang="pl">{{ 'header.languages.polish' | t }}</a>
-          <a href="#" class="header__link" data-lang="en">{{ 'header.languages.english' | t }}</a>
-          <a href="#" class="header__link" data-lang="de">{{ 'header.languages.german' | t }}</a>
+          <a href="#" class="header__link" data-lang="pl" data-translate="header.languages.polish">{{ 'header.languages.polish' | t }}</a>
+          <a href="#" class="header__link" data-lang="en" data-translate="header.languages.english">{{ 'header.languages.english' | t }}</a>
+          <a href="#" class="header__link" data-lang="de" data-translate="header.languages.german">{{ 'header.languages.german' | t }}</a>
                   </div>
               </div>
             </div>
           </div>
 
   <div class="header__logo">
+  
     <div class="header__logo-container">
       <a href="{{ routes.root_url }}" class="header__logo-text">
         {{ section.settings.logo_text }}
       </a>
     </div>
-        </div>
+     <div class="header__mobile-icons mobile ">
+        <button class="header__mobile-icon-button header__mobile-phone" id="mobile-phone-button">
+          <img src="{{ 'phone_icon_mobile.png' | asset_url }}" alt="Phone" width="24" height="24">
+        </button>
+        <a href="/pages/login" class="header__mobile-icon-button header__mobile-user">
+          <img src="{{ 'user_icon.png' | asset_url }}" alt="Account" width="24" height="24">
+        </a>
+        <a href="{{ routes.cart_url }}" class="header__mobile-icon-button header__mobile-cart">
+          <img src="{{ 'shopping_cart_icon.png' | asset_url }}" alt="Cart" width="24" height="24">
+        </a>
+        <button class="header__mobile-icon-button header__mobile-menu-button" aria-label="Menu" aria-expanded="false">
+          <img src="{{ 'menu_icon.svg' | asset_url }}" alt="Menu" width="24" height="24" class="header__menu-icon closed">
+          <img src="{{ 'menu_icon_open.svg' | asset_url }}" alt="Close Menu" width="24" height="24" class="header__menu-icon open">
+        </button>
+      </div>
+  </div>
 
   <div class="header__bottom">
     <div class="header__container">
@@ -476,37 +658,73 @@
           </div>
         </div>
         <div class="header__actions">
-          <a href="/collections/all" class="header__link">{{ 'header.actions.buy' | t }}</a>
-          <a href="/pages/wypozycz" class="header__link">{{ 'header.actions.rent' | t }}</a>
-          <a href="/pages/regeneruj" class="header__link">{{ 'header.actions.regenerate' | t }}</a>
-          <a href="/pages/naostrz" class="header__link">{{ 'header.actions.sharpen' | t }}</a>
+          <a href="/collections/all" class="header__link" data-translate="header.actions.buy">{{ 'header.actions.buy' | t }}</a>
+          <a href="/pages/wypozycz" class="header__link" data-translate="header.actions.rent">{{ 'header.actions.rent' | t }}</a>
+          <a href="/pages/regeneruj" class="header__link" data-translate="header.actions.regenerate">{{ 'header.actions.regenerate' | t }}</a>
+          <a href="/pages/naostrz" class="header__link" data-translate="header.actions.sharpen">{{ 'header.actions.sharpen' | t }}</a>
           </div>
         </div>
       </div>
     </div>
-  </header>
+  
+  <!-- Mobile menu links -->
+  <div class="header__mobile-menu-links">
+    <a href="/collections/all" class="header__mobile-menu-link" data-translate="header.actions.buy">KUP</a>
+    <a href="/pages/wypozycz" class="header__mobile-menu-link" data-translate="header.actions.rent">WYPOŻYCZ</a>
+    <a href="/pages/regeneruj" class="header__mobile-menu-link" data-translate="header.actions.regenerate">REGENERUJ</a>
+    <a href="/pages/naostrz" class="header__mobile-menu-link" data-translate="header.actions.sharpen">NAOSTRZ</a>
+  </div>
+</header>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const header = document.querySelector('[data-header]');
   const mobileMenuButton = document.querySelector('.header__mobile-menu-button');
-  const mobileMenu = document.querySelector('.header__mobile-menu');
+  const mobileMenuLinks = document.querySelector('.header__mobile-menu-links');
+  const mobilePhoneButton = document.getElementById('mobile-phone-button');
   let lastScrollTop = 0;
   
+  // Phone number copy function
+  if (mobilePhoneButton) {
+    mobilePhoneButton.addEventListener('click', function() {
+      const phoneNumber = '{{ section.settings.phone }}';
+      navigator.clipboard.writeText(phoneNumber).then(function() {
+        // Show a toast or notification
+        const toast = document.createElement('div');
+        toast.className = 'header__toast';
+        toast.textContent = 'Numer telefonu skopiowany!';
+        document.body.appendChild(toast);
+        
+        setTimeout(function() {
+          toast.classList.add('active');
+        }, 10);
+        
+        setTimeout(function() {
+          toast.classList.remove('active');
+          setTimeout(function() {
+            document.body.removeChild(toast);
+          }, 300);
+        }, 2000);
+      }).catch(function(err) {
+        console.error('Could not copy phone number: ', err);
+      });
+    });
+  }
+  
   // Mobile menu toggle
-  mobileMenuButton.addEventListener('click', function() {
-    const isActive = this.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-    document.body.style.overflow = isActive ? 'hidden' : '';
-    
-    // Accessibility
-    mobileMenu.setAttribute('aria-hidden', !isActive);
-    this.setAttribute('aria-expanded', isActive);
-  });
+  if (mobileMenuButton && mobileMenuLinks) {
+    mobileMenuButton.addEventListener('click', function() {
+      const isActive = this.classList.toggle('active');
+      mobileMenuLinks.classList.toggle('active');
+      
+      // Accessibility
+      this.setAttribute('aria-expanded', isActive);
+    });
+  }
 
   // Close mobile menu on escape key
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+    if (e.key === 'Escape' && mobileMenuLinks && mobileMenuLinks.classList.contains('active')) {
       mobileMenuButton.click();
     }
   });
@@ -546,17 +764,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Close mobile menu on resize if open
+  // Close mobile menu on resize
   let resizeTimer;
   window.addEventListener('resize', function() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function() {
-      if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+      if (window.innerWidth > 768 && mobileMenuLinks && mobileMenuLinks.classList.contains('active')) {
         mobileMenuButton.click();
       }
     }, 250);
   });
 });
+
+window.openFilterModal = function() { ... }
+window.closeFilterModal = function() { ... }
+
+filterButton.onclick = function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  window.openFilterModal();
+  return false;
+};
+
 </script>
 
 {% schema %}

@@ -28,7 +28,58 @@
     </div>
   </div>
 </div>
-
+<!-- Add this after wiertla-stats -->
+<div class="wiertla-categories-mobile-types">
+  <div class="wiertla-categories-mobile-types__container">
+    <div class="wiertla-categories-mobile-types__item" data-category="koronkowe">
+      <img class="wiertla-categories-mobile-types__icon" src="{{ 'koronkowe_small.png' | asset_url }}" alt="Koronkowe" />
+      <div class="wiertla-categories-mobile-types__content">
+        <div class="wiertla-categories-mobile-types__label">WIERTŁA CNC</div>
+        <div class="wiertla-categories-mobile-types__name">Koronkowe</div>
+      </div>
+    </div>
+    
+    <div class="wiertla-categories-mobile-types__item" data-category="plytkowe">
+      <img class="wiertla-categories-mobile-types__icon" src="{{ 'plytkowe_small.png' | asset_url }}" alt="Płytkowe" />
+      <div class="wiertla-categories-mobile-types__content">
+        <div class="wiertla-categories-mobile-types__label">WIERTŁA CNC</div>
+        <div class="wiertla-categories-mobile-types__name">Płytkowe</div>
+      </div>
+    </div>
+    
+    <div class="wiertla-categories-mobile-types__item" data-category="vhm">
+      <img class="wiertla-categories-mobile-types__icon" src="{{ 'vhm_small.png' | asset_url }}" alt="VHM" />
+      <div class="wiertla-categories-mobile-types__content">
+        <div class="wiertla-categories-mobile-types__label">WIERTŁA CNC</div>
+        <div class="wiertla-categories-mobile-types__name">VHM</div>
+      </div>
+    </div>
+    
+    <div class="wiertla-categories-mobile-types__item" data-category="sandvik">
+      <img class="wiertla-categories-mobile-types__icon" src="{{ 'sandavik_small.png' | asset_url }}" alt="SanDavik 880" />
+      <div class="wiertla-categories-mobile-types__content">
+        <div class="wiertla-categories-mobile-types__label">WIERTŁA CNC</div>
+        <div class="wiertla-categories-mobile-types__name">SanDavik 880</div>
+      </div>
+    </div>
+    
+    <div class="wiertla-categories-mobile-types__item" data-category="amec">
+      <img class="wiertla-categories-mobile-types__icon" src="{{ 'amec_small.png' | asset_url }}" alt="AMEC" />
+      <div class="wiertla-categories-mobile-types__content">
+        <div class="wiertla-categories-mobile-types__label">WIERTŁA CNC</div>
+        <div class="wiertla-categories-mobile-types__name">AMEC</div>
+      </div>
+    </div>
+    
+    <div class="wiertla-categories-mobile-types__item" data-category="ksem">
+      <img class="wiertla-categories-mobile-types__icon" src="{{ 'ksem_small.png' | asset_url }}" alt="KSEM" />
+      <div class="wiertla-categories-mobile-types__content">
+        <div class="wiertla-categories-mobile-types__label">WIERTŁA CNC</div>
+        <div class="wiertla-categories-mobile-types__name">KSEM</div>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Latest Products Section -->
 <div class="latest-products">
   <div class="latest-products__title">
@@ -112,40 +163,23 @@
 <div class="rent-tools">
   <div class="rent-tools__lines"></div>
   <div class="rent-tools__content">
-    <div class="rent-tools__title">
-      {{ 'wiertla_stats.rent_tools.title_line1' | t }}
+    <div class="rent-tools__title" data-translate="wiertla_stats.rent_tools.title">
+      {{ 'wiertla_stats.rent_tools.title' | t }}
     </div>
-    <div class="rent-tools__title">
-      {{ 'wiertla_stats.rent_tools.title_line2' | t }}
+    <div class="rent-tools__subtitle" data-translate="wiertla_stats.rent_tools.subtitle">
+      {{ 'wiertla_stats.rent_tools.subtitle' | t }}
     </div>
     
     <div class="rent-tools__icons">
-      <div>
-        <img src="{{ 'Ksztat8Kopia.svg' | asset_url }}" alt="{{ 'wiertla_stats.rent_tools.icon1_alt' | t }}">
-      </div>
-      <div>
-        <img src="{{ 'Group7.svg' | asset_url }}" alt="{{ 'wiertla_stats.rent_tools.icon2_alt' | t }}">
-      </div>
-      <div>
-        <img src="{{ 'Ksztat16Kopia.svg' | asset_url }}" alt="{{ 'wiertla_stats.rent_tools.icon3_alt' | t }}">
-      </div>
-      <div>
-        <img src="{{ 'Frame6.svg' | asset_url }}" alt="{{ 'wiertla_stats.rent_tools.icon4_alt' | t }}">
-      </div>
-      <div>
-        <img src="{{ 'Ksztat13Kopia.svg' | asset_url }}" alt="{{ 'wiertla_stats.rent_tools.icon5_alt' | t }}">
-      </div>
-      <div>
-        <img src="{{ 'Ksztat13Kopia1.svg' | asset_url }}" alt="{{ 'wiertla_stats.rent_tools.icon6_alt' | t }}">
-      </div>
+      <img src="{{ 'icons_rent.png' | asset_url }}" alt="Tool icons" class="rent-tools__icons-image">
     </div>
     
-    <div class="rent-tools__description">
+    <div class="rent-tools__description" data-translate="wiertla_stats.rent_tools.description">
       {{ 'wiertla_stats.rent_tools.description' | t }}
     </div>
     
     <a href="{{ section.settings.rent_tools_link }}" class="rent-tools__button">
-      {{ 'wiertla_stats.rent_tools.learn_more' | t }}
+      <span data-translate="wiertla_stats.rent_tools.learn_more">{{ 'wiertla_stats.rent_tools.learn_more' | t }}</span>
       <img src="{{ 'Refresh_24dp_5F6368_FILL0_wght400_GRAD0_opsz.svg' | asset_url }}" class="h-7 w-7 flex-shrink-0" alt="{{ 'wiertla_stats.rent_tools.arrow_alt' | t }}">
     </a>
   </div>
@@ -157,21 +191,23 @@
     <div class="faq__columns">
       <!-- Column 1 -->
       <div class="faq__column">
-        <div class="faq__main-title">
+        <div class="faq__main-title" data-translate="wiertla_stats.faq.main_title">
           {{ 'wiertla_stats.faq.main_title' | t }}
         </div>
         <div class="faq__item">
-          <div class="faq__title">
+          <div class="faq__title" data-translate="wiertla_stats.faq.question1.title">
             {{ 'wiertla_stats.faq.question1.title' | t }}
           </div>
           <div class="faq__text">
-            <p></p>
-              <span class="faq__bold">{{ 'wiertla_stats.faq.question1.subtitle1' | t }}</span>: {{ 'wiertla_stats.faq.question1.text1' | t }}
+            <p>
+              <span class="faq__bold" data-translate="wiertla_stats.faq.question1.subtitle1">{{ 'wiertla_stats.faq.question1.subtitle1' | t }}</span>: 
+              <span data-translate="wiertla_stats.faq.question1.text1">{{ 'wiertla_stats.faq.question1.text1' | t }}</span>
             </p>
           </div>
           <div class="faq__text">
             <p>
-              <span class="faq__bold">{{ 'wiertla_stats.faq.question1.subtitle2' | t }}</span>: {{ 'wiertla_stats.faq.question1.text2' | t }}
+              <span class="faq__bold" data-translate="wiertla_stats.faq.question1.subtitle2">{{ 'wiertla_stats.faq.question1.subtitle2' | t }}</span>: 
+              <span data-translate="wiertla_stats.faq.question1.text2">{{ 'wiertla_stats.faq.question1.text2' | t }}</span>
             </p>
           </div>
         </div>
@@ -180,22 +216,23 @@
       <!-- Column 2 -->
       <div class="faq__column">
         <div class="faq__item">
-          <div class="faq__title">
+          <div class="faq__title" data-translate="wiertla_stats.faq.question2.title">
             {{ 'wiertla_stats.faq.question2.title' | t }}
           </div>
           <div class="faq__text">
-            <p>
+            <p data-translate="wiertla_stats.faq.question2.text">
               {{ 'wiertla_stats.faq.question2.text' | t }}
             </p>
           </div>
         </div>
         <div class="faq__item">
-          <div class="faq__title">
+          <div class="faq__title" data-translate="wiertla_stats.faq.question4.title">
             {{ 'wiertla_stats.faq.question4.title' | t }}
           </div>
           <div class="faq__text">
             <p>
-              <span class="faq__bold">{{ 'wiertla_stats.faq.question4.subtitle' | t }}</span> {{ 'wiertla_stats.faq.question4.text' | t }}
+              <span class="faq__bold" data-translate="wiertla_stats.faq.question4.subtitle">{{ 'wiertla_stats.faq.question4.subtitle' | t }}</span> 
+              <span data-translate="wiertla_stats.faq.question4.text">{{ 'wiertla_stats.faq.question4.text' | t }}</span>
             </p>
           </div>
         </div>
@@ -204,22 +241,23 @@
       <!-- Column 3 -->
       <div class="faq__column">
         <div class="faq__item">
-          <div class="faq__title">
+          <div class="faq__title" data-translate="wiertla_stats.faq.question3.title">
             {{ 'wiertla_stats.faq.question3.title' | t }}
           </div>
           <div class="faq__text">
-            <p>
+            <p data-translate="wiertla_stats.faq.question3.text">
               {{ 'wiertla_stats.faq.question3.text' | t }}
             </p>
           </div>
         </div>
         <div class="faq__item">
-          <div class="faq__title">
+          <div class="faq__title" data-translate="wiertla_stats.faq.question5.title">
             {{ 'wiertla_stats.faq.question5.title' | t }}
           </div>
           <div class="faq__text">
             <p>
-              <span class="faq__bold">{{ 'wiertla_stats.faq.question5.subtitle' | t }}</span> {{ 'wiertla_stats.faq.question5.text' | t }}
+              <span class="faq__bold" data-translate="wiertla_stats.faq.question5.subtitle">{{ 'wiertla_stats.faq.question5.subtitle' | t }}</span> 
+              <span data-translate="wiertla_stats.faq.question5.text">{{ 'wiertla_stats.faq.question5.text' | t }}</span>
             </p>
           </div>
         </div>
@@ -251,10 +289,10 @@
         <div class="category-desc__item">
           <div class="category-desc__header">
             <img src="{{ 'image-37.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="SanDavik 880">
-            <div class="category-desc__name">SanDavik 880</div>
+            <div class="category-desc__name" data-translate="wiertla_categories.sandvik">SanDavik 880</div>
           </div>
           <div class="category-desc__text">
-            <p>Wiertła Sandvik 880 to synonim jakości i niezawodności. Zaprojektowane z myślą o najwyższej wydajności, wiertła te są doskonałe do wiercenia w najtwardszych materiałach. Ich zaawansowana geometria i powłoki ochronne zapewniają długą żywotność i stabilność pracy. Idealne do zastosowań przemysłowych, wiertła Sandvik 880 są świadomym wyborem profesjonalistów na całym świecie.</p>
+            <p data-translate="wiertla_stats.category_desc.sandvik_drills.text">Wiertła Sandvik 880 to synonim jakości i niezawodności. Zaprojektowane z myślą o najwyższej wydajności, wiertła te są doskonałe do wiercenia w najtwardszych materiałach. Ich zaawansowana geometria i powłoki ochronne zapewniają długą żywotność i stabilność pracy. Idealne do zastosowań przemysłowych, wiertła Sandvik 880 są świadomym wyborem profesjonalistów na całym świecie.</p>
           </div>
         </div>
       </div>
@@ -264,20 +302,20 @@
         <div class="category-desc__item">
           <div class="category-desc__header">
             <img src="{{ 'image-38.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="Wiertła PŁYTKOWE">
-            <div class="category-desc__name">Wiertła PŁYTKOWE</div>
+            <div class="category-desc__name" data-translate="wiertla_categories.plate">Wiertła PŁYTKOWE</div>
           </div>
           <div class="category-desc__text">
-            <p>Wiertła płytkowe zapewniają niezrównaną precyzję i trwałość. Dzięki swojej konstrukcji, doskonale nadają się do obróbki materiałów kompozytowych i metali kolorowych. Wiertła płytkowe oferują stabilność i dokładność, co jest niezbędne w precyzyjnych pracach obróbczych. W naszej ofercie znajdziesz szeroki wybór wierteł płytkowych, które sprostają nawet najbardziej wymagającym zadaniom.</p>
+            <p data-translate="wiertla_stats.category_desc.plate_drills.text">Wiertła płytkowe zapewniają niezrównaną precyzję i trwałość. Dzięki swojej konstrukcji, doskonale nadają się do obróbki materiałów kompozytowych i metali kolorowych. Wiertła płytkowe oferują stabilność i dokładność, co jest niezbędne w precyzyjnych pracach obróbczych. W naszej ofercie znajdziesz szeroki wybór wierteł płytkowych, które sprostają nawet najbardziej wymagającym zadaniom.</p>
           </div>
         </div>
 
         <div class="category-desc__item">
           <div class="category-desc__header">
             <img src="{{ 'image-39.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="Wiertła AMEC">
-            <div class="category-desc__name">Wiertła AMEC</div>
+            <div class="category-desc__name" data-translate="wiertla_categories.amec">Wiertła AMEC</div>
           </div>
           <div class="category-desc__text">
-            <p>Specjalistyczne wiertła AMEC to narzędzia o najwyższej precyzji, przeznaczone do zastosowań przemysłowych. Dzięki zaawansowanej technologii produkcji, wiertła te oferują doskonałe rezultaty nawet w najbardziej wymagających warunkach. Nasza oferta obejmuje szeroki wybór wierteł AMEC, które sprostają wszelkim potrzebom obróbczych.</p>
+            <p data-translate="wiertla_stats.category_desc.amec_drills.text">Specjalistyczne wiertła AMEC to narzędzia o najwyższej precyzji, przeznaczone do zastosowań przemysłowych. Dzięki zaawansowanej technologii produkcji, wiertła te oferują doskonałe rezultaty nawet w najbardziej wymagających warunkach. Nasza oferta obejmuje szeroki wybór wierteł AMEC, które sprostają wszelkim potrzebom obróbczych.</p>
           </div>
         </div>
       </div>
@@ -287,20 +325,20 @@
         <div class="category-desc__item">
           <div class="category-desc__header">
             <img src="{{ 'image-40.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="Wiertła VHM">
-            <div class="category-desc__name">Wiertła VHM <span class="category-desc__subtitle">(Węglik Spiekany)</span></div>
+            <div class="category-desc__name" data-translate="wiertla_categories.vhm">Wiertła VHM <span class="category-desc__subtitle">(Węglik Spiekany)</span></div>
           </div>
           <div class="category-desc__text">
-            <p>Wiertła VHM, wykonane z węglika spiekanego, to narzędzia o wyjątkowej trwałości i wydajności. Są one idealne do intensywnych prac obróbczych w trudnych warunkach. Wiertła VHM cechują się wysoką odpornością na zużycie, co gwarantuje długą żywotność narzędzia i mniejsze przestoje w produkcji. Sprawdzą się doskonale w przemyśle metalowym i narzędziowym.</p>
+            <p data-translate="wiertla_stats.category_desc.vhm_drills.text">Wiertła VHM, wykonane z węglika spiekanego, to narzędzia o wyjątkowej trwałości i wydajności. Są one idealne do intensywnych prac obróbczych w trudnych warunkach. Wiertła VHM cechują się wysoką odpornością na zużycie, co gwarantuje długą żywotność narzędzia i mniejsze przestoje w produkcji. Sprawdzą się doskonale w przemyśle metalowym i narzędziowym.</p>
           </div>
         </div>
 
         <div class="category-desc__item">
           <div class="category-desc__header">
             <img src="{{ 'image-41.png' | asset_url }}" loading="lazy" class="category-desc__icon" alt="Wiertła KSEM">
-            <div class="category-desc__name">Wiertła KSEM</div>
+            <div class="category-desc__name" data-translate="wiertla_categories.ksem">Wiertła KSEM</div>
           </div>
           <div class="category-desc__text">
-            <p>Innowacyjne wiertła KSEM zapewniają doskonałe rezultaty wiercenia, nawet w najtwardszych materiałach. Dzięki unikalnym rozwiązaniom konstrukcyjnym, wiertła KSEM umożliwiają szybkie i efektywne wiercenie, minimalizując przy tym czas przestoju maszyn. Są one idealnym wyborem do produkcji masowej i precyzyjnych prac obróbczych.</p>
+            <p data-translate="wiertla_stats.category_desc.ksem_drills.text">Innowacyjne wiertła KSEM zapewniają doskonałe rezultaty wiercenia, nawet w najtwardszych materiałach. Dzięki unikalnym rozwiązaniom konstrukcyjnym, wiertła KSEM umożliwiają szybkie i efektywne wiercenie, minimalizując przy tym czas przestoju maszyn. Są one idealnym wyborem do produkcji masowej i precyzyjnych prac obróbczych.</p>
           </div>
         </div>
       </div>
@@ -407,7 +445,7 @@
   }
   
   .wiertla-stats__item {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     text-align: center;
   }
@@ -462,8 +500,7 @@
   max-height: 34px;
   width: 34px;
   height: 34px;
-  border-top: 2px solid #112832;
-  border-bottom: 2px solid #112832;
+  border: 2px solid #112832;
 }
 
 .product-card__image {
@@ -572,8 +609,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
+  width: 10.79px;
+  height: 18.33px;
   margin: 0;
   background: none;
   border: none;
@@ -581,9 +618,21 @@
 
 .swiper-button-next:after,
 .swiper-button-prev:after {
-  font-size: 24px;
+  font-size: 18.33px;
   font-weight: bold;
   color: #112832;
+}
+@media screen and (max-width: 768px) {
+  .swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 12px;
+  font-weight: bold;
+  color: #112832;
+}
+  .swiper-button-next,
+.swiper-button-prev {
+    top: 100%;
+    }
 }
 
 .swiper-button-next {
@@ -604,12 +653,12 @@
   justify-content: center;
   align-items: center;
   gap: 4px;
-  width: 120px;
+  width: 80%;
   margin: 0 auto;
 }
 
 .pagination-bar {
-  width: 32px;
+  flex: 1;
   height: 2px;
   background-color: #112832;
   transition: all 0.3s ease;
@@ -644,7 +693,11 @@
   text-align: center;
   max-width: 842px;
 }
-
+@media screen and (max-width: 1024px) {
+  .rent-tools__content {
+    max-width: 90vw;
+  }
+}
 .rent-tools__title {
   font-family: "League Spartan";
   font-weight: 700;
@@ -698,40 +751,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px;
   margin: 24px 0;
   padding: 0 20px;
 }
 
-.rent-tools__icons > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-}
-
-.rent-tools__icons img {
-  width: 100%;
-  height: 100%;
+.rent-tools__icons-image {
+  max-width: 100%;
+  height: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
 }
 
-.rent-tools__icons img:hover {
-  transform: scale(1.1);
+.rent-tools__icons-image:hover {
+  transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
   .rent-tools__icons {
-    gap: 24px;
-    flex-wrap: wrap;
     margin: 16px 0;
   }
   
-  .rent-tools__icons > div {
-    width: 32px;
-    height: 32px;
+  .rent-tools__icons-image {
+    max-width: 90%;
   }
 }
 
@@ -761,6 +802,11 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+}
+
+.faq__column:nth-child(2),
+.faq__column:nth-child(3) {
+  margin-top: 59px;
 }
 
 .faq__main-title {
@@ -887,7 +933,6 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #112832;
-  margin-bottom: 20px;
 }
 
 .category-desc__subtitle {

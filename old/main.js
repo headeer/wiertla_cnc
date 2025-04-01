@@ -26,7 +26,6 @@ function toggleActiveClass(groupSelector, activeClass, stateKey, stateValue) {
   activeState[stateKey] = stateValue;
 
   // Debugging the current state
-  console.log(activeState);
 }
 
 // Functionality for Tabs

@@ -5,36 +5,36 @@
 
 <!-- New Category Icons -->
 <div class="wiertla-categories__icons">
-  <div class="wiertla-categories__icon-item">
+  <div class="wiertla-categories__icon-item" data-category="koronkowe">
     <img src="{{ 'ico_big_koronkowe.svg' | asset_url }}" alt="Koronkowe" class="wiertla-categories__icon">
     <span class="wiertla-categories__icon-label">KORONKOWE</span>
   </div>
-  <div class="wiertla-categories__icon-item">
+  <div class="wiertla-categories__icon-item" data-category="plytkowe">
     <img src="{{ 'ico_big_plytkowe.svg' | asset_url }}" alt="Płytkowe" class="wiertla-categories__icon">
     <span class="wiertla-categories__icon-label">PŁYTKOWE</span>
   </div>
-  <div class="wiertla-categories__icon-item">
+  <div class="wiertla-categories__icon-item" data-category="vhm">
     <img src="{{ 'ico_big_vhm.svg' | asset_url }}" alt="VH" class="wiertla-categories__icon">
     <span class="wiertla-categories__icon-label">VHM</span>
   </div>
-  <div class="wiertla-categories__icon-item">
+  <div class="wiertla-categories__icon-item" data-category="sandvik">
     <img src="{{ 'ico_big_sandvik.svg' | asset_url }}" alt="Sandvik 880" class="wiertla-categories__icon">
     <span class="wiertla-categories__icon-label">SANDVIK 880</span>
   </div>
-  <div class="wiertla-categories__icon-item">
+  <div class="wiertla-categories__icon-item" data-category="amec">
     <img src="{{ 'ico_big_amec.svg' | asset_url }}" alt="AMEC" class="wiertla-categories__icon">
     <span class="wiertla-categories__icon-label">AMEC</span>
   </div>
-  <div class="wiertla-categories__icon-item">
+  <div class="wiertla-categories__icon-item" data-category="ksem">
     <img src="{{ 'ico_big_ksem.svg' | asset_url }}" alt="KSEM" class="wiertla-categories__icon">
     <span class="wiertla-categories__icon-label">KSEM</span>
   </div>
-  <div class="wiertla-categories__icon-item">
+  <div class="wiertla-categories__icon-item" data-category="wszystkie">
     <img src="{{ 'ico_big_all.svg' | asset_url }}" alt="Wszystkie" class="wiertla-categories__icon">
     <span class="wiertla-categories__icon-label">WSZYSTKIE</span>
   </div>
 </div>
-<div class="wiertla-categories__filters">
+<div class="wiertla-categories__filters desktop">
   <div class="wiertla-categories__filters-left">
     <button class="wiertla-categories__filter-button active" data-filter="wszystkie">Wszystkie</button>
     <select class="wiertla-categories__filter" data-filter="type">
@@ -63,12 +63,275 @@
   </div>
 
   <div class="wiertla-categories__filters-right">
-    <span class="wiertla-categories__per-page-label">Pokaż</span>
+  <button class="wiertla-categories__filter-btn mobile-only mobile">
+      <img src="{{ 'icon_filter.svg' | asset_url }}" alt="Filter" width="24" height="24">
+      <span>Filtruj</span>
+    </button>
+    <span class="wiertla-categories__per-page-label desktop">Pokaż</span>
     <div class="wiertla-categories__per-page-buttons">
       <button class="wiertla-categories__per-page-button active" data-value="20">20</button>
       <button class="wiertla-categories__per-page-button" data-value="50">50</button>
       <button class="wiertla-categories__per-page-button" data-value="100">100</button>
     </div>
     <span class="wiertla-categories__per-page-label">/ na stronę</span>
+    
   </div>
-</div> 
+</div>
+
+<!-- Filter Modal -->
+<div class="wiertla-categories__modal" id="filterModal">
+  <div class="wiertla-categories__modal-content">
+    <div class="wiertla-categories__modal-header">
+      <h3>Filtruj wiertła w tabeli</h3>
+      <button class="wiertla-categories__modal-close">&times;</button>
+    </div>
+    <div class="wiertla-categories__modal-body">
+      <div class="wiertla-categories__modal-filters">
+        <div class="wiertla-categories__modal-filter-group">
+          <label>Typ wiertła</label>
+          <select class="wiertla-categories__filter" data-filter="type">
+            <option value="">Wszystkie</option>
+            <option value="VW">Koronkowe (VW)</option>
+            <option value="PR">Płytkowe (PR)</option>
+            <option value="WW">VHM (WW)</option>
+            <option value="PS">Sandvik 880 (PS)</option>
+            <option value="WK">KSEM (WK)</option>
+            <option value="WV">AMEC (WV)</option>
+          </select>
+        </div>
+        <div class="wiertla-categories__modal-filter-group">
+          <label>Wykaz koronek</label>
+          <select class="wiertla-categories__filter" data-filter="crown">
+            <option value="">Wszystkie</option>
+            <option value="KK">KK</option>
+            <option value="KI">KI</option>
+            <option value="KS">KS</option>
+            <option value="KT">KT</option>
+            <option value="KA">KA</option>
+          </select>
+        </div>
+        <div class="wiertla-categories__modal-filter-group">
+          <label>Producent</label>
+          <select class="wiertla-categories__filter" data-filter="manufacturer">
+            <option value="">Wszystkie</option>
+            <option value="Sandvik">Sandvik</option>
+            <option value="AMEC">AMEC</option>
+            <option value="KSEM">KSEM</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="wiertla-categories__modal-footer">
+      <button class="wiertla-categories__modal-apply">Zastosuj</button>
+      <button class="wiertla-categories__modal-reset">Resetuj</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add event listeners to language buttons
+    document.querySelectorAll('.wiertla-categories__language-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const lang = this.getAttribute('data-lang');
+        if (window.WiertlaCNC && window.WiertlaCNC.changeLanguage) {
+          window.WiertlaCNC.changeLanguage(lang);
+        }
+      });
+    });
+
+    // Modal functionality
+    const modal = document.getElementById('filterModal');
+    const filterBtn = document.querySelector('.wiertla-categories__filter-btn');
+    const closeBtn = document.querySelector('.wiertla-categories__modal-close');
+    const applyBtn = document.querySelector('.wiertla-categories__modal-apply');
+    const resetBtn = document.querySelector('.wiertla-categories__modal-reset');
+
+    if (filterBtn && modal) {
+      filterBtn.addEventListener('click', function() {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+
+    if (closeBtn && modal) {
+      closeBtn.addEventListener('click', function() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    }
+
+    if (applyBtn) {
+      applyBtn.addEventListener('click', function() {
+        // Apply filters logic here
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function() {
+        // Reset filters logic here
+        const filters = modal.querySelectorAll('.wiertla-categories__filter');
+        filters.forEach(filter => {
+          filter.value = '';
+        });
+      });
+    }
+
+    // Close modal when clicking outside
+    if (modal) {
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+.wiertla-categories__filter-btn {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: #112832;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wiertla-categories__filter-btn:hover {
+  background: #1a3a47;
+}
+
+.wiertla-categories__filter-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Modal styles */
+.wiertla-categories__modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.wiertla-categories__modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wiertla-categories__modal-content {
+  background: white;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.wiertla-categories__modal-header {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wiertla-categories__modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.wiertla-categories__modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  color: #666;
+}
+
+.wiertla-categories__modal-body {
+  padding: 20px;
+}
+
+.wiertla-categories__modal-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.wiertla-categories__modal-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wiertla-categories__modal-filter-group label {
+  font-weight: 500;
+  color: #333;
+}
+
+.wiertla-categories__modal-footer {
+  padding: 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.wiertla-categories__modal-apply,
+.wiertla-categories__modal-reset {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wiertla-categories__modal-apply {
+  background: #112832;
+  color: white;
+  border: none;
+}
+
+.wiertla-categories__modal-reset {
+  background: white;
+  color: #112832;
+  border: 1px solid #112832;
+}
+
+.wiertla-categories__modal-apply:hover {
+  background: #1a3a47;
+}
+
+.wiertla-categories__modal-reset:hover {
+  background: #f5f5f5;
+}
+
+@media (max-width: 768px) {
+  .mobile-only {
+    display: flex !important;
+  }
+  
+  .wiertla-categories__filters-left {
+    display: none;
+  }
+}
+</style> 

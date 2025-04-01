@@ -1,7 +1,6 @@
 // Main Shopify custom scripts
 document.addEventListener("DOMContentLoaded", function () {
   // Initialize any custom functionality here
-  console.log("Custom scripts loaded");
 
   // Add mobile table functionality
   initMobileTableView();

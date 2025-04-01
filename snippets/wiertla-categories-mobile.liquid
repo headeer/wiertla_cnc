@@ -44,80 +44,73 @@
   </div>
 </div>
 
-<!-- Mobile Filter Controls -->
-<div class="wiertla-categories__mobile-controls">
-  <button class="wiertla-categories__mobile-filter-btn">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <path d="M4 4h16v2.67l-6.67 6.67v5.66l-2.66 2v-7.66L4 6.67V4z" stroke="currentColor" stroke-width="2"/>
-    </svg>
-    <span>Filtruj</span>
-  </button>
-  
-  <div class="wiertla-categories__mobile-per-page">
-    <span class="wiertla-categories__per-page-label">Pokaż</span>
-    <div class="wiertla-categories__per-page-buttons">
-      <button class="wiertla-categories__per-page-button active" data-value="20">20</button>
-      <button class="wiertla-categories__per-page-button" data-value="50">50</button>
-      <button class="wiertla-categories__per-page-button" data-value="100">100</button>
-    </div>
-    <span class="wiertla-categories__per-page-label">/ na stronę</span>
-  </div>
-</div>
 
 <!-- Mobile Filter Modal -->
-<div class="wiertla-categories__mobile-filter-modal">
-  <div class="wiertla-categories__mobile-filter-header">
-    <div class="wiertla-categories__mobile-filter-title">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M4 4h16v2.67l-6.67 6.67v5.66l-2.66 2v-7.66L4 6.67V4z" stroke="currentColor" stroke-width="2"/>
-      </svg>
-      <h3>Filtruj wiertła w tabeli</h3>
+<div class="wiertla-categories__mobile-filter-modal" style="display: none;">
+  <div class="wiertla-categories__mobile-filter-wrapper">
+    <!-- Filter header -->
+    <div class="wiertla-categories__mobile-filter-header">
+      <div class="wiertla-categories__mobile-filter-icon">
+        <img src="{{ 'icon_filter.svg' | asset_url }}" alt="Filter" class="wiertla-categories__mobile-filter-icon-inner">
+      </div>
+      <div class="wiertla-categories__mobile-filter-title">filtruj wiertła w tabeli</div>
+      <div class="wiertla-categories__mobile-filter-close-wrapper">
+        <img src="{{ 'closee.svg' | asset_url }}" alt="Close" class="wiertla-categories__mobile-filter-close">
+      </div>
     </div>
-    <button class="wiertla-categories__mobile-filter-close">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
-  </div>
-  
-  <div class="wiertla-categories__mobile-filter-content">
-    <div class="wiertla-categories__mobile-filters">
-      <select class="wiertla-categories__filter" data-filter="type">
-        <option value="">Typ wiertła</option>
-        <option value="VW">Koronkowe (VW)</option>
-        <option value="PR">Płytkowe (PR)</option>
-        <option value="WW">VHM (WW)</option>
-        <option value="PS">Sandvik 880 (PS)</option>
-        <option value="WK">KSEM (WK)</option>
-        <option value="WV">AMEC (WV)</option>
-      </select>
-      <select class="wiertla-categories__filter" data-filter="crown">
-        <option value="">Wykaz koronek</option>
-        <option value="KK">KK</option>
-        <option value="KI">KI</option>
-        <option value="KS">KS</option>
-        <option value="KT">KT</option>
-        <option value="KA">KA</option>
-      </select>
-      <select class="wiertla-categories__filter" data-filter="manufacturer">
-        <option value="">Producent</option>
-        <option value="Sandvik">Sandvik</option>
-        <option value="AMEC">AMEC</option>
-        <option value="KSEM">KSEM</option>
-      </select>
+    
+    <!-- Filter options -->
+    <div class="wiertla-categories__mobile-filter-options">
+      <div class="wiertla-categories__mobile-filter-dropdown">
+        <select class="wiertla-categories__mobile-filter-select" data-filter="type">
+          <option value="">Typ wiertła</option>
+          <option value="all">Wszystkie</option>
+          <option value="VW">Koronkowe (VW)</option>
+          <option value="PR">Płytkowe (PR)</option>
+          <option value="WW">VHM (WW)</option>
+          <option value="PS">Sandvik 880 (PS)</option>
+          <option value="WK">KSEM (WK)</option>
+          <option value="WV">AMEC (WV)</option>
+        </select>
+      </div>
+      <div class="wiertla-categories__mobile-filter-dropdown">
+        <select class="wiertla-categories__mobile-filter-select" data-filter="crown">
+          <option value="">Wykaz koronek</option>
+          <option value="all">Wszystkie</option>
+          <option value="KK">KK</option>
+          <option value="KI">KI</option>
+          <option value="KS">KS</option>
+          <option value="KT">KT</option>
+          <option value="KA">KA</option>
+        </select>
+      </div>
+      <div class="wiertla-categories__mobile-filter-dropdown">
+        <select class="wiertla-categories__mobile-filter-select" data-filter="manufacturer">
+          <option value="">Producent</option>
+          <option value="all">Wszystkie</option>
+          <option value="Sandvik">Sandvik</option>
+          <option value="AMEC">AMEC</option>
+          <option value="KSEM">KSEM</option>
+        </select>
+      </div>
+    </div>
+    
+    <!-- Filter selection -->
+    <div class="wiertla-categories__mobile-filter-selection">
+      <div class="wiertla-categories__mobile-filter-selection-title">Pokaż</div>
+      <div class="wiertla-categories__mobile-filter-dropdown">
+        <div class="wiertla-categories__mobile-filter-dropdown-text">Wszystkie</div>
+      </div>
       
-      <button class="wiertla-categories__mobile-filter-show">
-        <span>Pokaż</span>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M21 12L13 4V9C7 10 4 15 3 20C5.5 16.5 9 14.9 13 14.9V20L21 12Z" stroke="currentColor" stroke-width="2"/>
-        </svg>
-      </button>
-      
-      <button class="wiertla-categories__mobile-sort-btn">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M3 7H21M6 12H18M9 17H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+      <!-- Include Dropdown Menu -->
+      {% render 'wiertla-categories-mobile-dropdown' %}
+    </div>
+    
+    <!-- Sort button -->
+    <div class="wiertla-categories__mobile-filter-sort-wrapper">
+      <button class="wiertla-categories__mobile-filter-sort-button">
         <span>Sortuj wiertła</span>
+        <img src="{{ 'icon_filter.svg' | asset_url }}" alt="Sort" class="wiertla-categories__mobile-filter-sort-icon">
       </button>
     </div>
   </div>
@@ -215,6 +208,68 @@
       </svg>
       <h4>Dziękujemy za wysłanie zapytania</h4>
       <p>Czas na odpowiedź wynosi zwykle 24 godziny w dni robocze. Jeśli potrzebujesz wiertła szybciej, zadzwoń.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Product Preview Modal -->
+<div class="wiertla-categories__mobile-preview-modal" style="display: none;">
+  <div class="wiertla-categories__mobile-preview-wrapper">
+    <!-- Preview header -->
+    <div class="wiertla-categories__mobile-preview-header">
+      <div class="wiertla-categories__mobile-preview-icon">
+        <img src="{{ 'loop_icon.svg' | asset_url }}" alt="Preview" class="wiertla-categories__mobile-preview-icon-inner">
+      </div>
+      <div class="wiertla-categories__mobile-preview-title">Podgląd</div>
+      <div class="wiertla-categories__mobile-preview-close-wrapper">
+        <img src="{{ 'closee.svg' | asset_url }}" alt="Close" class="wiertla-categories__mobile-preview-close">
+      </div>
+    </div>
+    
+    <!-- Product Image -->
+    <div class="wiertla-categories__mobile-preview-image-container">
+      <img src="" alt="Product" class="wiertla-categories__mobile-preview-image">
+    </div>
+    
+    <!-- Product Info -->
+    <div class="wiertla-categories__mobile-preview-info">
+      <!-- Diameter and size -->
+      <div class="wiertla-categories__mobile-preview-specs">
+        <div class="wiertla-categories__mobile-preview-type">
+          <img src="" alt="Type" class="wiertla-categories__mobile-preview-type-icon">
+        </div>
+        <div class="wiertla-categories__mobile-preview-diameter">
+          <div class="wiertla-categories__mobile-preview-diameter-label">fi ⌀</div>
+          <div class="wiertla-categories__mobile-preview-diameter-value"></div>
+        </div>
+        <div class="wiertla-categories__mobile-preview-size">
+          <div class="wiertla-categories__mobile-preview-size-value"></div>
+        </div>
+        <div class="wiertla-categories__mobile-preview-price">
+          <div class="wiertla-categories__mobile-preview-price-value"></div>
+          <div class="wiertla-categories__mobile-preview-cart-icon">
+            <img src="{{ 'cart_icon.svg' | asset_url }}" alt="Add to cart">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Manufacturer and SKU -->
+      <div class="wiertla-categories__mobile-preview-details">
+        <div class="wiertla-categories__mobile-preview-manufacturer">
+          <div class="wiertla-categories__mobile-preview-manufacturer-value"></div>
+        </div>
+        <div class="wiertla-categories__mobile-preview-sku">
+          <div class="wiertla-categories__mobile-preview-sku-value"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Details Button -->
+    <div class="wiertla-categories__mobile-preview-button-container">
+      <a href="#" class="wiertla-categories__mobile-preview-button">
+        <span>Zobacz szczegóły</span>
+        <img src="{{ 'Arrow_forward_ios_24dp_5F6368_FILL0_wght400_GRAD0_opsz.svg' | asset_url }}" alt="Arrow" class="wiertla-categories__mobile-preview-button-icon">
+      </a>
     </div>
   </div>
 </div> 
