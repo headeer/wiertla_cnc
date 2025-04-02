@@ -1,23 +1,24 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "wiertla-banner": {
       "type": "wiertla-banner",
       "settings": {
-        "title": "Precision CNC Tools for Every Project",
-        "text": "<p>High-quality tools and accessories for professional machinists and hobbyists</p>",
-        "button_label": "Shop Now",
-        "button_link": "/collections/all"
+        "title": "Precision CNC Tools for Every Project"
       }
     },
     "wiertla-search": {
       "type": "wiertla-search",
       "settings": {
-        "title": "Find the Perfect Tool",
-        "placeholder": "Search for drill bits, end mills, and more...",
-        "button_label": "Search",
-        "show_popular_searches": true,
-        "popular_searches_label": "Popular Searches",
-        "popular_searches": "Drill Bits, End Mills, Lathe Tools, Tool Holders"
+        "placeholder": "Search for drill bits, end mills, and more..."
       }
     },
     "wiertla-logos": {
@@ -59,13 +60,15 @@
           }
         }
       },
-      "block_order": ["logo-1", "logo-2", "logo-3", "logo-4", "logo-5"],
-      "settings": {
-        "title": "Our Trusted Partners",
-        "subtitle": "We work with the best brands in the industry"
-      }
+      "block_order": [
+        "logo-1",
+        "logo-2",
+        "logo-3",
+        "logo-4",
+        "logo-5"
+      ],
+      "settings": {}
     },
-
     "wiertla-categories": {
       "type": "wiertla-categories",
       "settings": {}

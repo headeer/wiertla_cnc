@@ -109,54 +109,64 @@ window.WiertlaTranslations = {
     // FAQ Section
     wiertla_stats: {
       faq: {
-        main_title: "NAJCZĘŚCIEJ ZADAWANE PYTANIA",
+        main_title: "Wiertła CNC - FAQ",
         question1: {
-          title: "Dostawy",
-          subtitle1: "Wysyłki",
-          text1: "Standardowy czas realizacji zamówienia to 1-2 dni robocze.",
-          subtitle2: "Płatności",
-          text2: "Akceptujemy przelewy bankowe, płatności kartą oraz PayPal.",
+          title: "1. Jakie wiertła CNC wybrać do metalu?",
+          subtitle1: "Wiertła Koronkowe",
+          text1:
+            "Idealne do dużych otworów w metalu. Wiertła koronkowe charakteryzują się konstrukcją, która umożliwia wydajne i szybkie wiercenie nawet w twardych materiałach, minimalizując przy tym uszkodzenia obrabianego materiału. Są często stosowane w przemyśle budowlanym i mechanicznym",
+          subtitle2: "Wiertła VHM",
+          text2:
+            "(Węglik Spiekany): Wytrzymałe i długowieczne, doskonałe do twardych metali. Wiertła wykonane z węglika spiekanego cechują się wyjątkową twardością i odpornością na zużycie, co sprawia, że są idealne do wiercenia w trudnych i wymagających warunkach. Są powszechnie używane w branżach, gdzie precyzja i trwałość narzędzi są kluczowe.",
         },
         question2: {
-          title: "Jakie wiertła są dostępne w naszej ofercie?",
-          text: "W naszej ofercie znajdziesz szeroki wybór wierteł CNC od renomowanych producentów. Oferujemy wiertła koronkowe, płytkowe, VHM, Sandvik 880, AMEC oraz KSEM.",
+          title: "2. Czy wiertła Sandvik 880 są dobre do trudnych materiałów?",
+          text: "Tak, wiertła Sandvik 880 są znane ze swojej wydajności i wytrzymałości, co czyni je idealnym wyborem do trudnych materiałów. Wiertła te posiadają zaawansowaną geometrię i powłoki, które zwiększają ich żywotność i efektywność. Dzięki swojej konstrukcji, wiertła Sandvik 880 są w stanie pracować z dużą precyzją nawet w najtwardszych materiałach, co czyni je popularnym wyborem w przemyśle lotniczym i motoryzacyjnym.",
         },
         question3: {
-          title: "Czy oferujecie usługi regeneracji wierteł?",
-          text: "Tak, oferujemy profesjonalne usługi regeneracji wierteł CNC. Usługa obejmuje diagnozę stanu narzędzia, regenerację oraz testowanie po regeneracji.",
+          title: "3. Jakie są zalety wierteł KSEM?",
+          text: "Wiertła KSEM oferują innowacyjne rozwiązania, które zapewniają doskonałe rezultaty nawet w najtwardszych materiałach. Dzięki zaawansowanej technologii, wiertła te umożliwiają szybką i efektywną obróbkę, minimalizując przy tym czas przestoju maszyn. Wiertła KSEM są zaprojektowane z myślą o maksymalnej wydajności, co sprawia, że są one idealnym wyborem do produkcji masowej i zastosowań, gdzie precyzja jest kluczowa.",
         },
         question4: {
-          title: "Czy istnieje możliwość wypożyczenia wierteł?",
-          subtitle: "Oferta wypożyczenia:",
-          text: "Tak, oferujemy możliwość wypożyczenia wierteł CNC na konkurencyjnych warunkach. Skontaktuj się z nami, aby uzyskać szczegółowe informacje.",
+          title: "4. Jakie są zastosowania wierteł płytkowych?",
+          text: "Wiertła płytkowe są wszechstronne i znajdują zastosowanie w wielu różnych dziedzinach. Idealnie nadają się do obróbki materiałów kompozytowych, metali kolorowych oraz tworzyw sztucznych. Dzięki swojej konstrukcji zapewniają wysoką precyzję i długą żywotność, co czyni je niezastąpionymi w przemyśle lotniczym, motoryzacyjnym oraz przy produkcji urządzeń elektronicznych.",
         },
         question5: {
-          title: "Czy oferujecie wiertła używane?",
-          subtitle: "Używane wiertła:",
-          text: "Tak, w naszej ofercie znajdziesz zarówno nowe, jak i używane wiertła w dobrym stanie, które przeszły rygorystyczną kontrolę jakości.",
+          title: "5. Dlaczego warto wybierać wiertła AMEC?",
+          text: "Wiertła AMEC są synonimem jakości i niezawodności w przemyśle. Dzięki zaawansowanej technologii produkcji, oferują one doskonałe rezultaty wiercenia w najtrudniejszych warunkach. Wiertła AMEC są projektowane z myślą o długiej żywotności i minimalnych kosztach eksploatacji, co sprawia, że są one idealnym wyborem do intensywnych zastosowań przemysłowych, takich jak obróbka metali, produkcja części precyzyjnych oraz prace montażowe.",
         },
       },
       category_desc: {
         title: "KATEGORIE WIERTEŁ",
         crown_drills: {
           title: "Wiertła KORONKOWE",
-          text: "Wiertła koronkowe są specjalnie zaprojektowane do wydajnego wiercenia w różnorodnych materiałach. Idealnie nadają się do głębokich i precyzyjnych otworów. Nasza oferta obejmuje szeroki wybór wierteł koronkowych, które sprostają najbardziej wymagającym zastosowaniom.",
+          text: "Wiertła koronkowe są niezastąpione w pracach wymagających wiercenia dużych otworów. Nasza oferta obejmuje wiertła koronkowe o różnych średnicach, które doskonale sprawdzają się zarówno w metalu, jak i w betonie. Ich zaawansowana konstrukcja zapewnia szybkie i wydajne wiercenie z minimalnym uszkodzeniem obrabianego materiału. Idealne do zastosowań budowlanych i przemysłowych, wiertła koronkowe są niezawodnym wyborem dla profesjonalistów.",
           icon_alt: "Wiertła koronkowe",
         },
         sandvik_drills: {
+          title: "Wiertła SANDVIK 880",
           text: "Wiertła Sandvik 880 to synonim jakości i niezawodności. Zaprojektowane z myślą o najwyższej wydajności, wiertła te są doskonałe do wiercenia w najtwardszych materiałach. Ich zaawansowana geometria i powłoki ochronne zapewniają długą żywotność i stabilność pracy. Idealne do zastosowań przemysłowych, wiertła Sandvik 880 są świadomym wyborem profesjonalistów na całym świecie.",
+          icon_alt: "Wiertła Sandvik 880",
         },
         plate_drills: {
+          title: "Wiertła PŁYTKOWE",
           text: "Wiertła płytkowe zapewniają niezrównaną precyzję i trwałość. Dzięki swojej konstrukcji, doskonale nadają się do obróbki materiałów kompozytowych i metali kolorowych. Wiertła płytkowe oferują stabilność i dokładność, co jest niezbędne w precyzyjnych pracach obróbczych. W naszej ofercie znajdziesz szeroki wybór wierteł płytkowych, które sprostają nawet najbardziej wymagającym zadaniom.",
+          icon_alt: "Wiertła płytkowe",
         },
         amec_drills: {
-          text: "Specjalistyczne wiertła AMEC to narzędzia o najwyższej precyzji, przeznaczone do zastosowań przemysłowych. Dzięki zaawansowanej technologii produkcji, wiertła te oferują doskonałe rezultaty nawet w najbardziej wymagających warunkach. Nasza oferta obejmuje szeroki wybór wierteł AMEC, które sprostają wszelkim potrzebom obróbczych.",
+          title: "Wiertła AMEC",
+          text: "Specjalistyczne wiertła AMEC to narzędzia o najwyższej precyzji, przeznaczone do zastosowań przemysłowych. Dzięki zaawansowanej technologii produkcji, wiertła te oferują doskonałe rezultaty nawet w najbardziej wymagających warunkach. Nasza oferta obejmuje szeroki wybór wierteł AMEC, które sprostają wszelkim potrzebom obróbczym.",
+          icon_alt: "Wiertła AMEC",
         },
         vhm_drills: {
+          title: "Wiertła VHM",
           text: "Wiertła VHM, wykonane z węglika spiekanego, to narzędzia o wyjątkowej trwałości i wydajności. Są one idealne do intensywnych prac obróbczych w trudnych warunkach. Wiertła VHM cechują się wysoką odpornością na zużycie, co gwarantuje długą żywotność narzędzia i mniejsze przestoje w produkcji. Sprawdzą się doskonale w przemyśle metalowym i narzędziowym.",
+          icon_alt: "Wiertła VHM",
         },
         ksem_drills: {
+          title: "Wiertła KSEM",
           text: "Innowacyjne wiertła KSEM zapewniają doskonałe rezultaty wiercenia, nawet w najtwardszych materiałach. Dzięki unikalnym rozwiązaniom konstrukcyjnym, wiertła KSEM umożliwiają szybkie i efektywne wiercenie, minimalizując przy tym czas przestoju maszyn. Są one idealnym wyborem do produkcji masowej i precyzyjnych prac obróbczych.",
+          icon_alt: "Wiertła KSEM",
         },
       },
       rent_tools: {
@@ -166,6 +176,20 @@ window.WiertlaTranslations = {
           "Stale podnosząc jakość i komfort korzystania z naszej oferty, umożliwiamy wypożyczenie wierteł CNC.",
         learn_more: "Dowiedz się więcej",
         arrow_alt: "Strzałka",
+      },
+      tools_icon_alt: "Narzędzia",
+      tools_title: "999+ WIERTEŁ CNC",
+      tools_text: "Ponad 1000 wierteł CNC na stanie",
+      years_icon_alt: "Lata doświadczenia",
+      years_title: "8 LAT NA RYNKU",
+      years_text: "Budujemy silną pozycję jako dostawca narzędzi CNC",
+      quality_icon_alt: "Jakość",
+      quality_title: "NAJWYŻSZA JAKOŚĆ",
+      quality_text: "Oferujemy markowe wiertła i dedykowane alternatywy",
+      latest_products: {
+        title: "Najnowsze w naszej ofercie",
+        subtitle:
+          "Stale rozszerzamy nasz asortyment, uzupełniając ofertę o nowe modele wierteł CNC",
       },
     },
 
@@ -337,19 +361,29 @@ window.WiertlaTranslations = {
           icon_alt: "Crown drills",
         },
         sandvik_drills: {
+          title: "SANDVIK 880 DRILLS",
           text: "Sandvik 880 drills are synonymous with quality and reliability. Designed for maximum efficiency, these drills are excellent for drilling in the hardest materials. Their advanced geometry and protective coatings ensure long life and stability. Ideal for industrial applications, Sandvik 880 drills are the conscious choice of professionals worldwide.",
+          icon_alt: "Sandvik 880 drills",
         },
         plate_drills: {
+          title: "PLATE DRILLS",
           text: "Plate drills provide unmatched precision and durability. Due to their construction, they are perfect for processing composite materials and non-ferrous metals. Plate drills offer stability and accuracy, which is essential in precision machining. In our offer, you will find a wide selection of plate drills that will meet even the most demanding tasks.",
+          icon_alt: "Plate drills",
         },
         amec_drills: {
+          title: "AMEC DRILLS",
           text: "Specialized AMEC drills are tools of the highest precision, designed for industrial applications. Thanks to advanced production technology, these drills offer excellent results even in the most demanding conditions. Our offer includes a wide selection of AMEC drills that will meet all machining needs.",
+          icon_alt: "AMEC drills",
         },
         vhm_drills: {
+          title: "VHM DRILLS",
           text: "VHM drills, made of carbide, are tools of exceptional durability and efficiency. They are ideal for intensive machining in difficult conditions. VHM drills are characterized by high wear resistance, which guarantees long tool life and reduced downtime in production. They are perfect for the metal and tool industry.",
+          icon_alt: "VHM drills",
         },
         ksem_drills: {
+          title: "KSEM DRILLS",
           text: "Innovative KSEM drills provide excellent drilling results, even in the hardest materials. Thanks to unique design solutions, KSEM drills enable fast and efficient drilling, minimizing machine downtime. They are the ideal choice for mass production and precision machining.",
+          icon_alt: "KSEM drills",
         },
       },
       rent_tools: {
@@ -359,6 +393,20 @@ window.WiertlaTranslations = {
           "Continuously improving the quality and comfort of using our offer, we provide the possibility to rent CNC drills.",
         learn_more: "Learn more",
         arrow_alt: "Arrow",
+      },
+      tools_icon_alt: "Tools",
+      tools_title: "999+ CNC DRILLS",
+      tools_text: "Over 1000 CNC drills in stock",
+      years_icon_alt: "Years of experience",
+      years_title: "8 YEARS ON THE MARKET",
+      years_text: "Building a strong position as a CNC tools supplier",
+      quality_icon_alt: "Quality",
+      quality_title: "HIGHEST QUALITY",
+      quality_text: "We offer branded drills and dedicated alternatives",
+      latest_products: {
+        title: "Latest in our offer",
+        subtitle:
+          "We continuously expand our stock, updating the offer with new CNC drill models",
       },
     },
 
@@ -532,19 +580,29 @@ window.WiertlaTranslations = {
           icon_alt: "Kronenbohrer",
         },
         sandvik_drills: {
+          title: "SANDVIK 880 BOHRER",
           text: "Sandvik 880 Bohrer sind ein Synonym für Qualität und Zuverlässigkeit. Diese für maximale Effizienz entwickelten Bohrer eignen sich hervorragend zum Bohren in den härtesten Materialien. Ihre fortschrittliche Geometrie und Schutzbeschichtungen sorgen für lange Lebensdauer und Stabilität. Ideal für industrielle Anwendungen, sind Sandvik 880 Bohrer die bewusste Wahl von Fachleuten weltweit.",
+          icon_alt: "Sandvik 880 Bohrer",
         },
         plate_drills: {
+          title: "PLATTENBOHRER",
           text: "Plattenbohrer bieten unübertroffene Präzision und Haltbarkeit. Aufgrund ihrer Konstruktion eignen sie sich perfekt für die Bearbeitung von Verbundwerkstoffen und Buntmetallen. Plattenbohrer bieten Stabilität und Genauigkeit, was bei der Präzisionsbearbeitung unerlässlich ist. In unserem Angebot finden Sie eine große Auswahl an Plattenbohrern, die selbst die anspruchsvollsten Aufgaben erfüllen.",
+          icon_alt: "Plattenbohrer",
         },
         amec_drills: {
+          title: "AMEC BOHRER",
           text: "Spezialisierte AMEC-Bohrer sind Werkzeuge von höchster Präzision, die für industrielle Anwendungen konzipiert sind. Dank fortschrittlicher Produktionstechnologie bieten diese Bohrer auch unter anspruchsvollsten Bedingungen hervorragende Ergebnisse. Unser Angebot umfasst eine große Auswahl an AMEC-Bohrern, die allen Bearbeitungsanforderungen gerecht werden.",
+          icon_alt: "AMEC Bohrer",
         },
         vhm_drills: {
+          title: "VHM BOHRER",
           text: "VHM-Bohrer aus Hartmetall sind Werkzeuge von außergewöhnlicher Haltbarkeit und Effizienz. Sie sind ideal für intensive Bearbeitung unter schwierigen Bedingungen. VHM-Bohrer zeichnen sich durch hohe Verschleißfestigkeit aus, was eine lange Werkzeuglebensdauer und reduzierte Ausfallzeiten in der Produktion garantiert. Sie sind perfekt für die Metall- und Werkzeugindustrie.",
+          icon_alt: "VHM Bohrer",
         },
         ksem_drills: {
+          title: "KSEM BOHRER",
           text: "Innovative KSEM-Bohrer liefern hervorragende Bohrergebnisse, selbst in den härtesten Materialien. Dank einzigartiger Konstruktionslösungen ermöglichen KSEM-Bohrer schnelles und effizientes Bohren und minimieren Maschinenstillstandszeiten. Sie sind die ideale Wahl für die Massenproduktion und Präzisionsbearbeitung.",
+          icon_alt: "KSEM Bohrer",
         },
       },
       rent_tools: {
@@ -554,6 +612,20 @@ window.WiertlaTranslations = {
           "Durch kontinuierliche Verbesserung der Qualität und des Komforts bei der Nutzung unseres Angebots bieten wir die Möglichkeit, CNC-Bohrer zu mieten.",
         learn_more: "Mehr erfahren",
         arrow_alt: "Pfeil",
+      },
+      tools_icon_alt: "Werkzeuge",
+      tools_title: "999+ CNC-BOHRER",
+      tools_text: "Über 1000 CNC-Bohrer auf Lager",
+      years_icon_alt: "Jahre Erfahrung",
+      years_title: "8 JAHRE AM MARKT",
+      years_text: "Aufbau einer starken Position als CNC-Werkzeuglieferant",
+      quality_icon_alt: "Qualität",
+      quality_title: "HÖCHSTE QUALITÄT",
+      quality_text: "Wir bieten Markenbohrer und dedizierte Alternativen",
+      latest_products: {
+        title: "Neueste in unserem Angebot",
+        subtitle:
+          "Wir erweitern kontinuierlich unseren Bestand und aktualisieren das Angebot mit neuen CNC-Bohrermodellen",
       },
     },
 

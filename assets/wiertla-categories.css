@@ -11,6 +11,7 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+  cursor: pointer;
 }
 
 .wiertla-categories__mobile-filter-modal.active {
@@ -29,6 +30,8 @@
   padding: 24px;
   transform: translateY(100%);
   transition: transform 0.3s ease;
+  cursor: default;
+  pointer-events: auto;
 }
 
 .wiertla-categories__mobile-filter-modal.active
@@ -344,7 +347,11 @@
   background-color: #e0e0e0;
   font-weight: 600;
 }
-
+@media (max-width: 768px) {
+  .wiertla-categories__mobile-header {
+    justify-content: flex-start;
+  }
+}
 @media (min-width: 768px) {
   .wiertla-categories__mobile-filter-modal {
     display: none;
@@ -820,6 +827,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding: 0;
   }
   .wiertla-categories__mobile-filter-button,
   .wiertla-categories__mobile-pagination {
@@ -1242,4 +1250,253 @@
   .wiertla-categories-mobile-types {
     display: block;
   }
+}
+
+/* Mobile Rent Modal Styles */
+.wiertla-categories__mobile-rent-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  cursor: pointer;
+}
+
+.wiertla-categories__mobile-rent-modal.active {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.wiertla-categories__mobile-rent-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 24px 24px 0 0;
+  padding: 24px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  cursor: default;
+  pointer-events: auto;
+}
+
+.wiertla-categories__mobile-rent-modal.active
+  .wiertla-categories__mobile-rent-wrapper {
+  transform: translateY(0);
+}
+
+.wiertla-categories__mobile-rent-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.wiertla-categories__mobile-rent-icon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wiertla-categories__mobile-rent-icon-inner {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.wiertla-categories__mobile-rent-title {
+  flex-grow: 1;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 15.6px;
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+  color: #112832;
+}
+
+.wiertla-categories__mobile-rent-close-wrapper {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wiertla-categories__mobile-rent-close {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.wiertla-categories__mobile-rent-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.wiertla-categories__mobile-rent-description {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #112832;
+}
+
+.wiertla-categories__mobile-rent-contact {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #112832;
+}
+
+.wiertla-categories__mobile-rent-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wiertla-categories__mobile-rent-phone,
+.wiertla-categories__mobile-rent-email {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wiertla-categories__mobile-rent-phone img,
+.wiertla-categories__mobile-rent-email img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.wiertla-categories__mobile-rent-phone span,
+.wiertla-categories__mobile-rent-email span {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #112832;
+}
+
+.wiertla-categories__mobile-rent-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 48px;
+  background-color: #ffd700;
+  border: none;
+  border-radius: 30px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #112832;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.wiertla-categories__mobile-rent-button:hover {
+  background-color: #ffe44d;
+}
+
+.wiertla-categories__mobile-rent-button img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.wiertla-categories__mobile-rent-form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.wiertla-categories__mobile-rent-form-title {
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 15.6px;
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+  color: #112832;
+  margin-bottom: 11px;
+}
+
+.wiertla-categories__mobile-rent-form-group {
+  width: 100%;
+  height: 44px;
+  padding: 0 17px;
+  background-color: white;
+  border: 2px solid #e2e2e7;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.wiertla-categories__mobile-rent-form-group input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #5d7077;
+}
+
+.wiertla-categories__mobile-rent-form-group input::placeholder {
+  color: #5d7077;
+}
+
+.wiertla-categories__mobile-rent-form-row {
+  display: flex;
+  gap: 11px;
+}
+
+.wiertla-categories__mobile-rent-form-row
+  .wiertla-categories__mobile-rent-form-group {
+  flex: 1;
+}
+
+.wiertla-categories__mobile-rent-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 48px;
+  background-color: #ffd700;
+  border: none;
+  border-radius: 30px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #112832;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 11px;
+}
+
+.wiertla-categories__mobile-rent-submit:hover {
+  background-color: #ffe44d;
+}
+
+.wiertla-categories__mobile-rent-submit img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }

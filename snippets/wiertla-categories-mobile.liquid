@@ -117,97 +117,77 @@
 </div>
 
 <!-- Mobile Rent Modal -->
-<div class="wiertla-categories__mobile-rent-modal">
-  <div class="wiertla-categories__mobile-rent-header">
-    <div class="wiertla-categories__mobile-rent-title">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2"/>
-        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2"/>
-        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2"/>
-      </svg>
-      <h3>Wypożycz wiertło</h3>
-    </div>
-    <button class="wiertla-categories__mobile-rent-close">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
-  </div>
-  
-  <div class="wiertla-categories__mobile-rent-content">
-    <p class="wiertla-categories__mobile-rent-text">
-      Oferujemy naszym partnerom, możliwość wypożyczenia wybranego wiertła na wybrany termin i czas.
-      <br><br>
-      Skontaktuj się z nami, aby ustalić szczegóły<br>
-      lub wyślij zapytanie o preferowany termin.
-    </p>
-    
-    <div class="wiertla-categories__mobile-rent-contact">
-      <a href="tel:+48123456789" class="wiertla-categories__mobile-rent-link">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2"/>
-        </svg>
-        <span>+48 123 456 789</span>
-      </a>
-      
-      <a href="mailto:info@example.com" class="wiertla-categories__mobile-rent-link">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2"/>
-          <path d="M22 6l-10 7-10-7" stroke="currentColor" stroke-width="2"/>
-        </svg>
-        <span>info@example.com</span>
-      </a>
+<div class="wiertla-categories__mobile-rent-modal" style="display: none;">
+  <div class="wiertla-categories__mobile-rent-wrapper">
+    <!-- Rent header -->
+    <div class="wiertla-categories__mobile-rent-header">
+      <div class="wiertla-categories__mobile-rent-icon">
+        <img src="{{ 'calendar.svg' | asset_url }}" alt="Calendar" class="wiertla-categories__mobile-rent-icon-inner">
+      </div>
+      <div class="wiertla-categories__mobile-rent-title">WYPOŻYCZ WIERTŁO</div>
+      <div class="wiertla-categories__mobile-rent-close-wrapper">
+        <img src="{{ 'closee.svg' | asset_url }}" alt="Close" class="wiertla-categories__mobile-rent-close">
+      </div>
     </div>
     
-    <button class="wiertla-categories__mobile-rent-form-btn">
-      <span>Zapytaj o dostępny termin</span>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M21 12L13 4V9C7 10 4 15 3 20C5.5 16.5 9 14.9 13 14.9V20L21 12Z" stroke="currentColor" stroke-width="2"/>
-      </svg>
-    </button>
-    
-    <form class="wiertla-categories__mobile-rent-form">
-      <h4>SKORZYSTAJ Z FORMULARZA</h4>
+    <!-- Rent content -->
+    <div class="wiertla-categories__mobile-rent-content">
+      <p class="wiertla-categories__mobile-rent-description">
+        Oferujemy naszym partnerom, możliwość wypożyczenia wybranego wiertła na wybrany termin i czas.
+      </p>
+      <p class="wiertla-categories__mobile-rent-contact">
+        Skontaktuj się z nami, aby ustalić szczegóły<br>
+        lub wyślij zapytanie o preferowany termin.
+      </p>
       
-      <div class="wiertla-categories__form-group">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/>
-          <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
-        </svg>
-        <input type="text" placeholder="Osoba kontaktowa" required>
+      <!-- Contact info -->
+      <div class="wiertla-categories__mobile-rent-contact-info">
+        <div class="wiertla-categories__mobile-rent-phone">
+          <img src="{{ 'phone_icon.svg' | asset_url }}" alt="Phone">
+          <span>{{ section.settings.phone }}</span>
+        </div>
+        <div class="wiertla-categories__mobile-rent-email">
+          <img src="{{ 'mail_icon.svg' | asset_url }}" alt="Email">
+          <span>{{ section.settings.email }}</span>
+        </div>
       </div>
-      
-      <div class="wiertla-categories__form-group">
-        <input type="text" placeholder="Nazwa firmy" required>
-      </div>
-      
-      <div class="wiertla-categories__form-row">
-        <input type="tel" placeholder="Nr telefonu" required>
-        <input type="email" placeholder="E-mail" required>
-      </div>
-      
-      <div class="wiertla-categories__form-group">
-        <input type="text" placeholder="Symbol wiertła" required>
-      </div>
-      
-      <div class="wiertla-categories__form-group">
-        <input type="text" placeholder="Wpisz preferowany termin wypożyczenia" required>
-      </div>
-      
-      <button type="submit" class="wiertla-categories__form-submit">
-        <span>Wyślij wiadomość</span>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M21 12L13 4V9C7 10 4 15 3 20C5.5 16.5 9 14.9 13 14.9V20L21 12Z" stroke="currentColor" stroke-width="2"/>
-        </svg>
+
+      <!-- Initial button -->
+      <button class="wiertla-categories__mobile-rent-button">
+        <span>zapytaj o dostępny termin</span>
+        <img src="{{ 'mail_icon_send.svg' | asset_url }}" alt="Send">
       </button>
-    </form>
-    
-    <div class="wiertla-categories__form-success">
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-        <path d="M44 24L36 16L38.8 13.2L44 18.4L56.8 5.6L59.6 8.4L44 24Z" stroke="currentColor" stroke-width="2"/>
-      </svg>
-      <h4>Dziękujemy za wysłanie zapytania</h4>
-      <p>Czas na odpowiedź wynosi zwykle 24 godziny w dni robocze. Jeśli potrzebujesz wiertła szybciej, zadzwoń.</p>
+
+      <!-- Form (hidden by default) -->
+      <div class="wiertla-categories__mobile-rent-form" style="display: none;">
+        <div class="wiertla-categories__mobile-rent-form-title">Skorzystaj z formularza</div>
+        <form class="wiertla-categories__mobile-rent-form-content">
+          <div class="wiertla-categories__mobile-rent-form-group">
+            <input type="text" placeholder="Osoba kontaktowa" required>
+          </div>
+          <div class="wiertla-categories__mobile-rent-form-group">
+            <input type="text" placeholder="Nazwa firmy" required>
+          </div>
+          <div class="wiertla-categories__mobile-rent-form-row">
+            <div class="wiertla-categories__mobile-rent-form-group">
+              <input type="tel" placeholder="Nr telefonu" required>
+            </div>
+            <div class="wiertla-categories__mobile-rent-form-group">
+              <input type="email" placeholder="E-mail" required>
+            </div>
+          </div>
+          <div class="wiertla-categories__mobile-rent-form-group">
+            <input type="text" placeholder="SYMBOL wiertła" required>
+          </div>
+          <div class="wiertla-categories__mobile-rent-form-group">
+            <input type="text" placeholder="Wpisz preferowany termin wypożyczenia" required>
+          </div>
+          <button type="submit" class="wiertla-categories__mobile-rent-submit">
+            <span>Wyślij wiadomość</span>
+            <img src="{{ 'mail_icon_send.svg' | asset_url }}" alt="Send">
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

@@ -1,51 +1,52 @@
-
 <div class="section-x-padding py-theme max-w-lg mx-auto" x-data="BaselineLogin()" x-init="mounted()" data-color-scheme="primary">
   <div :class="{'hidden': state !== 'login'}">
     {% form 'customer_login', data-login-focus: true, tabindex: '-1' %}
-      <h1 class="font-heading text-2xl mb-2">{{ 'customer.login.title' | t }}</h1>
+      <h1 class="font-heading text-2xl mb-2" data-translate="customer.login.title">Zaloguj się</h1>
 
       {% if form.errors %}
         <div class="mt-4" tabindex="-1" data-login-error>{{ form.errors | default_errors }}</div>
       {% endif %}
 
-      <label class="mt-4 block" for="CustomerEmail" class="label-hidden">
-        {{ 'customer.login.email' | t }}
-      </label>
-      <input type="email"
-            name="customer[email]"
-            id="CustomerEmail"
-            class="w-full py-1 bg-transparent border-b-text border-current {% if form.errors contains 'email' %}border-theme-color{% endif %}"
-            spellcheck="false"
-            autocomplete="off"
-            autocapitalize="off"
-            {% unless form.errors %}autofocus{% endunless %}>
+      <div class="form-field">
+        <label for="customer_email" data-translate="customer.login.email">Email</label>
+        <input type="email"
+              name="customer[email]"
+              id="customer_email"
+              class="w-full py-1 bg-transparent border-b-text border-current {% if form.errors contains 'email' %}border-theme-color{% endif %}"
+              spellcheck="false"
+              autocomplete="off"
+              autocapitalize="off"
+              {% unless form.errors %}autofocus{% endunless %}>
+      </div>
 
       {% if form.password_needed %}
-        <label class="mt-4 block" for="CustomerPassword" class="label-hidden">
-          {{ 'customer.login.password' | t }}
-        </label>
-        <input type="password"
-              name="customer[password]"
-              id="CustomerPassword"
-              class="w-full py-1 bg-transparent border-b-text border-current {% if form.errors contains 'password' %}border-theme-color{% endif %}">
+        <div class="form-field">
+          <label for="customer_password" data-translate="customer.login.password">Hasło</label>
+          <input type="password"
+                name="customer[password]"
+                id="customer_password"
+                class="w-full py-1 bg-transparent border-b-text border-current {% if form.errors contains 'password' %}border-theme-color{% endif %}">
+        </div>
       {% endif %}
 
       <div class="mt-4">
-        <button type="submit" class="btn">{{ 'customer.login.sign_in' | t }}</button>
+        <button type="submit" class="btn" data-translate="customer.login.sign_in">Zaloguj się</button>
       </div>
 
       <div class="mt-8 md:flex md:justify-between">
-        {%- assign text = 'layout.customer.create_account' | t -%}
-        {%- render 'link-underline',
-          section_color: 'primary',
-          text: text,
-          link: routes.account_register_url
-        -%}
+        <div class="create-account">
+          <a href="{{ routes.account_register_url }}" class="btn">
+            <span data-translate="layout.customer.create_account">Utwórz konto</span>
+          </a>
+        </div>
 
         {% if form.password_needed %}
-          <button @click="state = 'recover'" type="button" class="mt-4 md:mt-0 md:ml-4 inline-block hover:text-scheme-accent text-base items-center justify-center {% if settings.links_show_underline %}border-b-text border-scheme-text hover:border-scheme-accent pb-1{% endif %}" href="{{ link }}">
-            <span class="{% if settings.links_uppercase %}uppercase{% endif %}">{{ 'customer.login.forgot_password' | t }}{% if settings.links_show_arrow %}&nbsp;&rarr;{% endif %}</span>
-          </button>
+          <div class="forgot-password">
+            <a href="{{ routes.account_recover_url }}">
+              <span data-translate="customer.login.forgot_password">Zapomniałeś hasła?</span>
+              {% if settings.links_show_arrow %}&nbsp;&rarr;{% endif %}
+            </a>
+          </div>
         {% endif %}
       </div>
     {% endform %}
@@ -53,7 +54,7 @@
 
   <div :class="{'hidden': state !== 'recover'}" x-cloak>
     <div data-login-focus tabindex="-1">
-      <h2 class="font-heading text-2xl mb-2">{{ 'customer.recover_password.title' | t }}</h2>
+      <h2 class="font-heading text-2xl mb-2" data-translate="customer.recover_password.title">Resetowanie hasła</h2>
 
       {% form 'recover_customer_password' %}
         {% if form.errors %}
@@ -61,25 +62,23 @@
         {% endif %}
 
         {% if form.posted_successfully? %}
-          <p data-recover-success>{{ 'customer.recover_password.success' | t }}</p>
+          <p data-recover-success data-translate="customer.recover_password.success">Wysłaliśmy do Ciebie email z linkiem do resetowania hasła.</p>
         {% else %}
-          <p>{{ 'customer.recover_password.subtext' | t }}</p>
-          <label for="RecoverEmail" class="mt-4 block">
-            {{ 'customer.recover_password.email' | t }}
-          </label>
-          <input type="email"
-                class="w-full py-1 bg-transparent border-b-text border-current"
-                name="email"
-                id="RecoverEmail"
-                spellcheck="false"
-                autocomplete="off"
-                autocapitalize="off">
+          <p data-translate="customer.recover_password.subtext">Wprowadź swój email, a my wyślemy Ci link do resetowania hasła.</p>
+          <div class="form-field">
+            <label for="recover_email" data-translate="customer.recover_password.email">Email</label>
+            <input type="email"
+                  class="w-full py-1 bg-transparent border-b-text border-current"
+                  name="email"
+                  id="recover_email"
+                  spellcheck="false"
+                  autocomplete="off"
+                  autocapitalize="off">
+          </div>
           <div class="mt-4">
-            <input type="submit" class="btn" value="{{ 'customer.recover_password.submit' | t }}">
+            <input type="submit" class="btn" value="Resetuj hasło" data-translate="customer.recover_password.submit">
 
-            <button type="button" @click="state = 'login'">
-              {{ 'customer.recover_password.cancel' | t }}
-            </button>
+            <a href="#" data-recover-cancel data-translate="customer.recover_password.cancel">Anuluj</a>
           </div>
         {% endif %}
       {% endform %}
@@ -87,12 +86,13 @@
   </div>
 
   {% if shop.checkout.guest_login %}
-    <div class="mt-8">
-      <h2>{{ 'customer.login.guest_title' | t }}</h2>
+    <div class="mt-8 guest-checkout">
+      <h2 data-translate="customer.login.guest_title">Kontynuuj jako gość</h2>
 
-      {% form 'guest_login' %}
-        <input type="submit" class="btn" value="{{ 'customer.login.guest_continue' | t }}">
-      {% endform %}
+      <form method="post" action="{{ routes.account_login_url }}">
+        <input type="hidden" name="checkout_url" value="{{ routes.root_url }}checkout">
+        <input type="submit" class="btn" value="Kontynuuj jako gość" data-translate="customer.login.guest_continue">
+      </form>
     </div>
   {% endif %}
 </div>

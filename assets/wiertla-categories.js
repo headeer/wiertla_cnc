@@ -1,39 +1,19 @@
 // Global modal control functions
 window.openFilterModal = function () {
-  // Try to find the modal in multiple ways
-  let modal = document.querySelector(
+  const modal = document.querySelector(
     ".wiertla-categories__mobile-filter-modal"
   );
-
-  if (!modal) {
-    console.error("Could not find modal by class name");
-
-    // Try to find all modals
-    const allModals = document.querySelectorAll('[class*="modal"]');
-
-    if (allModals.length > 0) {
-      modal = allModals[0];
-    }
-  }
-
   if (modal) {
-    // Force all style properties directly
     modal.style.display = "block";
     modal.style.visibility = "visible";
     modal.style.opacity = "1";
     modal.style.pointerEvents = "auto";
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
-
-    // Debug modal styles
-    const computedStyle = window.getComputedStyle(modal);
-  } else {
-    console.error("Modal not found in global function");
   }
   return false;
 };
 
-// Close modal function
 window.closeFilterModal = function () {
   const modal = document.querySelector(
     ".wiertla-categories__mobile-filter-modal"
@@ -48,20 +28,133 @@ window.closeFilterModal = function () {
   }
 };
 
+// Rent modal control functions
+window.openRentModal = function () {
+  const modal = document.querySelector(
+    ".wiertla-categories__mobile-rent-modal"
+  );
+  if (modal) {
+    modal.style.display = "block";
+    modal.style.visibility = "visible";
+    modal.style.opacity = "1";
+    modal.style.pointerEvents = "auto";
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+  return false;
+};
+
+window.closeRentModal = function () {
+  const modal = document.querySelector(
+    ".wiertla-categories__mobile-rent-modal"
+  );
+  if (modal) {
+    modal.style.display = "none";
+    modal.style.visibility = "hidden";
+    modal.style.opacity = "0";
+    modal.style.pointerEvents = "none";
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+};
+
 // Mobile filter modal functionality
 document.addEventListener("DOMContentLoaded", function () {
-  // Get all instances of the filter button (both in header and elsewhere)
+  const modal = document.querySelector(
+    ".wiertla-categories__mobile-filter-modal"
+  );
+  const wrapper = document.querySelector(
+    ".wiertla-categories__mobile-filter-wrapper"
+  );
   const filterButtons = document.querySelectorAll(
     ".wiertla-categories__mobile-filter-button, .wiertla-categories__filters-button"
   );
-
-  const filterModal = document.querySelector(
-    ".wiertla-categories__mobile-filter-modal"
-  );
-
-  const filterClose = document.querySelector(
+  const closeButtons = document.querySelectorAll(
     ".wiertla-categories__mobile-filter-close, .wiertla-categories__mobile-filter-close-wrapper"
   );
+  const rentModal = document.querySelector(
+    ".wiertla-categories__mobile-rent-modal"
+  );
+  const rentWrapper = document.querySelector(
+    ".wiertla-categories__mobile-rent-wrapper"
+  );
+  const rentCloseButtons = document.querySelectorAll(
+    ".wiertla-categories__mobile-rent-close, .wiertla-categories__mobile-rent-close-wrapper"
+  );
+  const rentButton = document.querySelector(
+    ".wiertla-categories__mobile-rent-button"
+  );
+  const rentForm = document.querySelector(
+    ".wiertla-categories__mobile-rent-form"
+  );
+
+  // Handle outside click
+  if (modal && wrapper) {
+    modal.addEventListener("click", function (e) {
+      // Check if the click was outside the wrapper
+      if (!wrapper.contains(e.target)) {
+        window.closeFilterModal();
+      }
+    });
+  }
+
+  // Handle outside click for rent modal
+  if (rentModal && rentWrapper) {
+    rentModal.addEventListener("click", function (e) {
+      if (!rentWrapper.contains(e.target)) {
+        window.closeRentModal();
+      }
+    });
+  }
+
+  // Handle close button clicks
+  closeButtons.forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.closeFilterModal();
+    });
+  });
+
+  // Handle close button clicks for rent modal
+  rentCloseButtons.forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.closeRentModal();
+    });
+  });
+
+  // Handle filter button clicks
+  filterButtons.forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.openFilterModal();
+    });
+  });
+
+  // Handle rent button click to show form
+  if (rentButton && rentForm) {
+    rentButton.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      rentForm.style.display = "flex";
+      rentButton.style.display = "none";
+    });
+  }
+
+  // Handle rent form submission
+  const rentFormElement = document.querySelector(
+    ".wiertla-categories__mobile-rent-form-content"
+  );
+  if (rentFormElement) {
+    rentFormElement.addEventListener("submit", function (e) {
+      e.preventDefault();
+      // Add your form submission logic here
+      window.closeRentModal();
+    });
+  }
 
   const filterOptions = document.querySelectorAll(
     ".wiertla-categories__mobile-filter-option"
@@ -97,43 +190,6 @@ document.addEventListener("DOMContentLoaded", function () {
   setTimeout(function () {
     window.openFilterModal();
   }, 2000);
-
-  // Open filter modal - attach to ALL filter buttons
-  if (filterButtons && filterButtons.length > 0) {
-    filterButtons.forEach(function (btn) {
-      btn.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        window.openFilterModal();
-      });
-    });
-  }
-
-  // Close filter modal
-  if (filterClose) {
-    filterClose.addEventListener("click", function () {
-      if (filterModal) {
-        filterModal.style.display = "none";
-        filterModal.style.visibility = "hidden";
-        filterModal.style.opacity = "0";
-        filterModal.classList.remove("active");
-        document.body.style.overflow = ""; // Restore scrolling
-      }
-    });
-  }
-
-  // Close modal when clicking outside
-  if (filterModal) {
-    filterModal.addEventListener("click", function (e) {
-      if (e.target === filterModal) {
-        filterModal.style.display = "none";
-        filterModal.style.visibility = "hidden";
-        filterModal.style.opacity = "0";
-        filterModal.classList.remove("active");
-        document.body.style.overflow = ""; // Restore scrolling
-      }
-    });
-  }
 
   // Handle mobile per page button selection
   if (mobilePerPageButtons && mobilePerPageButtons.length > 0) {
@@ -253,9 +309,9 @@ document.addEventListener("DOMContentLoaded", function () {
       applyFiltersAndSort();
 
       // Close the modal
-      if (filterModal) {
-        filterModal.style.display = "none";
-        filterModal.classList.remove("active");
+      if (modal) {
+        modal.style.display = "none";
+        modal.classList.remove("active");
         document.body.style.overflow = ""; // Restore scrolling
       }
     });
@@ -303,22 +359,63 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to filter the table (connect to existing table filtering logic)
   function filterTable(filterType, value) {
-    // This would connect to your existing table filtering logic
-    // For example:
-    const rows = document.querySelectorAll(".wiertla-categories__table-row");
+    const table = document.querySelector(".wiertla-categories__table");
+    if (!table) return;
 
+    const rows = table.querySelectorAll("tbody tr");
     rows.forEach((row) => {
-      if (!value || value === "") {
-        // Show all rows if no specific value selected
-        row.style.display = "";
+      let shouldShow = true;
+
+      // If value is empty (default value), show all rows
+      if (!value) {
+        shouldShow = true;
       } else {
-        // Get the value from the row's data attribute
-        const rowValue = row.getAttribute(`data-${filterType}`);
-        // Show/hide based on filter match
-        row.style.display = rowValue === value ? "" : "none";
+        const cell = row.querySelector(`td[data-${filterType}]`);
+        if (cell) {
+          const cellValue = cell.getAttribute(`data-${filterType}`);
+          shouldShow = cellValue === value;
+        }
+      }
+
+      row.style.display = shouldShow ? "" : "none";
+    });
+
+    // Update active states
+    const filterButtons = document.querySelectorAll(
+      ".wiertla-categories__filter-button"
+    );
+    filterButtons.forEach((btn) => {
+      if (btn.getAttribute("data-filter") === filterType) {
+        btn.classList.toggle(
+          "active",
+          value === btn.getAttribute("data-value")
+        );
       }
     });
   }
+
+  // Add event listeners for filter changes
+  document.addEventListener("DOMContentLoaded", function () {
+    const filters = document.querySelectorAll(".wiertla-categories__filter");
+    filters.forEach((filter) => {
+      filter.addEventListener("change", function () {
+        const filterType = this.getAttribute("data-filter");
+        const value = this.value;
+
+        // If value is empty (default value), reset all filters of this type
+        if (!value) {
+          filterTable(filterType, "");
+          // Reset any related filter buttons
+          const filterButtons = document.querySelectorAll(
+            `.wiertla-categories__filter-button[data-filter="${filterType}"]`
+          );
+          filterButtons.forEach((btn) => btn.classList.remove("active"));
+        } else {
+          filterTable(filterType, value);
+        }
+      });
+    });
+  });
 });
 
 // Mobile tabs functionality

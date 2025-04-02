@@ -1,63 +1,62 @@
-
-
 <div class="section-x-padding py-theme max-w-md mx-auto" x-data="BaselineLogin()" x-init="mounted()">
-  <h1 class="font-heading text-2xl mb-2">{{ 'customer.register.title' | t }}</h1>
+  <h1 class="font-heading text-2xl mb-2" data-translate="customer.register.title">Utwórz konto</h1>
 
   {%- assign formId = 'RegisterForm' -%}
   {% form 'create_customer', id: formId %}
     
     {% render 'form-status', form: form, form_id: formId, section_color: 'primary' %}
 
-    <label for="FirstName" class="block mt-4">
-      {{ 'customer.register.first_name' | t }}
-    </label>
-    <input type="text"
-      class="w-full py-1 bg-transparent border-b-text border-current"
-      name="customer[first_name]"
-      id="FirstName"
-      {% unless form.errors %}autofocus{% endunless %}
-      {% if form.first_name %}value="{{ form.first_name }}"{% endif %}>
+    <div class="form-field">
+      <label for="first_name" data-translate="customer.register.first_name">Imię</label>
+      <input type="text"
+        class="w-full py-1 bg-transparent border-b-text border-current"
+        name="customer[first_name]"
+        id="first_name"
+        {% unless form.errors %}autofocus{% endunless %}
+        {% if form.first_name %}value="{{ form.first_name }}"{% endif %}>
+    </div>
 
-    <label for="LastName" class="block mt-4">
-      {{ 'customer.register.last_name' | t }}
-    </label>
-    <input type="text"
-      class="w-full py-1 bg-transparent border-b-text border-current"
-      name="customer[last_name]"
-      id="LastName"
-      {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
+    <div class="form-field">
+      <label for="last_name" data-translate="customer.register.last_name">Nazwisko</label>
+      <input type="text"
+        class="w-full py-1 bg-transparent border-b-text border-current"
+        name="customer[last_name]"
+        id="last_name"
+        {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
+    </div>
 
-    <label for="Email" class="block mt-4">
-      {{ 'customer.register.email' | t }}
-    </label>
-    <input type="email"
-      name="customer[email]"
-      id="Email"
-      class="w-full py-1 bg-transparent border-b-text border-current {% if form.errors contains 'email' %}border-theme-color{% endif %}"
-      value="{% if form.email %}{{ form.email }}{% endif %}"
-      spellcheck="false"
-      autocomplete="off"
-      autocapitalize="off">
+    <div class="form-field">
+      <label for="email" data-translate="customer.register.email">Email</label>
+      <input type="email"
+        name="customer[email]"
+        id="email"
+        class="w-full py-1 bg-transparent border-b-text border-current {% if form.errors contains 'email' %}border-theme-color{% endif %}"
+        value="{% if form.email %}{{ form.email }}{% endif %}"
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="off"
+        required>
+    </div>
 
-    <label for="CreatePassword" class="block mt-4">
-      {{ 'customer.register.password' | t }}
-    </label>
-    <input type="password"
-      class="w-full py-1 bg-transparent border-b-text border-current {% if form.errors contains 'password' %}border-theme-color{% endif %}"
-      name="customer[password]"
-      id="CreatePassword">
+    <div class="form-field">
+      <label for="password" data-translate="customer.register.password">Hasło</label>
+      <input type="password"
+        class="w-full py-1 bg-transparent border-b-text border-current {% if form.errors contains 'password' %}border-theme-color{% endif %}"
+        name="customer[password]"
+        id="password"
+        required>
+    </div>
 
     <div class="mt-4">
-      <input type="submit" value="{{ 'customer.register.submit' | t }}" class="button">
+      <input type="submit" value="Utwórz konto" class="button" data-translate="customer.register.submit">
     </div>
 
     <div class="mt-8 md:flex md:justify-between">
-      {%- assign text = 'customer.login.sign_in' | t -%}
-      {%- render 'link-underline',
-        section_color: 'primary',
-        text: text,
-        link: routes.account_login_url
-      -%}
+      <div class="login-link">
+        <a href="{{ routes.account_login_url }}">
+          <span data-translate="customer.login.sign_in">Zaloguj się</span>
+        </a>
+      </div>
     </div>
   {% endform %}
 </div>
