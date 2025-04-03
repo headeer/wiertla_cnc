@@ -1,0 +1,364 @@
+/* Product Page Layout */
+.product-page {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* Breadcrumbs */
+.product-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.product-breadcrumbs__link {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-offset: 0%;
+  text-decoration-thickness: 0%;
+  color: #112832;
+  text-decoration: none;
+}
+
+.product-breadcrumbs__separator {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  color: #112832;
+}
+
+.product-breadcrumbs__current {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  color: #112832;
+}
+
+/* Product Layout */
+.product-layout {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.product-image {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.product-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Product Details Container */
+.product-details {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.product-details__container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Product Details Section */
+.product-details__info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Product SKU */
+.product-details__sku {
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  font-size: 52px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-transform: uppercase;
+  color: #112832;
+}
+
+/* Product Specifications */
+.product-details__specs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-details__spec-item {
+  display: flex;
+  gap: 20px;
+}
+
+.product-details__spec-label {
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+}
+
+.product-details__spec-value {
+  flex: 1;
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.03em;
+  color: #112832;
+}
+
+.product-details__divider {
+  height: 1px;
+  background-color: #e5e5e5;
+  width: 100%;
+}
+
+/* Quantity and Add to Cart Section */
+.product-details__actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.product-details__quantity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.product-details__quantity-label {
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+}
+
+.product-details__quantity-input input {
+  width: 60px;
+  height: 40px;
+  border: 1px solid #e5e5e5;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.03em;
+  color: #112832;
+}
+
+.product-details__quantity-unit {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.03em;
+  color: #112832;
+}
+
+.product-details__quantity-btn {
+  width: 52px;
+  height: 50px;
+  padding: 11px 15px;
+  border: 2px solid #112832;
+  background-color: #ffe500;
+  border-radius: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  transition: all 0.3s ease;
+}
+
+.product-details__quantity-btn:hover:not(
+    .product-details__quantity-btn--disabled
+  ) {
+  background-color: #ffe500;
+}
+
+.product-details__quantity-btn--disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.quantity-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.product-details__add-to-cart {
+  width: 300px;
+  height: 50px;
+  padding: 11px 22px 11px 17px;
+  background-color: #ffe500;
+  border: 2px solid #112832;
+  border-radius: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+}
+
+.product-details__add-to-cart:hover {
+  background-color: #ffe500;
+}
+
+.product-details__add-to-cart:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.cart-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Delivery and Contact Section */
+.product-details__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.product-details__delivery {
+  display: flex;
+  gap: 30px;
+}
+
+.product-details__delivery-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delivery-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.product-details__delivery-label {
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+}
+
+.product-details__delivery-value {
+  flex: 1;
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.03em;
+  color: #112832;
+}
+
+.product-details__contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-details__contact-title {
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+}
+
+.product-details__contact-methods {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.product-details__contact-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-offset: 0%;
+  text-decoration-thickness: 0%;
+  color: #112832;
+}
+
+.contact-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.product-details__contact-link:hover {
+  color: #1a3a4a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .product-layout {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .product-image,
+  .product-details {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .product-details__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .product-details__quantity {
+    justify-content: space-between;
+  }
+
+  .product-details__add-to-cart {
+    width: 100%;
+  }
+}

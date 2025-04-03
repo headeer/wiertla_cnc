@@ -160,10 +160,18 @@
 
     // Update header links
     const headerLinks = {
-      buy: document.querySelector(".header__actions a:nth-child(1)"),
-      rent: document.querySelector(".header__actions a:nth-child(2)"),
-      regenerate: document.querySelector(".header__actions a:nth-child(3)"),
-      sharpen: document.querySelector(".header__actions a:nth-child(4)"),
+      buy: document.querySelector(
+        ".header__action-menu[data-translate='header.actions.buy']"
+      ),
+      rent: document.querySelector(
+        ".header__action-menu[data-translate='header.actions.rent']"
+      ),
+      regenerate: document.querySelector(
+        ".header__action-menu[data-translate='header.actions.regenerate']"
+      ),
+      sharpen: document.querySelector(
+        ".header__action-menu[data-translate='header.actions.sharpen']"
+      ),
     };
 
     for (const [action, element] of Object.entries(headerLinks)) {

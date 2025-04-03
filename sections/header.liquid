@@ -111,7 +111,6 @@
   .header__container {
     max-width: 1420px;
     margin: 0 auto;
-    padding: 0 var(--desktop-edge-spacing, 64px);
   }
 
   .header__top-content {
@@ -129,10 +128,19 @@
     gap: 30px;
     padding-bottom: 5px;
   }
-@media screen and (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding-bottom: 0;
+    .header__nav-links,
+    .header__lang-links,
+    .header__contact,
+    .header__actions {
+      display: flex;
+    }
 
-}
+    .header__logo-text {
+      font-size: 24px;
+    }
+  }
   .header__lang-links {
     display: flex;
     align-items: center;
@@ -140,7 +148,8 @@
   }
 
   .header__link {
-    font-family: 'League Spartan', sans-serif;
+    font-family: 'League Spartan'
+    , sans-serif;
     font-weight: 700;
     font-size: 18px;
     line-height: 100%;
@@ -166,7 +175,14 @@
     background-color: #112832;
     transition: width var(--header-transition);
   }
-
+  @media screen and (max-width: 768px) {
+    .header__link::after {
+      content: none;
+    }
+    .header__link.active {
+      text-decoration: underline;
+    }
+  }
   .header__link:hover {
     color: rgba(17, 40, 50, 0.8);
   }
@@ -217,12 +233,22 @@
   }
 
   .header__logo-text {
-    font-size: 44px;
-    line-height: normal;
+    font-family: 'League Spartan'
+    , sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 100%;
+    letter-spacing: 0;
     text-align: center;
     color: #112832;
     text-decoration: none;
     transition: font-size var(--header-transition);
+  }
+
+  @media screen and (max-width: 768px) {
+    .header__logo-text {
+      font-size: 22px;
+    }
   }
 
   /* Bottom section */
@@ -236,7 +262,6 @@
     justify-content: space-between;
     align-items: center;
     height: 69px;
-    padding: 0 10px;
   }
 
   /* Contact and Actions */
@@ -267,6 +292,51 @@
     display: flex;
     align-items: center;
     gap: 30px;
+  }
+
+  .header__action-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    position: relative;
+    gap: 10px;
+  }
+
+  .header__action-icon {
+    width: 28px;
+    height: 28px;
+    padding: 0 2px;
+  }
+
+  .header__cart-link {
+    background: #112832;
+    border-radius: 14px;
+    padding: 10px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .header__cart-icon {
+    filter: brightness(0) invert(1);
+  }
+
+  .header__cart-count {
+    font-family: "League Spartan"
+    , sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 109%;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    background: #FCD34D;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* Enhanced Mobile Menu */
@@ -344,9 +414,9 @@
     .header__lang-links {
       gap: 0;
     }
-.header__link {
-  padding: 0 4px;
-}
+    .header__link {
+      padding: 0 4px;
+    }
     .header__logo-container {
       height: 80px;
       padding: 15px 20px;
@@ -371,12 +441,55 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      margin: 0;
     }
 
-    .header__nav-links,
-    .header__lang-links,
-    .header__contact,
-    .header__actions {
+    .header__mobile-icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .header__mobile-icon-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .header__mobile-icon-button img {
+      width: 44px;
+      height: 44px;
+    }
+
+    .header__logo {
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+    }
+
+    .header__logo-container {
+      height: 60px;
+      padding: 8px 16px;
+      border-width: 4px;
+    }
+
+    .header__logo-text {
+      font-size: 24px;
+    }
+
+    .header__bottom {
+      display: none;
     }
 
     .header__mobile-menu {
@@ -389,216 +502,68 @@
       height: 40px;
     }
 
-    .header__logo {
-      height: 60px;
-    }
-
-    .header__logo-container {
-      height: 70px;
-      padding: 12px 18px;
-      border-width: 4px;
-    }
-
-    .header__logo-text {
-      font-size: 32px;
-    }
-
-    .header__bottom {
-      display: none;
-    }
-
-    /* Mobile-specific animations */
-    .header__mobile-nav .header__link,
-    .header__mobile-actions .header__link,
-    .header__mobile-languages .header__link {
-      transform: translateX(-20px);
-      opacity: 0;
-      transition: transform 0.4s ease, opacity 0.4s ease;
-    }
-
-    .header__mobile-menu.active .header__link {
-      transform: translateX(0);
-      opacity: 1;
-    }
-
-    /* Staggered animation for menu items */
-    .header__mobile-nav .header__link:nth-child(1) { transition-delay: 0.1s; }
-    .header__mobile-nav .header__link:nth-child(2) { transition-delay: 0.15s; }
-    .header__mobile-nav .header__link:nth-child(3) { transition-delay: 0.2s; }
-    .header__mobile-actions .header__link:nth-child(1) { transition-delay: 0.25s; }
-    .header__mobile-actions .header__link:nth-child(2) { transition-delay: 0.3s; }
-    .header__mobile-actions .header__link:nth-child(3) { transition-delay: 0.35s; }
-    .header__mobile-actions .header__link:nth-child(4) { transition-delay: 0.4s; }
-    .swiper-navigation .swiper-button-next::after, .swiper-navigation .swiper-button-prev::after {
-      font-size: 12px;
-    } 
-     .swiper-navigation .swiper-button-next, .swiper-navigation .swiper-button-prev {
-      top: 100%;
-    } 
-       .header__mobile-menu-links {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 97px;
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      background: white;
-      padding: 0px 0px;
-      border-top: 1px solid #F5F5F8;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 40;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    
-    .header__mobile-menu-links.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-    
-    .header__mobile-menu-link {
-      font-family: 'League Spartan', sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 100%;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      text-decoration: underline;
-      color: #112832;
-      padding: 8px 4px;
-      flex: 1 0 20%;
-      text-align: center;
-    }
-    
-    .header__mobile-icons {
-      display: flex;
-      align-items: center;
-      height: 44px;
-    }
-    .header__mobile-icons >button, .header__mobile-icons > a {
-      width: 100%;
-    } 
-    .header__mobile-icons img {
-      width: 100%;
-
-    }
-    .wiertla-banner {
-      padding: 0 15px;
-    }
-    .header__mobile-icon-button {
-      background: none;
-      border: none;
-      padding: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-    
-    .header__menu-icon.open {
-      display: none;
-    }
-    
-    .header__mobile-menu-button.active .header__menu-icon.closed {
-      display: none;
-    }
-    
-    .header__mobile-menu-button.active .header__menu-icon.open {
-      display: block;
-    }
-
-    /* Toast notification for phone number copy */
-    .header__toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100%);
-      background-color: #112832;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 4px;
-      z-index: 9999;
-      opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-    
-    .header__toast.active {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-    
-    .header__bottom {
-      display: none;
-    }
-    
     .header__nav-links,
-    .header__lang-links {
-    }
-    
-    .header__top {
-    }
-    
-    .header__logo {
-      height: auto;
-      padding: 10px 0;
-          display: flex;
-          flex-direction: row;
-    justify-content: space-around;
-    }
-    
-    .header__logo-container {
-      height: auto;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-              padding: 8px 4px;
-      border-radius: 0;
-      height: 44px;
-      margin-bottom: 0;
-      box-shadow: none;
-      background: #FCD34D;
-      max-width: 187px;
-              border-radius: 60px;
+    .header__lang-links,
+    .header__contact,
+    .header__actions {}
 
-    }
-    
-    .header__logo-text {
-      font-family: 'League Spartan', sans-serif;
-      font-weight: 700;
-      font-size: 22px;
-      line-height: 100%;
-      letter-spacing: 0;
-      text-align: center;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: League Spartan;
-font-weight: 700;
-font-size: 18px;
-line-height: 100%;
-letter-spacing: 0%;
-text-align: center;
-
-    }
-  }
-  
-  /* Desktop-only styles */
-  @media (min-width: 769px) {
-    .header__mobile-icons,
-    .header__mobile-menu-links {
-      display: none;
-    }
+  .header__mobile-menu-links {
+    padding: 10px 15px;
+    gap: 8px;
   }
 
-  /* Dark mode support */
-  @media (prefers-color-scheme: dark) {
-    .header {
-      color-scheme: light; /* Force light mode for header */
-    }
+  .header__mobile-menu-links a {
+    padding: 8px 0;
+    font-size: 14px;
+  }
+
+  .header__mobile-menu-links {
+    display: none;
+  }
+}
+
+/* Desktop-only styles */
+@media (min-width: 769px) {
+  .header__mobile-icons,
+  .header__mobile-menu-links {
+    display: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .header {
+    color-scheme: light;
+    /* Force light mode for header */
+  }
+}
+
+.header__menu-icon {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease-in-out;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header__menu-icon.open {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+  pointer-events: none;
+}
+
+.header__mobile-menu-button.active .header__menu-icon.closed {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+  pointer-events: none;
+}
+
+.header__mobile-menu-button.active .header__menu-icon.open {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
 }
 </style>
 
@@ -607,41 +572,87 @@ text-align: center;
     <div class="header__container">
       <div class="header__top-content">
         <div class="header__nav-links">
-          <a href="/collections/wiertla" class="header__link" data-translate="header.nav.drills">{{ 'header.nav.drills' | t }}</a>
-          <a href="/collections/plytki" class="header__link" data-translate="header.nav.plates">{{ 'header.nav.plates' | t }}</a>
-          <a href="/collections/koronki" class="header__link" data-translate="header.nav.crowns">{{ 'header.nav.crowns' | t }}</a>
-    </div>
+          <a
+            href="/collections/all"
+            class="header__link header__action-menu"
+            data-translate="header.actions.buy">{{ 'header.actions.buy' | t }}</a>
+          <a href="/collections/plytki-do-wierel" class="header__link">PŁYTKI DO WIEREŁ</a>
+          {%- for link in section.settings.menu.links -%}
+            {%- if link.title != 'regeneruj/naostrz' -%}
+              <a href="{{ link.url }}" class="header__link {% if link.active %}active{% endif %}">
+                {{ link.title }}
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
         <div class="header__lang-links">
-          <a href="#" class="header__link" data-lang="pl" data-translate="header.languages.polish">{{ 'header.languages.polish' | t }}</a>
-          <a href="#" class="header__link" data-lang="en" data-translate="header.languages.english">{{ 'header.languages.english' | t }}</a>
-          <a href="#" class="header__link" data-lang="de" data-translate="header.languages.german">{{ 'header.languages.german' | t }}</a>
-                  </div>
-              </div>
-            </div>
-          </div>
+          <a
+            href="#"
+            class="header__link"
+            data-lang="pl"
+            data-translate="header.languages.polish">{{ 'header.languages.polish' | t }}</a>
+          <a
+            href="#"
+            class="header__link"
+            data-lang="en"
+            data-translate="header.languages.english">{{ 'header.languages.english' | t }}</a>
+          <a
+            href="#"
+            class="header__link"
+            data-lang="de"
+            data-translate="header.languages.german">{{ 'header.languages.german' | t }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="header__logo">
-  
+
     <div class="header__logo-container">
       <a href="{{ routes.root_url }}" class="header__logo-text">
         {{ section.settings.logo_text }}
       </a>
     </div>
-     <div class="header__mobile-icons mobile ">
-        <button class="header__mobile-icon-button header__mobile-phone" id="mobile-phone-button">
-          <img src="{{ 'phone_icon_mobile.png' | asset_url }}" alt="Phone" width="24" height="24">
-        </button>
-        <a href="/pages/login" class="header__mobile-icon-button header__mobile-user">
-          <img src="{{ 'user_icon.png' | asset_url }}" alt="Account" width="24" height="24">
-        </a>
-        <a href="{{ routes.cart_url }}" class="header__mobile-icon-button header__mobile-cart">
-          <img src="{{ 'shopping_cart_icon.png' | asset_url }}" alt="Cart" width="24" height="24">
-        </a>
-        <button class="header__mobile-icon-button header__mobile-menu-button" aria-label="Menu" aria-expanded="false">
-          <img src="{{ 'menu_icon.svg' | asset_url }}" alt="Menu" width="24" height="24" class="header__menu-icon closed">
-          <img src="{{ 'menu_icon_open.svg' | asset_url }}" alt="Close Menu" width="24" height="24" class="header__menu-icon open">
-        </button>
-      </div>
+    <div class="header__mobile-icons mobile ">
+      <button class="header__mobile-icon-button header__mobile-phone" id="mobile-phone-button">
+        <img
+          src="{{ 'phone_icon_mobile.png' | asset_url }}"
+          alt="Phone"
+          width="24"
+          height="24">
+      </button>
+      <a href="/pages/login" class="header__mobile-icon-button header__mobile-user">
+        <img
+          src="{{ 'user_icon.png' | asset_url }}"
+          alt="Account"
+          width="24"
+          height="24">
+      </a>
+      <a href="{{ routes.cart_url }}" class="header__mobile-icon-button header__mobile-cart">
+        <img
+          src="{{ 'shopping_cart_icon.png' | asset_url }}"
+          alt="Cart"
+          width="24"
+          height="24">
+      </a>
+      <button
+        class="header__mobile-icon-button header__mobile-menu-button"
+        aria-label="Menu"
+        aria-expanded="false">
+        <img
+          src="{{ 'menu_icon.svg' | asset_url }}"
+          alt="Menu"
+          width="24"
+          height="24"
+          class="header__menu-icon closed">
+        <img
+          src="{{ 'menu_close_icon.svg' | asset_url }}"
+          alt="Close Menu"
+          width="24"
+          height="24"
+          class="header__menu-icon open">
+      </button>
+    </div>
   </div>
 
   <div class="header__bottom">
@@ -649,39 +660,96 @@ text-align: center;
       <div class="header__bottom-content">
         <div class="header__contact">
           <div class="header__contact-item">
-            <img src="{{ 'Ico_phone.svg' | asset_url }}" class="header__contact-icon" alt="{{ 'header.contact.phone_icon_alt' | t }}">
+            <img
+              src="{{ 'Ico_phone.svg' | asset_url }}"
+              class="header__contact-icon"
+              alt="{{ 'header.contact.phone_icon_alt' | t }}">
             <a href="tel:{{ section.settings.phone }}" class="header__link">{{ section.settings.phone }}</a>
           </div>
           <div class="header__contact-item">
-            <img src="{{ 'Ico_mail.svg' | asset_url }}" class="header__contact-icon" alt="{{ 'header.contact.email_icon_alt' | t }}">
+            <img
+              src="{{ 'Ico_mail.svg' | asset_url }}"
+              class="header__contact-icon"
+              alt="{{ 'header.contact.email_icon_alt' | t }}">
             <a href="mailto:{{ section.settings.email }}" class="header__link">{{ section.settings.email }}</a>
           </div>
         </div>
         <div class="header__actions">
-          <a href="/collections/all" class="header__link" data-translate="header.actions.buy">{{ 'header.actions.buy' | t }}</a>
-          <a href="/pages/wypozycz" class="header__link" data-translate="header.actions.rent">{{ 'header.actions.rent' | t }}</a>
-          <a href="/pages/regeneruj" class="header__link" data-translate="header.actions.regenerate">{{ 'header.actions.regenerate' | t }}</a>
-          <a href="/pages/naostrz" class="header__link" data-translate="header.actions.sharpen">{{ 'header.actions.sharpen' | t }}</a>
-          </div>
+          {%- if template contains 'product' -%}
+            <a
+              href="/collections/all"
+              class="header__link header__action-menu"
+              data-translate="header.actions.buy">{{ 'header.actions.buy' | t }}</a>
+            <a
+              href="/pages/wypozycz"
+              class="header__link header__action-menu"
+              data-translate="header.actions.rent">{{ 'header.actions.rent' | t }}</a>
+            <a href="/account" class="header__action-link">
+              <img
+                src="{{ 'profile_icon.svg' | asset_url }}"
+                alt="Profile"
+                class="header__action-icon">
+            </a>
+            <a href="/cart" class="header__action-link">
+              <img
+                src="{{ 'shopping_cart.svg' | asset_url }}"
+                alt="Cart"
+                class="header__action-icon">
+              <span class="header__cart-count">{{ cart.item_count }}</span>
+            </a>
+          {%- else -%}
+            <a
+              href="/collections/all"
+              class="header__link header__action-menu"
+              data-translate="header.actions.buy">{{ 'header.actions.buy' | t }}</a>
+            <a
+              href="/pages/wypozycz"
+              class="header__link header__action-menu"
+              data-translate="header.actions.rent">{{ 'header.actions.rent' | t }}</a>
+            <a
+              href="/pages/regeneruj"
+              class="header__link header__action-menu"
+              data-translate="header.actions.regenerate">{{ 'header.actions.regenerate' | t }}</a>
+            <a
+              href="/pages/naostrz"
+              class="header__link header__action-menu"
+              data-translate="header.actions.sharpen">{{ 'header.actions.sharpen' | t }}</a>
+          {%- endif -%}
         </div>
       </div>
     </div>
-  
+  </div>
+
   <!-- Mobile menu links -->
   <div class="header__mobile-menu-links">
-    <a href="/collections/all" class="header__mobile-menu-link" data-translate="header.actions.buy">KUP</a>
-    <a href="/pages/wypozycz" class="header__mobile-menu-link" data-translate="header.actions.rent">WYPOŻYCZ</a>
-    <a href="/pages/regeneruj" class="header__mobile-menu-link" data-translate="header.actions.regenerate">REGENERUJ</a>
-    <a href="/pages/naostrz" class="header__mobile-menu-link" data-translate="header.actions.sharpen">NAOSTRZ</a>
+    <a
+      href="/collections/all"
+      class="header__mobile-menu-link"
+      data-translate="header.actions.buy">KUP</a>
+    <a
+      href="/pages/wypozycz"
+      class="header__mobile-menu-link"
+      data-translate="header.actions.rent">WYPOŻYCZ</a>
+    <a
+      href="/pages/regeneruj"
+      class="header__mobile-menu-link"
+      data-translate="header.actions.regenerate">REGENERUJ</a>
+    <a
+      href="/pages/naostrz"
+      class="header__mobile-menu-link"
+      data-translate="header.actions.sharpen">NAOSTRZ</a>
   </div>
 </header>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
   const header = document.querySelector('[data-header]');
   const mobileMenuButton = document.querySelector('.header__mobile-menu-button');
+  const mobileMenu = document.querySelector('.header__mobile-menu');
   const mobileMenuLinks = document.querySelector('.header__mobile-menu-links');
   const mobilePhoneButton = document.getElementById('mobile-phone-button');
+  const menuIconClosed = document.querySelector('.header__menu-icon.closed');
+  const menuIconOpen = document.querySelector('.header__menu-icon.open');
   let lastScrollTop = 0;
   
   // Phone number copy function
@@ -711,11 +779,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Mobile menu toggle
-  if (mobileMenuButton && mobileMenuLinks) {
+  // Mobile menu toggle with animation
+  if (mobileMenuButton && mobileMenu) {
     mobileMenuButton.addEventListener('click', function() {
       const isActive = this.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
       mobileMenuLinks.classList.toggle('active');
+      
+      // Animate menu icons
+      if (isActive) {
+        menuIconClosed.style.opacity = '0';
+        menuIconClosed.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        menuIconOpen.style.opacity = '1';
+        menuIconOpen.style.transform = 'translate(-50%, -50%) scale(1)';
+      } else {
+        menuIconClosed.style.opacity = '1';
+        menuIconClosed.style.transform = 'translate(-50%, -50%) scale(1)';
+        menuIconOpen.style.opacity = '0';
+        menuIconOpen.style.transform = 'translate(-50%, -50%) scale(0.8)';
+      }
       
       // Accessibility
       this.setAttribute('aria-expanded', isActive);
@@ -724,7 +806,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Close mobile menu on escape key
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && mobileMenuLinks && mobileMenuLinks.classList.contains('active')) {
+    if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
       mobileMenuButton.click();
     }
   });
@@ -774,17 +856,25 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }, 250);
   });
-});
 
-window.openFilterModal = function() { ... }
-window.closeFilterModal = function() { ... }
+  // Update cart count when items are added/removed
+  document.addEventListener('cart:updated', function(event) {
+    const cartCount = document.querySelector('.header__cart-count');
+    if (cartCount) {
+      cartCount.textContent = event.detail.cart.item_count;
+    }
+  });
+  });
 
-filterButton.onclick = function(e) {
+  window.openFilterModal = function() { ... }
+  window.closeFilterModal = function() { ... }
+
+  filterButton.onclick = function(e) {
   e.preventDefault();
   e.stopPropagation();
   window.openFilterModal();
   return false;
-};
+  };
 
 </script>
 
@@ -794,35 +884,34 @@ filterButton.onclick = function(e) {
     "settings": [
       {
         "type": "header",
-      "content": "Logo Settings"
-    },
-    {
-      "type": "text",
-      "id": "logo_text",
-      "label": "Logo Text",
-      "default": "wiertla-cnc.com"
+        "content": "Logo Settings"
+      },
+      {
+        "type": "text",
+        "id": "logo_text",
+        "label": "Logo Text",
+        "default": "wiertla-cnc.com"
       },
       {
         "type": "header",
-      "content": "Contact Information"
-    },
-    {
-      "type": "text",
-      "id": "phone",
-      "label": "Phone Number",
-      "default": "+48 600 67 37 36"
-    },
-    {
-      "type": "text",
-      "id": "email",
-      "label": "Email Address",
-      "default": "biuro@hmmetal.pl"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Header",
-      "category": "Header"
+        "content": "Contact Information"
+      },
+      {
+        "type": "text",
+        "id": "phone",
+        "label": "Phone Number",
+        "default": "+48 600 67 37 36"
+      }, {
+        "type": "text",
+        "id": "email",
+        "label": "Email Address",
+        "default": "biuro@hmmetal.pl"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Header",
+        "category": "Header"
       }
     ]
   }
