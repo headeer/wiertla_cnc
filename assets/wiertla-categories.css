@@ -566,7 +566,6 @@
 /* Mobile-specific styles */
 @media (max-width: 768px) {
   .wiertla-logos {
-    display: none; /* Hide on mobile */
   }
 
   .wiertla-logos.mobile {
@@ -1004,9 +1003,13 @@
 
 @media screen and (max-width: 768px) {
   .wiertla-logos--mobile {
-    display: block;
+    display: none;
     margin: 20px 0;
     padding: 0 20px;
+  }
+  .wiertla-logos__row {
+    flex-wrap: wrap;
+    justify-content: flex-start;
   }
 
   .wiertla-logos--mobile .wiertla-logos__grid {

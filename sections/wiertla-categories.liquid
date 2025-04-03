@@ -1,6 +1,6 @@
 {% comment %} 
-                                                                Wiertla Categories Component
-                                                                A component to display product categories and search functionality for the Wiertla CNC Shopify theme. 
+                                                                        Wiertla Categories Component
+                                                                        A component to display product categories and search functionality for the Wiertla CNC Shopify theme. 
 {% endcomment %}
 {{ 'wiertla-categories.css' | asset_url | stylesheet_tag }}
 {{ 'wiertla-filter-modal.css' | asset_url | stylesheet_tag }}
@@ -1916,6 +1916,11 @@
       max-width: 1440px;
       margin: 0 auto;
       padding: 0 24px;
+    }
+    @media screen and (max-width: 1024px) {
+      .wiertla-categories__container {
+        padding: 0;
+      }
     }
 
     /* Language Switcher */
@@ -3951,7 +3956,11 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
-
+    @media screen and (max-width: 768px) {
+      .wiertla-categories__status-filter {
+        max-width: 100px;
+      }
+    }
     .wiertla-categories__status-filter.active {
       border-color: #E2E2E7;
       background: #F5F5F8;
@@ -3960,7 +3969,7 @@
     @media screen and (max-width: 768px) {
       .wiertla-categories__status-filters--mobile {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         margin-bottom: 0;
       }
     }
