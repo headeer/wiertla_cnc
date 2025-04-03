@@ -111,7 +111,6 @@
 /* Search Component */
 .wiertla-search {
   padding: 1rem;
-  background-color: #f8f9fa;
 }
 @media (min-width: 768px) {
   .wiertla-search {
@@ -432,7 +431,7 @@
   }
 
   .latest-products__swiper .swiper-wrapper {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .latest-products__swiper .swiper-slide {

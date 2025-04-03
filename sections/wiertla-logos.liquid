@@ -1,140 +1,163 @@
-{%- comment -%}
-  Wiertla Logos Component
-  A component to display partner or brand logos for the Wiertla CNC Shopify theme.
+{%- comment -%} 
+                                Wiertla Logos Component
+                                A component to display partner or brand logos for the Wiertla CNC Shopify theme. 
 {%- endcomment -%}
-
+<div class="wiertla-logos">
+  <div class="wiertla-logos__grid">
+    <!-- First row of logos -->
+    <div class="wiertla-logos__row">
+      <div class="wiertla-logos__brand sandvik">SANDVIK</div>
+      <div class="wiertla-logos__separator"></div>
+      <div class="wiertla-logos__brand seco">SECO</div>
+      <div class="wiertla-logos__separator"></div>
+      <div class="wiertla-logos__brand walter">WALTER</div>
+      <div class="wiertla-logos__separator"></div>
+      <div class="wiertla-logos__brand kennametal">KENNAMETAL</div>
+      <div class="wiertla-logos__separator"></div>
+      <div class="wiertla-logos__brand iscar">ISCAR</div>
+    </div>
+  </div>
+</div>
 {% schema %}
-{
-  "name": "t:sections.wiertla_logos.name",
-  "settings": [],
-  "blocks": [
-    {
-      "type": "logo",
-      "name": "Logo",
-      "settings": [
-        {
-          "type": "text",
-          "id": "logo_alt_text",
-          "label": "Logo Alt Text",
-          "default": "Partner Brand"
-        },
-        {
-          "type": "checkbox",
-          "id": "open_in_new_tab",
-          "label": "Open in new tab",
-          "default": true
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "t:sections.wiertla_logos.presets.name",
-      "category": "t:sections.wiertla_logos.presets.category"
-    }
-  ]
-}
+  {
+    "name": "t:sections.wiertla_logos.name",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "logo",
+        "name": "Logo",
+        "settings": [
+          {
+            "type": "text",
+            "id": "logo_alt_text",
+            "label": "Logo Alt Text",
+            "default": "Partner Brand"
+          }, {
+            "type": "checkbox",
+            "id": "open_in_new_tab",
+            "label": "Open in new tab",
+            "default": true
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "t:sections.wiertla_logos.presets.name",
+        "category": "t:sections.wiertla_logos.presets.category"
+      }
+    ]
+  }
 {% endschema %}
 
 {% stylesheet %}
-.wiertla-logos {
-  padding-top: 30px;
-}
-
-.wiertla-logos__container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 1420px;
-  margin: 0 auto;
-  padding: 0 64px;
-}
-
-.wiertla-logos__grid {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.wiertla-logos__brand {
-  font-family: "League Spartan";
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 100%;
-  letter-spacing: 3%;
-  text-transform: uppercase;
-}
-
-.wiertla-logos__brand.sandvik {
-  color: #F0161D;
-}
-
-.wiertla-logos__brand.seco {
-  color: #3A63B1;
-}
-
-.wiertla-logos__brand.walter {
-  color: #515151;
-}
-
-.wiertla-logos__brand.kennametal {
-  color: #112832;
-}
-
-.wiertla-logos__brand.iscar {
-  color: #4473BC;
-}
-
-.wiertla-logos__separator {
-  height: 2px;
-  width: 160px;
-  flex-shrink: 0;
-  background-color: var(--color-gray-100);
-}
-
-@media (max-width: 768px) {
-  .wiertla-logos__container {
-    padding: 0;
+  .wiertla-logos {
+    padding: 0 0 20px;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
   }
-  
-  .wiertla-logos__grid {
-    gap: 10px;
+
+  .wiertla-logos__container {
+    display: flex;
     flex-direction: column;
-    padding: 22px 9px;
+    align-items: center;
+    max-width: 1420px;
+    margin: 0 auto;
+    padding: 0 64px;
+  }
+
+  .wiertla-logos__grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .wiertla-logos__brand {
+    font-family: "League Spartan";
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 3%;
+    text-transform: uppercase;
+  }
+
+  .wiertla-logos__brand.sandvik {
+    color: #F0161D;
+  }
+
+  .wiertla-logos__brand.seco {
+    color: #3A63B1;
+  }
+
+  .wiertla-logos__brand.walter {
+    color: #515151;
+  }
+
+  .wiertla-logos__brand.kennametal {
+    color: #112832;
   }
   .wiertla-logos__row {
-    display: flex
-;
-    flex-direction: row;
-    gap: 10px;
-  }
-  .wiertla-logos {
-    padding: 15px 0;
-  }
-  .wiertla-logos__item {
-    font-family: "League Spartan";
-font-weight: 700;
-font-size: 16px;
-line-height: 15.6px;
-letter-spacing: 0.06em;
-text-transform: uppercase;
-  }
-  .wiertla-logos__divider {
-    position: relative;
-    width: 100%;
-    height: 2px;
-    min-width: 2px;
-    background: #F5F5F8;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    margin-top: 11px;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
   }
+  .wiertla-logos__brand.iscar {
+    color: #4473BC;
+  }
+
   .wiertla-logos__separator {
-    width: 20px;
+    height: 2px;
+    width: 160px;
+    background-color: #F5F5F8;
+    flex-shrink: 0;
   }
-}
-{% endstylesheet %} 
+
+  @media (max-width: 768px) {
+    .wiertla-logos__container {
+      padding: 0;
+    }
+
+    .wiertla-logos__grid {
+      gap: 10px;
+      flex-direction: column;
+      padding: 22px 9px;
+    }
+    .wiertla-logos__row {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
+    .wiertla-logos {
+      padding: 15px 0;
+
+    }
+    .wiertla-logos__item {
+      font-family: "League Spartan";
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 15.6px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .wiertla-logos__divider {
+      position: relative;
+      width: 100%;
+      height: 2px;
+      min-width: 2px;
+      background: #F5F5F8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-top: 11px;
+    }
+    .wiertla-logos__separator {
+      width: 20px;
+    }
+  }
+{% endstylesheet %}

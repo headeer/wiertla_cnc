@@ -1,6 +1,6 @@
 {% comment %} 
-                    Wiertla Categories Component
-                    A component to display product categories and search functionality for the Wiertla CNC Shopify theme. 
+                                                                Wiertla Categories Component
+                                                                A component to display product categories and search functionality for the Wiertla CNC Shopify theme. 
 {% endcomment %}
 {{ 'wiertla-categories.css' | asset_url | stylesheet_tag }}
 {{ 'wiertla-filter-modal.css' | asset_url | stylesheet_tag }}
@@ -1913,9 +1913,9 @@
     }
 
     .wiertla-categories__container {
-      width: 100%;
       max-width: 1440px;
       margin: 0 auto;
+      padding: 0 24px;
     }
 
     /* Language Switcher */
@@ -1956,57 +1956,32 @@
     /* Icons */
     .wiertla-categories__icons {
       display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      margin-bottom: 30px;
-      justify-content: center;
-      width: 100%;
-      background: #F5F5F8;
-      padding: 40px 0;
+      gap: 10px;
     }
 
-    .wiertla-categories__icons-container {
-      max-width: 1440px;
-      width: 100%;
-      margin: 0 auto;
+    .wiertla-categories__icon-button {
+      width: 40px;
+      height: 40px;
+      border: 1px solid #E2E2E7;
+      border-radius: 20px;
+      background: transparent;
       display: flex;
-      justify-content: center;
-      gap: 40px;
-    }
-
-    .wiertla-categories__icon-item {
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      flex: 1;
-      padding: 20px 15px;
-      gap: 15px;
+      justify-content: center;
       cursor: pointer;
       transition: all 0.3s ease;
-      border-radius: 10px;
-      box-sizing: border-box;
-      background: #F5F5F8;
     }
 
-    .wiertla-categories__icon-item:hover {
-      background-color: white;
+    .wiertla-categories__icon-button.active {
+      background: #112832;
+      border-color: #112832;
     }
 
-    .wiertla-categories__icon-item.active {
-      background-color: white;
-    }
-    .wiertla-categories__icon-item.active span {
-      text-underline: none;
-    }
-    .wiertla-categories__icon-item.active .wiertla-categories__icon-label {
-      text-decoration: underline;
-      color: #112832;
-      font-weight: 700;
+    .wiertla-categories__icon-button.active svg {
+      fill: white;
     }
 
     .wiertla-categories__icon {
-      width: 100%;
-      height: auto;
       object-fit: cover;
     }
 
@@ -2089,27 +2064,20 @@
     }
 
     .wiertla-categories__status-filter {
-      height: 42px;
-      padding: 10px 22px;
-      background: white;
-      border: 2px solid #E2E2E7;
-      border-radius: 30px;
+      padding: 8px 16px;
+      border: 1px solid #E2E2E7;
+      border-radius: 20px;
+      background: transparent;
       font-family: 'Montserrat'
       , sans-serif;
-      font-weight: 500;
-      font-size: 18px;
-      line-height: 100%;
-      letter-spacing: 3%;
+      font-size: 14px;
       color: #112832;
       cursor: pointer;
-      text-align: center;
       transition: all 0.3s ease;
     }
 
     .wiertla-categories__status-filter.active {
-      background: #F5F5F8;
-      color: #5D7077;
-      border-color: #E2E2E7;
+      border-color: #112832;
     }
 
     /* Layout styles for the two-column structure */
@@ -2187,8 +2155,7 @@
     .wiertla-categories__status-filter {
       padding: 5px 15px;
       background: transparent;
-      border: 1px solid #E2E2E7;
-      border-radius: 20px;
+      border: 2px solid #E2E2E7;
       font-family: 'Montserrat'
       , sans-serif;
       font-weight: 500;
@@ -2468,8 +2435,7 @@
     .wiertla-categories__icons {
       display: flex;
       flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 30px;
+      gap: 0;
       justify-content: center;
       width: 100%;
     }
@@ -2478,9 +2444,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 205.7143px;
+      width: 191.7143px;
       height: 203px;
-      padding: 20px 15px;
+      padding: 20px 0;
       gap: 15px;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -2631,7 +2597,7 @@
       height: 50px;
       border: 2px solid #E2E2E7;
       border-radius: 30px;
-      padding: 11px 50px;
+      padding: 11px 20px;
       font-family: "Montserrat";
       font-weight: 500;
       font-size: 18px;
@@ -3961,6 +3927,43 @@
         display: table-header-group !important;
       }
     }
+
+    /* Existing styles... */
+
+    .wiertla-categories__status-filters--mobile {
+      display: none;
+      gap: 10px;
+    }
+
+    .wiertla-categories__status-filter {
+      width: 121px;
+      height: 40px;
+      padding: 10px 22px;
+      border-radius: 30px;
+      border: 2px solid #E2E2E7;
+      background: transparent;
+      font-family: 'Montserrat'
+      , sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #112832;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .wiertla-categories__status-filter.active {
+      border-color: #E2E2E7;
+      background: #F5F5F8;
+    }
+
+    @media screen and (max-width: 768px) {
+      .wiertla-categories__status-filters--mobile {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0;
+      }
+    }
   {% endstyle %}
 
   {% assign drill_stats_nav = sections['drill-stats-nav'] %}
@@ -4212,6 +4215,7 @@
           <div class="wiertla-categories__mobile-preview-diameter-value">-</div>
         </div>
         <div class="wiertla-categories__mobile-preview-size">
+          <span class="wiertla-categories__mobile-preview-label">Wymiar:</span>
           <div class="wiertla-categories__mobile-preview-size-value">-</div>
         </div>
         <div class="wiertla-categories__mobile-preview-price">
@@ -4246,4 +4250,4 @@
       </a>
     </div>
   </div>
-</div>
+</div></div>

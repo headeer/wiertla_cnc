@@ -374,20 +374,20 @@
     <div class="grid {{ desktop_grid_class }} bg-border {% if show_grid_border %}gap-gutter{% endif %%}">
 
       {% comment %} 
-        Footer logo 
-      {% endcomment %}
+                Footer logo 
+            {% endcomment %}
       <div class="{{ desktop_col_span }} section-x-padding py-4 bg-scheme-background text-scheme-text">
         <div class="h1">
           <a href="{{ routes.root_url }}" class="footer-logo-image break-words fill-scheme-text">
             {% render 'logo' %}
           {% comment %} {% if section.settings.logo != blank %}
-                          {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
-                          <img src="{{ section.settings.logo | img_url: image_size }}"
-                              srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x, {{ section.settings.logo | img_url: image_size, scale: 3 }} 3x"
-                              alt="{{ section.settings.logo.alt | default: shop.name }}">
-                        {% else %}
-                          {{ shop.name }}
-                      {% endif %} {% endcomment %}
+                                      {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
+                                      <img src="{{ section.settings.logo | img_url: image_size }}"
+                                          srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x, {{ section.settings.logo | img_url: image_size, scale: 3 }} 3x"
+                                          alt="{{ section.settings.logo.alt | default: shop.name }}">
+                                    {% else %}
+                                      {{ shop.name }}
+                                {% endif %} {% endcomment %}
           </a>
         </div>
       </div>
@@ -451,8 +451,8 @@
           &copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: routes.root_url }}.
         </p>
       {% comment %} <p>
-                  {{ powered_by_link }}
-              </p> {% endcomment %}
+                          {{ powered_by_link }}
+                    </p> {% endcomment %}
       </div>
       {% if section.settings.show_payment_icons %}
         {% unless shop.enabled_payment_types == empty %}
@@ -816,7 +816,7 @@
         "type": "text",
         "id": "copyright_year",
         "label": "Copyright Year",
-        "default": "2024"
+        "default": "2025"
       }, {
         "type": "text",
         "id": "designer_name",

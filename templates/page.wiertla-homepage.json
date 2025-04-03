@@ -60,13 +60,7 @@
           }
         }
       },
-      "block_order": [
-        "logo-1",
-        "logo-2",
-        "logo-3",
-        "logo-4",
-        "logo-5"
-      ],
+      "block_order": ["logo-1", "logo-2", "logo-3", "logo-4", "logo-5"],
       "settings": {}
     },
     "wiertla-categories": {

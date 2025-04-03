@@ -209,6 +209,7 @@
     justify-content: center;
     align-items: flex-end;
     background: white;
+    margin-top: -37px;
     transition: height var(--header-transition);
   }
 
@@ -223,7 +224,7 @@
     padding: 20px 28px 19px;
     position: relative;
     z-index: 1;
-    margin-bottom: -6px;
+    margin-bottom: 0;
     transition: all var(--header-transition);
   }
 
@@ -240,9 +241,17 @@
     line-height: 100%;
     letter-spacing: 0;
     text-align: center;
+    text-transform: lowercase;
     color: #112832;
     text-decoration: none;
     transition: font-size var(--header-transition);
+    font-family: League Spartan;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: center;
+
   }
 
   @media screen and (max-width: 768px) {
@@ -254,6 +263,7 @@
   /* Bottom section */
   .header__bottom {
     background-color: white;
+    margin-top: -39px;
     transition: transform var(--header-transition);
   }
 

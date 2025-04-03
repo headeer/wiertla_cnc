@@ -1,6 +1,6 @@
 {% comment %} 
-            Wiertla Stats Component
-            A component to display stats and achievements for the Wiertla CNC Shopify theme. 
+                                                                              Wiertla Stats Component
+                                                                              A component to display stats and achievements for the Wiertla CNC Shopify theme. 
 {% endcomment %}
 
 <div class="wiertla-stats">
@@ -33,6 +33,128 @@
       <div class="wiertla-stats__content">
         <div class="wiertla-stats__title" data-translate="wiertla_stats.quality_title">NAJWYŻSZA JAKOŚĆ</div>
         <div class="wiertla-stats__text" data-translate="wiertla_stats.quality_text">Oferujemy markowe wiertła i dedykowane alternatywy</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="nav-section desktop">
+  <div class="nav-container">
+    <div class="nav-items">
+
+
+      <div class="nav-item">
+        <a
+          href="#"
+          class="nav-link"
+          data-category="koronkowe">
+          <div class="nav-content">
+            <div class="nav-image">
+              <img
+                src="{{ 'image-8.png' | asset_url }}"
+                alt="Koronkowe"
+                loading="lazy">
+            </div>
+            <div class="nav-text">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>Koronkowe</div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a
+          href="#"
+          class="nav-link"
+          data-category="plytkowe">
+          <div class="nav-content">
+            <div class="nav-image">
+              <img
+                src="{{ 'image-9.png' | asset_url }}"
+                alt="Płytkowe"
+                loading="lazy">
+            </div>
+            <div class="nav-text">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>Płytkowe</div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a
+          href="#"
+          class="nav-link"
+          data-category="vhm">
+          <div class="nav-content">
+            <div class="nav-image">
+              <img
+                src="{{ 'image-12.png' | asset_url }}"
+                alt="VHM"
+                loading="lazy">
+            </div>
+            <div class="nav-text">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>VHM</div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a
+          href="#"
+          class="nav-link"
+          data-category="sandvik">
+          <div class="nav-content">
+            <div class="nav-image">
+              <img
+                src="{{ 'image-10.png' | asset_url }}"
+                alt="SanDavik 880"
+                loading="lazy">
+            </div>
+            <div class="nav-text">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>SanDavik 880</div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a
+          href="#"
+          class="nav-link"
+          data-category="amec">
+          <div class="nav-content">
+            <div class="nav-image">
+              <img
+                src="{{ 'image-11.png' | asset_url }}"
+                alt="AMEC"
+                loading="lazy">
+            </div>
+            <div class="nav-text">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>AMEC</div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a
+          href="#"
+          class="nav-link"
+          data-category="ksem">
+          <div class="nav-content">
+            <div class="nav-image">
+              <img
+                src="{{ 'image-13.png' | asset_url }}"
+                alt="KSEM"
+                loading="lazy">
+            </div>
+            <div class="nav-text">
+              <div class="nav-label">WIERTŁA CNC</div>
+              <div>KSEM</div>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
   </div>
@@ -399,7 +521,152 @@
   background-color: #F5F5F8;
   padding: 60px 0;
 }
+.drill-stats-table {
+  align-self: stretch;
+}
 
+.stats-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  background-color: rgb(243 244 246);
+  padding: 60px 16rem;
+}
+
+.stat-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.stat-cell {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.stat-icon {
+  height: 8rem;
+  width: 8rem;
+  flex-shrink: 0;
+  object-fit: cover;
+  object-position: center;
+}
+
+.stat-content {
+  display: flex;
+  width: 20rem;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.stat-title {
+  font-family: 'League Spartan'
+  , sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 17px;
+  letter-spacing: 0.96px;
+}
+
+.stat-description {
+  width: 15rem;
+}
+
+.nav-section {
+  height: 5rem;
+  flex-shrink: 0;
+
+}
+
+.nav-container {
+  margin-bottom: -0.125rem;
+  display: flex;
+  height: 5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-top: 2px dashed rgb(228 228 231);
+  background-color: rgb(243 244 246);
+  padding: 1.125rem 18rem 1.25rem 16rem;
+}
+
+.nav-items {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3.75rem 1.25rem;
+  flex-grow: 1;
+  padding-top: 0.125rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.nav-link:not(.active) {
+  text-decoration: none;
+}
+
+.nav-content {
+  flex-grow: 1;
+  max-width: 8.5rem;
+  display: flex;
+  flex-direction: row;
+
+}
+.nav-content > div {
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.03em;
+
+}
+.nav-content .nav-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1rem;
+  letter-spacing: 0.16px;
+  font-family: "Montserrat";
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+
+}
+
+@media (min-width: 1910px) {
+  .stats-section,
+  .nav-items {
+    flex-wrap: nowrap;
+  }
+}
+
+@media (max-width: 1909px) {
+  .stats-section,
+  .nav-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
 .wiertla-stats__container {
   max-width: 1420px;
   margin: 0 auto;
@@ -848,7 +1115,7 @@
   , sans-serif;
   font-weight: 700;
   font-size: 18px;
-  line-height: 16.6px;
+  line-height: 24px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #112832;
@@ -895,7 +1162,7 @@
 
 /* Category Descriptions Section */
 .category-desc {
-  padding: 60px 64px;
+  padding: 60px 0;
 }
 
 .category-desc__title {
@@ -919,7 +1186,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .category-desc__column {
@@ -928,13 +1195,14 @@
   max-width: 458px;
   display: flex;
   flex-direction: column;
-  gap: 96px;
+  gap: 0;
 }
 
 .category-desc__item {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  min-height: 300px;
 }
 
 .category-desc__header {
@@ -1011,6 +1279,74 @@
 
   .category-desc__header {
     flex-wrap: wrap;
+  }
+}
+.nav-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-image {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.nav-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-decoration: none;
+}
+
+.nav-label {
+  font-family: 'League Spartan'
+  , sans-serif;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 100%;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+}
+
+.nav-text div:last-child {
+  font-family: 'Montserrat'
+  , sans-serif;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 100%;
+  letter-spacing: 0.03em;
+  color: #112832;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-content {
+    gap: 10px;
+  }
+
+  .nav-image {
+    width: 30px;
+    height: 30px;
+  }
+
+  .nav-label {
+    font-size: 10px;
+  }
+
+  .nav-text div:last-child {
+    font-size: 12px;
   }
 }{% endstylesheet %}<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js" defer></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
