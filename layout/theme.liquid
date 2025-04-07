@@ -1,37 +1,49 @@
 <!doctype html>
 <html class="no-js supports-no-cookies" lang="{{ request.locale.iso_code }}">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="{{ settings.color_accent }}">
-  <link rel="canonical" href="{{ canonical_url }}">
-  <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.shopify.com" crossorigin>
-  <link rel="preconnect" href="https://monorail-edge.shopifysvc.com">
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=League+Spartan:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_accent }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link
+      rel="preconnect"
+      href="https://fonts.shopifycdn.com"
+      crossorigin>
+    <link
+      rel="preconnect"
+      href="https://cdn.shopify.com"
+      crossorigin>
+    <link
+      rel="preconnect"
+      href="https://fonts.shopify.com"
+      crossorigin>
+    <link rel="preconnect" href="https://monorail-edge.shopifysvc.com">
 
-  {%- liquid
-    assign body_font = settings.font_body
-    assign heading_font = settings.font_heading
-    assign body_font_bolder = body_font | font_modify: 'weight', 'bolder'
-    assign body_font_bold = body_font | font_modify: 'weight', 'bold'
-    assign body_font_italic = body_font | font_modify: 'style', 'italic'
-    assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+      <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=League+Spartan:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    {%- liquid
+      assign body_font = settings.font_body
+      assign heading_font = settings.font_heading
+      assign body_font_bolder = body_font | font_modify: 'weight', 'bolder'
+      assign body_font_bold = body_font | font_modify: 'weight', 'bold'
+      assign body_font_italic = body_font | font_modify: 'style', 'italic'
+      assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
   -%}
 
-  {% comment %}theme-check-disable UndefinedObject{% endcomment %}
-  {{ preload_tags }}
-  {% comment %}theme-check-enable UndefinedObject{% endcomment %}
+    {% comment %}theme-check-disable UndefinedObject{% endcomment %}
+    {{ preload_tags }}
+    {% comment %}theme-check-enable UndefinedObject{% endcomment %}
 
-  {%- if settings.favicon != blank -%}
-    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
-  {%- endif -%}
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="shortcut icon"
+        href="{{ settings.favicon | img_url: '32x32' }}"
+        type="image/png">
+    {%- endif -%}
 
-  {%- capture seo_title -%}
+    {%- capture seo_title -%}
     {{ page_title }}
     {%- if current_tags -%}
       {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
@@ -47,24 +59,24 @@
       {%- endunless -%}
     {%- endif -%}
   {%- endcapture -%}
-  <title>{{ seo_title | strip }}</title>
+    <title>{{ seo_title | strip }}</title>
 
-  {%- if page_description -%}
-    <meta name="description" content="{{ page_description | escape }}">
-  {%- endif -%}
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
 
-  <script>
-    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
-  </script>
+    <script>
+          document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    </script>
 
-  <!-- Start IE11 compatibility -->
-  <script>
-    if (!!window.MSInputMethodContext && !!document.documentMode) {
+    <!-- Start IE11 compatibility -->
+    <script>
+          if (!!window.MSInputMethodContext && !!document.documentMode) {
       // CSSVar Polyfill
       document.write('<script src="https://cdn.jsdelivr.net/gh/nuxodin/ie11CustomProperties@4.1.0/ie11CustomProperties.min.js"><\x2fscript>');
-
+      
       document.documentElement.className = document.documentElement.className.replace('js', 'no-js');
-
+      
       document.addEventListener('DOMContentLoaded', function () {
         var elsToLazyload = document.querySelectorAll('.lazyload');
         for (var i = 0; i < elsToLazyload.length; i++) {
@@ -76,87 +88,94 @@
           elToLazyLoad.classList.add('lazyloaded');
         }
       });
-    }
+          }
   </script>
-  <!-- End IE11 compatibility -->
-  {% render 'css-variables' %}
-  <style>
-    @keyframes marquee {
-      0% {
-        transform: translateX(0);
-        -webkit-transform: translateX(0);
+    <!-- End IE11 compatibility -->
+    {% render 'css-variables' %}
+    <style>
+      @keyframes marquee {
+        0% {
+          transform: translateX(0);
+          -webkit-transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-100%);
+          -webkit-transform: translateX(-100%);
+        }
       }
-      100% {
-        transform: translateX(-100%);
-        -webkit-transform: translateX(-100%);
-      }
-    }
-  </style>
-  {% render 'critical-css' %}
-  {% render 'social-meta-tags' %}
-  {% render 'style-tags', layout: 'theme' %}
-  
-  <!-- Theme styles -->
-  {{ 'theme.css' | asset_url | stylesheet_tag }}
-  
-  <!-- Wiertla Custom Styles -->
-  {{ 'custom-styles.css' | asset_url | stylesheet_tag }}
+    </style>
+    {% render 'critical-css' %}
+    {% render 'social-meta-tags' %}
+  {% render 'style-tags'
+    , layout: 'theme' %}
 
-  {% if template contains 'customers' %}
-    <script src="{{ "shopify_common.js" | shopify_asset_url }}" defer="defer"></script>
-  {% endif %}
+    <!-- Theme styles -->
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {{ 'letter-spacing-rules.css' | asset_url | stylesheet_tag }}
 
-  <style>
-    {{ heading_font | font_face: font_display: 'swap' }}
-    {{ body_font | font_face: font_display: 'swap' }}
-    {{ body_font_bold | font_face: font_display: 'swap' }}
-    {{ body_font_bolder | font_face: font_display: 'swap' }}
-    {{ body_font_italic | font_face: font_display: 'swap' }}
-    {{ body_font_bold_italic | font_face: font_display: 'swap' }}
-  </style>
+    <!-- Wiertla Custom Styles -->
+    {{ 'custom-styles.css' | asset_url | stylesheet_tag }}
 
-  {% render 'script-tags', layout: 'theme' %}
+    {% if template contains 'customers' %}
+      <script src="{{ "shopify_common.js" | shopify_asset_url }}" defer="defer"></script>
+    {% endif %}
 
-  {{ content_for_header }}
-  {% render 'judgeme_core' %}
-  
-  <!-- Translation System -->
-  <script src="{{ 'translations.js' | asset_url }}" defer></script>
-  <script src="{{ 'translation-system.js' | asset_url }}" defer></script>
-  <script src="{{ 'section-translators.js' | asset_url }}" defer></script>
-</head>
+    <style>
+      {{ heading_font | font_face: font_display: 'swap' }}
+      {{ body_font | font_face: font_display: 'swap' }}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+      {{ body_font_bolder | font_face: font_display: 'swap' }}
+      {{ body_font_italic | font_face: font_display: 'swap' }}
+      {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+    </style>
 
-<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }} {% if settings.buttons_show_arrow %}show-button-arrows{% endif %}">
-  <a class="in-page-link skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
-  {%- liquid
+    {% render 'script-tags'
+      , layout: 'theme' %}
+
+    {{ content_for_header }}
+    {% render 'judgeme_core' %}
+
+    <!-- Translation System -->
+    <script src="{{ 'translations.js' | asset_url }}" defer></script>
+    <script src="{{ 'translation-system.js' | asset_url }}" defer></script>
+    <script src="{{ 'section-translators.js' | asset_url }}" defer></script>
+  </head>
+
+  <body id="{{ page_title | handle }}" class="template-{{ template.name | handle }} {% if settings.buttons_show_arrow %}show-button-arrows{% endif %}">
+    <a class="in-page-link skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+    {%- liquid
       section 'sidebar'
       if settings.ajax_cart_method == 'drawer'
         render 'cart-drawer'
       endif
       render 'availability-drawer'
       section 'announcement-bar'
-  -%}
-  <div class="relative">
-    {% if template.name == 'index' %}
-      <div id="sticky-positioner"></div>
-    {% endif %}
-    {% section 'header' %}
-    <main role="main" id="MainContent">
-      {{ content_for_layout }}
-    </main>
-    {% section 'footer' %}
-  </div>
-  {% section 'popup' %}
+    -%}
+    <div class="relative">
+      {% if template.name == 'index' %}
+        <div id="sticky-positioner"></div>
+      {% endif %}
+      {% section 'header' %}
+      <main role="main" id="MainContent">
+        {{ content_for_layout }}
+      </main>
+      {% section 'footer' %}
+    </div>
+    {% section 'popup' %}
 
-  <div id="screenreader-announce" class="visually-hidden" aria-live="polite" role="status"></div>
+    <div
+      id="screenreader-announce"
+      class="visually-hidden"
+      aria-live="polite"
+      role="status"></div>
 
-  <ul hidden>
-    <li id="a11y-refresh-page-message">{{ 'general.accessibility.refresh_page' | t }}</li>
-    <li id="a11y-selection-message">{{ 'general.accessibility.selection_help' | t }}</li>
-  </ul>
+    <ul hidden>
+      <li id="a11y-refresh-page-message">{{ 'general.accessibility.refresh_page' | t }}</li>
+      <li id="a11y-selection-message">{{ 'general.accessibility.selection_help' | t }}</li>
+    </ul>
 
-  <script>
-    window.theme = {
+    <script>
+          window.theme = {
       strings: {
         loading: {{ 'general.search.loading' | t | json }},
         itemCountOne: {{ 'cart.popup.cart_count.one' | t | json }},
@@ -189,8 +208,8 @@
       moneyFormat: {% if settings.currency_code_enabled == true %}{{ shop.money_with_currency_format | json }}{% else %}{{ shop.money_format | json }}{% endif %},
       cartItemCount: {{ cart.item_count | json }},
       cartMethod: {{ settings.ajax_cart_method | json }}
-    };
-  </script>
-{% include 'uploadkit' %}
-</body>
+          };
+    </script>
+    {% include 'uploadkit' %}
+  </body>
 </html>

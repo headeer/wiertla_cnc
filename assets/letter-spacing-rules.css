@@ -1,0 +1,55 @@
+/* 
+ * Letter Spacing Rules
+ * 
+ * This file contains standardized letter-spacing rules for the Wiertla CNC Shopify theme.
+ * All letter-spacing values are specified in em units for better scaling and consistency.
+ */
+
+/* Standard letter spacing values */
+:root {
+  --letter-spacing-tight: 0.01em; /* Very tight spacing */
+  --letter-spacing-normal: 0.03em; /* Normal spacing */
+  --letter-spacing-wide: 0.06em; /* Wide spacing */
+  --letter-spacing-extra-wide: 0.1em; /* Extra wide spacing */
+}
+
+/* Common letter spacing classes */
+.letter-spacing-tight {
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.letter-spacing-normal {
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+.letter-spacing-wide {
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.letter-spacing-extra-wide {
+  letter-spacing: var(--letter-spacing-extra-wide);
+}
+
+/* Specific component letter spacing */
+.header__link,
+.header__action-link,
+.header__mobile-menu-link {
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.header__logo-text {
+  letter-spacing: 0;
+}
+
+.header__contact-item .header__link {
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
+  .header__link,
+  .header__action-link,
+  .header__mobile-menu-link {
+    letter-spacing: var(--letter-spacing-normal);
+  }
+}

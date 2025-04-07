@@ -21,6 +21,7 @@
     text-transform: uppercase;
     letter-spacing: 0.96px;
     will-change: transform;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* Sticky Header */
@@ -30,9 +31,13 @@
     left: 0;
     width: 100%;
     transform: translateY(-100%);
-    transition: transform var(--header-transition);
-    background: #FCD34D;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #FFE500;
     box-shadow: var(--header-shadow);
+    will-change: transform;
+    height: auto;
+    max-height: 100vh;
+    overflow: hidden;
   }
 
   .header--sticky.is-visible {
@@ -104,7 +109,7 @@
 
   /* Header sections */
   .header__top {
-    background-color: #FCD34D;
+    background-color: #FFE500;
     position: relative;
   }
 
@@ -115,10 +120,12 @@
 
   .header__top-content {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 13px 0 9px;
-    position: relative;
+    justify-content: space-between;
+    height: 42px;
+    max-height: 42px;
+    background-color: var(--color-cyan-950);
+    color: white;
   }
 
   /* Navigation with hover effects */
@@ -148,7 +155,7 @@
   }
 
   .header__link {
-    font-family: 'League Spartan'
+    font-family: "League Spartan"
     , sans-serif;
     font-weight: 700;
     font-size: 18px;
@@ -157,21 +164,17 @@
     text-transform: uppercase;
     color: #112832;
     position: relative;
-    text-decoration: none;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    padding: 0 8px;
     transition: color var(--header-transition);
+    text-decoration: none;
   }
 
   .header__link::after {
     content: '';
     position: absolute;
-    width: calc(100% - 16px);
+    width: 100%;
     height: 1px;
-    bottom: 16px;
-    left: 8px;
+    bottom: -2px;
+    left: 0;
     background-color: #112832;
     transition: transform 0.3s ease;
     transform-origin: left;
@@ -212,7 +215,7 @@
     justify-content: center;
     align-items: flex-end;
     background: white;
-    margin-top: -37px;
+    margin-top: -5px;
     transition: height var(--header-transition);
   }
   @media screen and (max-width: 768px) {
@@ -226,7 +229,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #FCD34D;
+    background-color: #FFE500;
     border: 6px solid #112832;
     border-radius: 60px;
     padding: 20px 28px 19px;
@@ -239,27 +242,22 @@
   .header__logo-container:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #FCD34D;
   }
 
   .header__logo-text {
-    font-family: 'League Spartan'
+    font-family: "League Spartan"
     , sans-serif;
-    font-weight: 700;
-    font-size: 22px;
-    line-height: 100%;
-    letter-spacing: 0;
-    text-align: center;
-    text-transform: lowercase;
-    color: #112832;
-    text-decoration: none;
-    position: relative;
-    transition: font-size var(--header-transition);
-    font-family: League Spartan;
     font-weight: 700;
     font-size: 44px;
     line-height: 100%;
     letter-spacing: 0;
     text-align: center;
+    text-transform: lowercase;
+    color: #112832;
+    position: relative;
+    text-decoration: none;
+    transition: font-size var(--header-transition);
   }
 
   /* Remove underline from logo text */
@@ -285,6 +283,8 @@
     justify-content: space-between;
     align-items: center;
     height: 69px;
+    position: relative;
+    top: -33px;
   }
 
   /* Contact and Actions */
@@ -323,11 +323,17 @@
   }
 
   .header__action-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
+    font-family: "League Spartan"
+    , sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 16.6px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #112832;
     position: relative;
-    gap: 10px;
+    transition: color var(--header-transition);
+    text-decoration: none;
   }
 
   .header__action-link::after {
@@ -392,7 +398,7 @@
     left: 0;
     width: var(--mobile-menu-width);
     height: 100vh;
-    background: #FCD34D;
+    background: #FFE500;
     padding: var(--mobile-menu-padding);
     transform: translateX(-100%);
     transition: transform var(--mobile-menu-transition);
@@ -542,9 +548,9 @@
     }
 
     .header__top-content {
-      padding: 10px 0;
-      align-items: center;
-      height: 40px;
+      padding: 0 16px;
+      height: 42px;
+      max-height: 42px;
     }
 
     .header__nav-links,
@@ -573,18 +579,17 @@
   }
 
   .header__mobile-menu-link {
-    font-family: 'League Spartan'
+    font-family: "League Spartan"
     , sans-serif;
     font-weight: 700;
-    font-size: 16px;
-    line-height: 100%;
+    font-size: 18px;
+    line-height: 16.6px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: #112832;
-    text-decoration: none;
     position: relative;
-    padding: 8px 16px;
-    transition: color 0.3s ease;
+    transition: color var(--header-transition);
+    text-decoration: none;
   }
 
   .header__mobile-menu-link::after {
@@ -853,6 +858,7 @@
     const mobilePhoneButton = document.getElementById('mobile-phone-button');
     const menuIconClosed = document.querySelector('.header__menu-icon.closed');
     const menuIconOpen = document.querySelector('.header__menu-icon.open');
+    const headerHeight = header.offsetHeight;
 
     // Set initial state
     if (menuIconOpen) {
@@ -865,10 +871,14 @@
       mobileMenuLinks: !!mobileMenuLinks,
       mobilePhoneButton: !!mobilePhoneButton,
       menuIconClosed: !!menuIconClosed,
-      menuIconOpen: !!menuIconOpen
+      menuIconOpen: !!menuIconOpen,
+      headerHeight: headerHeight
     });
 
     let lastScrollTop = 0;
+    let scrollThreshold = 100;
+    let isScrolling = false;
+    let isHeaderSticky = false;
     
     // Phone number copy function
     if (mobilePhoneButton) {
@@ -939,37 +949,62 @@
       }
     });
 
-    // Sticky header logic
+    // Improved sticky header logic with debounce and smooth transitions
     function handleScroll() {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollDiff = scrollTop - lastScrollTop;
+      if (isScrolling) return;
       
-      if (scrollTop > 100) {
-        header.classList.add('header--sticky');
+      isScrolling = true;
+      requestAnimationFrame(function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollDiff = scrollTop - lastScrollTop;
         
-        if (scrollDiff > 0) {
-          header.classList.remove('is-visible');
+        // Only apply sticky header after scrolling past threshold
+        if (scrollTop > scrollThreshold) {
+          if (!isHeaderSticky) {
+            // First time entering sticky mode - add a placeholder to prevent content jump
+            const placeholder = document.createElement('div');
+            placeholder.id = 'header-placeholder';
+            placeholder.style.height = headerHeight + 'px';
+            header.parentNode.insertBefore(placeholder, header);
+            isHeaderSticky = true;
+          }
+          
+          header.classList.add('header--sticky');
+          
+          // Only toggle visibility if scroll difference is significant
+          if (Math.abs(scrollDiff) > 5) {
+            if (scrollDiff > 0) {
+              // Scrolling down
+              header.classList.remove('is-visible');
+            } else {
+              // Scrolling up
+              header.classList.add('is-visible');
+            }
+          }
         } else {
-          header.classList.add('is-visible');
+          if (isHeaderSticky) {
+            // Remove placeholder when exiting sticky mode
+            const placeholder = document.getElementById('header-placeholder');
+            if (placeholder) {
+              placeholder.remove();
+            }
+            isHeaderSticky = false;
+          }
+          
+          header.classList.remove('header--sticky', 'is-visible');
         }
-      } else {
-        header.classList.remove('header--sticky', 'is-visible');
-      }
-      
-      lastScrollTop = scrollTop;
+        
+        lastScrollTop = scrollTop;
+        isScrolling = false;
+      });
     }
 
-    // Throttle scroll event
-    let ticking = false;
+    // Throttle scroll event with requestAnimationFrame
     window.addEventListener('scroll', function() {
-      if (!ticking) {
-        window.requestAnimationFrame(function() {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
+      if (!isScrolling) {
+        requestAnimationFrame(handleScroll);
       }
-    });
+    }, { passive: true });
 
     // Close mobile menu on resize
     let resizeTimer;
