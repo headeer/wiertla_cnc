@@ -16,7 +16,7 @@
     assign background = background | plus: 0 
     assign text = settings.color_primary_text | color_brightness 
     assign text = text | plus: 0 
-    assign primary_overlay_color = '' 
+    assign primary_overlay_color = '#112832' 
     if text > 127 
       if background > 127 
         assign primary_overlay_color = '#000000' 
@@ -38,7 +38,7 @@
     assign background = background | plus: 0 
     assign text = settings.color_primary_accent | color_brightness 
     assign text = text | plus: 0 
-    assign primary_accent_overlay_color = '' 
+    assign primary_accent_overlay_color = '#112832' 
     if text > 127 
       if background > 127 
         assign primary_accent_overlay_color = '#000000' 
@@ -60,7 +60,7 @@
     assign background = background | plus: 0 
     assign text = settings.color_secondary_text | color_brightness 
     assign text = text | plus: 0 
-    assign secondary_overlay_color = '' 
+    assign secondary_overlay_color = '#112832' 
     if text > 127 
       if background > 127 
         assign secondary_overlay_color = '#000000' 
@@ -82,7 +82,7 @@
     assign background = background | plus: 0 
     assign text = settings.color_secondary_accent | color_brightness 
     assign text = text | plus: 0 
-    assign secondary_accent_overlay = '' 
+    assign secondary_accent_overlay = '#112832' 
     if text > 127 
       if background > 127 
         assign secondary_accent_overlay = '#000000' 
@@ -104,7 +104,7 @@
     assign background = background | plus: 0 
     assign text = settings.color_tertiary_text | color_brightness 
     assign text = text | plus: 0 
-    assign tertiary_overlay_color = '' 
+    assign tertiary_overlay_color = '#112832' 
     if text > 127 
       if background > 127 
         assign tertiary_overlay_color = '#000000' 
@@ -126,7 +126,7 @@
     assign background = background | plus: 0 
     assign text = settings.color_tertiary_accent | color_brightness 
     assign text = text | plus: 0 
-    assign tertiary_accent_overlay = '' 
+    assign tertiary_accent_overlay = '#112832' 
     if text > 127 
       if background > 127 
         assign tertiary_accent_overlay = '#000000' 
@@ -148,7 +148,7 @@
     assign background = background | plus: 0 
     assign text = settings.color_quaternary_text | color_brightness 
     assign text = text | plus: 0 
-    assign quaternary_overlay_color = '' 
+    assign quaternary_overlay_color = '#112832' 
     if text > 127 
       if background > 127 
         assign quaternary_overlay_color = '#000000' 
@@ -170,7 +170,7 @@
     assign background = background | plus: 0 
     assign text = settings.color_quaternary_accent | color_brightness 
     assign text = text | plus: 0 
-    assign quaternary_accent_overlay = '' 
+    assign quaternary_accent_overlay = '#112832' 
     if text > 127 
       if background > 127 
         assign quaternary_accent_overlay = '#000000' 
@@ -202,7 +202,7 @@
     comment
     Black text overlay
     endcomment
-    assign background = '#000000' | color_brightness 
+    assign background = '#112832' | color_brightness 
     assign background = background | plus: 0 
     assign text = settings.color_primary_text | color_brightness 
     assign text = text | plus: 0 
@@ -745,8 +745,8 @@
   }
 
   [data-color-scheme="black"] {
-    --color-scheme-text: #000000;
-    --color-scheme-accent: #000000;
+    --color-scheme-text: #112832;
+    --color-scheme-accent: #112832;
     --color-scheme-text--overlay: {{ black_text_overlay_color | color_to_rgb }};
     --color-scheme-accent--overlay: {{ black_text_overlay_color | color_to_rgb }};
   }

@@ -1,0 +1,160 @@
+{
+  "projectName": "wiertla-cnc",
+  "rules": {
+    "css": {
+      "prefix": "wiertla-",
+      "methodology": "BEM",
+      "mediaQueries": {
+        "mobile": "max-width: 768px",
+        "tablet": "max-width: 1024px",
+        "desktop": "min-width: 1025px"
+      },
+      "classPattern": "^wiertla-[a-z]+__[a-z]+(?:--[a-z]+)?$",
+      "requiredProperties": [
+        "display",
+        "position",
+        "width",
+        "height",
+        "padding",
+        "margin",
+        "border",
+        "background",
+        "color",
+        "font-family",
+        "font-size",
+        "font-weight",
+        "line-height",
+        "letter-spacing"
+      ]
+    },
+    "javascript": {
+      "domEvents": ["DOMContentLoaded"],
+      "errorHandling": true,
+      "naming": {
+        "functions": "camelCase",
+        "variables": "camelCase",
+        "constants": "UPPER_SNAKE_CASE"
+      }
+    },
+    "liquid": {
+      "indentation": 2,
+      "maxLineLength": 120,
+      "requiredComments": [
+        "complex-logic",
+        "component-props",
+        "section-settings"
+      ]
+    },
+    "components": {
+      "structure": {
+        "required": ["template", "styles", "script"],
+        "optional": ["schema", "settings", "locales"]
+      },
+      "naming": {
+        "files": "kebab-case",
+        "components": "PascalCase"
+      }
+    },
+    "testing": {
+      "required": [
+        "desktop",
+        "mobile",
+        "responsive",
+        "accessibility",
+        "performance"
+      ],
+      "browsers": ["Chrome", "Firefox", "Safari", "Edge"]
+    },
+    "performance": {
+      "imageOptimization": true,
+      "lazyLoading": true,
+      "minification": true,
+      "caching": true
+    },
+    "accessibility": {
+      "required": [
+        "aria-labels",
+        "semantic-html",
+        "keyboard-navigation",
+        "color-contrast"
+      ]
+    }
+  },
+  "linting": {
+    "css": {
+      "stylelint": {
+        "extends": ["stylelint-config-standard"],
+        "rules": {
+          "selector-class-pattern": "^wiertla-[a-z]+__[a-z]+(?:--[a-z]+)?$",
+          "max-nesting-depth": 3,
+          "no-descending-specificity": null
+        }
+      }
+    },
+    "javascript": {
+      "eslint": {
+        "extends": ["eslint:recommended"],
+        "rules": {
+          "no-unused-vars": "error",
+          "no-console": "warn"
+        }
+      }
+    }
+  },
+  "fileTemplates": {
+    "component": {
+      "path": "components/{{name}}.liquid",
+      "content": [
+        "{% comment %}",
+        "  Component: {{name}}",
+        "  Description: {{description}}",
+        "{% endcomment %}",
+        "",
+        "<div class=\"wiertla-{{name}}\">",
+        "  {{content}}",
+        "</div>",
+        "",
+        "{% schema %}",
+        "{\"name\":\"{{name}}\",\"settings\":[]}",
+        "{% endschema %}"
+      ]
+    },
+    "section": {
+      "path": "sections/{{name}}.liquid",
+      "content": [
+        "{% comment %}",
+        "  Section: {{name}}",
+        "  Description: {{description}}",
+        "{% endcomment %}",
+        "",
+        "<div class=\"wiertla-{{name}}\">",
+        "  {{content}}",
+        "</div>",
+        "",
+        "{% schema %}",
+        "{\"name\":\"{{name}}\",\"settings\":[]}",
+        "{% endschema %}"
+      ]
+    }
+  },
+  "snippets": {
+    "mobilePreview": {
+      "prefix": "wiertla-mobile-preview",
+      "body": [
+        "<div class=\"wiertla-categories__mobile-preview-modal\">",
+        "  <div class=\"wiertla-categories__mobile-preview-content\">",
+        "    {{content}}",
+        "  </div>",
+        "</div>"
+      ]
+    },
+    "statusFilter": {
+      "prefix": "wiertla-status-filter",
+      "body": [
+        "<div class=\"wiertla-categories__status-filters--mobile\">",
+        "  {{content}}",
+        "</div>"
+      ]
+    }
+  }
+}

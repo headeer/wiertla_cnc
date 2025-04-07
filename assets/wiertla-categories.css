@@ -875,125 +875,172 @@
 }
 
 /* Updated Mobile Preview Modal Styles */
-.wiertla-categories__mobile-preview-specs {
-  display: grid;
-  grid-template-columns: auto 1fr 1fr;
-  grid-template-rows: auto auto;
-  grid-gap: 0;
-  padding: 15px;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 20px;
+.wiertla-categories__mobile-preview-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: white;
+  padding: 0;
+  margin: 0;
 }
 
+.wiertla-categories__mobile-preview-specs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+/* Top row with image, fi, dimension, price */
 .wiertla-categories__mobile-preview-type {
-  grid-column: 1;
-  grid-row: 1 / span 2;
+  display: flex;
+  align-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  margin: 0;
+  border: 2px solid #112832;
+}
+
+.wiertla-categories__mobile-preview-type-icon {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.wiertla-categories__mobile-preview-diameter {
+  width: 127px;
+  height: 34px;
+  padding: 1px 10px 0;
+  margin: 0;
+  border: 2px solid #112832;
+  border-left: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wiertla-categories__mobile-preview-diameter-label {
+  color: #112832;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.48px;
+}
+
+.wiertla-categories__mobile-preview-size {
+  flex: 1;
+  height: 34px;
+  padding: 0 10px;
+  margin: 0;
+  border: 2px solid #112832;
+  border-left: none;
+  display: flex;
+  align-items: center;
+}
+
+.wiertla-categories__mobile-preview-price {
+  height: 34px;
+  padding: 0 10px;
+  margin: 0;
+  background: #ffe500;
+  border: 2px solid #112832;
+  border-left: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Bottom row with vendor and symbol */
+.wiertla-categories__mobile-preview-details {
+  display: flex;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.wiertla-categories__mobile-preview-manufacturer {
+  width: 160px;
+  height: 34px;
+  padding: 0 10px;
+  margin: 0;
+  background: #f5f5f8;
+  border: 2px solid #e2e2e7;
+  border-top: none;
+  display: flex;
+  align-items: center;
+}
+
+.wiertla-categories__mobile-preview-sku {
+  flex: 1;
+  height: 34px;
+  padding: 0 10px;
+  margin: 0;
+  background: #f5f5f8;
+  border: 2px solid #e2e2e7;
+  border-left: none;
+  border-top: none;
+  display: flex;
+  align-items: center;
+}
+
+/* Text styles */
+.wiertla-categories__mobile-preview-diameter-value,
+.wiertla-categories__mobile-preview-size-value,
+.wiertla-categories__mobile-preview-price-value,
+.wiertla-categories__mobile-preview-manufacturer-value,
+.wiertla-categories__mobile-preview-sku-value {
+  color: #112832;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.48px;
+}
+
+.wiertla-categories__mobile-preview-cart-icon {
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.wiertla-categories__mobile-preview-type-icon {
-  width: 36px;
-  height: 36px;
-}
-
-.wiertla-categories__mobile-preview-diameter {
-  grid-column: 2;
-  grid-row: 1;
-  border: 2px solid #112832;
-}
-
-.wiertla-categories__mobile-preview-size {
-  grid-column: 3;
-  grid-row: 1;
-  border: 2px solid #112832;
-}
-
-.wiertla-categories__mobile-preview-price {
-  grid-column: 2 / span 2;
-  grid-row: 2;
-  display: flex;
-  justify-content: space-between;
-  border: 2px solid #f5f5f5;
-  border-top: none;
-  align-items: center;
-}
-
-.wiertla-categories__mobile-preview-diameter-label,
-.wiertla-categories__mobile-preview-size-label {
-  font-size: 14px;
-  color: #767676;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 500;
-  margin-bottom: 5px;
-}
-
-.wiertla-categories__mobile-preview-diameter-value,
-.wiertla-categories__mobile-preview-size-value,
-.wiertla-categories__mobile-preview-price-value {
-  font-size: 16px;
-  font-weight: 600;
-  color: #112832;
-  font-family: "Montserrat", sans-serif;
-}
-
-.wiertla-categories__mobile-preview-price-value {
-  font-size: 18px;
-}
-
 .wiertla-categories__mobile-preview-cart-icon img {
   width: 24px;
   height: 24px;
+  object-fit: contain;
 }
 
-.wiertla-categories__mobile-preview-details {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 15px 15px;
-}
+@media screen and (max-width: 768px) {
+  .wiertla-categories__mobile-preview-info {
+    padding: 0;
+  }
 
-.wiertla-categories__mobile-preview-manufacturer,
-.wiertla-categories__mobile-preview-sku {
-  display: flex;
-  flex-direction: column;
-}
+  .wiertla-categories__mobile-preview-specs {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 
-.wiertla-categories__mobile-preview-manufacturer-value,
-.wiertla-categories__mobile-preview-sku-value {
-  font-size: 16px;
-  font-weight: 600;
-  color: #112832;
-  font-family: "Montserrat", sans-serif;
-}
+  .wiertla-categories__mobile-preview-type,
+  .wiertla-categories__mobile-preview-diameter,
+  .wiertla-categories__mobile-preview-size,
+  .wiertla-categories__mobile-preview-price {
+    margin: 0;
+  }
 
-/* Style button like filter sort button */
-.wiertla-categories__mobile-preview-button {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 10px 22px;
-  background-color: #ffe500;
-  border: 2px solid #112832;
-  border-radius: 30px;
-  font-family: "League Spartan", sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 15.6px;
-  letter-spacing: 0.96px;
-  text-transform: uppercase;
-  color: #112832;
-  cursor: pointer;
-  text-decoration: none;
-  margin-bottom: 20px;
-}
+  .wiertla-categories__mobile-preview-details {
+    flex-direction: row;
+  }
 
-.wiertla-categories__mobile-preview-button:hover,
-.wiertla-categories__mobile-preview-button:focus {
-  background-color: #ffe200;
-  text-decoration: none;
-  color: #112832;
+  .wiertla-categories__mobile-preview-manufacturer,
+  .wiertla-categories__mobile-preview-sku {
+    margin: 0;
+  }
 }
 
 /* Mobile-only logos styles */

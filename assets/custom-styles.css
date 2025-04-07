@@ -439,3 +439,8 @@
     margin-right: 0 !important;
   }
 }
+
+/* Update black color to #112832 */
+.wiertla-categories__mobile-preview-type-label {
+  color: #112832;
+}
