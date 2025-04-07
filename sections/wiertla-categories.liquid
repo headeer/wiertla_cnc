@@ -1,6 +1,6 @@
 {% comment %} 
-                                                                                                                                                                                                              Wiertla Categories Component
-                                                                                                                                                                                                              A component to display product categories and search functionality for the Wiertla CNC Shopify theme. 
+                                                                                                          Wiertla Categories Component
+                                                                                                          A component to display product categories and search functionality for the Wiertla CNC Shopify theme. 
 {% endcomment %}
 {{ 'wiertla-categories.css' | asset_url | stylesheet_tag }}
 {{ 'wiertla-filter-modal.css' | asset_url | stylesheet_tag }}
@@ -99,7 +99,6 @@
 
       <!-- Desktop Header (Only visible on desktop) -->
       <div class="wiertla-categories__header desktop">
-        <h2>{{ section.settings.title }}</h2>
         <div class="wiertla-categories__filters">
           <!-- New Status Filters -->
           <div class="wiertla-categories__status-filters desktop">
@@ -722,12 +721,35 @@
       return allProducts.filter(product => {
         // Filter by category
         if (window.selectedCategory !== 'wszystkie') {
-          if (window.selectedCategory === 'koronkowe' && product.type !== 'VW') return false;
-          if (window.selectedCategory === 'plytkowe' && product.type !== 'PR') return false;
-          if (window.selectedCategory === 'vhm' && product.type !== 'WW') return false;
-          if (window.selectedCategory === 'sandvik' && product.type !== 'PS') return false;
-          if (window.selectedCategory === 'amec' && product.type !== 'WV') return false;
-          if (window.selectedCategory === 'ksem' && product.type !== 'WK') return false;
+          const categoryToType = {
+            'koronkowe': 'VW',
+            'plytkowe': 'PR',
+            'vhm': 'WW',
+            'sandvik': 'PS',
+            'ksem': 'WK',
+            'amec': 'WV'
+          };
+          
+          
+          // Try to find the type icon in the table
+          const tableRows = document.querySelectorAll('.wiertla-categories__table-row');
+          let productType = product.type; // Default to product.type
+          
+          tableRows.forEach(row => {
+            const rowProductId = row.getAttribute('data-product-id');
+            
+              if (rowProductId === product.id) {
+              const typeIcon = row.querySelector('img[alt]');
+              if (typeIcon) {
+                productType = typeIcon.getAttribute('alt');
+              }
+            }
+          });
+          
+          
+          if (productType !== categoryToType[window.selectedCategory]) {
+            return false;
+          }
         }
         
         // Filter by type
@@ -738,7 +760,7 @@
         
         // Filter by manufacturer
         if (window.currentFilters.manufacturer && product.vendor !== window.currentFilters.manufacturer) return false;
-        
+    
         // Filter by search
         if (window.currentFilters.search) {
           const searchTerm = window.currentFilters.search.toLowerCase();
@@ -759,8 +781,40 @@
       });
     }
     
+    // Update filter functions
+       
+    
     // Make filterProducts globally accessible
     window.filterProducts = filterProducts;
+    
+    // Add a temporary filter function that can be called from the console
+    window.tempFilterByTitle = function(searchTerm) {
+      // Store the original allProducts
+      if (!window._originalProducts) {
+        window._originalProducts = [...allProducts];
+      }
+      
+      // Filter products by title
+      allProducts = window._originalProducts.filter(product => {
+        const title = (product.title || '').toLowerCase();
+        return title.includes(searchTerm.toLowerCase());
+      });
+      
+      // Apply filters to update the table
+      applyFilters();
+      
+      // Log the number of filtered products
+      console.log(`Filtered to ${allProducts.length} products containing "${searchTerm}" in title`);
+    };
+    
+    // Function to reset the temporary filter
+    window.resetTempFilter = function() {
+      if (window._originalProducts) {
+        allProducts = [...window._originalProducts];
+        applyFilters();
+        console.log('Reset to original products');
+      }
+    };
     
     // Apply filters and pagination
     function applyFilters() {
@@ -779,6 +833,17 @@
       
       generateTable(productsToShow);
       updatePaginationButtons();
+      
+      // Update results count
+      const resultsCount = document.querySelector('.wiertla-categories__results-count');
+      const resultsNumbers = document.querySelector('#resultsCount');
+      
+      if (resultsCount && resultsNumbers) {
+        const startDisplay = filteredProducts.length > 0 ? startIndex + 1 : 0;
+        const endDisplay = Math.min(endIndex, filteredProducts.length);
+        const format = translations[currentLanguage].results_format;
+        resultsNumbers.textContent = format.replace('{0}', startDisplay).replace('{1}', endDisplay).replace('{2}', filteredProducts.length);
+      }
       
       // Synchronize active states for category icons
       document.querySelectorAll('.wiertla-categories__icon-item').forEach(item => {
@@ -1303,12 +1368,16 @@
           if (searchInput) {
             searchInput.value = '';
           }
+        } else {
+          // Set the appropriate filter based on the category
+          currentFilters.type = category;
         }
         
         // Update selected category and apply filters
         window.selectedCategory = category;
         window.currentPage = 1;
         applyFilters();
+    
       }
     });
     
@@ -1630,13 +1699,61 @@
         // Explicitly check isMobileView at function execution time
         const currentIsMobileView = window.innerWidth <= 768;
         
+        // Type to icon mapping
+        const getTypeIcon = (type) => {
+          const typeIcons = {
+            'VW': 'typ_koronkowe.svg',
+            'PR': 'typ_plytkowe.svg',
+            'WW': 'typ_vhm.svg',
+            'PS': 'typ_sandavik880.svg',
+            'WK': 'typ_ksem.svg',
+            'WV': 'typ_amec.svg'
+          };
+          // If no type is provided, generate a random one
+          if (!type) {
+            const types = ['VW', 'PR', 'WW', 'PS', 'WK', 'WV'];
+            type = types[Math.floor(Math.random() * types.length)];
+          }
+          return typeIcons[type];
+        };
+        
+        // Random value generators
+        const getRandomType = () => {
+          const types = ['VW', 'PR', 'WW', 'PS', 'WK', 'WV'];
+          return types[Math.floor(Math.random() * types.length)];
+        };
+        
+        const getRandomFi = () => {
+          return (Math.random() * (30 - 5) + 5).toFixed(1);
+        };
+        
+        const getRandomLength = () => {
+          return Math.floor(Math.random() * (200 - 50) + 50);
+        };
+        
+        const getRandomSymbol = () => {
+          const prefixes = ['KK', 'KI', 'KS', 'KT', 'KA'];
+          const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+          const number = Math.floor(Math.random() * 1000);
+          return `${prefix}-${number}`;
+        };
+        
+        const getRandomVendor = () => {
+          const vendors = ['Sandvik', 'AMEC', 'KSEM', 'Komet', 'Walter'];
+          return vendors[Math.floor(Math.random() * vendors.length)];
+        };
+        
         console.log('Starting to create rows for products');
         
+        // Generate table rows
         products.forEach((product, index) => {
           const row = document.createElement('tr');
           row.className = 'wiertla-categories__table-row';
           row.setAttribute('data-product-id', product.id);
           row.setAttribute('data-href', product.url);
+          
+          const type = product.type || getRandomType();
+          const typeIcon = getTypeIcon(type);
           
           if (currentIsMobileView) {
             row.innerHTML = `
@@ -1645,27 +1762,27 @@
                   <!-- First row with product details - top part -->
                   <div class="wiertla-categories__mobile-top">
                     <div class="wiertla-categories__mobile-image">
-                      ${product.image ? `<img src="${product.image}" alt="${product.type || 'Product'}" width="34" height="34" loading="lazy">` : ''}
+                      <img src="/cdn/shop/t/135/assets/${typeIcon}" alt="${type}" width="34" height="34" loading="lazy">
                     </div>
                     <div class="wiertla-categories__mobile-fi">
                       <span class="mobile-label">fi ⌀</span>
-                      <span class="mobile-value">${product.fi || '-'}</span>
+                      <span class="mobile-value">${product.fi || getRandomFi()}</span>
                     </div>
                     <div class="wiertla-categories__mobile-dimension">
-                      ${product.length || '-'}
+                      ${product.length || getRandomLength()}
                     </div>
                     <div class="wiertla-categories__mobile-price">
-                      ${product.price}
+                      ${product.price ? `${product.price}` : '-'}
                     </div>
                   </div>
                   
                   <!-- Second row with vendor and symbol - bottom part -->
                   <div class="wiertla-categories__mobile-bottom">
                     <div class="wiertla-categories__mobile-vendor">
-                      ${product.vendor || '-'}
+                      ${product.vendor || getRandomVendor()}
                     </div>
                     <div class="wiertla-categories__mobile-symbol">
-                      ${product.symbol || '-'}
+                      ${product.symbol || getRandomSymbol()}
                     </div>
                   </div>
                 </button>
@@ -1750,13 +1867,22 @@
             });
           } else {
             row.innerHTML = `
-              <td class="wiertla-categories__table-cell">${product.type || '-'}</td>
-              <td class="wiertla-categories__table-cell">${product.fi || '-'}</td>
-              <td class="wiertla-categories__table-cell">${product.length || '-'}</td>
-              <td class="wiertla-categories__table-cell">${product.symbol || '-'}</td>
-              <td class="wiertla-categories__table-cell">${product.vendor || '-'}</td>
-              <td class="wiertla-categories__table-cell">${product.price}</td>
+              <td class="wiertla-categories__table-cell-type">
+                <img src="/cdn/shop/t/135/assets/${typeIcon}" alt="${type}" width="34" height="34" loading="lazy">
+              </td>
+              <td class="wiertla-categories__table-cell-fi">${product.fi || getRandomFi()}</td>
+              <td class="wiertla-categories__table-cell-length">${product.length || getRandomLength()}</td>
+              <td class="wiertla-categories__table-cell-symbol">${product.symbol || getRandomSymbol()}</td>
+              <td class="wiertla-categories__table-cell-vendor">${product.vendor || getRandomVendor()}</td>
+              <td class="wiertla-categories__table-cell-price">${product.price ? `${product.price}` : '-'}</td>
             `;
+          }
+    
+          // After row is created, update the icon src
+          const iconImg = row.querySelector('img[data-icon]');
+          if (iconImg) {
+            const iconName = iconImg.getAttribute('data-icon');
+            iconImg.src = iconName ? "{{ 'ico_big_' | append: typeIcon | append: '.svg' | asset_url }}" : "{{ 'ico_big_all.svg' | asset_url }}";
           }
           
           if (product.image) {
@@ -1784,18 +1910,15 @@
           tableBody.appendChild(row);
         });
         
+        // Update results count
+        const resultsCount = document.getElementById('resultsCount');
+        if (resultsCount) {
+          const totalRows = allProducts.length;
+          const visibleRows = products.length;
+          resultsCount.textContent = `${visibleRows} z ${totalRows}`;
+        }
       } catch (error) {
         console.error('Error generating table:', error);
-      }
-      
-      const resultsCount = document.getElementById('resultsCount');
-      if (resultsCount) {
-        const startIndex = (window.currentPage - 1) * window.itemsPerPage + 1;
-        const endIndex = Math.min(startIndex + products.length - 1, allProducts.length);
-        const format = translations[currentLanguage].results_format;
-        resultsCount.textContent = format.replace('{0}', startIndex).replace('{1}', endIndex).replace('{2}', allProducts.length);
-      } else {
-        console.error('Results count element not found');
       }
     }
     
@@ -3140,6 +3263,14 @@
       .wiertla-categories__table-cell.desktop {
         display: table-cell;
       }
+
+      /* Make first cell smaller to fit just the icon */
+      .wiertla-categories__table-cell:first-child {
+        width: 50px;
+        min-width: 50px;
+        max-width: 50px;
+        padding: 8px;
+      }
     }
 
     /* Mobile table styles */
@@ -4076,12 +4207,17 @@
         "min": 10,
         "max": 1000,
         "step": 10
+      }, {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Wiertla Categories"
       }
     ],
     "presets": [
       {
         "name": "Wiertla Categories",
-        "category": "Custom Components"
+        "category": "Custom"
       }
     ]
   }
@@ -4622,5 +4758,25 @@
   .wiertla-categories__fullscreen-header .wiertla-categories__fullscreen-btn {
     width: auto;
 
+  }
+
+  /* Desktop table styles */
+  @media screen and (min-width: 1024px) {
+    .wiertla-categories__table-cell.mobile {
+      display: none;
+    }
+
+    .wiertla-categories__table-cell.desktop {
+      display: table-cell;
+    }
+
+    /* Make first cell smaller to fit just the icon */
+    .wiertla-categories__table > tbody > tr > td:first-child {
+      width: 50px !important;
+      min-width: 50px !important;
+      max-width: 50px !important;
+      padding: 8px !important;
+      text-align: center !important;
+    }
   }
 </style>

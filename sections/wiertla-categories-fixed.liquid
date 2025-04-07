@@ -1,0 +1,57 @@
+{% comment %} {% comment %} 
+        Wiertla Categories Component
+        A component to display product categories and search functionality for the Wiertla CNC Shopify theme. 
+{% endcomment %}
+{{ 'wiertla-categories.css' | asset_url | stylesheet_tag }}
+{{ 'wiertla-filter-modal.css' | asset_url | stylesheet_tag }}
+{{ 'wiertla-categories-filter.js' | asset_url | script_tag }}
+
+{% assign section_id = section.id %}
+{% assign items_per_page = section.settings.items_per_page | default: 20 %}
+
+{% if section.settings.selected_collection != blank %}
+  {% assign selected_collection = collections[section.settings.selected_collection] %}
+{% else %}
+  {% assign selected_collection = collections.all %}
+{% endif %}
+
+{% assign current_language = request.locale.iso_code | default: 'pl' %}
+
+{% paginate selected_collection.products by 2000 %}
+  <!-- Your content here -->
+{% endpaginate %}
+
+{% schema %}
+  {
+    "name": "Wiertla Categories",
+    "tag": "section",
+    "class": "wiertla-categories-section",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "selected_collection",
+        "label": "Select Collection to Display",
+        "info": "Choose which collection's products to display in this section"
+      }, {
+        "type": "range",
+        "id": "items_per_page",
+        "label": "Products per page",
+        "default": 20,
+        "min": 10,
+        "max": 1000,
+        "step": 10
+      }, {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Wiertla Categories"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Wiertla Categories",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}{% endcomment %}

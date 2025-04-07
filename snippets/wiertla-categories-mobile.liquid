@@ -1,6 +1,6 @@
-{% comment %}
+{% comment %} 
   Wiertla Categories Mobile Components
-  A reusable component to display the mobile components for the Wiertla CNC Shopify theme.
+  A reusable component to display the mobile components for the Wiertla CNC Shopify theme. 
 {% endcomment %}
 
 <!-- Mobile Category Navigation -->
@@ -8,31 +8,52 @@
   <div class="wiertla-categories__scroll-container">
     <div class="wiertla-categories__icons mobile">
       <div class="wiertla-categories__icon-item">
-        <img src="{{ 'ico_big_koronkowe.svg' | asset_url }}" alt="Koronkowe" class="wiertla-categories__icon">
+        <img
+          src="{{ 'ico_big_koronkowe.svg' | asset_url }}"
+          alt="Koronkowe"
+          class="wiertla-categories__icon">
         <span class="wiertla-categories__icon-label">KORONKOWE</span>
       </div>
       <div class="wiertla-categories__icon-item">
-        <img src="{{ 'ico_big_plytkowe.svg' | asset_url }}" alt="Płytkowe" class="wiertla-categories__icon">
+        <img
+          src="{{ 'ico_big_plytkowe.svg' | asset_url }}"
+          alt="Płytkowe"
+          class="wiertla-categories__icon">
         <span class="wiertla-categories__icon-label">PŁYTKOWE</span>
       </div>
       <div class="wiertla-categories__icon-item">
-        <img src="{{ 'ico_big_vhm.svg' | asset_url }}" alt="VH" class="wiertla-categories__icon">
+        <img
+          src="{{ 'ico_big_vhm.svg' | asset_url }}"
+          alt="VH"
+          class="wiertla-categories__icon">
         <span class="wiertla-categories__icon-label">VHM</span>
       </div>
       <div class="wiertla-categories__icon-item">
-        <img src="{{ 'ico_big_sandvik.svg' | asset_url }}" alt="Sandvik 880" class="wiertla-categories__icon">
+        <img
+          src="{{ 'ico_big_sandvik.svg' | asset_url }}"
+          alt="Sandvik 880"
+          class="wiertla-categories__icon">
         <span class="wiertla-categories__icon-label">SANDVIK 880</span>
       </div>
       <div class="wiertla-categories__icon-item">
-        <img src="{{ 'ico_big_amec.svg' | asset_url }}" alt="AMEC" class="wiertla-categories__icon">
+        <img
+          src="{{ 'ico_big_amec.svg' | asset_url }}"
+          alt="AMEC"
+          class="wiertla-categories__icon">
         <span class="wiertla-categories__icon-label">AMEC</span>
       </div>
       <div class="wiertla-categories__icon-item">
-        <img src="{{ 'ico_big_ksem.svg' | asset_url }}" alt="KSEM" class="wiertla-categories__icon">
+        <img
+          src="{{ 'ico_big_ksem.svg' | asset_url }}"
+          alt="KSEM"
+          class="wiertla-categories__icon">
         <span class="wiertla-categories__icon-label">KSEM</span>
       </div>
       <div class="wiertla-categories__icon-item">
-        <img src="{{ 'ico_big_all.svg' | asset_url }}" alt="Wszystkie" class="wiertla-categories__icon">
+        <img
+          src="{{ 'ico_big_all.svg' | asset_url }}"
+          alt="Wszystkie"
+          class="wiertla-categories__icon">
         <span class="wiertla-categories__icon-label">WSZYSTKIE</span>
       </div>
     </div>
@@ -51,14 +72,20 @@
     <!-- Filter header -->
     <div class="wiertla-categories__mobile-filter-header">
       <div class="wiertla-categories__mobile-filter-icon">
-        <img src="{{ 'icon_filter.svg' | asset_url }}" alt="Filter" class="wiertla-categories__mobile-filter-icon-inner">
+        <img
+          src="{{ 'icon_filter.svg' | asset_url }}"
+          alt="Filter"
+          class="wiertla-categories__mobile-filter-icon-inner">
       </div>
       <div class="wiertla-categories__mobile-filter-title">filtruj wiertła w tabeli</div>
       <div class="wiertla-categories__mobile-filter-close-wrapper">
-        <img src="{{ 'closee.svg' | asset_url }}" alt="Close" class="wiertla-categories__mobile-filter-close">
+        <img
+          src="{{ 'closee.svg' | asset_url }}"
+          alt="Close"
+          class="wiertla-categories__mobile-filter-close">
       </div>
     </div>
-    
+
     <!-- Filter options -->
     <div class="wiertla-categories__mobile-filter-options">
       <div class="wiertla-categories__mobile-filter-dropdown">
@@ -85,6 +112,16 @@
         </select>
       </div>
       <div class="wiertla-categories__mobile-filter-dropdown">
+        <select class="wiertla-categories__mobile-filter-select" data-filter="warehouse">
+          <option value="">Magazyn</option>
+          <option value="all">Wszystkie</option>
+          <option value="M">Poznań</option>
+          <option value="T">Czechy</option>
+          <option value="E">eBay</option>
+          <option value="U">UK</option>
+        </select>
+      </div>
+      <div class="wiertla-categories__mobile-filter-dropdown">
         <select class="wiertla-categories__mobile-filter-select" data-filter="manufacturer">
           <option value="">Producent</option>
           <option value="all">Wszystkie</option>
@@ -94,23 +131,26 @@
         </select>
       </div>
     </div>
-    
+
     <!-- Filter selection -->
     <div class="wiertla-categories__mobile-filter-selection">
       <div class="wiertla-categories__mobile-filter-selection-title">Pokaż</div>
       <div class="wiertla-categories__mobile-filter-dropdown">
         <div class="wiertla-categories__mobile-filter-dropdown-text">Wszystkie</div>
-      </div>
-      
+    </div>
+
       <!-- Include Dropdown Menu -->
       {% render 'wiertla-categories-mobile-dropdown' %}
     </div>
-    
+
     <!-- Sort button -->
     <div class="wiertla-categories__mobile-filter-sort-wrapper">
       <button class="wiertla-categories__mobile-filter-sort-button">
         <span>Sortuj wiertła</span>
-        <img src="{{ 'icon_filter.svg' | asset_url }}" alt="Sort" class="wiertla-categories__mobile-filter-sort-icon">
+        <img
+          src="{{ 'icon_filter.svg' | asset_url }}"
+          alt="Sort"
+          class="wiertla-categories__mobile-filter-sort-icon">
       </button>
     </div>
   </div>
@@ -122,14 +162,20 @@
     <!-- Rent header -->
     <div class="wiertla-categories__mobile-rent-header">
       <div class="wiertla-categories__mobile-rent-icon">
-        <img src="{{ 'calendar.svg' | asset_url }}" alt="Calendar" class="wiertla-categories__mobile-rent-icon-inner">
+        <img
+          src="{{ 'calendar.svg' | asset_url }}"
+          alt="Calendar"
+          class="wiertla-categories__mobile-rent-icon-inner">
       </div>
       <div class="wiertla-categories__mobile-rent-title">WYPOŻYCZ WIERTŁO</div>
       <div class="wiertla-categories__mobile-rent-close-wrapper">
-        <img src="{{ 'closee.svg' | asset_url }}" alt="Close" class="wiertla-categories__mobile-rent-close">
+        <img
+          src="{{ 'closee.svg' | asset_url }}"
+          alt="Close"
+          class="wiertla-categories__mobile-rent-close">
       </div>
     </div>
-    
+
     <!-- Rent content -->
     <div class="wiertla-categories__mobile-rent-content">
       <p class="wiertla-categories__mobile-rent-description">
@@ -139,7 +185,7 @@
         Skontaktuj się z nami, aby ustalić szczegóły<br>
         lub wyślij zapytanie o preferowany termin.
       </p>
-      
+
       <!-- Contact info -->
       <div class="wiertla-categories__mobile-rent-contact-info">
         <div class="wiertla-categories__mobile-rent-phone">
@@ -163,24 +209,42 @@
         <div class="wiertla-categories__mobile-rent-form-title">Skorzystaj z formularza</div>
         <form class="wiertla-categories__mobile-rent-form-content">
           <div class="wiertla-categories__mobile-rent-form-group">
-            <input type="text" placeholder="Osoba kontaktowa" required>
+            <input
+              type="text"
+              placeholder="Osoba kontaktowa"
+              required>
           </div>
           <div class="wiertla-categories__mobile-rent-form-group">
-            <input type="text" placeholder="Nazwa firmy" required>
+            <input
+              type="text"
+              placeholder="Nazwa firmy"
+              required>
           </div>
           <div class="wiertla-categories__mobile-rent-form-row">
             <div class="wiertla-categories__mobile-rent-form-group">
-              <input type="tel" placeholder="Nr telefonu" required>
+              <input
+                type="tel"
+                placeholder="Nr telefonu"
+                required>
             </div>
             <div class="wiertla-categories__mobile-rent-form-group">
-              <input type="email" placeholder="E-mail" required>
+              <input
+                type="email"
+                placeholder="E-mail"
+                required>
             </div>
           </div>
           <div class="wiertla-categories__mobile-rent-form-group">
-            <input type="text" placeholder="SYMBOL wiertła" required>
+            <input
+              type="text"
+              placeholder="SYMBOL wiertła"
+              required>
           </div>
           <div class="wiertla-categories__mobile-rent-form-group">
-            <input type="text" placeholder="Wpisz preferowany termin wypożyczenia" required>
+            <input
+              type="text"
+              placeholder="Wpisz preferowany termin wypożyczenia"
+              required>
           </div>
           <button type="submit" class="wiertla-categories__mobile-rent-submit">
             <span>Wyślij wiadomość</span>
@@ -198,25 +262,37 @@
     <!-- Preview header -->
     <div class="wiertla-categories__mobile-preview-header">
       <div class="wiertla-categories__mobile-preview-icon">
-        <img src="{{ 'loop_icon.svg' | asset_url }}" alt="Preview" class="wiertla-categories__mobile-preview-icon-inner">
+        <img
+          src="{{ 'loop_icon.svg' | asset_url }}"
+          alt="Preview"
+          class="wiertla-categories__mobile-preview-icon-inner">
       </div>
       <div class="wiertla-categories__mobile-preview-title">Podgląd</div>
       <div class="wiertla-categories__mobile-preview-close-wrapper">
-        <img src="{{ 'closee.svg' | asset_url }}" alt="Close" class="wiertla-categories__mobile-preview-close">
+        <img
+          src="{{ 'closee.svg' | asset_url }}"
+          alt="Close"
+          class="wiertla-categories__mobile-preview-close">
       </div>
     </div>
-    
+
     <!-- Product Image -->
     <div class="wiertla-categories__mobile-preview-image-container">
-      <img src="" alt="Product" class="wiertla-categories__mobile-preview-image">
+      <img
+        src=""
+        alt="Product"
+        class="wiertla-categories__mobile-preview-image">
     </div>
-    
+
     <!-- Product Info -->
     <div class="wiertla-categories__mobile-preview-info">
       <!-- Diameter and size -->
       <div class="wiertla-categories__mobile-preview-specs">
         <div class="wiertla-categories__mobile-preview-type">
-          <img src="" alt="Type" class="wiertla-categories__mobile-preview-type-icon">
+          <img
+            src=""
+            alt="Type"
+            class="wiertla-categories__mobile-preview-type-icon">
         </div>
         <div class="wiertla-categories__mobile-preview-diameter">
           <div class="wiertla-categories__mobile-preview-diameter-label">fi ⌀</div>
@@ -233,7 +309,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Manufacturer and SKU -->
       <div class="wiertla-categories__mobile-preview-details">
         <div class="wiertla-categories__mobile-preview-manufacturer">
@@ -244,13 +320,16 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Details Button -->
     <div class="wiertla-categories__mobile-preview-button-container">
       <a href="#" class="wiertla-categories__mobile-preview-button">
         <span>Zobacz szczegóły</span>
-        <img src="{{ 'Arrow_forward_ios_24dp_5F6368_FILL0_wght400_GRAD0_opsz.svg' | asset_url }}" alt="Arrow" class="wiertla-categories__mobile-preview-button-icon">
+        <img
+          src="{{ 'Arrow_forward_ios_24dp_5F6368_FILL0_wght400_GRAD0_opsz.svg' | asset_url }}"
+          alt="Arrow"
+          class="wiertla-categories__mobile-preview-button-icon">
       </a>
     </div>
   </div>
-</div> 
+</div>
