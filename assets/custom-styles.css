@@ -8,6 +8,24 @@
   width: 100%;
   padding: 0 15px;
 }
+
+/* Link Styles */
+a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.2s ease;
+}
+
+a:active,
+a.active,
+a[aria-current="page"] {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration-color: rgba(0, 0, 0, 0.5);
+}
+
 .wiertla-section {
   margin-bottom: 2rem;
 }

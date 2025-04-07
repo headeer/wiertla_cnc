@@ -168,12 +168,14 @@
   .header__link::after {
     content: '';
     position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -2px;
-    left: 0;
+    width: calc(100% - 16px);
+    height: 1px;
+    bottom: 16px;
+    left: 8px;
     background-color: #112832;
-    transition: width var(--header-transition);
+    transition: transform 0.3s ease;
+    transform-origin: left;
+    transform: scaleX(1);
   }
   @media screen and (max-width: 768px) {
     .header__link::after {
@@ -188,18 +190,19 @@
   }
 
   .header__link:hover::after {
-    width: 100%;
+    transform: scaleX(0);
   }
 
   .header__link:focus {
-    outline: 2px solid #112832;
-    outline-offset: 4px;
-    border-radius: 2px;
+    outline: none;
+  }
+
+  .header__link:active {
+    outline: none;
   }
 
   .header__link.active::after {
-    width: 100%;
-    opacity: 0.5;
+    transform: scaleX(0);
   }
 
   /* Enhanced Logo */
@@ -249,6 +252,7 @@
     text-transform: lowercase;
     color: #112832;
     text-decoration: none;
+    position: relative;
     transition: font-size var(--header-transition);
     font-family: League Spartan;
     font-weight: 700;
@@ -256,7 +260,11 @@
     line-height: 100%;
     letter-spacing: 0;
     text-align: center;
+  }
 
+  /* Remove underline from logo text */
+  .header__logo-text::after {
+    display: none;
   }
 
   @media screen and (max-width: 768px) {
@@ -303,6 +311,11 @@
     flex-shrink: 0;
   }
 
+  /* Remove underline from contact links */
+  .header__contact-item .header__link::after {
+    display: none;
+  }
+
   .header__actions {
     display: flex;
     align-items: center;
@@ -315,6 +328,23 @@
     text-decoration: none;
     position: relative;
     gap: 10px;
+  }
+
+  .header__action-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: #112832;
+    transition: transform 0.3s ease;
+    transform-origin: left;
+    transform: scaleX(1);
+  }
+
+  .header__action-link:hover::after {
+    transform: scaleX(0);
   }
 
   .header__action-icon {
@@ -552,12 +582,30 @@
     text-transform: uppercase;
     color: #112832;
     text-decoration: none;
+    position: relative;
     padding: 8px 16px;
     transition: color 0.3s ease;
   }
 
+  .header__mobile-menu-link::after {
+    content: '';
+    position: absolute;
+    width: calc(100% - 32px);
+    height: 1px;
+    bottom: -2px;
+    left: 16px;
+    background-color: #112832;
+    transition: transform 0.3s ease;
+    transform-origin: left;
+    transform: scaleX(1);
+  }
+
   .header__mobile-menu-link:hover {
     color: rgba(17, 40, 50, 0.8);
+  }
+
+  .header__mobile-menu-link:hover::after {
+    transform: scaleX(0);
   }
 
   @media screen and (max-width: 768px) {
