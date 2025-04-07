@@ -948,7 +948,9 @@
     const quantityInput = productDetails.querySelector('.quantity__input');
     const decreaseBtn = productDetails.querySelector('.product-details__quantity-btn--decrease');
     const increaseBtn = productDetails.querySelector('.product-details__quantity-btn--increase');
+    const addToCartBtn = productDetails.querySelector('.product-details__add-to-cart');
     const addToCartForm = productDetails.querySelector('form[data-type="add-to-cart-form"]');
+    const headerCartCount = document.querySelector('.header__cart-count');
   
     // Quantity controls
     if (quantityInput && decreaseBtn && increaseBtn) {
@@ -980,101 +982,65 @@
   
       decreaseBtn.addEventListener('click', () => updateQuantity(-1));
       increaseBtn.addEventListener('click', () => updateQuantity(1));
-  
-      // Prevent manual input of invalid numbers
-      quantityInput.addEventListener('change', function() {
-        let value = parseInt(this.value);
-        if (isNaN(value) || value < min) value = min;
-        if (value > max) value = max;
-        this.value = value;
-        
-        // Update decrease button state on manual input
-        if (value <= min) {
-          decreaseBtn.disabled = true;
-          decreaseBtn.classList.add('product-details__quantity-btn--disabled');
-        } else {
-          decreaseBtn.disabled = false;
-          decreaseBtn.classList.remove('product-details__quantity-btn--disabled');
-        }
-      });
     }
-  
-    // Add to cart form submission
+
+    // Add to cart functionality
     if (addToCartForm) {
-      addToCartForm.addEventListener('submit', function(e) {
+      addToCartForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const formData = new FormData(this);
-        const submitButton = this.querySelector('button[type="submit"]');
-        const originalButtonText = submitButton.innerHTML;
+        if (!addToCartBtn || addToCartBtn.disabled) return;
         
-        // Disable button and show loading state
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<span>DODAWANIE...</span>';
+        const quantity = parseInt(quantityInput.value) || 1;
+        const formData = new FormData(addToCartForm);
+        formData.set('quantity', quantity);
         
-        fetch(window.Shopify.routes.root + 'cart/add.js', {
-          method: 'POST',
-          body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-          // Re-enable button and restore original text
-          submitButton.disabled = false;
-          submitButton.innerHTML = originalButtonText;
+        try {
+          addToCartBtn.disabled = true;
           
-          // Optional: Show success message or update cart count
-          // You can add your own success handling here
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-          // Re-enable button and restore original text
-          submitButton.disabled = false;
-          submitButton.innerHTML = originalButtonText;
-        });
-      });
-    }
-
-    // Filter state management
-    const filtersContainer = document.querySelector('.wiertla-categories__filters-left');
-    if (filtersContainer) {
-      const filterGroups = filtersContainer.querySelectorAll('.wiertla-categories__filter-group');
-      const activeFilters = new Set();
-
-      function updateFilterState() {
-        const hasActiveFilters = activeFilters.size > 0;
-        const noFiltersElement = document.querySelector('.wiertla-categories__no-filters');
-        
-        if (hasActiveFilters) {
-          noFiltersElement?.classList.add('hidden');
-        } else {
-          noFiltersElement?.classList.remove('hidden');
-        }
-      }
-
-      filterGroups.forEach(group => {
-        const filterOptions = group.querySelectorAll('.wiertla-categories__filter-option');
-        
-        filterOptions.forEach(option => {
-          option.addEventListener('click', () => {
-            const filterId = option.getAttribute('data-filter-id');
-            
-            if (option.classList.contains('active')) {
-              option.classList.remove('active');
-              activeFilters.delete(filterId);
-            } else {
-              // Remove active class from other options in the same group
-              filterOptions.forEach(opt => opt.classList.remove('active'));
-              option.classList.add('active');
-              activeFilters.add(filterId);
-            }
-            
-            updateFilterState();
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            body: formData
           });
-        });
+          
+          if (!response.ok) throw new Error('Network response was not ok');
+          
+          const data = await response.json();
+          
+          // Update cart count in header
+          if (headerCartCount) {
+            const currentCount = parseInt(headerCartCount.textContent) || 0;
+            headerCartCount.textContent = currentCount + quantity;
+          }
+          
+          // Change button text and style
+          if (addToCartBtn) {
+            addToCartBtn.innerHTML = `
+              <span>PRZEJDŹ DO KOSZYKA</span>
+              <img src="{{ 'shopping_cart.svg' | asset_url }}" alt="Cart" class="cart-icon">
+            `;
+            addToCartBtn.disabled = false;
+            addToCartBtn.onclick = function() {
+              window.location.href = '/cart';
+            };
+          }
+          
+          // Reset quantity to 1
+          if (quantityInput) {
+            quantityInput.value = 1;
+            if (decreaseBtn) {
+              decreaseBtn.disabled = true;
+              decreaseBtn.classList.add('product-details__quantity-btn--disabled');
+            }
+          }
+          
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Wystąpił błąd podczas dodawania do koszyka. Spróbuj ponownie.');
+          addToCartBtn.disabled = false;
+          addToCartBtn.style.opacity = '1';
+        }
       });
-
-      // Initialize filter state
-      updateFilterState();
     }
   });
 </script><script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js" defer></script>
