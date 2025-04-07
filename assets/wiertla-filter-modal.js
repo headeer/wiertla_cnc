@@ -318,8 +318,21 @@ function updateResultsCount(count) {
   const resultsCount = document.querySelector(
     ".wiertla-categories__results-count"
   );
-  if (resultsCount) {
-    resultsCount.textContent = `Znaleziono ${count} wiertła`;
+  const resultsNumbers = document.querySelector("#resultsCount");
+
+  if (resultsCount && resultsNumbers) {
+    // Get the total number of rows (before filtering)
+    const tableBody = document.querySelector("#productsTableBody");
+    const allRows = tableBody ? tableBody.querySelectorAll("tr") : [];
+    const totalRows = allRows.length;
+
+    // Count visible rows (after filtering)
+    const visibleRows = Array.from(allRows).filter(
+      (row) => !row.style.display || row.style.display !== "none"
+    ).length;
+
+    // Update the results count text
+    resultsNumbers.textContent = `${visibleRows} z ${totalRows}`;
   }
 }
 
@@ -327,7 +340,41 @@ function updateResultsCount(count) {
 document.addEventListener("DOMContentLoaded", () => {
   initFilterModal();
   initPreviewModal();
+  initDesktopTabs();
 });
+
+// Initialize desktop tabs
+function initDesktopTabs() {
+  const desktopTabs = document.querySelectorAll(
+    ".wiertla-categories__tabs.desktop .wiertla-categories__tab"
+  );
+
+  // Add click event listener to each tab
+  desktopTabs.forEach((tab) => {
+    tab.addEventListener("click", function () {
+      // Remove active class from all tabs
+      desktopTabs.forEach((t) => t.classList.remove("active"));
+
+      // Add active class to clicked tab
+      this.classList.add("active");
+
+      // Get the tab text to use as a filter
+      const tabText = this.textContent.trim();
+
+      // Set the filter state based on the tab
+      if (tabText.includes("PŁYTKI")) {
+        filterState.type = "plate";
+      } else if (tabText.includes("KORONKI")) {
+        filterState.type = "crown";
+      } else if (tabText.includes("REGENERACJA")) {
+        filterState.type = "regeneration";
+      }
+
+      // Apply filters to update the table
+      applyFilters();
+    });
+  });
+}
 
 // Make functions available globally
 window.openFilterModal = function () {

@@ -1,6 +1,6 @@
-{% comment %}
-  Wiertla Banner Component
-  A banner with image and overlay text for the Wiertla CNC Shopify theme.
+{% comment %} 
+    Wiertla Banner Component
+    A banner with image and overlay text for the Wiertla CNC Shopify theme. 
 {% endcomment %}
 
 {% assign section_id = section.id %}
@@ -15,77 +15,77 @@
 </div>
 
 {% schema %}
-{
-  "name": "Wiertla Banner",
-  "settings": [
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "NOWE • UŻYWANE • POTESTOWE"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Title",
-      "default": "Markowe wiertła CNC w super cenie"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Wiertla Banner",
-      "category": "Custom Sections"
-    }
-  ]
-}
+  {
+    "name": "Wiertla Banner",
+    "settings": [
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subtitle",
+        "default": "NOWE • UŻYWANE • POTESTOWE"
+      }, {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Markowe wiertła CNC w super cenie"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Wiertla Banner",
+        "category": "Custom Sections"
+      }
+    ]
+  }
 {% endschema %}
 
 {% stylesheet %}
-.wiertla-banner {
-  max-width: 1420px;
-  margin: 0 auto;
-}
-
-.wiertla-banner__text {
-  font-family: 'League Spartan', sans-serif;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 16.6px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #112832;
-  padding-top: 56px;
-}
-
-.wiertla-banner__title {
-  font-family: "League Spartan";
-  font-size: 144px;
-  font-weight: 700;
-  line-height: 100%;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  padding-top: 30px;
-}
-
-@media (max-width: 1024px) {
-  .wiertla-banner__title {
-    font-size: 72px;
-  }
-}
-
-@media (max-width: 768px) {
-  .wiertla-banner__title {
-    font-size: 48px;
-  }
-  
   .wiertla-banner {
-    padding: 0 15px;
+    max-width: 1420px;
+    margin: 0 auto;
   }
-  .header__nav-links {
-    padding: 0;
+
+  .wiertla-banner__text {
+    font-family: 'League Spartan'
+    , sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 16.6px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #112832;
+    padding-top: 30px;
   }
-  .header__nav-links a {
-    text-decoration: underline;
+
+  .wiertla-banner__title {
+    font-family: "League Spartan";
+    font-size: 144px;
+    font-weight: 700;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    padding-top: 30px;
   }
-}
-{% endstylesheet %} 
+
+  @media (max-width: 1024px) {
+    .wiertla-banner__title {
+      font-size: 72px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .wiertla-banner__title {
+      font-size: 48px;
+    }
+
+    .wiertla-banner {
+      padding: 0 15px;
+    }
+    .header__nav-links {
+      padding: 0;
+    }
+    .header__nav-links a {
+      text-decoration: underline;
+    }
+  }
+{% endstylesheet %}

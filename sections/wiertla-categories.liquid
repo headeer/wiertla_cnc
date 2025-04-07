@@ -1,6 +1,6 @@
 {% comment %} 
-                                                                                  Wiertla Categories Component
-                                                                                  A component to display product categories and search functionality for the Wiertla CNC Shopify theme. 
+                                                                                                                                                                                                              Wiertla Categories Component
+                                                                                                                                                                                                              A component to display product categories and search functionality for the Wiertla CNC Shopify theme. 
 {% endcomment %}
 {{ 'wiertla-categories.css' | asset_url | stylesheet_tag }}
 {{ 'wiertla-filter-modal.css' | asset_url | stylesheet_tag }}
@@ -39,7 +39,7 @@
 
       <div class="wiertla-categories__status-filters--mobile">
         <button class="wiertla-categories__status-filter active" data-translate="wiertla_categories.status_filters.new">Nowe</button>
-        <button class="wiertla-categories__status-filter" data-translate="wiertla_categories.status_filters.used">Używane</button>
+        <button class="wiertla-categories__status-filter wider" data-translate="wiertla_categories.status_filters.used">Używane</button>
       </div>
       <div class="wiertla-categories__icons mobile">
         <div class="wiertla-categories__icon-item" data-category="wszystkie">
@@ -104,7 +104,7 @@
           <!-- New Status Filters -->
           <div class="wiertla-categories__status-filters desktop">
             <button class="wiertla-categories__status-filter active" data-translate="wiertla_categories.status_filters.new">Nowe</button>
-            <button class="wiertla-categories__status-filter" data-translate="wiertla_categories.status_filters.used">Używane</button>
+            <button class="wiertla-categories__status-filter wider" data-translate="wiertla_categories.status_filters.used">Używane</button>
           </div>
 
           <!-- Filter button -->
@@ -2073,16 +2073,20 @@
       border: 1px solid #E2E2E7;
       border-radius: 20px;
       background: transparent;
-      font-family: 'Montserrat'
+      font-family: "League Spartan"
       , sans-serif;
-      font-size: 14px;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 16.6px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       color: #112832;
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
     .wiertla-categories__status-filter.active {
-      border-color: #112832;
+      border: 2px solid #112832;
     }
 
     /* Layout styles for the two-column structure */
@@ -2200,9 +2204,11 @@
     }
 
     .wiertla-categories__table-row:hover {
-      background-color: #e5e5ed;
+      background-color: #112832;
     }
-
+    .wiertla-categories__table-row:hover td {
+      color: #F5F5F8
+    }
     .wiertla-categories__table-row:hover::after {
       content: "";
       position: absolute;
@@ -2211,14 +2217,14 @@
       transform: translateY(-50%);
       width: 24px;
       height: 24px;
-      background-image: url("{{ 'table_arrow.svg' | asset_url }}");
+      background-image: url("{{ 'table_arrow_right_yellow.svg' | asset_url }}");
       background-repeat: no-repeat;
       background-position: center;
       z-index: 5;
     }
 
     .wiertla-categories__table td {
-      padding: 10px 17px;
+      padding: 5.5px 17px;
       min-height: 34px;
       line-height: normal;
       vertical-align: middle;
@@ -2458,7 +2464,12 @@
       border-radius: 10px;
       box-sizing: border-box;
     }
-
+    .wiertla-categories__icon-item span {
+      text-decoration: underline;
+    }
+    .wiertla-categories__icon-item.active span {
+      text-decoration: none;
+    }
     .wiertla-categories__icon-item:hover {
       background-color: #F5F5F8;
     }
@@ -2515,15 +2526,21 @@
       height: 40px;
       border: 2px solid #E2E2E7;
       border-radius: 30px;
-      padding: 0 20px;
+      padding: 0 30px 0 20px;
       font-family: 'Montserrat'
       , sans-serif;
       font-weight: 500;
-      font-size: 14px;
-      line-height: 14px;
+      font-size: 18px;
+      line-height: 18px;
       color: #112832;
       background: #FFFFFF;
       cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5' viewBox='0 0 10 5' fill='none'%3E%3Cpath d='M5 5L0 0H10L5 5Z' fill='%235F6368'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 10px 5px;
     }
 
     .wiertla-categories__filter-button {
@@ -2534,8 +2551,8 @@
       font-family: 'Montserrat'
       , sans-serif;
       font-weight: 500;
-      font-size: 14px;
-      line-height: 14px;
+      font-size: 18px;
+      line-height: 18px;
       color: #112832;
       background: #FFFFFF;
       cursor: pointer;
@@ -2552,8 +2569,8 @@
       font-family: 'Montserrat'
       , sans-serif;
       font-weight: 500;
-      font-size: 14px;
-      line-height: 14px;
+      font-size: 16px;
+      line-height: 22px;
       color: #445D68;
     }
 
@@ -2572,9 +2589,9 @@
       border-radius: 30px;
       font-family: 'Montserrat'
       , sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 14px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 18px;
       color: #112832;
       background: #FFFFFF;
       cursor: pointer;
@@ -2659,12 +2676,17 @@
       font-family: 'League Spartan'
       , sans-serif;
       font-weight: 700;
+      text-transform: uppercase;
+      flex-direction: row-reverse;
       font-size: 18px;
       line-height: 16.6px;
       letter-spacing: 0.06em;
       color: #112832;
       cursor: pointer;
       transition: all 0.3s ease;
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
     }
 
     .wiertla-categories__fullscreen-btn:hover {
@@ -2807,51 +2829,100 @@
     }
 
     /* Fullscreen mode styles */
-    .wiertla-categories__fullscreen-mode {
+    .wiertla-categories__fullscreen-view {
       display: none;
+    }
+
+    .wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-view {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: #FFFFFF;
+      background: white;
       z-index: 1000;
-      padding: 40px;
       overflow-y: auto;
-    }
-
-    .wiertla-categories__fullscreen-mode.active {
+      padding: 40px;
       display: block;
     }
 
-    .wiertla-categories__fullscreen-header {
+    .wiertla-categories__fullscreen-mode .wiertla-categories__content {
+      display: none;
+    }
+
+    .wiertla-categories__fullscreen-header,
+    .wiertla-categories__fullscreen-title,
+    .wiertla-categories__fullscreen-filters,
+    .wiertla-categories__fullscreen-layout,
+    .wiertla-categories__fullscreen-left,
+    .wiertla-categories__fullscreen-right {
+      display: none;
+    }
+
+    .wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 40px;
     }
 
-    .wiertla-categories__fullscreen-title h2 {
+    .wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-title {
+      max-width: 600px;
+      display: block;
+    }
+
+    .wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-filters {
+      margin-bottom: 40px;
+      display: block;
+    }
+
+    .wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-layout {
+      display: flex;
+      gap: 40px;
+    }
+
+    .wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-left {
+      width: 425px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-right {
+      flex: 1;
+      display: block;
+    }
+
+    .wiertla-categories__fullscreen-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 17px;
+      background: #FFE500;
+      border: 2px solid #112832;
+      border-radius: 30px;
       font-family: 'League Spartan'
       , sans-serif;
       font-weight: 700;
+      text-transform: uppercase;
       font-size: 18px;
       line-height: 16.6px;
+      margin-bottom: 20px;
       letter-spacing: 0.06em;
-      text-transform: uppercase;
       color: #112832;
-      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
     }
 
-    .wiertla-categories__fullscreen-title p {
-      font-family: 'Montserrat'
-      , sans-serif;
-      font-weight: 500;
-      font-size: 16px;
-      line-height: 22px;
-      letter-spacing: 0.03em;
-      color: #112832;
-      max-width: 510px;
+    .wiertla-categories__fullscreen-btn:hover {
+      background: #FFD500;
+    }
+
+    .wiertla-categories__fullscreen-icon {
+      width: 24px;
+      height: 24px;
     }
 
     .wiertla-categories__fullscreen-close {
@@ -3947,20 +4018,28 @@
       font-family: 'Montserrat'
       , sans-serif;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 700;
       color: #112832;
       background: white;
       cursor: pointer;
       transition: all 0.3s ease;
+    }
+    .wiertla-categories__status-filter.wider {
+      width: 150px;
+    }
+    .wiertla-categories__status-filter.active {
+
+      background: #F5F5F8;
+
     }
     @media screen and (max-width: 768px) {
       .wiertla-categories__status-filter {
         max-width: 100px;
       }
     }
-    .wiertla-categories__status-filter.active {
-      border-color: #E2E2E7;
+    .wiertla-categories__status-filters--mobile .wiertla-categories__status-filter.active {
       background: #F5F5F8;
+      border: 2px solid #112832;
     }
 
     @media screen and (max-width: 768px) {
@@ -4191,6 +4270,22 @@
       });
     }
   });
+  
+  function updateResultsCount() {
+      const tableBody = document.querySelector('#productsTableBody');
+      if (!tableBody) return;
+      
+      const allRows = tableBody.querySelectorAll('tr');
+      const totalRows = allRows.length;
+      const visibleRows = document.querySelectorAll('#productsTableBody tr:not([style*="display: none"])').length;
+      
+      const resultsCount = document.querySelector('.wiertla-categories__results-count');
+      const resultsNumbers = document.querySelector('#resultsCount');
+      
+      if (resultsCount && resultsNumbers) {
+        resultsNumbers.textContent = `${visibleRows} z ${totalRows}`;
+      }
+    }
 </script>
 
 <!-- Mobile Preview Modal -->
@@ -4256,4 +4351,276 @@
       </a>
     </div>
   </div>
-</div></div>
+</div>
+
+<div class="wiertla-categories__fullscreen-view" style="display: none;">
+  <div class="wiertla-categories__fullscreen-header">
+    <div class="wiertla-categories__fullscreen-title">
+      <h2>Przeglądaj wiertła w tabeli</h2>
+      <p>Stale poszerzamy stan magazynowy, aktualizując ofertę o nowe modele wierteł CNC</p>
+    </div>
+    <button class="wiertla-categories__fullscreen-btn">
+      <img
+        src="{{ 'zoom_out_map.svg' | asset_url }}"
+        alt="Close fullscreen"
+        class="wiertla-categories__fullscreen-icon">
+      <span>Zamknij tryb pełnoekranowy</span>
+    </button>
+  </div>
+
+  <div class="wiertla-categories__fullscreen-filters">
+    {% render 'wiertla-categories-filters' %}
+  </div>
+
+  <div class="wiertla-categories__fullscreen-content">
+    <div class="wiertla-categories__fullscreen-layout">
+      <div class="wiertla-categories__fullscreen-left">
+        {% render 'wiertla-categories-search' %}
+      </div>
+      <div class="wiertla-categories__fullscreen-right">
+        {% render 'wiertla-categories-table' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .wiertla-categories__fullscreen-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 40px;
+  }
+
+  .wiertla-categories__fullscreen-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+  }
+
+  .wiertla-categories__fullscreen-title {
+    max-width: 600px;
+  }
+
+  .wiertla-categories__fullscreen-title h2 {
+    font-family: 'League Spartan'
+    , sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.2;
+    color: #112832;
+    margin-bottom: 16px;
+  }
+
+  .wiertla-categories__fullscreen-title p {
+    font-family: 'Montserrat'
+    , sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #5D7077;
+  }
+
+  .wiertla-categories__fullscreen-filters {
+    margin-bottom: 40px;
+  }
+
+  .wiertla-categories__fullscreen-layout {
+    display: flex;
+    gap: 40px;
+  }
+
+  .wiertla-categories__fullscreen-left {
+    width: 425px;
+    flex-shrink: 0;
+  }
+
+  .wiertla-categories__fullscreen-right {
+    flex: 1;
+  }
+
+  .wiertla-categories__fullscreen-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 17px;
+    background: #FFE500;
+    border: 2px solid #112832;
+    border-radius: 30px;
+    font-family: 'League Spartan'
+    , sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 18px;
+    line-height: 16.6px;
+    letter-spacing: 0.06em;
+    color: #112832;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .wiertla-categories__fullscreen-btn:hover {
+    background: #FFD500;
+  }
+
+  .wiertla-categories__fullscreen-icon {
+    width: 24px;
+    height: 24px;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Status filter functionality
+    const statusFilters = document.querySelectorAll('.wiertla-categories__status-filters.desktop .wiertla-categories__status-filter');
+    const tableRows = document.querySelectorAll('#productsTableBody tr');
+  
+    statusFilters.forEach(filter => {
+      filter.addEventListener('click', function(e) {
+        // If this filter is already active, prevent the click
+        if (this.classList.contains('active')) {
+          e.preventDefault();
+          return;
+        }
+  
+        // Remove active class from all filters
+        statusFilters.forEach(f => f.classList.remove('active'));
+        
+        // Add active class to clicked filter
+        this.classList.add('active');
+  
+        const filterValue = this.textContent.trim().toLowerCase();
+        
+        // Filter table rows based on status
+        tableRows.forEach(row => {
+          const statusCell = row.querySelector('td[data-status]');
+          if (statusCell) {
+            const rowStatus = statusCell.getAttribute('data-status').toLowerCase();
+            if (filterValue === 'wszystkie' || rowStatus === filterValue) {
+              row.style.display = '';
+            } else {
+              row.style.display = 'none';
+            }
+          }
+        });
+  
+        // Update results count
+        updateResultsCount();
+      });
+    });
+  
+    // Function to update results count
+    function updateResultsCount() {
+      const tableBody = document.querySelector('#productsTableBody');
+      if (!tableBody) return;
+      
+      const allRows = tableBody.querySelectorAll('tr');
+      const totalRows = allRows.length;
+      const visibleRows = document.querySelectorAll('#productsTableBody tr:not([style*="display: none"])').length;
+      
+      const resultsCount = document.querySelector('.wiertla-categories__results-count');
+      const resultsNumbers = document.querySelector('#resultsCount');
+      
+      if (resultsCount && resultsNumbers) {
+        resultsNumbers.textContent = `${visibleRows} z ${totalRows}`;
+      }
+    }
+  
+    // Initial results count
+    updateResultsCount();
+  
+    // Fullscreen view functionality
+    const fullscreenBtns = document.querySelectorAll('.wiertla-categories__fullscreen-btn');
+    const fullscreenView = document.querySelector('.wiertla-categories__fullscreen-view');
+    const mainContent = document.querySelector('.wiertla-categories__content');
+  
+    fullscreenBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Toggle fullscreen view
+        if (fullscreenView.style.display === 'none') {
+          fullscreenView.style.display = 'block';
+          mainContent.style.display = 'none';
+          document.body.classList.add('wiertla-categories__fullscreen-mode');
+          document.body.style.overflow = 'hidden';
+        } else {
+          fullscreenView.style.display = 'none';
+          mainContent.style.display = 'flex';
+          document.body.classList.remove('wiertla-categories__fullscreen-mode');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+  });
+  const desktopTabs = document.querySelectorAll('.wiertla-categories__tabs.desktop .wiertla-categories__tab');
+  
+  // Add click event listener to each tab
+  desktopTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      // Remove active class from all tabs
+      desktopTabs.forEach(t => t.classList.remove('active'));
+      
+      // Add active class to clicked tab
+      this.classList.add('active');
+      
+      // Get the tab text to use as a filter
+      const tabText = this.textContent.trim();
+      
+      // Set the filter state based on the tab
+      if (tabText.includes('PŁYTKI')) {
+        filterState.type = 'plate';
+      } else if (tabText.includes('KORONKI')) {
+        filterState.type = 'crown';
+      } else if (tabText.includes('REGENERACJA')) {
+        filterState.type = 'regeneration';
+      }
+      
+      // Apply filters to update the table
+      applyFilters();
+    });
+  });
+</script>
+
+<style>
+  /* Hide icons in fullscreen view */
+  .wiertla-categories__fullscreen-view .wiertla-categories__icons {
+    display: none !important;
+  }
+
+  /* Update fullscreen button styles */
+  .wiertla-categories__fullscreen-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 17px;
+    background: #FFE500;
+    border: 2px solid #112832;
+    border-radius: 30px;
+    font-family: 'League Spartan'
+    , sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin-bottom: 20px;
+    line-height: 16.6px;
+    letter-spacing: 0.06em;
+    color: #112832;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  .wiertla-categories__fullscreen-header .wiertla-categories__fullscreen-btn {
+    width: auto;
+
+  }
+</style>

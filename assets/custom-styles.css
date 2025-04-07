@@ -109,7 +109,6 @@ a:hover {
 }
 .wiertla-banner__title {
   font-size: 1.8rem;
-  margin-bottom: 1rem;
 }
 @media (min-width: 768px) {
   .wiertla-banner__title {

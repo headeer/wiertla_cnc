@@ -20,6 +20,10 @@
 {{ 'product-details.css' | asset_url | stylesheet_tag }}
 
 <style>
+  .wiertla-stats.second_stats {
+    background-color: #F5F5F8;
+  }
+
   .product-image {
     width: 50%;
     height: 100%;
@@ -47,9 +51,7 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    padding: 40px;
     background: white;
-    border-radius: 60px;
     position: relative;
     overflow: hidden;
   }
@@ -63,10 +65,13 @@
   }
 
   .product-details__spec-label {
-    font-family: 'Montserrat'
+    font-family: 'League Spartan'
     , sans-serif;
-    font-size: 1em;
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 16.6px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: #112832;
     width: 50%;
   }
@@ -74,9 +79,36 @@
   .product-details__spec-value {
     font-family: 'Montserrat'
     , sans-serif;
-    font-size: 1em;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.03em;
     color: #112832;
     width: 50%;
+  }
+
+  /* Breadcrumbs styling */
+  .product-breadcrumbs {
+    font-family: 'Montserrat'
+    , sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.01em;
+    margin-bottom: 20px;
+    padding: 15px 0;
+  }
+
+  .product-breadcrumbs__link {
+    color: #112832;
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-decoration-offset: 0;
+    text-decoration-thickness: 0;
+  }
+
+  .product-breadcrumbs__current {
+    color: #112832;
   }
 
   @media screen and (max-width: 768px) {
@@ -183,7 +215,7 @@
             {%- if product.vendor != blank -%}
               <!-- Manufacturer -->
               <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation="mainProductHorizontalGallery.productBrand">Producent</div>
+                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.productBrand">Producent</div>
                 <div class="product-details__spec-value">{{ product.vendor }}</div>
               </div>
               <div class="product-details__divider"></div>
@@ -192,7 +224,7 @@
             {%- if product.metafields.custom.diameter.value != blank -%}
               <!-- Diameter -->
               <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation="mainProductHorizontalGallery.diameter">średnica</div>
+                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.diameter">średnica</div>
                 <div class="product-details__spec-value">
                   <span>⌀</span>
                   <span>{{ product.metafields.custom.diameter.value }}</span>
@@ -204,7 +236,7 @@
             {%- if product.metafields.custom.length.value != blank -%}
               <!-- Working Length -->
               <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation="mainProductHorizontalGallery.workingLength">Długość robocza</div>
+                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.workingLength">Długość robocza</div>
                 <div class="product-details__spec-value">{{ product.metafields.custom.length.value }}</div>
               </div>
               <div class="product-details__divider"></div>
@@ -212,15 +244,15 @@
 
             <!-- Condition -->
             <div class="product-details__spec-item">
-              <div class="product-details__spec-label" data-translation="mainProductHorizontalGallery.condition">Stan</div>
-              <div class="product-details__spec-value" data-translation="mainProductHorizontalGallery.new">Nowe</div>
+              <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.condition">Stan</div>
+              <div class="product-details__spec-value" data-translation-key="mainProductHorizontalGallery.new">Nowe</div>
             </div>
             <div class="product-details__divider"></div>
 
             {%- if product.metafields.custom.symbol.value != blank -%}
               <!-- Our Number -->
               <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation="mainProductHorizontalGallery.ourNumber">Nasz numer</div>
+                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.ourNumber">Nasz numer</div>
                 <div class="product-details__spec-value">{{ product.metafields.custom.symbol.value }}</div>
               </div>
               <div class="product-details__divider"></div>
@@ -228,7 +260,7 @@
 
             <!-- Mounting -->
             <div class="product-details__spec-item">
-              <div class="product-details__spec-label" data-translation="mainProductHorizontalGallery.mounting">Mocowanie</div>
+              <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.mounting">Mocowanie</div>
               <div class="product-details__spec-value">
                 {%- if product.metafields.custom.mounting.value != blank -%}
                   {{ product.metafields.custom.mounting.value }}
@@ -241,22 +273,22 @@
 
             <!-- Cooling -->
             <div class="product-details__spec-item">
-              <div class="product-details__spec-label" data-translation="mainProductHorizontalGallery.cooling">Chłodzenie</div>
-              <div class="product-details__spec-value">IK</div>
+              <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.cooling">Chłodzenie</div>
+              <div class="product-details__spec-value" data-translation-key="mainProductHorizontalGallery.withCooling">Z chłodzeniem</div>
             </div>
             <div class="product-details__divider"></div>
 
             <!-- Notes -->
             <div class="product-details__spec-item">
-              <div class="product-details__spec-label" data-translation="mainProductHorizontalGallery.notes">Uwagi</div>
-              <div class="product-details__spec-value" data-translation="mainProductHorizontalGallery.withCooling">Z chłodzeniem</div>
+              <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.notes">Uwagi</div>
+              <div class="product-details__spec-value">{{ product.metafields.custom.notes }}</div>
             </div>
             <div class="product-details__divider"></div>
 
             {%- if product.price != blank -%}
               <!-- Net Price -->
               <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation="mainProductHorizontalGallery.netPrice">cena netto</div>
+                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.netPrice">cena netto</div>
                 <div class="product-details__spec-value">{{ product.price | money_without_trailing_zeros }}</div>
               </div>
             {%- endif -%}
@@ -267,7 +299,7 @@
           <!-- Quantity and Add to Cart Section -->
           <section class="product-details__actions">
             <div class="product-details__quantity">
-              <div class="product-details__quantity-label" data-translation="mainProductHorizontalGallery.quantity">ilość</div>
+              <div class="product-details__quantity-label" data-translation-key="mainProductHorizontalGallery.quantity">ilość</div>
               <div class="product-details__quantity-input">
                 <input
                   type="number"
@@ -316,7 +348,7 @@
                 class="product-details__add-to-cart"
                 {% if current_variant.available == false %}
                 disabled{% endif %}>
-                <span data-translation="mainProductHorizontalGallery.addToCart">DO KOSZYKA</span>
+                <span data-translation-key="mainProductHorizontalGallery.addToCart">DO KOSZYKA</span>
                 <img
                   src="{{ 'shopping_cart.svg' | asset_url }}"
                   alt="Cart"
@@ -337,10 +369,10 @@
                     src="{{ 'truck_icon.svg' | asset_url }}"
                     alt="Delivery"
                     class="delivery-icon">
-                  <div class="product-details__delivery-label" data-translation="mainProductHorizontalGallery.deliveryTime">Czas dostawy</div>
+                  <div class="product-details__delivery-label" data-translation-key="mainProductHorizontalGallery.deliveryTime">Czas dostawy</div>
                 </div>
                 <div class="product-details__delivery-value">2-3
-                  <span data-translation="mainProductHorizontalGallery.days">dni robocze</span>
+                  <span data-translation-key="mainProductHorizontalGallery.days">dni robocze</span>
                 </div>
               </div>
             {%- endif -%}
@@ -348,7 +380,7 @@
             {%- if section.settings.show_contact_info -%}
               <!-- Contact Information -->
               <div class="product-details__contact-info">
-                <div class="product-details__contact-title" data-translation="mainProductHorizontalGallery.contactTitle">Chcesz wypożyczyć? masz pytania? Skontaktuj się</div>
+                <div class="product-details__contact-title" data-translation-key="contactTitle">Chcesz wypożyczyć? masz pytania? Skontaktuj się</div>
                 <div class="product-details__contact-methods">
                   <a href="tel:+48600673736" class="product-details__contact-link">
                     <img
@@ -442,10 +474,7 @@
     <div class="swiper-navigation">
       <div class="swiper-button-prev"></div>
       <div class="pagination-container">
-        {% assign total_slides = all_products.size %}
-        {% if total_slides > 5 %}
-          {% assign total_slides = 5 %}{% endif %}
-        {% for i in (1..total_slides) %}
+        {% for i in (1..3) %}
           <div class="pagination-bar {% if forloop.first %}pagination-active{% else %}pagination-inactive{% endif %}" data-index="{{ forloop.index0 }}"></div>
         {% endfor %}
       </div>
@@ -455,12 +484,48 @@
 </div>
 
 
-<!-- Wiertla Stats Section -->
-<section class="wiertla-stats">
+<!-- Wiertla Stats Module -->
+<div class="wiertla-stats">
   <div class="wiertla-stats__container">
-    <h2 class="wiertla-stats__title" data-translation="mainProductHorizontalGallery.wiertlaStatsTitle">Czym są płytki do wierteł CNC?</h2>
+    <div class="wiertla-stats__item">
+      <img
+        src="{{ 'image-36.png' | asset_url }}"
+        alt="Wiertła"
+        class="wiertla-stats__icon">
+      <div class="wiertla-stats__content">
+        <div class="wiertla-stats__title" data-translate="wiertla_stats.tools_title">999+ WIERTEŁ CNC</div>
+        <div class="wiertla-stats__text" data-translate="wiertla_stats.tools_text">Ponad 1000 wierteł CNC na stanie</div>
+      </div>
+    </div>
+    <div class="wiertla-stats__item">
+      <img
+        src="{{ 'image-38.png' | asset_url }}"
+        alt="Lata doświadczenia"
+        class="wiertla-stats__icon">
+      <div class="wiertla-stats__content">
+        <div class="wiertla-stats__title" data-translate="wiertla_stats.years_title">8 LAT NA RYNKU</div>
+        <div class="wiertla-stats__text" data-translate="wiertla_stats.years_text">Budujemy silną pozycję jako dostawca narzędzi CNC</div>
+      </div>
+    </div>
+    <div class="wiertla-stats__item">
+      <img
+        src="{{ 'image-24.png' | asset_url }}"
+        alt="Jakość"
+        class="wiertla-stats__icon">
+      <div class="wiertla-stats__content">
+        <div class="wiertla-stats__title" data-translate="wiertla_stats.quality_title">NAJWYŻSZA JAKOŚĆ</div>
+        <div class="wiertla-stats__text" data-translate="wiertla_stats.quality_text">Oferujemy markowe wiertła i dedykowane alternatywy</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Wiertla Stats Section -->
+<section class="wiertla-stats second_stats">
+  <div class="wiertla-stats__container">
+    <h2 class="wiertla-stats__title" data-translation-key="wiertlaStatsTitle">Czym są płytki do wierteł CNC?</h2>
     <div class="wiertla-stats__content">
-      <p class="wiertla-stats__description" data-translation="mainProductHorizontalGallery.wiertlaStatsDesc">
+      <p class="wiertla-stats__description" data-translation-key="wiertlaStatsDesc">
         <b>Płytki do wierteł CNC</b>
         to wymienne elementy skrawające, które montuje się na korpusie wiertła. Wykonane są z materiałów o wysokiej twardości, takich jak węglik spiekany, ceramika, cermet czy diament, co pozwala na precyzyjne i trwałe wiercenie w różnych materiałach, od metali, przez kompozyty, po tworzywa sztuczne.
       </p>
@@ -675,11 +740,13 @@
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
   width: 100%;
 }
-
+.second_stats .wiertla-stats__container {
+  flex-direction: column;
+}
 .wiertla-stats__title {
   font-family: 'League Spartan'
   , sans-serif;
@@ -734,6 +801,144 @@
   .wiertla-stats__description {
     font-size: 14px;
     line-height: 20px;
+  }
+}
+
+/* Category Descriptions Section */
+.category-desc {
+  padding: 60px 64px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.category-desc__title {
+  font-family: 'League Spartan'
+  , sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+  margin-bottom: 30px;
+}
+
+.category-desc__container {
+  max-width: 1420px;
+  margin: 0 auto;
+}
+
+.category-desc__columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.category-desc__column {
+  flex: 1;
+  min-width: 320px;
+  max-width: 458px;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+.category-desc__item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-desc__item.active {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.category-desc__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.category-desc__icon {
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.category-desc__name {
+  font-family: 'League Spartan'
+  , sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+.category-desc__item.active .category-desc__name {
+  text-decoration: none;
+}
+
+.category-desc__subtitle {
+  font-family: "Montserrat";
+  font-weight: 400;
+  font-size: 16px;
+  text-transform: none;
+  text-decoration: none;
+}
+
+.category-desc__text {
+  font-family: 'Montserrat'
+  , sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.03em;
+  color: #112832;
+}
+
+.category-desc__text strong {
+  font-weight: 700;
+}
+
+@media (max-width: 1910px) {
+  .category-desc__columns {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 1024px) {
+  .category-desc {
+    padding: 40px 32px;
+  }
+
+  .category-desc__column {
+    gap: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .category-desc {
+    padding: 30px 16px;
+  }
+
+  .category-desc__column {
+    min-width: 100%;
+    gap: 32px;
+  }
+
+  .category-desc__header {
+    flex-wrap: wrap;
   }
 }</style><script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -828,78 +1033,145 @@
         });
       });
     }
+
+    // Filter state management
+    const filtersContainer = document.querySelector('.wiertla-categories__filters-left');
+    if (filtersContainer) {
+      const filterGroups = filtersContainer.querySelectorAll('.wiertla-categories__filter-group');
+      const activeFilters = new Set();
+
+      function updateFilterState() {
+        const hasActiveFilters = activeFilters.size > 0;
+        const noFiltersElement = document.querySelector('.wiertla-categories__no-filters');
+        
+        if (hasActiveFilters) {
+          noFiltersElement?.classList.add('hidden');
+        } else {
+          noFiltersElement?.classList.remove('hidden');
+        }
+      }
+
+      filterGroups.forEach(group => {
+        const filterOptions = group.querySelectorAll('.wiertla-categories__filter-option');
+        
+        filterOptions.forEach(option => {
+          option.addEventListener('click', () => {
+            const filterId = option.getAttribute('data-filter-id');
+            
+            if (option.classList.contains('active')) {
+              option.classList.remove('active');
+              activeFilters.delete(filterId);
+            } else {
+              // Remove active class from other options in the same group
+              filterOptions.forEach(opt => opt.classList.remove('active'));
+              option.classList.add('active');
+              activeFilters.add(filterId);
+            }
+            
+            updateFilterState();
+          });
+        });
+      });
+
+      // Initialize filter state
+      updateFilterState();
+    }
   });
 </script><script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js" defer></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
 
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-  new Swiper('.latest-products__swiper', {
-    loop: false,
-    slidesPerView: 1,
-    spaceBetween: 20,
-    watchOverflow: true,
-    observer: true,
-    observeParents: true,
-    
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    
-    breakpoints: {
-      640: {
-        slidesPerView: 2,
+    const swiper = new Swiper('.latest-products__swiper', {
+      loop: false,
+      slidesPerView: 1,
+      spaceBetween: 20,
+      watchOverflow: true,
+      observer: true,
+      observeParents: true,
+      
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
       },
-      1024: {
-        slidesPerView: 3,
+      
+      breakpoints: {
+        640: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
+        1280: {
+          slidesPerView: 4,
+        },
+        1536: {
+          slidesPerView: 5,
+        }
       },
-      1280: {
-        slidesPerView: 4,
-      },
-      1536: {
-        slidesPerView: 5,
+      
+      on: {
+        init: function() {
+          updatePaginationBars(this.realIndex);
+          updateNavigationButtons(this);
+        },
+        slideChange: function() {
+          updatePaginationBars(this.realIndex);
+          updateNavigationButtons(this);
+        }
       }
-    },
-    
-    on: {
-      init: function() {
-        updatePaginationBars(this.realIndex);
-      },
-      slideChange: function() {
-        updatePaginationBars(this.realIndex);
+    });
+  
+    function updateNavigationButtons(swiper) {
+      const nextButton = document.querySelector('.swiper-button-next');
+      const prevButton = document.querySelector('.swiper-button-prev');
+      
+      // Disable next button if we're at the last slide
+      if (swiper.realIndex >= 2) {
+        nextButton.style.opacity = '0.35';
+        nextButton.style.pointerEvents = 'none';
+      } else {
+        nextButton.style.opacity = '1';
+        nextButton.style.pointerEvents = 'auto';
+      }
+      
+      // Disable prev button if we're at the first slide
+      if (swiper.realIndex === 0) {
+        prevButton.style.opacity = '0.35';
+        prevButton.style.pointerEvents = 'none';
+      } else {
+        prevButton.style.opacity = '1';
+        prevButton.style.pointerEvents = 'auto';
       }
     }
-  });
-
-  function updatePaginationBars(activeIndex) {
+  
+    function updatePaginationBars(activeIndex) {
+      const paginationBars = document.querySelectorAll('.pagination-bar');
+      paginationBars.forEach((bar, index) => {
+        if (index === activeIndex) {
+          bar.classList.add('pagination-active');
+          bar.classList.remove('pagination-inactive');
+        } else {
+          bar.classList.remove('pagination-active');
+          bar.classList.add('pagination-inactive');
+        }
+      });
+    }
+  
+    // Add click handlers for pagination bars
     const paginationBars = document.querySelectorAll('.pagination-bar');
     paginationBars.forEach((bar, index) => {
-      if (index === activeIndex) {
-        bar.classList.add('pagination-active');
-        bar.classList.remove('pagination-inactive');
-      } else {
-        bar.classList.add('pagination-inactive');
-        bar.classList.remove('pagination-active');
-      }
-    });
-  }
-
-  const paginationBars = document.querySelectorAll('.pagination-bar');
-  paginationBars.forEach((bar) => {
-    bar.addEventListener('click', () => {
-      const index = parseInt(bar.getAttribute('data-index'));
-      const swiper = document.querySelector('.latest-products__swiper').swiper;
-      if (swiper) {
+      bar.addEventListener('click', () => {
         swiper.slideTo(index);
-      }
+      });
     });
-  });
   });
 </script>
 {% stylesheet %}
   .wiertla-stats {
     padding: 60px 0;
+    background-color: #F5F5F8;
   }
   .swiper-wrapper {
     gap: 20px;
@@ -999,7 +1271,6 @@
     overflow: hidden;
     margin: 0;
     padding-bottom: 40px;
-    /* Add space for navigation */
   }
 
   .product-card {
@@ -1007,7 +1278,7 @@
     height: 102px;
     padding: 10px;
     margin: 0 auto;
-    /* Center cards on mobile */
+    background-color: white;
   }
 
   .product-card__top {
@@ -1109,6 +1380,7 @@
     margin-right: 4px;
     background: #FFE500;
   }
+
   .latest-products .swiper {
     margin-bottom: 0;
     padding-bottom: 40px;
@@ -1125,12 +1397,14 @@
     margin-top: 20px;
     width: 100%;
   }
+
   @media screen and (max-width: 1024px) {
     .latest-products__swiper .swiper-navigation {
       position: absolute;
       bottom: 0;
     }
   }
+
   .swiper-button-next,
   .swiper-button-prev {
     position: relative;
@@ -1233,20 +1507,32 @@
     text-align: center;
     max-width: 842px;
   }
+
   @media screen and (max-width: 1024px) {
     .rent-tools__content {
       max-width: 90vw;
     }
   }
-  .rent-tools__title {
-    font-family: "League Spartan";
+
+  .rent-tools__title-line1,
+  .rent-tools__title-line2 {
+    font-family: 'League Spartan'
+    , sans-serif;
     font-weight: 700;
     font-size: 18px;
     line-height: 16.6px;
     letter-spacing: 0.06em;
     text-align: center;
     text-transform: uppercase;
+    color: #112832;
+  }
+
+  .rent-tools__title-line1 {
     margin-bottom: 8px;
+  }
+
+  .rent-tools__title-line2 {
+    margin-bottom: 20px;
   }
 
   .rent-tools__description {
@@ -1322,7 +1608,6 @@
   }
 
   .faq__container {
-    background-color: #F5F5F8;
     padding: 60px 0;
   }
 
@@ -1456,6 +1741,15 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .category-desc__item.active {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   }
 
   .category-desc__header {
@@ -1480,6 +1774,12 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: #112832;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+  }
+
+  .category-desc__item.active .category-desc__name {
+    text-decoration: none;
   }
 
   .category-desc__subtitle {

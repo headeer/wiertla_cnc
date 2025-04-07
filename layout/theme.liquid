@@ -114,7 +114,10 @@
   {{ 'letter-spacing-rules.css' | asset_url | stylesheet_tag }}
 
     <!-- Wiertla Custom Styles -->
-    {{ 'custom-styles.css' | asset_url | stylesheet_tag }}
+  {{ 'custom-styles.css' | asset_url | stylesheet_tag }}
+
+    <!-- Wiertla Categories Global Styles -->
+    {{ 'wiertla-categories-global.css' | asset_url | stylesheet_tag }}
 
     {% if template contains 'customers' %}
       <script src="{{ "shopify_common.js" | shopify_asset_url }}" defer="defer"></script>
@@ -136,9 +139,37 @@
     {% render 'judgeme_core' %}
 
     <!-- Translation System -->
-    <script src="{{ 'translations.js' | asset_url }}" defer></script>
-    <script src="{{ 'translation-system.js' | asset_url }}" defer></script>
-    <script src="{{ 'section-translators.js' | asset_url }}" defer></script>
+    <script src="{{ 'translations.js' | asset_url }}"></script>
+    <script src="{{ 'translation-system.js' | asset_url }}"></script>
+    <script src="{{ 'section-translators.js' | asset_url }}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Ensure translations are initialized
+        if (window.WiertlaTranslator && typeof window.WiertlaTranslator.translate === 'function') {
+          window.WiertlaTranslator.translate();
+          
+          // Debug translations after a short delay to ensure everything is loaded
+          setTimeout(function() {
+            if (window.WiertlaTranslator && typeof window.WiertlaTranslator.debug === 'function') {
+              window.WiertlaTranslator.debug();
+            }
+          }, 1000);
+        }
+        
+        // Listen for language changes
+        document.addEventListener('wiertlaLanguageChanged', function() {
+          // Apply translations when language changes
+          if (window.WiertlaTranslator && typeof window.WiertlaTranslator.translate === 'function') {
+            window.WiertlaTranslator.translate();
+          }
+          
+          // Also call the section-specific translators
+          if (window.WiertlaTranslators && typeof window.WiertlaTranslators.translateMainProductHorizontalGallery === 'function') {
+            window.WiertlaTranslators.translateMainProductHorizontalGallery();
+          }
+        });
+      });
+    </script>
   </head>
 
   <body id="{{ page_title | handle }}" class="template-{{ template.name | handle }} {% if settings.buttons_show_arrow %}show-button-arrows{% endif %}">

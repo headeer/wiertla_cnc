@@ -1,6 +1,6 @@
 {% comment %} 
-                                                                                  Wiertla Stats Component
-                                                                                  A component to display stats and achievements for the Wiertla CNC Shopify theme. 
+                                                                                                                                      Wiertla Stats Component
+                                                                                                                                      A component to display stats and achievements for the Wiertla CNC Shopify theme. 
 {% endcomment %}
 
 <div class="wiertla-stats">
@@ -297,10 +297,7 @@
     <div class="swiper-navigation">
       <div class="swiper-button-prev"></div>
       <div class="pagination-container">
-        {% assign total_slides = all_products.size %}
-        {% if total_slides > 5 %}
-          {% assign total_slides = 5 %}{% endif %}
-        {% for i in (1..total_slides) %}
+        {% for i in (1..3) %}
           <div class="pagination-bar {% if forloop.first %}pagination-active{% else %}pagination-inactive{% endif %}" data-index="{{ forloop.index0 }}"></div>
         {% endfor %}
       </div>
@@ -316,6 +313,13 @@
     <div class="rent-tools__title">
       <div class="rent-tools__title-line1" data-translate="wiertla_stats.rent_tools.title">WYPOŻYCZ WIERTŁA CNC</div>
       <div class="rent-tools__title-line2" data-translate="wiertla_stats.rent_tools.subtitle">na dogodnych warunkach</div>
+    </div>
+    <div class="rent-tools__icon" style="display: flex; justify-content: center; align-items: center; margin: 20px auto;">
+      <img
+        src="{{ 'icons_rent.png' | asset_url }}"
+        alt="Rent Icon"
+        class="rent-tools__icon-image"
+        style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
     </div>
     <div class="rent-tools__description" data-translate="wiertla_stats.rent_tools.description">
       Stale podnosząc jakość i komfort korzystania z naszej oferty, umożliwiamy wypożyczenie wierteł CNC.
@@ -606,7 +610,18 @@
   flex-grow: 1;
   padding-top: 0.125rem;
 }
-
+.rent-tools__title-line1,
+.rent-tools__title-line2 {
+  font-family: 'League Spartan'
+  , sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #112832;
+}
 .nav-item {
   display: flex;
   align-items: center;
@@ -882,7 +897,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px auto 0;
+  max-width: 480px;
 }
 
 /* Swiper Navigation Styles */
@@ -1081,7 +1097,18 @@
   background-color: #F5F5F8;
   padding: 60px 0;
 }
-
+.rent-tools__title-line1,
+.rent-tools__title-line2 {
+  font-family: 'League Spartan'
+  , sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 16.6px;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #112832;
+}
 .faq__columns {
   max-width: 1420px;
   margin: 0 auto;
@@ -1361,66 +1388,88 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-  new Swiper('.latest-products__swiper', {
-    loop: false,
-    slidesPerView: 1,
-    spaceBetween: 20,
-    watchOverflow: true,
-    observer: true,
-    observeParents: true,
-    
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    
-    breakpoints: {
-      640: {
-        slidesPerView: 2,
+    const swiper = new Swiper('.latest-products__swiper', {
+      loop: false,
+      slidesPerView: 1,
+      spaceBetween: 20,
+      watchOverflow: true,
+      observer: true,
+      observeParents: true,
+      
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
       },
-      1024: {
-        slidesPerView: 3,
+      
+      breakpoints: {
+        640: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
+        1280: {
+          slidesPerView: 4,
+        },
+        1536: {
+          slidesPerView: 5,
+        }
       },
-      1280: {
-        slidesPerView: 4,
-      },
-      1536: {
-        slidesPerView: 5,
+      
+      on: {
+        init: function() {
+          updatePaginationBars(this.realIndex);
+          updateNavigationButtons(this);
+        },
+        slideChange: function() {
+          updatePaginationBars(this.realIndex);
+          updateNavigationButtons(this);
+        }
       }
-    },
-    
-    on: {
-      init: function() {
-        updatePaginationBars(this.realIndex);
-      },
-      slideChange: function() {
-        updatePaginationBars(this.realIndex);
+    });
+  
+    function updateNavigationButtons(swiper) {
+      const nextButton = document.querySelector('.swiper-button-next');
+      const prevButton = document.querySelector('.swiper-button-prev');
+      
+      // Disable next button if we're at the last slide
+      if (swiper.realIndex >= 2) {
+        nextButton.style.opacity = '0.35';
+        nextButton.style.pointerEvents = 'none';
+      } else {
+        nextButton.style.opacity = '1';
+        nextButton.style.pointerEvents = 'auto';
+      }
+      
+      // Disable prev button if we're at the first slide
+      if (swiper.realIndex === 0) {
+        prevButton.style.opacity = '0.35';
+        prevButton.style.pointerEvents = 'none';
+      } else {
+        prevButton.style.opacity = '1';
+        prevButton.style.pointerEvents = 'auto';
       }
     }
-  });
   
-  function updatePaginationBars(activeIndex) {
+    function updatePaginationBars(activeIndex) {
+      const paginationBars = document.querySelectorAll('.pagination-bar');
+      paginationBars.forEach((bar, index) => {
+        if (index === activeIndex) {
+          bar.classList.add('pagination-active');
+          bar.classList.remove('pagination-inactive');
+        } else {
+          bar.classList.remove('pagination-active');
+          bar.classList.add('pagination-inactive');
+        }
+      });
+    }
+  
+    // Add click handlers for pagination bars
     const paginationBars = document.querySelectorAll('.pagination-bar');
     paginationBars.forEach((bar, index) => {
-      if (index === activeIndex) {
-        bar.classList.add('pagination-active');
-        bar.classList.remove('pagination-inactive');
-      } else {
-        bar.classList.add('pagination-inactive');
-        bar.classList.remove('pagination-active');
-      }
-    });
-  }
-  
-  const paginationBars = document.querySelectorAll('.pagination-bar');
-  paginationBars.forEach((bar) => {
-    bar.addEventListener('click', () => {
-      const index = parseInt(bar.getAttribute('data-index'));
-      const swiper = document.querySelector('.latest-products__swiper').swiper;
-      if (swiper) {
+      bar.addEventListener('click', () => {
         swiper.slideTo(index);
-      }
+      });
     });
-  });
   });
 </script>

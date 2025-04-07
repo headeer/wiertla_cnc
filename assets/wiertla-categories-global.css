@@ -1,0 +1,56 @@
+/* Global fullscreen mode styles */
+.wiertla-categories__fullscreen-view,
+.wiertla-categories__fullscreen-header,
+.wiertla-categories__fullscreen-title,
+.wiertla-categories__fullscreen-filters,
+.wiertla-categories__fullscreen-layout,
+.wiertla-categories__fullscreen-right {
+  display: none;
+}
+.wiertla-categories__fullscreen-layout
+  .wiertla-categories__fullscreen-btn.desktop {
+  display: none;
+}
+.wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 40px;
+  display: block;
+}
+
+.wiertla-categories__fullscreen-mode .wiertla-categories__content {
+  display: none;
+}
+
+.wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-title {
+  max-width: 600px;
+  display: block;
+}
+
+.wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-filters {
+  margin-bottom: 40px;
+  display: block;
+}
+
+.wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-layout {
+  display: flex;
+  gap: 40px;
+}
+
+.wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-right {
+  flex: 1;
+  display: block;
+}
