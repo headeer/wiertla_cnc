@@ -3,7 +3,7 @@
   assign products_per_row_mobile = block.settings.products_per_row_mobile | plus: 0
 -%}
 
-{%- if recommendations.performed and recommendations.products_count > 0 -%}
+{% comment %} {%- if recommendations.performed and recommendations.products_count > 0 -%}
   <div class="product-recommendations product-recommendations--font-{{ block.settings.heading_text_style }} mt-8" {{ block.shopify_attributes }}>
     <div class="product-recommendations-container border-b-grid border-grid-color -mx-2 lg:-mx-4{% if block.settings.heading_text_style == 'heading' %} border-t-grid{% endif %}">
       {%- if block.settings.heading != '' -%}
@@ -47,4 +47,4 @@
     data-section-type="product-recommendations"
     data-request-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ block.settings.product_list_limit }}&intent=complementary"
   ></div>
-{%- endif -%}
+{%- endif -%} {% endcomment %}
