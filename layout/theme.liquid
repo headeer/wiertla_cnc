@@ -119,6 +119,9 @@
     <!-- Wiertla Categories Global Styles -->
     {{ 'wiertla-categories-global.css' | asset_url | stylesheet_tag }}
 
+    <!-- Wiertla Desktop Modals Styles -->
+    {{ 'wiertla-modals-desktop.css' | asset_url | stylesheet_tag }}
+
     {% if template contains 'customers' %}
       <script src="{{ "shopify_common.js" | shopify_asset_url }}" defer="defer"></script>
     {% endif %}

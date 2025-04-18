@@ -13,23 +13,58 @@ document.addEventListener("DOMContentLoaded", function () {
     const rows = tableBody.querySelectorAll("tr");
     searchTerm = searchTerm.toLowerCase();
 
+    // Get current filter values
+    const activeCategory = document.querySelector('.wiertla-categories__icons > div.active')?.dataset.category || 'all';
+    const activeType = document.querySelector('.wiertla-categories__filters-left [data-filter="type"].active')?.dataset.value || 'all';
+    const activeStatus = document.querySelector('.wiertla-categories__filters-left [data-filter="status"].active')?.dataset.value || 'all';
+    const activeCrown = document.querySelector('.wiertla-categories__filters-left [data-filter="crown"].active')?.dataset.value || 'all';
+    const activeManufacturer = document.querySelector('.wiertla-categories__filters-left [data-filter="manufacturer"].active')?.dataset.value || 'all';
+
     rows.forEach((row) => {
-      const fi =
-        row.querySelector("td:nth-child(1)")?.textContent.toLowerCase() || "";
-      const name =
-        row.querySelector("td:nth-child(2)")?.textContent.toLowerCase() || "";
-      const symbol =
-        row.querySelector("td:nth-child(3)")?.textContent.toLowerCase() || "";
-      const manufacturer =
-        row.querySelector("td:nth-child(4)")?.textContent.toLowerCase() || "";
+      const type = row.querySelector("td:nth-child(1)")?.textContent.toLowerCase() || "";
+      const fi = row.querySelector("td:nth-child(2)")?.textContent.toLowerCase() || "";
+      const length = row.querySelector("td:nth-child(3)")?.textContent.toLowerCase() || "";
+      const symbol = row.querySelector("td:nth-child(4)")?.textContent.toLowerCase() || "";
+      const manufacturer = row.querySelector("td:nth-child(5)")?.textContent.toLowerCase() || "";
+      const price = row.querySelector("td:nth-child(6)")?.textContent.toLowerCase() || "";
 
-      const matches =
+      // Check if row matches search term
+      const matchesSearch = searchTerm === "" || 
+        type.includes(searchTerm) ||
         fi.includes(searchTerm) ||
-        name.includes(searchTerm) ||
+        length.includes(searchTerm) ||
         symbol.includes(searchTerm) ||
-        manufacturer.includes(searchTerm);
+        manufacturer.includes(searchTerm) ||
+        price.includes(searchTerm);
 
-      row.style.display = matches ? "" : "none";
+      // Check if row matches category filter
+      const matchesCategory = activeCategory === 'all' || 
+        row.dataset.category === activeCategory;
+
+      // Check if row matches type filter
+      const matchesType = activeType === 'all' || 
+        type === activeType.toLowerCase();
+
+      // Check if row matches status filter
+      const matchesStatus = activeStatus === 'all' || 
+        (activeStatus === 'rentable' && row.dataset.status === 'true') ||
+        (activeStatus === 'non-rentable' && row.dataset.status === 'false');
+
+      // Check if row matches crown filter
+      const matchesCrown = activeCrown === 'all' || 
+        row.dataset.crown === activeCrown;
+
+      // Check if row matches manufacturer filter
+      const matchesManufacturer = activeManufacturer === 'all' || 
+        manufacturer === activeManufacturer.toLowerCase();
+
+      // Show row only if it matches all active filters and search term
+      row.style.display = matchesSearch && 
+        matchesCategory && 
+        matchesType && 
+        matchesStatus && 
+        matchesCrown && 
+        matchesManufacturer ? "" : "none";
     });
 
     // Update results count
@@ -92,17 +127,19 @@ document.addEventListener("DOMContentLoaded", function () {
       const suggestions = new Set();
 
       rows.forEach((row) => {
-        const fi = row.querySelector("td:nth-child(1)")?.textContent || "";
-        const name = row.querySelector("td:nth-child(2)")?.textContent || "";
-        const symbol = row.querySelector("td:nth-child(3)")?.textContent || "";
-        const manufacturer =
-          row.querySelector("td:nth-child(4)")?.textContent || "";
+        const type = row.querySelector("td:nth-child(1)")?.textContent || "";
+        const fi = row.querySelector("td:nth-child(2)")?.textContent || "";
+        const length = row.querySelector("td:nth-child(3)")?.textContent || "";
+        const symbol = row.querySelector("td:nth-child(4)")?.textContent || "";
+        const manufacturer = row.querySelector("td:nth-child(5)")?.textContent || "";
+        const price = row.querySelector("td:nth-child(6)")?.textContent || "";
 
+        if (type.toLowerCase().includes(searchTerm)) suggestions.add(type);
         if (fi.toLowerCase().includes(searchTerm)) suggestions.add(fi);
-        if (name.toLowerCase().includes(searchTerm)) suggestions.add(name);
+        if (length.toLowerCase().includes(searchTerm)) suggestions.add(length);
         if (symbol.toLowerCase().includes(searchTerm)) suggestions.add(symbol);
-        if (manufacturer.toLowerCase().includes(searchTerm))
-          suggestions.add(manufacturer);
+        if (manufacturer.toLowerCase().includes(searchTerm)) suggestions.add(manufacturer);
+        if (price.toLowerCase().includes(searchTerm)) suggestions.add(price);
       });
 
       // Limit to 5 suggestions

@@ -46,49 +46,63 @@
           <img
             src="{{ 'ico_big_all.svg' | asset_url }}"
             alt="Wszystkie"
-            class="wiertla-categories__icon">
+            class="wiertla-categories__icon"
+            width="24"
+            height="24">
           <span class="wiertla-categories__icon-label" data-translate="wiertla_categories.icons.all">WSZYSTKIE</span>
         </div>
         <div class="wiertla-categories__icon-item" data-category="koronkowe">
           <img
             src="{{ 'ico_big_koronkowe.svg' | asset_url }}"
             alt="Koronkowe"
-            class="wiertla-categories__icon">
+            class="wiertla-categories__icon"
+            width="24"
+            height="24">
           <span class="wiertla-categories__icon-label" data-translate="wiertla_categories.icons.crown">KORONKOWE</span>
         </div>
         <div class="wiertla-categories__icon-item" data-category="plytkowe">
           <img
             src="{{ 'ico_big_plytkowe.svg' | asset_url }}"
             alt="Płytkowe"
-            class="wiertla-categories__icon">
+            class="wiertla-categories__icon"
+            width="24"
+            height="24">
           <span class="wiertla-categories__icon-label" data-translate="wiertla_categories.icons.plate">PŁYTKOWE</span>
         </div>
         <div class="wiertla-categories__icon-item" data-category="vhm">
           <img
             src="{{ 'ico_big_vhm.svg' | asset_url }}"
             alt="VH"
-            class="wiertla-categories__icon">
+            class="wiertla-categories__icon"
+            width="24"
+            height="24">
           <span class="wiertla-categories__icon-label" data-translate="wiertla_categories.icons.vhm">VHM</span>
         </div>
         <div class="wiertla-categories__icon-item" data-category="sandvik">
           <img
             src="{{ 'ico_big_sandvik.svg' | asset_url }}"
             alt="Sandvik 880"
-            class="wiertla-categories__icon">
+            class="wiertla-categories__icon"
+            width="24"
+            height="24">
           <span class="wiertla-categories__icon-label" data-translate="wiertla_categories.icons.sandvik">SANDVIK 880</span>
         </div>
         <div class="wiertla-categories__icon-item" data-category="amec">
           <img
             src="{{ 'ico_big_amec.svg' | asset_url }}"
             alt="AMEC"
-            class="wiertla-categories__icon">
+            class="wiertla-categories__icon"
+            width="24"
+            height="24">
           <span class="wiertla-categories__icon-label" data-translate="wiertla_categories.icons.amec">AMEC</span>
         </div>
         <div class="wiertla-categories__icon-item" data-category="ksem">
           <img
             src="{{ 'ico_big_ksem.svg' | asset_url }}"
             alt="KSEM"
-            class="wiertla-categories__icon">
+            class="wiertla-categories__icon"
+            width="24"
+            height="24">
           <span class="wiertla-categories__icon-label" data-translate="wiertla_categories.icons.ksem">KSEM</span>
         </div>
 
@@ -175,8 +189,158 @@
     }, 100);
       });
     
-      // Create global API for language switching
+      // Get products from selected collection
+      var wiertlaProducts =[];
+        {% for product in selected_collection.products %}
+        wiertlaProducts.push({
+          // Basic Information
+          id: {{ product.id | json }},
+          title: {{ product.title | json }},
+          handle: {{ product.handle | json }},
+          description: {{ product.description | json }},
+          type: {{ product.type | json }},
+          vendor: {{ product.vendor | json }},
+          tags: {{ product.tags | json }},
+          published_at: {{ product.published_at | json }},
+          created_at: {{ product.created_at | json }},
+          updated_at: {{ product.updated_at | json }},
+          custom_fi: {{ product.metafields.custom.fi | json }},
+          custom_symbol: {{ product.metafields.custom.symbol | json }},
+          custom_category: {{ product.metafields.custom.category | json }},
+          custom_drill_length: {{ product.metafields.custom.drill_length | json }},
+          custom_rent: {{ product.metafields.custom.rent | json }},
+          // Pricing and Availability
+          price: {{ product.price | money_without_trailing_zeros | json }},
+          price_min: {{ product.price_min | money_without_trailing_zeros | json }},
+          price_max: {{ product.price_max | money_without_trailing_zeros | json }},
+          price_varies: {{ product.price_varies | json }},
+          compare_at_price: {{ product.compare_at_price | money_without_trailing_zeros | json }},
+          compare_at_price_min: {{ product.compare_at_price_min | money_without_trailing_zeros | json }},
+          compare_at_price_max: {{ product.compare_at_price_max | money_without_trailing_zeros | json }},
+          compare_at_price_varies: {{ product.compare_at_price_varies | json }},
+          available: {{ product.available | json }},
+          
+          // Variants
+          variants: [
+            {% for variant in product.variants %}
+              {
+                id: {{ variant.id | json }},
+                title: {{ variant.title | json }},
+                sku: {{ variant.sku | json }},
+                barcode: {{ variant.barcode | json }},
+                price: {{ variant.price | money_without_trailing_zeros | json }},
+                compare_at_price: {{ variant.compare_at_price | money_without_trailing_zeros | json }},
+                weight: {{ variant.weight | json }},
+                weight_unit: {{ variant.weight_unit | json }},
+                available: {{ variant.available | json }},
+                inventory_quantity: {{ variant.inventory_quantity | json }},
+                inventory_policy: {{ variant.inventory_policy | json }},
+                inventory_management: {{ variant.inventory_management | json }},
+                option1: {{ variant.option1 | json }},
+                option2: {{ variant.option2 | json }},
+                option3: {{ variant.option3 | json }}
+              }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+          ],
+          
+          // Options
+          options: [
+            {% for option in product.options %}
+              {
+                name: {{ option.name | json }},
+                position: {{ option.position | json }},
+                values: {{ option.values | json }}
+              }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+          ],
+          
+          // Images
+          images: [
+            {% for image in product.images %}
+              {
+                id: {{ image.id | json }},
+                src: {{ image | img_url: 'master' | json }},
+                alt: {{ image.alt | json }},
+                width: {{ image.width | json }},
+                height: {{ image.height | json }},
+                position: {{ image.position | json }}
+              }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+          ],
+          featured_image: {{ product.featured_image | img_url: 'master' | json }},
+          
+          // Metafields
+          metafields: {
+            custom: {
+              diameter: {{ product.metafields.custom.diameter.value | json }},
+              length: {{ product.metafields.custom.length.value | json }},
+              symbol: {{ product.metafields.custom.symbol.value | json }},
+              rentable: {{ product.metafields.custom.rentable.value | json }},
+              rent: {{ product.metafields.custom.rent.value | json }},
+              cooling: {{ product.metafields.custom.cooling.value | json }},
+              working_length: {{ product.metafields.custom.working_length.value | json }},
+              notes: {{ product.metafields.custom.notes.value | json }},
+              mounting: {{ product.metafields.custom.mounting.value | json }},
+              condition: {{ product.metafields.custom.condition.value | json }},
+              manufacturer: {{ product.metafields.custom.manufacturer.value | json }},
+              width: {{ product.metafields.custom.width.value | json }},
+              height: {{ product.metafields.custom.height.value | json }},
+              custom_category: {{ product.metafields.custom.custom_category.value | json }}
+            }
+          },
+          
+          // Collections
+          collections: [
+            {% for collection in product.collections %}
+              {
+                id: {{ collection.id | json }},
+                title: {{ collection.title | json }},
+                handle: {{ collection.handle | json }}
+              }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+          ]
+        });
+      {% endfor %}
+      
+      // Assign products to global WiertlaCNC object
       window.WiertlaCNC = window.WiertlaCNC || {};
+      window.WiertlaCNC.products = wiertlaProducts;
+      
+      // Define openRentModal function
+      window.WiertlaCNC.openRentModal = function(product) {
+        const modal = document.querySelector('.wiertla-categories__mobile-rent-modal');
+        if (!modal) {
+          console.error('Rent modal not found');
+          return;
+        }
+
+        // Update modal content
+        const title = modal.querySelector('.wiertla-categories__mobile-rent-title');
+        if (title) {
+          title.textContent = product.title;
+        }
+
+        // Show the modal
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        console.log(modal);
+        // Add close handler
+        const closeButton = modal.querySelector('.wiertla-categories__mobile-rent-close');
+        if (closeButton) {
+          closeButton.onclick = function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+          };
+        }
+
+        // Add click outside handler
+        modal.onclick = function(event) {
+          if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+          }
+        };
+      };
       
       // Language switcher API - This is being replaced by our new translation system
       window.WiertlaCNC.changeLanguage = function(language) {
@@ -186,29 +350,6 @@
     }
       };
       
-      // Get products from selected collection
-      var wiertlaProducts = [
-    {% for product in selected_collection.products %}
-      {
-        id: {{ product.id | json }},
-        title: {{ product.title | json }},
-        url: {{ product.url | json }},
-        type: {{ product.type | json }},
-        vendor: {{ product.vendor | json }},
-        price: {{ product.price | money_without_trailing_zeros | json }},
-        available: {{ product.available | json }},
-        fi: {{ product.metafields.custom.diameter.value | json }},
-        length: {{ product.metafields.custom.length.value | json }},
-        symbol: {{ product.metafields.custom.symbol.value | json }},
-        rentable: {{ product.metafields.custom.rentable.value | json }},
-        image: {{ product.featured_image | img_url: '100x' | json }},
-        large_image: {{ product.featured_image | img_url: '425x' | json }}
-      }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-      ];
-    
-      
-    
       document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize mobile filter bar
@@ -719,64 +860,77 @@
     // Filter products based on current filters
     function filterProducts() {
       return allProducts.filter(product => {
-        // Filter by category
-        if (window.selectedCategory !== 'wszystkie') {
-          const categoryToType = {
-            'koronkowe': 'VW',
-            'plytkowe': 'PR',
+        // Filter by category or type (they use the same logic)
+        const categoryToType = {
+          'koronkowe': 'VW',
+          'plytkowe': 'PR',
+          'vhm': 'WW',
+          'sandvik': 'PS',
+          'ksem': 'WK',
+          'amec': 'WV',
+          'iscar': 'IS',
+          'walter': 'WA'
+        };
+
+        // Only apply category filter if one is selected
+        if (window.selectedCategory && window.selectedCategory !== 'wszystkie') {
+          const expectedType = categoryToType[window.selectedCategory];
+          if (!expectedType || !product.custom_category || !product.custom_category.includes(expectedType)) {
+            return false;
+          }
+        }
+
+        // Only apply type filter if one is selected
+        if (window.WiertlaCNC.filters.type && window.WiertlaCNC.filters.type !== 'all') {
+          const typeMapping = {
             'vhm': 'WW',
-            'sandvik': 'PS',
-            'ksem': 'WK',
-            'amec': 'WV'
+            'hss': 'HSS',
+            'carbide': 'Węglik'
           };
-          
-          
-          // Try to find the type icon in the table
-          const tableRows = document.querySelectorAll('.wiertla-categories__table-row');
-          let productType = product.type; // Default to product.type
-          
-          tableRows.forEach(row => {
-            const rowProductId = row.getAttribute('data-product-id');
-            
-              if (rowProductId === product.id) {
-              const typeIcon = row.querySelector('img[alt]');
-              if (typeIcon) {
-                productType = typeIcon.getAttribute('alt');
-              }
-            }
-          });
-          
-          
-          if (productType !== categoryToType[window.selectedCategory]) {
+          const expectedType = typeMapping[window.WiertlaCNC.filters.type];
+          if (!expectedType || !product.custom_category || !product.custom_category.includes(expectedType)) {
             return false;
           }
         }
-        
-        // Filter by type
-        if (window.currentFilters.type && product.type !== window.currentFilters.type) return false;
-        
-        // Filter by crown
-        if (window.currentFilters.crown && (!product.symbol || !product.symbol.includes(window.currentFilters.crown))) return false;
-        
-        // Filter by manufacturer
-        if (window.currentFilters.manufacturer && product.vendor !== window.currentFilters.manufacturer) return false;
-    
-        // Filter by search
-        if (window.currentFilters.search) {
-          const searchTerm = window.currentFilters.search.toLowerCase();
-          const title = (product.title || '').toLowerCase();
-          const symbol = (product.symbol || '').toLowerCase();
-          const vendor = (product.vendor || '').toLowerCase();
-          const fi = String(product.fi || '').toLowerCase();
-          
-          if (!title.includes(searchTerm) && 
-              !symbol.includes(searchTerm) && 
-              !vendor.includes(searchTerm) &&
-              !fi.includes(searchTerm)) {
+
+        // Only apply status filter if one is selected
+        if (window.WiertlaCNC.filters.status && window.WiertlaCNC.filters.status !== 'all') {
+          if (window.WiertlaCNC.filters.status === 'rentable' && !product.rentable) {
+            return false;
+          }
+          if (window.WiertlaCNC.filters.status === 'non-rentable' && product.rentable) {
             return false;
           }
         }
-        
+
+        // Only apply crown filter if one is selected
+        if (window.WiertlaCNC.filters.crown && window.WiertlaCNC.filters.crown !== 'all') {
+          const crownMapping = {
+            'standard': 'Standardowe',
+            'premium': 'Premium',
+            'special': 'Specjalne'
+          };
+          const expectedCrown = crownMapping[window.WiertlaCNC.filters.crown];
+          if (!expectedCrown || !product.crown || !product.crown.includes(expectedCrown)) {
+            return false;
+          }
+        }
+
+        // Only apply manufacturer filter if one is selected
+        if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all') {
+          const manufacturerMapping = {
+            'sandvik': 'Sandvik',
+            'iscar': 'ISCAR',
+            'walter': 'WALTER',
+            'ksem': 'KSEM',
+            'amec': 'AMEC'
+          };
+          const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer];
+          if (!expectedManufacturer || !product.vendor || !product.vendor.toLowerCase().includes(expectedManufacturer.toLowerCase())) {
+            return false;
+          }
+        }
+
         return true;
       });
     }
@@ -818,7 +972,6 @@
     
     // Apply filters and pagination
     function applyFilters() {
-      
       const filteredProducts = filterProducts();
       
       window.totalPages = Math.ceil(filteredProducts.length / window.itemsPerPage);
@@ -1185,6 +1338,7 @@
       
       // Handle fullscreen filters
       const filterSelects = document.querySelectorAll('.wiertla-categories__fullscreen-content .wiertla-categories__filter');
+      
       filterSelects.forEach(select => {
         select.addEventListener('change', function() {
           const filterType = this.getAttribute('data-filter');
@@ -1275,7 +1429,6 @@
           // Update selected category
           window.selectedCategory = category;
           window.currentPage = 1;
-          
           // If "Wszystkie" is clicked, reset all filters
           if (category === 'wszystkie') {
             currentFilters = {
@@ -1679,174 +1832,138 @@
     
     // Only have ONE generateTable function
     function generateTable(products) {
-      const tableBody = document.getElementById('productsTableBody');
-      if (!tableBody) {
-        console.error('Table body element not found!');
-        return;
-      }
+      const tableBody = document.querySelector('.wiertla-categories__table tbody');
+      if (!tableBody) return;
       
       tableBody.innerHTML = '';
       
-      
       if (products.length === 0) {
-        const noResultsRow = document.createElement('tr');
-        noResultsRow.innerHTML = `<td colspan="7" style="text-align: center; padding: 20px;">${translations[currentLanguage].no_results}</td>`;
-        tableBody.appendChild(noResultsRow);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td colspan="7" class="wiertla-categories__table-cell">Brak wyników</td>
+        `;
+        tableBody.appendChild(row);
         return;
       }
       
-      try {
-        // Explicitly check isMobileView at function execution time
-        const currentIsMobileView = window.innerWidth <= 768;
+      // Create preview container if it doesn't exist
+      let previewContainer = document.querySelector('.wiertla-categories__preview-container');
+      if (!previewContainer) {
+        previewContainer = document.createElement('div');
+        previewContainer.className = 'wiertla-categories__preview-container';
+        previewContainer.style.cssText = `
+          position: fixed;
+          left: 0;
+          top: 0;
+          width: 300px;
+          height: 100vh;
+          background: white;
+          z-index: 1000;
+          padding: 20px;
+          display: none;
+          box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        `;
+        previewContainer.innerHTML = `
+          <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+            <img src="" alt="" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+          </div>
+        `;
+        document.body.appendChild(previewContainer);
+      }
+      
+      products.forEach((product, index) => {
+        const row = document.createElement('tr');
+        row.className = 'wiertla-categories__table-row';
+        row.setAttribute('data-product-id', product.id);
+        row.setAttribute('data-href', product.url);
         
-        // Type to icon mapping
-        const getTypeIcon = (type) => {
-          const typeIcons = {
-            'VW': 'typ_koronkowe.svg',
-            'PR': 'typ_plytkowe.svg',
-            'WW': 'typ_vhm.svg',
-            'PS': 'typ_sandavik880.svg',
-            'WK': 'typ_ksem.svg',
-            'WV': 'typ_amec.svg'
-          };
-          // If no type is provided, generate a random one
-          if (!type) {
-            const types = ['VW', 'PR', 'WW', 'PS', 'WK', 'WV'];
-            type = types[Math.floor(Math.random() * types.length)];
-          }
-          return typeIcons[type];
-        };
-        
-        // Random value generators
-        const getRandomType = () => {
-          const types = ['VW', 'PR', 'WW', 'PS', 'WK', 'WV'];
-          return types[Math.floor(Math.random() * types.length)];
-        };
-        
-        const getRandomFi = () => {
-          return (Math.random() * (30 - 5) + 5).toFixed(1);
-        };
-        
-        const getRandomLength = () => {
-          return Math.floor(Math.random() * (200 - 50) + 50);
-        };
-        
-        const getRandomSymbol = () => {
-          const prefixes = ['KK', 'KI', 'KS', 'KT', 'KA'];
-          const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
-          const number = Math.floor(Math.random() * 1000);
-          return `${prefix}-${number}`;
-        };
-        
-        const getRandomVendor = () => {
-          const vendors = ['Sandvik', 'AMEC', 'KSEM', 'Komet', 'Walter'];
-          return vendors[Math.floor(Math.random() * vendors.length)];
-        };
-        
-        console.log('Starting to create rows for products');
-        
-        // Generate table rows
-        products.forEach((product, index) => {
-          const row = document.createElement('tr');
-          row.className = 'wiertla-categories__table-row';
-          row.setAttribute('data-product-id', product.id);
-          row.setAttribute('data-href', product.url);
+        if (product.image) {
+          row.setAttribute('data-image', product.image);
           
-          const type = product.type || getRandomType();
-          const typeIcon = getTypeIcon(type);
+          // Add mouseover handler for image preview
+          row.addEventListener('mouseenter', function() {
+            const imageUrl = this.getAttribute('data-image');
+            if (imageUrl) {
+              const previewImage = previewContainer.querySelector('img');
+              if (previewImage) {
+                previewImage.src = imageUrl;
+                previewImage.alt = product.title;
+                previewContainer.style.display = 'block';
+              }
+            }
+          });
           
-          if (currentIsMobileView) {
-            row.innerHTML = `
-              <td class="wiertla-categories__table-cell-main mobile">
-                <button type="button" class="wiertla-categories__mobile-card" data-product-id="${product.id}" data-product-url="${product.url}">
-                  <!-- First row with product details - top part -->
-                  <div class="wiertla-categories__mobile-top">
-                    <div class="wiertla-categories__mobile-image">
-                      <img src="/cdn/shop/t/135/assets/${typeIcon}" alt="${type}" width="34" height="34" loading="lazy">
-                    </div>
-                    <div class="wiertla-categories__mobile-fi">
-                      <span class="mobile-label">fi ⌀</span>
-                      <span class="mobile-value">${product.fi || getRandomFi()}</span>
-                    </div>
-                    <div class="wiertla-categories__mobile-dimension">
-                      ${product.length || getRandomLength()}
-                    </div>
+          // Add mouseout handler to hide preview
+          row.addEventListener('mouseleave', function() {
+            previewContainer.style.display = 'none';
+          });
+        }
+        
+        if (window.innerWidth <= 768) {
+          row.innerHTML = `
+            <td class="wiertla-categories__table-cell">
+              <button type="button" class="wiertla-categories__mobile-card" data-product-id="${product.id}" data-product-url="${product.url}">
+                <div class="wiertla-categories__mobile-top">
+                  <div class="wiertla-categories__mobile-image">
+                    ${(() => {
+                      const category = (product.custom_category || '').toLowerCase();
+                      const iconMap = {
+                        'koronkowe': "{{ 'image-8.png' | asset_url }}",
+                        'plytkowe': "{{ 'image-9.png' | asset_url }}",
+                        'vhm': "{{ 'image-12.png' | asset_url }}",
+                        'sandvik': "{{ 'image-10.png' | asset_url }}",
+                        'ksem': "{{ 'image-13.png' | asset_url }}",
+                        'amec': "{{ 'image-11.png' | asset_url }}"
+                      };
+                      const iconUrl = Object.entries(iconMap).find(([key]) => category.includes(key.toLowerCase()))?.[1] || product.image;
+                      return iconUrl ? `<img src="${iconUrl}" alt="${category || 'Product'}" width="34" height="34" loading="lazy">` : '';
+                    })()}
+                  </div>
+                  <div class="wiertla-categories__mobile-fi">
+                    <span class="mobile-label">Fi ⌀</span>
+                    <span class="mobile-value">${product.custom_fi || '-'}</span>
+                  </div>
+                  <div class="wiertla-categories__mobile-dimension">
+                    ${product.custom_drill_length || '-'}
+                  </div>
+                </div>
+                <div class="wiertla-categories__mobile-bottom">
+                  <div class="wiertla-categories__mobile-vendor">
+                    ${product.vendor || '-'}
+                  </div>
+                  <div class="wiertla-categories__mobile-symbol">
+                    ${product.custom_symbol || '-'}
+                  </div>
+                  <div class="wiertla-categories__mobile-price-wrapper">
                     <div class="wiertla-categories__mobile-price">
-                      ${product.price ? `${product.price}` : '-'}
+                      ${product.price}
                     </div>
+                    ${product.custom_rent ? `
+                      <button class="wiertla-categories__mobile-rent-button" data-product-id="${product.id}">
+                        <span>RENT A TOOL</span>
+                      </button>
+                    ` : ''}
                   </div>
-                  
-                  <!-- Second row with vendor and symbol - bottom part -->
-                  <div class="wiertla-categories__mobile-bottom">
-                    <div class="wiertla-categories__mobile-vendor">
-                      ${product.vendor || getRandomVendor()}
-                    </div>
-                    <div class="wiertla-categories__mobile-symbol">
-                      ${product.symbol || getRandomSymbol()}
-                    </div>
-                  </div>
-                </button>
-              </td>
-            `;
-            row.addEventListener('click', (e) => {
-              // Don't trigger if clicking the info link or image
+                </div>
+              </button>
+            </td>
+          `;
+          
+          const mobileCard = row.querySelector('.wiertla-categories__mobile-card');
+          if (mobileCard) {
+            mobileCard.addEventListener('click', function(e) {
               e.preventDefault();
               e.stopPropagation();
               
-              // Get the preview modal
               const previewModal = document.querySelector('.wiertla-categories__mobile-preview-modal');
-              if (!previewModal) {
-                return;
+              if (!previewModal) return;
+              
+              const modalImage = previewModal.querySelector('.wiertla-categories__preview-modal-image');
+              if (modalImage) {
+                modalImage.src = product.image;
+                modalImage.alt = product.title;
               }
               
-              // Populate preview modal with product data
-              const typeIcon = document.querySelector('.wiertla-categories__mobile-preview-type-icon');
-              const diameterValue = document.querySelector('.wiertla-categories__mobile-preview-diameter-value');
-              const sizeValue = document.querySelector('.wiertla-categories__mobile-preview-size-value');
-              const priceValue = document.querySelector('.wiertla-categories__mobile-preview-price-value');
-              const manufacturerValue = document.querySelector('.wiertla-categories__mobile-preview-manufacturer-value');
-              const skuValue = document.querySelector('.wiertla-categories__mobile-preview-sku-value');
-              const detailsButton = document.querySelector('.wiertla-categories__mobile-preview-button');
-              
-              // Set type icon based on product type
-              if (typeIcon) {
-                let iconUrl = '';
-                if (product.type === 'VW') iconUrl = "{{ 'ico_big_koronkowe.svg' | asset_url }}";
-                else if (product.type === 'PR') iconUrl = "{{ 'ico_big_plytkowe.svg' | asset_url }}";
-                else if (product.type === 'WW') iconUrl = "{{ 'ico_big_vhm.svg' | asset_url }}";
-                else if (product.type === 'PS') iconUrl = "{{ 'ico_big_sandvik.svg' | asset_url }}";
-                else if (product.type === 'WV') iconUrl = "{{ 'ico_big_amec.svg' | asset_url }}";
-                else if (product.type === 'WK') iconUrl = "{{ 'ico_big_ksem.svg' | asset_url }}";
-                else iconUrl = "{{ 'ico_big_all.svg' | asset_url }}";
-                
-                typeIcon.src = iconUrl;
-              }
-              
-              // Set text values
-              if (diameterValue) diameterValue.textContent = product.fi || '-';
-              if (sizeValue) sizeValue.textContent = product.length || '-';
-              if (priceValue) priceValue.textContent = product.price || '-';
-              if (manufacturerValue) manufacturerValue.textContent = product.vendor || '-';
-              if (skuValue) skuValue.textContent = product.symbol || '-';
-              
-              // Set link to product page
-              if (detailsButton) {
-                detailsButton.href = product.url;
-              }
-              
-              // Add click handler for the close button
-              const closeButton = document.querySelector('.wiertla-categories__mobile-preview-close');
-              if (closeButton) {
-                closeButton.addEventListener('click', function() {
-                  previewModal.classList.remove('active');
-                  setTimeout(() => {
-                    previewModal.style.display = 'none';
-                    document.body.style.overflow = '';
-                  }, 300);
-                });
-              }
-              
-              // Close modal when clicking outside content
               previewModal.addEventListener('click', function(event) {
                 if (event.target === previewModal) {
                   previewModal.classList.remove('active');
@@ -1857,7 +1974,6 @@
                 }
               });
               
-              // Display the modal
               previewModal.style.display = 'block';
               document.body.style.overflow = 'hidden';
               
@@ -1865,60 +1981,95 @@
                 previewModal.classList.add('active');
               }, 10);
             });
-          } else {
-            row.innerHTML = `
-              <td class="wiertla-categories__table-cell-type">
-                <img src="/cdn/shop/t/135/assets/${typeIcon}" alt="${type}" width="34" height="34" loading="lazy">
-              </td>
-              <td class="wiertla-categories__table-cell-fi">${product.fi || getRandomFi()}</td>
-              <td class="wiertla-categories__table-cell-length">${product.length || getRandomLength()}</td>
-              <td class="wiertla-categories__table-cell-symbol">${product.symbol || getRandomSymbol()}</td>
-              <td class="wiertla-categories__table-cell-vendor">${product.vendor || getRandomVendor()}</td>
-              <td class="wiertla-categories__table-cell-price">${product.price ? `${product.price}` : '-'}</td>
-            `;
           }
-    
-          // After row is created, update the icon src
-          const iconImg = row.querySelector('img[data-icon]');
-          if (iconImg) {
-            const iconName = iconImg.getAttribute('data-icon');
-            iconImg.src = iconName ? "{{ 'ico_big_' | append: typeIcon | append: '.svg' | asset_url }}" : "{{ 'ico_big_all.svg' | asset_url }}";
-          }
+        } else {
+          row.innerHTML = `
+            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle}">
+              ${(() => {
+                const category = (product.custom_category || '').toLowerCase();
+                const iconMap = {
+                  'koronkowe': "{{ 'image-8.png' | asset_url }}",
+                  'plytkowe': "{{ 'image-9.png' | asset_url }}",
+                  'vhm': "{{ 'image-12.png' | asset_url }}",
+                  'sandvik': "{{ 'image-10.png' | asset_url }}",
+                  'ksem': "{{ 'image-13.png' | asset_url }}",
+                  'amec': "{{ 'image-11.png' | asset_url }}"
+                };
+                const iconUrl = Object.entries(iconMap).find(([key]) => category.includes(key.toLowerCase()))?.[1] || product.image;
+                return iconUrl ? `<img src="${iconUrl}" alt="${category || 'Product'}" width="34" height="34" loading="lazy">` : '-';
+              })()}
+            </td>
+            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle}">${product.custom_fi ? '⌀ ' + product.custom_fi : '-'}</td>
+            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle}">${product.custom_drill_length || '-'}</td>
+            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle}">${product.custom_symbol || '-'}</td>
+            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle}">${product.vendor || '-'}</td>
+            <td class="wiertla-categories__table-cell">
+              <div class="wiertla-categories__price-wrapper">
+                <span class="wiertla-categories__price" data-href="/products/${product.handle}">${product.price}</span>
+                ${product.custom_rent ? `
+                  <button class="wiertla-categories__rent-button" data-product-id="${product.id}">
+                    <span>RENT A TOOL</span>
+                  </button>
+                ` : ''}
+              </div>
+            </td>
+          `;
           
-          if (product.image) {
-            row.setAttribute('data-image', product.large_image);
-            
-            row.addEventListener('mouseenter', function() {
-              showProductImage(this);
+          // Add click handlers for table cells
+          const cells = row.querySelectorAll('.wiertla-categories__table-cell[data-href]');
+          cells.forEach(cell => {
+            cell.addEventListener('click', function(e) {
+              // Don't navigate if clicking on the rent button
+              if (!e.target.closest('.wiertla-categories__rent-button')) {
+                const url = this.getAttribute('data-href');
+                if (url) {
+                  window.location.href = url;
+                }
+              }
             });
-            
-            row.addEventListener('mouseleave', function() {
-              hideProductImage();
-            });
-          }
-          
-          // For mobile view, let the a tag handle clicks
-          if (!currentIsMobileView) {
-            row.addEventListener('click', function() {
-              const url = this.getAttribute('data-href');
-              if (url) {
-                window.location.href = url;
+          });
+
+          // Add click handler for rent button
+          const rentButton = row.querySelector('.wiertla-categories__rent-button');
+          if (rentButton) {
+            rentButton.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              const productId = this.getAttribute('data-product-id');
+              
+              // Ensure WiertlaCNC and products array exist
+              if (!window.WiertlaCNC) {
+                console.error('WiertlaCNC is not initialized');
+                return;
+              }
+              
+              if (!window.WiertlaCNC.products || !Array.isArray(window.WiertlaCNC.products)) {
+                console.error('Products array is not initialized');
+                return;
+              }
+              
+              // Convert productId to number for comparison
+              const product = window.WiertlaCNC.products.find(p => p.id === Number(productId));
+              if (product) {
+                window.WiertlaCNC.openRentModal(product);
+              } else {
+                console.error('Product not found with ID:', productId);
+                console.log('Available products:', window.WiertlaCNC.products);
               }
             });
           }
-          
-          tableBody.appendChild(row);
-        });
-        
-        // Update results count
-        const resultsCount = document.getElementById('resultsCount');
-        if (resultsCount) {
-          const totalRows = allProducts.length;
-          const visibleRows = products.length;
-          resultsCount.textContent = `${visibleRows} z ${totalRows}`;
         }
-      } catch (error) {
-        console.error('Error generating table:', error);
+        
+        tableBody.appendChild(row);
+      });
+      
+      // Update results count
+      const resultsCount = document.getElementById('resultsCount');
+      if (resultsCount) {
+        const startIndex = (window.currentPage - 1) * window.itemsPerPage + 1;
+        const endIndex = Math.min(startIndex + products.length - 1, allProducts.length);
+        const format = translations[currentLanguage].results_format;
+        resultsCount.textContent = format.replace('{0}', startIndex).replace('{1}', endIndex).replace('{2}', allProducts.length);
       }
     }
     
@@ -2318,8 +2469,8 @@
     }
 
     .wiertla-categories__table-row {
-      min-height: 34px;
-      line-height: 34px;
+      min-height: 25px;
+      line-height: 25px;
       transition: all 0.3s ease;
       cursor: pointer;
       position: relative;
@@ -2348,7 +2499,7 @@
 
     .wiertla-categories__table td {
       padding: 5.5px 17px;
-      min-height: 34px;
+      min-height: 25px;
       line-height: normal;
       vertical-align: middle;
       position: relative;
@@ -2377,13 +2528,14 @@
     .wiertla-categories__table td img {
       vertical-align: middle;
       max-height: 24px;
+      max-width: 22px;
       margin: auto 0;
     }
 
     .wiertla-categories__table th {
       height: 34px;
       line-height: 34px;
-      padding: 10px 17px;
+      padding: 5.5px 17px;
       vertical-align: middle;
       position: relative;
       text-align: left;
@@ -2600,7 +2752,11 @@
     .wiertla-categories__icon {
       object-fit: cover;
     }
-
+    @media screen and (max-width: 768px) {
+      .wiertla-categories__icon {
+        width: 122px;
+      }
+    }
     .wiertla-categories__icon-label {
       font-family: 'League Spartan'
       , sans-serif;
@@ -3248,7 +3404,7 @@
       width: 100%;
       margin: 0 auto;
       background: white;
-      padding: 20px;
+      padding: 0 20px;
       border-radius: 15px;
     }
     body .bg_neutral {
@@ -4361,68 +4517,7 @@
   </div>
 </div>
 
-<script>
-  function toggleDropdown(dropdownId) {
-    const dropdown = document.getElementById(`${dropdownId}-dropdown`);
-    dropdown.classList.toggle('wiertla-filter-modal__dropdown-content--active');
-  }
-  
-  function closeFilterModal() {
-    document.getElementById('wiertla-filter-modal-fallback').style.display = 'none';
-    document.body.style.overflow = '';
-  }
-  
-  function clearAllFilters() {
-    // Reset all filter buttons to inactive state
-    document.querySelectorAll('.wiertla-filter-modal__button').forEach(button => {
-      button.classList.remove('wiertla-filter-modal__button--active');
-    });
-    // Clear any selected filters
-    // Add your filter clearing logic here
-  }
-  
-  function selectAllItems() {
-    // Add your select all items logic here
-  }
-  
-  function deselectAllItems() {
-    // Add your deselect all items logic here
-  }
-  
-  function sortTable(sortType) {
-    // Add your sorting logic here
-  }
-  
-  function applyFilters() {
-    // Add your filter application logic here
-    closeFilterModal();
-  }
-  
-  // Close dropdowns when clicking outside
-  document.addEventListener('click', function(event) {
-    if (!event.target.closest('.wiertla-filter-modal__dropdown')) {
-      document.querySelectorAll('.wiertla-filter-modal__dropdown-content').forEach(dropdown => {
-        dropdown.classList.remove('wiertla-filter-modal__dropdown-content--active');
-      });
-    }
-  });
-  
-  function updateResultsCount() {
-      const tableBody = document.querySelector('#productsTableBody');
-      if (!tableBody) return;
-      
-      const allRows = tableBody.querySelectorAll('tr');
-      const totalRows = allRows.length;
-      const visibleRows = document.querySelectorAll('#productsTableBody tr:not([style*="display: none"])').length;
-      
-      const resultsCount = document.querySelector('.wiertla-categories__results-count');
-      const resultsNumbers = document.querySelector('#resultsCount');
-      
-      if (resultsCount && resultsNumbers) {
-        resultsNumbers.textContent = `${visibleRows} z ${totalRows}`;
-      }
-    }
-</script>
+
 
 <!-- Mobile Preview Modal -->
 <div class="wiertla-categories__mobile-preview-modal">
@@ -4521,6 +4616,48 @@
 </div>
 
 <style>
+  .wiertla-categories__price-wrapper,
+    .wiertla-categories__mobile-price-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .wiertla-categories__rent-button span  {
+      font-family: Montserrat;
+font-weight: 700;
+font-size: 12px;
+line-height: 16px;
+letter-spacing: 1%;
+text-transform: lowercase;
+    }
+    .wiertla-categories__rent-button,
+    .wiertla-categories__mobile-rent-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 82px;
+      height: 24px;
+      border-radius: 14px;
+      border: 2px solid #112832;
+      padding: 4px 8px;
+      background-color: #F5F5F8;
+      color: #112832;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .wiertla-categories__rent-button:hover,
+    .wiertla-categories__mobile-rent-button:hover {
+      background-color: #112832;
+      color: #F5F5F8;
+    }
+    
+    .wiertla-categories__rent-button img,
+    .wiertla-categories__mobile-rent-button img {
+      width: 12px;
+      height: 12px;
+    }
   .wiertla-categories__fullscreen-view {
     position: fixed;
     top: 0;
@@ -4612,6 +4749,54 @@
     width: 24px;
     height: 24px;
   }
+  .wiertla-logos__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  @media screen and (max-width: 768px) {
+    .wiertla-logos__row {
+      gap: 15px;
+      padding: 15px;
+    }
+    
+    .wiertla-logos__item {
+      flex: 0 0 calc(33.333% - 15px);
+      max-width: calc(33.333% - 15px);
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .wiertla-logos__row {
+      gap: 10px;
+      padding: 10px;
+    }
+    
+    .wiertla-logos__item {
+      flex: 0 0 calc(50% - 10px);
+      max-width: calc(50% - 10px);
+    }
+  }
+
+.wiertla-banner {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 40px 20px;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+
+
+
 </style>
 
 <script>
@@ -4780,3 +4965,531 @@
     }
   }
 </style>
+
+<script>
+  function toggleFullscreen() {
+    const container = document.querySelector('.wiertla-categories__container');
+    const fullscreenBtn = document.querySelector('.wiertla-categories__fullscreen-btn');
+    const table = document.querySelector('.wiertla-categories__table');
+    const rightSection = document.querySelector('.wiertla-categories__fullscreen-right');
+    
+    if (!container || !fullscreenBtn || !table || !rightSection) return;
+    
+    if (container.classList.contains('fullscreen')) {
+      // Exit fullscreen
+      container.classList.remove('fullscreen');
+      fullscreenBtn.innerHTML = `
+        <img src="{{ 'zoom_out_map.svg' | asset_url }}" alt="Fullscreen" width="24" height="24" class="wiertla-categories__fullscreen-icon">
+        <span>Pełny ekran</span>
+      `;
+      document.body.style.overflow = '';
+      
+      // Move table back to its original container
+      const tableContainer = document.querySelector('.wiertla-categories__table-container');
+      if (tableContainer) {
+        tableContainer.appendChild(table);
+      }
+    } else {
+      // Enter fullscreen
+      container.classList.add('fullscreen');
+      fullscreenBtn.innerHTML = `
+        <img src="{{ 'zoom_out_map.svg' | asset_url }}" alt="Close fullscreen" width="24" height="24" class="wiertla-categories__fullscreen-icon">
+        <span>Zamknij tryb pełnoekranowy</span>
+      `;
+      document.body.style.overflow = 'hidden';
+      
+      // Move table to fullscreen container
+      rightSection.appendChild(table);
+      
+      // Ensure table is visible and properly styled
+      table.style.width = '100%';
+      table.style.margin = '0';
+      table.style.borderCollapse = 'collapse';
+      
+      // Ensure right section is properly styled
+      rightSection.style.flex = '1';
+      rightSection.style.overflow = 'auto';
+      rightSection.style.padding = '20px';
+    }
+  }
+
+  // Add styles for fullscreen mode
+  const style = document.createElement('style');
+  style.textContent = `
+    .wiertla-categories__container.fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1000;
+      background: white;
+      display: flex;
+      flex-direction: row;
+    }
+    
+    .wiertla-categories__fullscreen-right {
+      flex: 1;
+      overflow: auto;
+      padding: 20px;
+    }
+    
+    .wiertla-categories__table {
+      width: 100%;
+      margin: 0;
+      border-collapse: collapse;
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+
+<script>
+  // Update category mappings
+  window.WiertlaCNC.categoryMappings = {
+    'koronkowe': 'VW',
+    'plytkowe': 'PR',
+    'vhm': 'VH',
+    'sandvik': 'SANDVIK',
+    'amec': 'AMEC',
+    'ksem': 'KSEM',
+    'iscar': 'ISCAR',
+    'walter': 'WALTER'
+  };
+
+  // Update icon mappings
+  window.WiertlaCNC.iconMappings = {
+    'koronkowe': '{{ 'ico_big_koronkowe.svg' | asset_url }}',
+    'plytkowe': '{{ 'ico_big_plytkowe.svg' | asset_url }}',
+    'vhm': '{{ 'ico_big_vhm.svg' | asset_url }}',
+    'sandvik': '{{ 'ico_big_sandvik.svg' | asset_url }}',
+    'amec': '{{ 'ico_big_amec.svg' | asset_url }}',
+    'ksem': '{{ 'ico_big_ksem.svg' | asset_url }}',
+    'iscar': '{{ 'ico_big_iscar.svg' | asset_url }}',
+    'walter': '{{ 'ico_big_walter.svg' | asset_url }}'
+  };
+
+  function applyFilters() {
+    const selectedCategory = document.querySelector('.wiertla-categories__icon-item.active')?.getAttribute('data-category');
+    const selectedStatus = document.querySelector('.wiertla-categories__status-item.active')?.getAttribute('data-status');
+    let filteredProducts = window.WiertlaCNC.products;
+    
+    // Apply category filter
+    if (selectedCategory && selectedCategory !== 'wszystkie') {
+      const categoryCode = window.WiertlaCNC.categoryMappings[selectedCategory];
+      filteredProducts = filteredProducts.filter(product => {
+        return product.custom_category === categoryCode;
+      });
+    }
+    
+    // Apply status filter
+    if (selectedStatus && selectedStatus !== 'all') {
+      filteredProducts = filteredProducts.filter(product => {
+        if (selectedStatus === 'rentable') {
+          return product.rentable === true;
+        } else if (selectedStatus === 'non-rentable') {
+          return product.rentable === false;
+        }
+        return true;
+      });
+    }
+    
+    // Apply manufacturer filter
+    if (selectedManufacturer && selectedManufacturer !== 'all') {
+      const manufacturerMapping = {
+        'sandvik': 'SA',
+        'amec': 'AM',
+        'ksem': 'KS',
+        'iscar': 'IS',
+        'walter': 'WA'
+      };
+      const expectedManufacturer = manufacturerMapping[selectedManufacturer];
+      if (expectedManufacturer) {
+        filteredProducts = filteredProducts.filter(product => {
+          return product.vendor && product.vendor.toLowerCase().includes(expectedManufacturer.toLowerCase());
+        });
+      }
+    }
+    
+    // Update table with filtered products
+    generateTable(filteredProducts);
+    
+    // Update results count
+    const resultsCount = document.querySelector('.wiertla-categories__results-count');
+    if (resultsCount) {
+      resultsCount.textContent = `${filteredProducts.length} wyników`;
+    }
+  }
+
+  // Add event listeners for category icons
+  document.querySelectorAll('.wiertla-categories__icon-item').forEach(icon => {
+    icon.addEventListener('click', function() {
+      // Remove active class from all icons
+      document.querySelectorAll('.wiertla-categories__icon-item').forEach(i => i.classList.remove('active'));
+      // Add active class to clicked icon
+      this.classList.add('active');
+      // Apply filters
+      applyFilters();
+    });
+  });
+</script>
+
+<script>
+  // Global filter state
+  window.WiertlaCNC.filters = {
+    category: 'wszystkie',
+    status: 'all',
+    type: 'all',
+    crown: 'all',
+    manufacturer: 'all',
+    page: 1,
+    perPage: 10
+  };
+
+  // Function to update URL parameters
+  function updateUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    
+    // Update all filter parameters
+    const filterKeys = ['category', 'status', 'type', 'crown', 'manufacturer', 'page', 'perPage'];
+    filterKeys.forEach(key => {
+      if (window.WiertlaCNC.filters[key] !== 'all' && window.WiertlaCNC.filters[key] !== 1) {
+        params.set(key, window.WiertlaCNC.filters[key]);
+      } else {
+        params.delete(key);
+      }
+    });
+    
+    const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+    window.history.replaceState({}, '', newUrl);
+  }
+
+  // Function to read parameters from URL
+  function readUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    window.WiertlaCNC.filters = {
+      category: params.get('category') || 'wszystkie',
+      status: params.get('status') || 'all',
+      type: params.get('type') || 'all',
+      crown: params.get('crown') || 'all',
+      manufacturer: params.get('manufacturer') || 'all',
+      page: parseInt(params.get('page')) || 1,
+      perPage: parseInt(params.get('perPage')) || 10
+    };
+  }
+
+  // Function to apply filters
+  function applyFilters() {
+    const filteredProducts = window.products.filter(product => {
+      // Category filter
+      if (window.WiertlaCNC.filters.category && product.custom_category !== window.WiertlaCNC.filters.category) {
+        return false;
+      }
+      
+      // Manufacturer filter
+      if (window.WiertlaCNC.filters.manufacturer) {
+        const manufacturerMapping = {
+          'sandvik': 'SA',
+          'amec': 'AM',
+          'ksem': 'KS',
+          'iscar': 'IS',
+          'walter': 'WA'
+        };
+        const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer];
+        if (!expectedManufacturer) return false;
+        if (!product.vendor || !product.vendor.toLowerCase().includes(expectedManufacturer.toLowerCase())) {
+          return false;
+        }
+      }
+      
+      // Status filter
+      if (window.WiertlaCNC.filters.status) {
+        if (window.WiertlaCNC.filters.status === 'rentable' && !product.rentable) {
+          return false;
+        }
+        if (window.WiertlaCNC.filters.status === 'non-rentable' && product.rentable) {
+          return false;
+        }
+      }
+      
+      return true;
+    });
+    
+    // Update pagination
+    window.totalPages = Math.ceil(filteredProducts.length / window.WiertlaCNC.filters.perPage);
+    if (window.WiertlaCNC.filters.page > window.totalPages) {
+      window.WiertlaCNC.filters.page = 1;
+    }
+    
+    // Update URL parameters
+    updateUrlParams();
+    
+    // Generate table with filtered products
+    generateTable(filteredProducts);
+  }
+
+  // Function to update pagination controls
+  function updatePaginationControls(totalItems) {
+    const totalPages = Math.ceil(totalItems / window.WiertlaCNC.filters.perPage);
+    const paginationContainer = document.querySelector('.wiertla-categories__pagination');
+    
+    if (paginationContainer) {
+      let paginationHTML = '';
+      
+      // Previous button
+      paginationHTML += `
+        <button class="wiertla-categories__pagination-btn ${window.WiertlaCNC.filters.page === 1 ? 'disabled' : ''}" 
+                onclick="changePage(${window.WiertlaCNC.filters.page - 1})">
+          Poprzednia
+        </button>
+      `;
+      
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        paginationHTML += `
+          <button class="wiertla-categories__pagination-btn ${window.WiertlaCNC.filters.page === i ? 'active' : ''}" 
+                  onclick="changePage(${i})">
+            ${i}
+          </button>
+        `;
+      }
+      
+      // Next button
+      paginationHTML += `
+        <button class="wiertla-categories__pagination-btn ${window.WiertlaCNC.filters.page === totalPages ? 'disabled' : ''}" 
+                onclick="changePage(${window.WiertlaCNC.filters.page + 1})">
+          Następna
+        </button>
+      `;
+      
+      paginationContainer.innerHTML = paginationHTML;
+    }
+  }
+
+  // Function to change page
+  function changePage(newPage) {
+    window.WiertlaCNC.filters.page = newPage;
+    applyFilters();
+  }
+
+  // Initialize filters from URL on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    // Read initial parameters from URL
+    readUrlParams();
+    
+    // Set active states based on URL parameters
+    const filterTypes = ['category', 'status', 'type', 'crown', 'manufacturer'];
+    filterTypes.forEach(type => {
+      const element = document.querySelector(`.wiertla-categories__${type}-item[data-${type}="${window.WiertlaCNC.filters[type]}"]`);
+      if (element) {
+        element.classList.add('active');
+      }
+    });
+    
+    // Apply initial filters
+    applyFilters();
+    
+    // Add event listeners for all filter types
+    filterTypes.forEach(type => {
+      document.querySelectorAll(`.wiertla-categories__${type}-item`).forEach(item => {
+        item.addEventListener('click', function() {
+          // Remove active class from all items of this type
+          document.querySelectorAll(`.wiertla-categories__${type}-item`).forEach(i => i.classList.remove('active'));
+          // Add active class to clicked item
+          this.classList.add('active');
+          // Reset to first page when changing filters
+          window.WiertlaCNC.filters.page = 1;
+          // Apply filters
+          applyFilters();
+        });
+      });
+    });
+  });
+
+  // Add event listener for category select
+  document.querySelector('.wiertla-categories__filter[data-filter="category"]').addEventListener('change', function() {
+    const value = this.value;
+    const categoryMapping = {
+      'VW': 'koronkowe',
+      'PR': 'plytkowe',
+      'WW': 'vhm',
+      'PS': 'sandvik',
+      'WK': 'ksem',
+      'WV': 'amec'
+    };
+    
+    window.selectedCategory = value ? categoryMapping[value] : 'wszystkie';
+    
+    // Update active states
+    document.querySelectorAll('.wiertla-categories__icon-item').forEach(item => {
+      item.classList.remove('active');
+      if (item.getAttribute('data-category') === window.selectedCategory) {
+        item.classList.add('active');
+      }
+    });
+    
+    // Reset to first page when changing filters
+    window.WiertlaCNC.filters.page = 1;
+    // Apply filters
+    applyFilters();
+  });
+
+  // Add event listener for manufacturer select
+  document.querySelector('.wiertla-categories__filter[data-filter="manufacturer"]').addEventListener('change', function() {
+    const value = this.value;
+    const manufacturerMapping = {
+      'Sandvik': 'sandvik',
+      'AMEC': 'amec',
+      'KSEM': 'ksem',
+      'ISCAR': 'iscar',
+      'WALTER': 'walter'
+    };
+    
+    window.WiertlaCNC.filters.manufacturer = value ? manufacturerMapping[value] : '';
+    
+    // Reset to first page when changing filters
+    window.WiertlaCNC.filters.page = 1;
+    // Apply filters
+    applyFilters();
+  });
+</script>
+
+<script>
+  // Add styles for rent button
+
+  // Add click handlers for rent buttons
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.wiertla-categories__rent-button, .wiertla-categories__mobile-rent-button')) {
+      e.preventDefault();
+      e.stopPropagation();
+      const button = e.target.closest('.wiertla-categories__rent-button, .wiertla-categories__mobile-rent-button');
+      const productId = button.dataset.productId;
+      const product = window.WiertlaCNC.products.find(p => p.id === productId);
+      if (product) {
+        window.WiertlaCNC.openRentModal(product);
+      } else {
+        console.error('Product not found with ID:', productId);
+        console.log('Available products:', window.WiertlaCNC.products);
+      }
+    }
+  });
+</script>
+
+  </div>
+  
+  <!-- Rent Modal -->
+  <div id="rent-modal" class="rent-modal">
+    <div class="rent-modal__content">
+      <div class="rent-modal__header">
+        <h2 class="rent-modal__title"></h2>
+        <button class="rent-modal__close">
+          <img src="{{ 'ico_close.svg' | asset_url }}" alt="Close" width="24" height="24">
+        </button>
+      </div>
+      <div class="rent-modal__body">
+        <div class="rent-modal__price"></div>
+        <div class="rent-modal__description"></div>
+        <div class="rent-modal__form">
+          <form id="rent-form">
+            <div class="rent-modal__form-group">
+              <label for="rent-start-date">Start Date</label>
+              <input type="date" id="rent-start-date" name="start-date" required>
+            </div>
+            <div class="rent-modal__form-group">
+              <label for="rent-end-date">End Date</label>
+              <input type="date" id="rent-end-date" name="end-date" required>
+            </div>
+            <button type="submit" class="rent-modal__submit">Rent Now</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <style>
+    .rent-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+    
+    .rent-modal__content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+    }
+    
+    .rent-modal__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .rent-modal__title {
+      margin: 0;
+      font-size: 24px;
+    }
+    
+    .rent-modal__close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    
+    .rent-modal__body {
+      margin-bottom: 20px;
+    }
+    
+    .rent-modal__price {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .rent-modal__description {
+      margin-bottom: 20px;
+    }
+    
+    .rent-modal__form-group {
+      margin-bottom: 15px;
+    }
+    
+    .rent-modal__form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .rent-modal__form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    .rent-modal__submit {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .rent-modal__submit:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</div>

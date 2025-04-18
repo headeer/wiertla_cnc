@@ -31,9 +31,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     rows.forEach((row) => {
       const sku = row.querySelector("[data-sku]")?.dataset.sku || "";
-      const shouldShow =
-        category === "wszystkie" || sku.startsWith(categoryCode);
-      row.style.display = shouldShow ? "" : "none";
+      const shouldShow = category === "wszystkie" || sku.startsWith(categoryCode);
+      row.style.setProperty('display', shouldShow ? "" : "none");
     });
 
     updateResultsCount();
@@ -49,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     rows.forEach((row) => {
       const sku = row.querySelector("[data-sku]")?.dataset.sku || "";
       const shouldShow = crownType === "all" || sku.includes(crownType);
-      row.style.display = shouldShow ? "" : "none";
+      row.style.setProperty('display', shouldShow ? "" : "none");
     });
 
     updateResultsCount();
@@ -65,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     rows.forEach((row) => {
       const sku = row.querySelector("[data-sku]")?.dataset.sku || "";
       const shouldShow = warehouse === "all" || sku.includes(warehouse);
-      row.style.display = shouldShow ? "" : "none";
+      row.style.setProperty('display', shouldShow ? "" : "none");
     });
 
     updateResultsCount();
@@ -93,30 +92,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Mobile filter modal functions
   function openFilterModal() {
-    const modal = document.querySelector(
-      ".wiertla-categories__mobile-filter-modal"
-    );
+    const modal = document.querySelector(".wiertla-categories__mobile-filter-modal");
     if (modal) {
-      modal.style.display = "block";
-      modal.style.visibility = "visible";
-      modal.style.opacity = "1";
-      modal.style.pointerEvents = "auto";
+      const styles = {
+        display: 'block',
+        visibility: 'visible',
+        opacity: '1',
+        pointerEvents: 'auto'
+      };
+      
+      Object.entries(styles).forEach(([property, value]) => {
+        modal.style.setProperty(property, value);
+      });
+      
       modal.classList.add("active");
-      document.body.style.overflow = "hidden";
+      document.body.style.setProperty('overflow', 'hidden');
     }
   }
 
   function closeFilterModal() {
-    const modal = document.querySelector(
-      ".wiertla-categories__mobile-filter-modal"
-    );
+    const modal = document.querySelector(".wiertla-categories__mobile-filter-modal");
     if (modal) {
-      modal.style.display = "none";
-      modal.style.visibility = "hidden";
-      modal.style.opacity = "0";
-      modal.style.pointerEvents = "none";
+      const styles = {
+        display: 'none',
+        visibility: 'hidden',
+        opacity: '0',
+        pointerEvents: 'none'
+      };
+      
+      Object.entries(styles).forEach(([property, value]) => {
+        modal.style.setProperty(property, value);
+      });
+      
       modal.classList.remove("active");
-      document.body.style.overflow = "";
+      document.body.style.setProperty('overflow', '');
     }
   }
 
@@ -192,8 +201,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (mobileDropdownText && mobileDropdownMenu) {
     mobileDropdownText.addEventListener("click", function () {
-      mobileDropdownMenu.style.display =
-        mobileDropdownMenu.style.display === "none" ? "block" : "none";
+      const isVisible = mobileDropdownMenu.style.getPropertyValue('display') === 'block';
+      mobileDropdownMenu.style.setProperty('display', isVisible ? 'none' : 'block');
     });
   }
 

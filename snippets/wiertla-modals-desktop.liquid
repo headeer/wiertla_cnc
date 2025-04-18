@@ -1,0 +1,230 @@
+{% comment %}
+  Wiertla Desktop Modals
+  A reusable component to display desktop modals for the Wiertla CNC Shopify theme.
+{% endcomment %}
+
+<!-- Desktop Rent Modal -->
+<div class="wiertla-modals__desktop-rent-modal" style="display: none;">
+  <div class="wiertla-modals__desktop-rent-wrapper">
+    <!-- Rent header -->
+    <div class="wiertla-modals__desktop-rent-header">
+      <div class="wiertla-modals__desktop-rent-icon">
+        <img
+          src="{{ 'icon_calendar.svg' | asset_url }}"
+          alt="Calendar"
+          class="wiertla-modals__desktop-rent-icon-inner"
+          width="24"
+          height="24">
+      </div>
+      <div class="wiertla-modals__desktop-rent-title">WYPOŻYCZ WIERTŁO</div>
+      <div class="wiertla-modals__desktop-rent-close-wrapper">
+        <img
+          src="{{ 'closee.svg' | asset_url }}"
+          alt="Close"
+          class="wiertla-modals__desktop-rent-close"
+          width="24"
+          height="24">
+      </div>
+    </div>
+
+    <!-- Rent content -->
+    <div class="wiertla-modals__desktop-rent-content">
+      <p class="wiertla-modals__desktop-rent-description">
+        Oferujemy naszym partnerom, możliwość wypożyczenia wybranego wiertła na wybrany termin i czas.
+      </p>
+      <p class="wiertla-modals__desktop-rent-contact">
+        Skontaktuj się z nami, aby ustalić szczegóły<br>
+        lub wyślij zapytanie o preferowany termin.
+      </p>
+
+      <!-- Contact info -->
+      <div class="wiertla-modals__desktop-rent-contact-info">
+        <div class="wiertla-modals__desktop-rent-phone">
+          <img 
+            src="{{ 'Ico_phone.svg' | asset_url }}" 
+            alt="Phone"
+            width="24"
+            height="24">
+          <span>{{ section.settings.phone }}</span>
+        </div>
+        <div class="wiertla-modals__desktop-rent-email">
+          <img 
+            src="{{ 'Ico_mail.svg' | asset_url }}" 
+            alt="Email"
+            width="24"
+            height="24">
+          <span>{{ section.settings.email }}</span>
+        </div>
+      </div>
+
+      <!-- Initial button -->
+      <button class="wiertla-modals__desktop-rent-button" onclick="WiertlaCNC.showRentForm()">
+        <span>zapytaj o dostępny termin</span>
+        <img 
+          src="{{ 'mail_icon_send.svg' | asset_url }}" 
+          alt="Send"
+          width="24"
+          height="24">
+      </button>
+
+      <!-- Form (hidden by default) -->
+      <div class="wiertla-modals__desktop-rent-form" style="display: none;">
+        <div class="wiertla-modals__desktop-rent-form-title">Skorzystaj z formularza</div>
+        <form class="wiertla-modals__desktop-rent-form-content" onsubmit="return false;">
+          <div class="wiertla-modals__desktop-rent-form-group">
+            <input
+              type="text"
+              placeholder="Osoba kontaktowa"
+              required>
+          </div>
+          <div class="wiertla-modals__desktop-rent-form-group">
+            <input
+              type="text"
+              placeholder="Nazwa firmy"
+              required>
+          </div>
+          <div class="wiertla-modals__desktop-rent-row">
+            <div class="wiertla-modals__desktop-rent-form-group">
+              <input
+                type="tel"
+                placeholder="Nr telefonu"
+                required>
+            </div>
+            <div class="wiertla-modals__desktop-rent-form-group">
+              <input
+                type="email"
+                placeholder="E-mail"
+                required>
+            </div>
+          </div>
+          <div class="wiertla-modals__desktop-rent-form-group">
+            <input
+              type="text"
+              placeholder="SYMBOL wiertła"
+              required>
+          </div>
+          <div class="wiertla-modals__desktop-rent-form-group">
+            <input
+              type="text"
+              placeholder="Wpisz preferowany termin wypożyczenia"
+              required>
+          </div>
+          <button type="submit" class="wiertla-modals__desktop-rent-submit" onclick="WiertlaCNC.handleFormSubmit(event)">
+            <span>Wyślij wiadomość</span>
+            <img 
+              src="{{ 'mail_icon_send.svg' | asset_url }}" 
+              alt="Send"
+              width="24"
+              height="24">
+          </button>
+        </form>
+
+        <!-- Success message (hidden by default) -->
+        <div class="wiertla-modals__desktop-rent-success" style="display: none;">
+          <div class="wiertla-modals__desktop-rent-success-content">
+            <div class="wiertla-modals__desktop-rent-success-icon">
+              <img src="{{ 'mail_sended.svg' | asset_url }}" alt="Mail sent" width="24" height="24">
+            </div>
+            <div class="wiertla-modals__desktop-rent-success-message">
+              Dziękujemy za wysłanie zapytania
+            </div>
+          </div>
+          <p class="wiertla-modals__desktop-rent-success-note">
+            Czas na odpowiedź wynosi zwykle 24 godziny w dni robocze. Jeśli potrzebujesz wiertła szybciej, zadzwoń.
+          </p>
+          <button class="wiertla-modals__desktop-rent-button" style="display: flex; background-color: #FFFFFF;" onclick="WiertlaCNC.closeRentModal()">
+            <span>Zamknij</span>
+            <img src="{{ 'mail_sended.svg' | asset_url }}" alt="Send" width="24" height="24">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Initialize WiertlaCNC namespace if it doesn't exist
+  window.WiertlaCNC = window.WiertlaCNC || {};
+
+  // Rent modal control functions
+  window.WiertlaCNC.openRentModal = function (product) {
+    const modal = document.querySelector(".wiertla-modals__desktop-rent-modal");
+    if (modal) {
+      // Add active class first
+      modal.classList.add("active");
+      
+      // Then set display to flex
+      modal.style.display = "flex";
+      
+      // Update modal content if product is provided
+      if (product) {
+        const title = modal.querySelector('.wiertla-modals__desktop-rent-title');
+        if (title) {
+          title.textContent = product.title;
+        }
+      }
+      
+      // Prevent body scrolling
+      document.body.style.setProperty('overflow', 'hidden');
+    }
+    return false;
+  };
+
+  window.WiertlaCNC.closeRentModal = function () {
+    const modal = document.querySelector(".wiertla-modals__desktop-rent-modal");
+    if (modal) {
+      // Remove active class first
+      modal.classList.remove("active");
+      
+      // Then set display to none
+      modal.style.display = "none";
+      
+      // Restore body scrolling
+      document.body.style.setProperty('overflow', '');
+    }
+  };
+
+  window.WiertlaCNC.showRentForm = function() {
+    const rentButton = document.querySelector(".wiertla-modals__desktop-rent-button");
+    const rentForm = document.querySelector(".wiertla-modals__desktop-rent-form");
+    
+    if (rentButton && rentForm) {
+      rentForm.style.setProperty('display', 'flex');
+      rentButton.style.setProperty('display', 'none');
+    }
+  };
+
+  window.WiertlaCNC.handleFormSubmit = function(event) {
+    event.preventDefault();
+    const form = event.target.closest('form');
+    const successMessage = form.nextElementSibling;
+    
+    // Hide form and show success message
+    form.style.display = 'none';
+    successMessage.style.display = 'block';
+  };
+
+  // Add event listeners when DOM is loaded
+  document.addEventListener("DOMContentLoaded", function() {
+    // Handle close button clicks
+    const closeButtons = document.querySelectorAll(".wiertla-modals__desktop-rent-close, .wiertla-modals__desktop-rent-close-wrapper");
+    closeButtons.forEach(function(btn) {
+      btn.addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.WiertlaCNC.closeRentModal();
+      });
+    });
+
+    // Handle outside click
+    const modal = document.querySelector(".wiertla-modals__desktop-rent-modal");
+    const wrapper = document.querySelector(".wiertla-modals__desktop-rent-wrapper");
+    if (modal && wrapper) {
+      modal.addEventListener("click", function(e) {
+        if (!wrapper.contains(e.target)) {
+          window.WiertlaCNC.closeRentModal();
+        }
+      });
+    }
+  });
+</script> 

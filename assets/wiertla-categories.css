@@ -888,157 +888,85 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 0;
-  padding: 0;
-  margin: 0;
-  border: none;
+  margin-bottom: 20px;
+  gap: 10px;
 }
 
-/* Top row with image, fi, dimension, price */
 .wiertla-categories__mobile-preview-type {
-  display: flex;
-  align-items: center;
   width: 34px;
   height: 34px;
-  padding: 0;
-  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 2px solid #112832;
+  margin-right: 10px;
 }
 
 .wiertla-categories__mobile-preview-type-icon {
-  width: 34px;
-  height: 34px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
 }
 
 .wiertla-categories__mobile-preview-diameter {
   width: 127px;
   height: 34px;
-  padding: 1px 10px 0;
-  margin: 0;
+  padding: 0 10px;
   border: 2px solid #112832;
-  border-left: none;
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.wiertla-categories__mobile-preview-diameter-label {
-  color: #112832;
-  font-size: 16px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 500;
-  line-height: 22px;
-  letter-spacing: 0.48px;
 }
 
 .wiertla-categories__mobile-preview-size {
   flex: 1;
   height: 34px;
   padding: 0 10px;
-  margin: 0;
-  border: 2px solid #112832;
-  border-left: none;
   display: flex;
   align-items: center;
+  border: 2px solid #112832;
 }
 
 .wiertla-categories__mobile-preview-price {
   height: 34px;
   padding: 0 10px;
-  margin: 0;
-  background: #ffe500;
+  background: #FFE500;
+  display: flex;
+  align-items: center;
   border: 2px solid #112832;
-  border-left: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
-/* Bottom row with vendor and symbol */
-.wiertla-categories__mobile-preview-details {
-  display: flex;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-.wiertla-categories__mobile-preview-manufacturer {
-  width: 160px;
-  height: 34px;
-  padding: 0 10px;
-  margin: 0;
-  background: #f5f5f8;
-  border: 2px solid #e2e2e7;
-  border-top: none;
-  display: flex;
-  align-items: center;
-}
-
-.wiertla-categories__mobile-preview-sku {
-  flex: 1;
-  height: 34px;
-  padding: 0 10px;
-  margin: 0;
-  background: #f5f5f8;
-  border: 2px solid #e2e2e7;
-  border-left: none;
-  border-top: none;
-  display: flex;
-  align-items: center;
-}
-
-/* Text styles */
-.wiertla-categories__mobile-preview-diameter-value,
-.wiertla-categories__mobile-preview-size-value,
-.wiertla-categories__mobile-preview-price-value,
-.wiertla-categories__mobile-preview-manufacturer-value,
-.wiertla-categories__mobile-preview-sku-value {
+.wiertla-categories__mobile-preview-diameter-label,
+.wiertla-categories__mobile-preview-size-label {
   color: #112832;
   font-size: 16px;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   line-height: 22px;
-  letter-spacing: 0.48px;
+  margin-right: 10px;
 }
 
-.wiertla-categories__mobile-preview-cart-icon {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.wiertla-categories__mobile-preview-cart-icon img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
+.wiertla-categories__mobile-preview-diameter-value,
+.wiertla-categories__mobile-preview-size-value,
+.wiertla-categories__mobile-preview-price-value {
+  color: #112832;
+  font-size: 16px;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  line-height: 22px;
 }
 
 @media screen and (max-width: 768px) {
-  .wiertla-categories__mobile-preview-info {
-    padding: 0;
-  }
-
   .wiertla-categories__mobile-preview-specs {
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
   }
 
   .wiertla-categories__mobile-preview-type,
   .wiertla-categories__mobile-preview-diameter,
   .wiertla-categories__mobile-preview-size,
   .wiertla-categories__mobile-preview-price {
-    margin: 0;
-  }
-
-  .wiertla-categories__mobile-preview-details {
-    flex-direction: row;
-  }
-
-  .wiertla-categories__mobile-preview-manufacturer,
-  .wiertla-categories__mobile-preview-sku {
     margin: 0;
   }
 }
@@ -1306,6 +1234,17 @@
   .wiertla-categories-mobile-types {
     display: block;
   }
+
+  .wiertla-categories-mobile-types__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .wiertla-categories-mobile-types__item {
+    width: 100%;
+    margin-bottom: 0;
+  }
 }
 
 /* Mobile Rent Modal Styles */
@@ -1317,7 +1256,7 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
-  display: none;
+  display: none !important;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -1325,9 +1264,9 @@
 }
 
 .wiertla-categories__mobile-rent-modal.active {
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
+  display: flex !important;
+  opacity: 1;
+  visibility: visible;
 }
 
 .wiertla-categories__mobile-rent-wrapper {
@@ -1344,9 +1283,83 @@
   pointer-events: auto;
 }
 
-.wiertla-categories__mobile-rent-modal.active
-  .wiertla-categories__mobile-rent-wrapper {
+.wiertla-categories__mobile-rent-modal.active .wiertla-categories__mobile-rent-wrapper {
   transform: translateY(0);
+}
+
+/* Desktop styles for the rent modal */
+@media screen and (min-width: 769px) {
+  .wiertla-categories__mobile-rent-modal {
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .wiertla-categories__mobile-rent-modal.active {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .wiertla-categories__mobile-rent-wrapper {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 24px;
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .wiertla-categories__mobile-rent-modal.active .wiertla-categories__mobile-rent-wrapper {
+    transform: none;
+  }
+
+  .wiertla-categories__mobile-rent-header {
+    margin-bottom: 32px;
+  }
+
+  .wiertla-categories__mobile-rent-content {
+    gap: 24px;
+  }
+
+  .wiertla-categories__mobile-rent-description,
+  .wiertla-categories__mobile-rent-contact {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  .wiertla-categories__mobile-rent-contact-info {
+    gap: 16px;
+  }
+
+  .wiertla-categories__mobile-rent-button {
+    height: 56px;
+    font-size: 18px;
+  }
+
+  .wiertla-categories__mobile-rent-form {
+    gap: 16px;
+  }
+
+  .wiertla-categories__mobile-rent-form-group {
+    height: 56px;
+  }
+
+  .wiertla-categories__mobile-rent-form-group input {
+    font-size: 18px;
+  }
+
+  .wiertla-categories__mobile-rent-submit {
+    height: 56px;
+    font-size: 18px;
+    margin-top: 16px;
+  }
 }
 
 .wiertla-categories__mobile-rent-header {
@@ -1451,12 +1464,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  width: 100%;
-  height: 48px;
-  background-color: #ffd700;
-  border: none;
-  border-radius: 30px;
+  width: 392px;
+  height: 44px;
+  gap: 22px;
+  background-color: #FFE500;
+  border: 2px solid #112832;
+  border-radius: 40px;
+  padding: 11px 17px 11px 22px;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 16px;
@@ -1493,46 +1507,50 @@
 }
 
 .wiertla-categories__mobile-rent-form-group {
-  width: 100%;
-  height: 44px;
-  padding: 0 17px;
-  background-color: white;
-  border: 2px solid #e2e2e7;
-  border-radius: 30px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 11px;
+  width: 100%;
+  margin-bottom: 11px;
 }
 
-.wiertla-categories__mobile-rent-form-group input {
+.wiertla-categories__mobile-rent-date {
   width: 100%;
-  height: 100%;
-  border: none;
-  background: none;
+  padding: 11px 17px;
+  border: 2px solid #112832;
+  border-radius: 40px;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 16px;
-  color: #5d7077;
+  color: #112832;
+  background-color: #FFFFFF;
+  cursor: pointer;
 }
 
-.wiertla-categories__mobile-rent-form-group input::placeholder {
-  color: #5d7077;
+.wiertla-categories__mobile-rent-date::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  width: 24px;
+  height: 24px;
 }
 
 .wiertla-categories__mobile-rent-form-row {
   display: flex;
   gap: 11px;
+  width: 100%;
+  margin-bottom: 11px;
 }
 
-.wiertla-categories__mobile-rent-form-row
-  .wiertla-categories__mobile-rent-form-group {
+.wiertla-categories__mobile-rent-form-row .wiertla-categories__mobile-rent-form-group {
   flex: 1;
+  margin-bottom: 0;
 }
 
 .wiertla-categories__mobile-rent-submit {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  justify-content: space-between;
   width: 100%;
   height: 48px;
   background-color: #ffd700;
@@ -1555,4 +1573,255 @@
   width: 24px;
   height: 24px;
   object-fit: contain;
+}
+
+.wiertla-categories__filters-left select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('dropdown_icon.svg');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
+  padding-right: 28px;
+  margin-right: 8px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  padding: 10px 22px;
+  font-size: 16px;
+  color: #112832;
+  cursor: pointer;
+  min-width: 120px;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.48px;
+}
+
+.wiertla-categories__filters-left select:focus {
+  outline: none;
+  border-color: #112832;
+}
+
+.wiertla-categories__filters-left select option {
+  padding: 10px;
+  font-size: 16px;
+  background-color: white;
+  color: #112832;
+}
+
+/* Remove default dropdown arrow in Firefox */
+.wiertla-categories__filters-left select::-ms-expand {
+  display: none;
+}
+
+/* Style for disabled state */
+.wiertla-categories__filters-left select:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.wiertla-categories__mobile-rent-contact-info span {
+  font-family: League Spartan;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 6%;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-offset: 0%;
+  text-decoration-thickness: 0%;
+  margin-left: 8px;
+}
+
+.wiertla-categories__mobile-rent-contact-link {
+  font-family: League Spartan;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 6%;
+  text-transform: uppercase;
+  text-decoration: underline;
+  color: #112832;
+  margin-left: 8px;
+}
+
+.wiertla-categories__mobile-rent-contact-link:hover {
+  text-decoration: none;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 392px;
+  height: 44px;
+  gap: 22px;
+  background-color: #FFE500;
+  border: 2px solid #112832;
+  border-radius: 40px;
+  padding: 11px 17px 11px 22px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+
+  color: #112832;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-button:hover {
+  background-color: #ffe44d;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-button img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 0;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-form-group {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-form-group input {
+  width: 100%;
+  height: 44px;
+  padding: 11px 17px 11px 22px;
+  border: 2px solid #e2e2e7;
+  border-radius: 40px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #112832;
+  transition: border-color 0.3s ease;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-form-group input:focus {
+  outline: none;
+  border-color: #112832;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-form-group input.error {
+  border-color: #ff0000;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-form-error {
+  display: none;
+  color: #ff0000;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  margin-top: 4px;
+  padding-left: 22px;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-form-group.error .wiertla-categories__mobile-rent-form-error {
+  display: block;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 392px;
+  height: 44px;
+  gap: 22px;
+  background-color: #FFE500;
+  border: 2px solid #112832;
+  border-radius: 40px;
+  padding: 11px 17px 11px 22px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #112832;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 16px;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-submit:hover {
+  background-color: #ffe44d;
+}
+
+.wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-submit img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.wiertla-categories__mobile-rent-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.wiertla-categories__mobile-rent-success-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.wiertla-categories__mobile-rent-success-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.wiertla-categories__mobile-rent-success-message {
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 15.6px;
+  letter-spacing: 6%;
+  text-transform: uppercase;
+  color: #112832;
+}
+
+.wiertla-categories__mobile-rent-success-note {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 3%;
+  color: #112832;
+  margin-bottom: 24px;
+}
+
+.wiertla-categories__mobile-rent-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 44px;
+  background-color: #FFFFFF;
+  border: 2px solid #112832;
+  border-radius: 40px;
+  padding: 11px 22px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #112832;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.wiertla-categories__mobile-rent-button:hover {
+  background-color: #f5f5f5;
 }
