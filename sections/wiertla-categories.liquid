@@ -197,6 +197,7 @@
           id: {{ product.id | json }},
           title: {{ product.title | json }},
           handle: {{ product.handle | json }},
+          sku: {{ product.first_available_variant.sku | json }},
           description: {{ product.description | json }},
           type: {{ product.type | json }},
           vendor: {{ product.vendor | json }},
@@ -323,7 +324,6 @@
         // Show the modal
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        console.log(modal);
         // Add close handler
         const closeButton = modal.querySelector('.wiertla-categories__mobile-rent-close');
         if (closeButton) {
@@ -405,7 +405,6 @@
           itemsPerPage = newItemsPerPage;
           currentPage = 1; // Reset to first page
           applyFilters(); // Refresh the table
-          console.log('Changed items per page to:', itemsPerPage);
         }
       });
     });
@@ -859,8 +858,46 @@
     
     // Filter products based on current filters
     function filterProducts() {
-      return allProducts.filter(product => {
-        // Filter by category or type (they use the same logic)
+      let filteredProducts = window.WiertlaCNC?.products || [];
+      
+      if (!Array.isArray(filteredProducts) || filteredProducts.length === 0) {
+        return [];
+      }
+
+      // Apply search filter first if there's a search term
+      const searchTerm = window.currentFilters.search?.toLowerCase();
+      if (searchTerm) {
+        filteredProducts = filteredProducts.filter(product => {
+          const searchableFields = [
+            product.custom_symbol,
+            product.custom_fi,
+            product.custom_drill_length,
+            product.vendor,
+            product.title,
+            product.sku
+          ].filter(Boolean).map(field => field.toString().toLowerCase());
+
+          return searchableFields.some(field => field.includes(searchTerm));
+        });
+      }
+
+      // Sort by diameter (FI)
+      filteredProducts.sort((a, b) => {
+        const parseDiameter = (diameter) => {
+          if (!diameter) return Number.MAX_SAFE_INTEGER;
+          const numberStr = diameter.toString().replace(/[^\d.]/g, '');
+          const parsedValue = parseFloat(numberStr);
+          return isNaN(parsedValue) ? Number.MAX_SAFE_INTEGER : parsedValue;
+        };
+
+        const diameterA = parseDiameter(a.custom_fi);
+        const diameterB = parseDiameter(b.custom_fi);
+        return diameterA - diameterB;
+      });
+
+      // Apply category filter
+      if (window.selectedCategory && window.selectedCategory !== 'wszystkie') {
+        console.log('Applying category filter:', window.selectedCategory);
         const categoryToType = {
           'koronkowe': 'VW',
           'plytkowe': 'PR',
@@ -871,68 +908,65 @@
           'iscar': 'IS',
           'walter': 'WA'
         };
+        const expectedType = categoryToType[window.selectedCategory];
+        filteredProducts = filteredProducts.filter(product => {
+          const matches = expectedType && product.sku && product.sku.startsWith(expectedType);
+          console.log('Product matches category:', matches, 'SKU:', product.sku);
+          return matches;
+        });
+        console.log('Products after category filter:', filteredProducts.length);
+      }
 
-        // Only apply category filter if one is selected
-        if (window.selectedCategory && window.selectedCategory !== 'wszystkie') {
-          const expectedType = categoryToType[window.selectedCategory];
-          if (!expectedType || !product.custom_category || !product.custom_category.includes(expectedType)) {
-            return false;
-          }
-        }
+      // Apply type filter
+      if (window.WiertlaCNC.filters.type && window.WiertlaCNC.filters.type !== 'all') {
+        console.log('Applying type filter:', window.WiertlaCNC.filters.type);
+        const typeMapping = {
+          'vhm': 'WW',
+          'hss': 'HSS',
+          'carbide': 'Węglik'
+        };
+        const expectedType = typeMapping[window.WiertlaCNC.filters.type];
+        filteredProducts = filteredProducts.filter(product => {
+          const matches = expectedType && product.custom_category && product.custom_category.includes(expectedType);
+          console.log('Product matches type:', matches, 'Category:', product.custom_category);
+          return matches;
+        });
+        console.log('Products after type filter:', filteredProducts.length);
+      }
 
-        // Only apply type filter if one is selected
-        if (window.WiertlaCNC.filters.type && window.WiertlaCNC.filters.type !== 'all') {
-          const typeMapping = {
-            'vhm': 'WW',
-            'hss': 'HSS',
-            'carbide': 'Węglik'
-          };
-          const expectedType = typeMapping[window.WiertlaCNC.filters.type];
-          if (!expectedType || !product.custom_category || !product.custom_category.includes(expectedType)) {
-            return false;
-          }
-        }
+      // Apply status filter
+      if (window.WiertlaCNC.filters.status && window.WiertlaCNC.filters.status !== 'all') {
+        console.log('Applying status filter:', window.WiertlaCNC.filters.status);
+        filteredProducts = filteredProducts.filter(product => {
+          if (window.WiertlaCNC.filters.status === 'rentable') return product.rentable;
+          if (window.WiertlaCNC.filters.status === 'non-rentable') return !product.rentable;
+          return true;
+        });
+        console.log('Products after status filter:', filteredProducts.length);
+      }
 
-        // Only apply status filter if one is selected
-        if (window.WiertlaCNC.filters.status && window.WiertlaCNC.filters.status !== 'all') {
-          if (window.WiertlaCNC.filters.status === 'rentable' && !product.rentable) {
-            return false;
-          }
-          if (window.WiertlaCNC.filters.status === 'non-rentable' && product.rentable) {
-            return false;
-          }
-        }
+      // Apply manufacturer filter
+      if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all') {
+        console.log('Applying manufacturer filter:', window.WiertlaCNC.filters.manufacturer);
+        const manufacturerMapping = {
+          'sandvik': 'Sandvik',
+          'iscar': 'ISCAR',
+          'walter': 'WALTER',
+          'ksem': 'KSEM',
+          'amec': 'AMEC'
+        };
+        const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer];
+        filteredProducts = filteredProducts.filter(product => {
+          const matches = expectedManufacturer && product.vendor && 
+                 product.vendor.toLowerCase().includes(expectedManufacturer.toLowerCase());
+          console.log('Product matches manufacturer:', matches, 'Vendor:', product.vendor);
+          return matches;
+        });
+        console.log('Products after manufacturer filter:', filteredProducts.length);
+      }
 
-        // Only apply crown filter if one is selected
-        if (window.WiertlaCNC.filters.crown && window.WiertlaCNC.filters.crown !== 'all') {
-          const crownMapping = {
-            'standard': 'Standardowe',
-            'premium': 'Premium',
-            'special': 'Specjalne'
-          };
-          const expectedCrown = crownMapping[window.WiertlaCNC.filters.crown];
-          if (!expectedCrown || !product.crown || !product.crown.includes(expectedCrown)) {
-            return false;
-          }
-        }
-
-        // Only apply manufacturer filter if one is selected
-        if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all') {
-          const manufacturerMapping = {
-            'sandvik': 'Sandvik',
-            'iscar': 'ISCAR',
-            'walter': 'WALTER',
-            'ksem': 'KSEM',
-            'amec': 'AMEC'
-          };
-          const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer];
-          if (!expectedManufacturer || !product.vendor || !product.vendor.toLowerCase().includes(expectedManufacturer.toLowerCase())) {
-            return false;
-          }
-        }
-
-        return true;
-      });
+      console.log('Final filtered products count:', filteredProducts.length);
+      return filteredProducts;
     }
     
     // Update filter functions
@@ -958,7 +992,6 @@
       applyFilters();
       
       // Log the number of filtered products
-      console.log(`Filtered to ${allProducts.length} products containing "${searchTerm}" in title`);
     };
     
     // Function to reset the temporary filter
@@ -966,13 +999,13 @@
       if (window._originalProducts) {
         allProducts = [...window._originalProducts];
         applyFilters();
-        console.log('Reset to original products');
       }
     };
     
     // Apply filters and pagination
     function applyFilters() {
-      const filteredProducts = filterProducts();
+
+    const filteredProducts = filterProducts();
       
       window.totalPages = Math.ceil(filteredProducts.length / window.itemsPerPage);
       
@@ -1226,12 +1259,27 @@
         row.setAttribute('data-product-id', product.id);
         
         row.innerHTML = `
-          <td>${product.type || '-'}</td>
-          <td>${product.fi || '-'}</td>
-          <td>${product.length || '-'}</td>
-          <td>${product.symbol || '-'}</td>
-          <td>${product.vendor || '-'}</td>
-          <td>${product.price}</td>
+          <td class="wiertla-categories__table-cell wiertla-categories__table-cell--type">
+            <img src="${product.typeIcon}" alt="${product.type}" class="wiertla-categories__type-icon">
+          </td>
+          <td class="wiertla-categories__table-cell wiertla-categories__table-cell--diameter">
+            ${product.diameter || '-'}
+          </td>
+          <td class="wiertla-categories__table-cell wiertla-categories__table-cell--length">
+            ${product.length || '-'}
+          </td>
+          <td class="wiertla-categories__table-cell wiertla-categories__table-cell--symbol">
+            ${product.symbol || '-'}
+          </td>
+          <td class="wiertla-categories__table-cell wiertla-categories__table-cell--vendor">
+            ${product.vendor || '-'}
+          </td>
+          <td class="wiertla-categories__table-cell wiertla-categories__table-cell--price">
+            ${product.price ? `${product.price} zł` : '-'}
+          </td>
+          <td class="wiertla-categories__table-cell wiertla-categories__table-cell--name">
+            ${product.name || '-'}
+          </td>
         `;
         
         if (product.image) {
@@ -1833,19 +1881,33 @@
     // Only have ONE generateTable function
     function generateTable(products) {
       const tableBody = document.querySelector('.wiertla-categories__table tbody');
-      if (!tableBody) return;
-      
-      tableBody.innerHTML = '';
-      
-      if (products.length === 0) {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td colspan="7" class="wiertla-categories__table-cell">Brak wyników</td>
-        `;
-        tableBody.appendChild(row);
+      if (!tableBody) {
+        console.error('Table body element not found');
         return;
       }
-      
+
+      // Clear existing table content
+      tableBody.innerHTML = '';
+
+      // Check if products array is valid
+      if (!Array.isArray(products) || products.length === 0) {
+        const noResultsRow = document.createElement('tr');
+        noResultsRow.innerHTML = `
+          <td colspan="7" class="wiertla-categories__table-cell" style="text-align: center; padding: 20px;">
+            ${translations[currentLanguage].no_results || 'Brak wyników'}
+          </td>
+        `;
+        tableBody.appendChild(noResultsRow);
+        return;
+      }
+
+      // Sort products by diameter (FI), placing items without FI at the end
+      const sortedProducts = [...products].sort((a, b) => {
+        const diameterA = a.custom_fi ? parseFloat(a.custom_fi.replace(/[^\d.]/g, '')) : Number.MAX_SAFE_INTEGER;
+        const diameterB = b.custom_fi ? parseFloat(b.custom_fi.replace(/[^\d.]/g, '')) : Number.MAX_SAFE_INTEGER;
+        return diameterA - diameterB;
+      });
+
       // Create preview container if it doesn't exist
       let previewContainer = document.querySelector('.wiertla-categories__preview-container');
       if (!previewContainer) {
@@ -1870,13 +1932,20 @@
         `;
         document.body.appendChild(previewContainer);
       }
-      
-      products.forEach((product, index) => {
+
+      // Generate table rows using sorted products
+      sortedProducts.forEach((product, index) => {
+        if (!product) {
+          console.warn('Invalid product data at index:', index);
+          return;
+        }
+
         const row = document.createElement('tr');
         row.className = 'wiertla-categories__table-row';
-        row.setAttribute('data-product-id', product.id);
-        row.setAttribute('data-href', product.url);
-        
+        row.setAttribute('data-product-id', product.id || '');
+        row.setAttribute('data-href', product.url || '');
+
+        // Set image data if available
         if (product.image) {
           row.setAttribute('data-image', product.image);
           
@@ -1887,7 +1956,7 @@
               const previewImage = previewContainer.querySelector('img');
               if (previewImage) {
                 previewImage.src = imageUrl;
-                previewImage.alt = product.title;
+                previewImage.alt = product.title || '';
                 previewContainer.style.display = 'block';
               }
             }
@@ -1898,26 +1967,31 @@
             previewContainer.style.display = 'none';
           });
         }
-        
+
+        // Define icon mapping
+        const iconMap = {
+          'VW': "{{ 'image-8.png' | asset_url }}",
+          'PR': "{{ 'image-10.png' | asset_url }}",
+          'WW': "{{ 'image-12.png' | asset_url }}",
+          'PS': "{{ 'image-9.png' | asset_url }}",
+          'WK': "{{ 'image-13.png' | asset_url }}",
+          'WV': "{{ 'image-11.png' | asset_url }}",
+          'IS': "{{ 'image-14.png' | asset_url }}",
+          'WA': "{{ 'image-15.png' | asset_url }}"
+        };
+
+        // Get SKU prefix for icon
+        const skuPrefix = product.sku?.substring(0, 2) || '';
+        const iconUrl = iconMap[skuPrefix] || product.image || '';
+
+        // Generate row content based on screen width
         if (window.innerWidth <= 768) {
           row.innerHTML = `
             <td class="wiertla-categories__table-cell">
-              <button type="button" class="wiertla-categories__mobile-card" data-product-id="${product.id}" data-product-url="${product.url}">
+              <button type="button" class="wiertla-categories__mobile-card" data-product-id="${product.id || ''}" data-product-url="${product.url || ''}">
                 <div class="wiertla-categories__mobile-top">
                   <div class="wiertla-categories__mobile-image">
-                    ${(() => {
-                      const category = (product.custom_category || '').toLowerCase();
-                      const iconMap = {
-                        'koronkowe': "{{ 'image-8.png' | asset_url }}",
-                        'plytkowe': "{{ 'image-9.png' | asset_url }}",
-                        'vhm': "{{ 'image-12.png' | asset_url }}",
-                        'sandvik': "{{ 'image-10.png' | asset_url }}",
-                        'ksem': "{{ 'image-13.png' | asset_url }}",
-                        'amec': "{{ 'image-11.png' | asset_url }}"
-                      };
-                      const iconUrl = Object.entries(iconMap).find(([key]) => category.includes(key.toLowerCase()))?.[1] || product.image;
-                      return iconUrl ? `<img src="${iconUrl}" alt="${category || 'Product'}" width="34" height="34" loading="lazy">` : '';
-                    })()}
+                    ${iconUrl ? `<img src="${iconUrl}" alt="${product.type || 'Product'}" width="34" height="34" loading="lazy">` : '-'}
                   </div>
                   <div class="wiertla-categories__mobile-fi">
                     <span class="mobile-label">Fi ⌀</span>
@@ -1948,7 +2022,6 @@
               </button>
             </td>
           `;
-          
           const mobileCard = row.querySelector('.wiertla-categories__mobile-card');
           if (mobileCard) {
             mobileCard.addEventListener('click', function(e) {
@@ -1984,26 +2057,22 @@
           }
         } else {
           row.innerHTML = `
-            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle}">
-              ${(() => {
-                const category = (product.custom_category || '').toLowerCase();
-                const iconMap = {
-                  'koronkowe': "{{ 'image-8.png' | asset_url }}",
-                  'plytkowe': "{{ 'image-9.png' | asset_url }}",
-                  'vhm': "{{ 'image-12.png' | asset_url }}",
-                  'sandvik': "{{ 'image-10.png' | asset_url }}",
-                  'ksem': "{{ 'image-13.png' | asset_url }}",
-                  'amec': "{{ 'image-11.png' | asset_url }}"
-                };
-                const iconUrl = Object.entries(iconMap).find(([key]) => category.includes(key.toLowerCase()))?.[1] || product.image;
-                return iconUrl ? `<img src="${iconUrl}" alt="${category || 'Product'}" width="34" height="34" loading="lazy">` : '-';
-              })()}
+            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
+              ${iconUrl ? `<img src="${iconUrl}" alt="${product.type || 'Product'}" width="34" height="34" loading="lazy">` : '-'}
             </td>
-            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle}">${product.custom_fi ? '⌀ ' + product.custom_fi : '-'}</td>
-            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle}">${product.custom_drill_length || '-'}</td>
-            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle}">${product.custom_symbol || '-'}</td>
-            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle}">${product.vendor || '-'}</td>
-            <td class="wiertla-categories__table-cell">
+            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
+              ${product.custom_fi ? '⌀ ' + product.custom_fi : '-'}
+            </td>
+            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
+              ${product.custom_drill_length || '-'}
+            </td>
+            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
+              ${product.custom_symbol || '-'}
+            </td>
+            <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
+              ${product.vendor || '-'}
+            </td>
+             <td class="wiertla-categories__table-cell">
               <div class="wiertla-categories__price-wrapper">
                 <span class="wiertla-categories__price" data-href="/products/${product.handle}">${product.price}</span>
                 ${product.custom_rent ? `
@@ -2014,55 +2083,41 @@
               </div>
             </td>
           `;
-          
-          // Add click handlers for table cells
-          const cells = row.querySelectorAll('.wiertla-categories__table-cell[data-href]');
-          cells.forEach(cell => {
-            cell.addEventListener('click', function(e) {
-              // Don't navigate if clicking on the rent button
-              if (!e.target.closest('.wiertla-categories__rent-button')) {
-                const url = this.getAttribute('data-href');
-                if (url) {
-                  window.location.href = url;
-                }
-              }
-            });
-          });
+        }
 
-          // Add click handler for rent button
-          const rentButton = row.querySelector('.wiertla-categories__rent-button');
-          if (rentButton) {
-            rentButton.addEventListener('click', function(e) {
-              e.preventDefault();
-              e.stopPropagation();
-              const productId = this.getAttribute('data-product-id');
-              
-              // Ensure WiertlaCNC and products array exist
-              if (!window.WiertlaCNC) {
-                console.error('WiertlaCNC is not initialized');
-                return;
+        // Add click handlers for table cells
+        const cells = row.querySelectorAll('.wiertla-categories__table-cell[data-href]');
+        cells.forEach(cell => {
+          cell.addEventListener('click', function(e) {
+            if (!e.target.closest('.wiertla-categories__rent-button')) {
+              const url = this.getAttribute('data-href');
+              if (url) {
+                window.location.href = url;
               }
-              
-              if (!window.WiertlaCNC.products || !Array.isArray(window.WiertlaCNC.products)) {
-                console.error('Products array is not initialized');
-                return;
-              }
-              
-              // Convert productId to number for comparison
+            }
+          });
+        });
+
+        // Add click handler for rent button
+        const rentButton = row.querySelector('.wiertla-categories__rent-button');
+        if (rentButton) {
+          rentButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const productId = this.getAttribute('data-product-id');
+            
+            if (window.WiertlaCNC && window.WiertlaCNC.products) {
               const product = window.WiertlaCNC.products.find(p => p.id === Number(productId));
               if (product) {
                 window.WiertlaCNC.openRentModal(product);
-              } else {
-                console.error('Product not found with ID:', productId);
-                console.log('Available products:', window.WiertlaCNC.products);
               }
-            });
-          }
+            }
+          });
         }
-        
+
         tableBody.appendChild(row);
       });
-      
+
       // Update results count
       const resultsCount = document.getElementById('resultsCount');
       if (resultsCount) {
@@ -2161,7 +2216,6 @@
     mobileTypeItems.forEach(item => {
       item.addEventListener('click', function() {
         const category = this.getAttribute('data-category');
-        console.log('Mobile category clicked:', category);
         
         // Set active class
         mobileTypeItems.forEach(el => el.classList.remove('active'));
@@ -2486,7 +2540,7 @@
     .wiertla-categories__table-row:hover::after {
       content: "";
       position: absolute;
-      right: 20px;
+      right: 12px;
       top: 50%;
       transform: translateY(-50%);
       width: 24px;
@@ -2498,7 +2552,7 @@
     }
 
     .wiertla-categories__table td {
-      padding: 5.5px 17px;
+      padding: 5.5px 30px 5.5px 17px;
       min-height: 25px;
       line-height: normal;
       vertical-align: middle;
@@ -2581,20 +2635,6 @@
     .wiertla-categories__table th:nth-child(7),
     .wiertla-categories__table td:nth-child(7) {
       display: none;
-    }
-
-    /* Add arrow to Cena netto column */
-    .wiertla-categories__table th:nth-last-child(2)::after {
-      content: "";
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 5px solid #112832;
     }
 
     /* Hover preview styles */
@@ -5368,7 +5408,6 @@ text-transform: lowercase;
         window.WiertlaCNC.openRentModal(product);
       } else {
         console.error('Product not found with ID:', productId);
-        console.log('Available products:', window.WiertlaCNC.products);
       }
     }
   });

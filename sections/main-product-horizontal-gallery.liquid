@@ -178,20 +178,11 @@
 <div class="product-page">
   <!-- Breadcrumbs -->
   <div class="product-breadcrumbs">
-    <a
-      href="/"
-      class="product-breadcrumbs__link"
-      data-translation="mainProductHorizontalGallery.home">STRONA GŁÓWNA</a>
-    {%- if collection -%}
-      <span>/</span>
-      <a href="{{ collection.url }}" class="product-breadcrumbs__link">{{ collection.title | upcase }}</a>
-    {%- endif -%}
-    {%- if product.vendor != blank -%}
-      <span>/</span>
-      <a href="/collections/vendors?q={{ product.vendor | url_encode }}" class="product-breadcrumbs__link">{{ product.vendor | upcase }}</a>
-    {%- endif -%}
+    <a href="/" class="product-breadcrumbs__home">Home</a>
     <span>/</span>
-    <span class="product-breadcrumbs__current">{{ product.variants[0].sku }}</span>
+    <a href="/collections/all" class="product-breadcrumbs__collection">Products</a>
+    <span>/</span>
+    <span class="product-breadcrumbs__current">{{ product.title }}</span>
   </div>
 
   <div class="product-layout">
@@ -217,12 +208,10 @@
       <div class="product-details__container">
         <!-- Product Details Section -->
         <section class="product-details__info">
-          {%- if product.variants[0].sku != blank -%}
-            <!-- Product SKU -->
-            <div class="product-details__sku">
-              {{ product.variants[0].sku }}
-            </div>
-          {%- endif -%}
+          <!-- Product Name -->
+          <div class="product-details__sku">
+            {{ product.title }}
+          </div>
 
           <!-- Product Availability Status -->
           {%- unless product.available -%}
@@ -242,14 +231,14 @@
               <div class="product-details__divider"></div>
             {%- endif -%}
 
-            {%- if product.metafields.custom.category != blank -%}
+            {% comment %} {%- if product.metafields.custom.category != blank -%}
               <!-- Category -->
               <div class="product-details__spec-item">
                 <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.category">Kategoria</div>
                 <div class="product-details__spec-value">{{ product.metafields.custom.category }}</div>
               </div>
               <div class="product-details__divider"></div>
-            {%- endif -%}
+            {%- endif -%} {% endcomment %}
 
             {%- if product.metafields.custom.fi != blank -%}
               <!-- Diameter (fi) -->
