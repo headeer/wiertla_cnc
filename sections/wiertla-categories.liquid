@@ -213,6 +213,8 @@
           custom_srednica: {{ product.metafields.custom._rednica | json }},
           custom_kod_producenta: {{ product.metafields.custom.kod_producenta | json }},
           custom_manufacturer: {{ product.metafields.custom.manufacturer | json }},
+          custom_working_length: {{ product.metafields.custom.working_length.value | json }},
+          custom_xd: {{ product.metafields.custom.xd | json }},
           // Pricing and Availability
           price: {{ product.price | money_without_trailing_zeros | json }},
           price_min: {{ product.price_min | money_without_trailing_zeros | json }},
@@ -305,7 +307,7 @@
           ]
         });
       {% endfor %}
-      
+      console.log(wiertlaProducts);
       // Assign products to global WiertlaCNC object
       window.WiertlaCNC = window.WiertlaCNC || {};
       window.WiertlaCNC.products = wiertlaProducts;
@@ -2004,7 +2006,8 @@
                     <span class="mobile-value">${product.custom_fi || product.custom_srednica || '-'}</span>
                   </div>
                   <div class="wiertla-categories__mobile-dimension">
-                    ${product.custom_drill_length || '-'}
+                    ${product.metafields.custom.custom_working_length || product.custom_working_length || product.custom_xd || '-'}
+                    
                   </div>
                 </div>
                 <div class="wiertla-categories__mobile-bottom">
@@ -2071,7 +2074,7 @@
               ${product.custom_fi ? '⌀ ' + product.custom_fi || product.custom_srednica : '-'}
             </td>
             <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
-              ${product.custom_drill_length || '-'}
+                    ${product.metafields.custom.custom_working_length || product.custom_working_length || product.custom_xd || '-'}
             </td>
             <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
               ${product.custom_symbol  || product.custom_kod_producenta  ||  '-'}
