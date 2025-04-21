@@ -210,6 +210,9 @@
           custom_category: {{ product.metafields.custom.category | json }},
           custom_drill_length: {{ product.metafields.custom.drill_length | json }},
           custom_rent: {{ product.metafields.custom.rent | json }},
+          custom_srednica: {{ product.metafields.custom._rednica | json }},
+          custom_kod_producenta: {{ product.metafields.custom.kod_producenta | json }},
+          custom_manufacturer: {{ product.metafields.custom.manufacturer | json }},
           // Pricing and Availability
           price: {{ product.price | money_without_trailing_zeros | json }},
           price_min: {{ product.price_min | money_without_trailing_zeros | json }},
@@ -423,7 +426,7 @@
     
     // Initialize product table data
     let allProducts = wiertlaProducts;
-    
+    console.log(allProducts);
     // Create hover preview element
     const hoverPreview = document.createElement('div');
     hoverPreview.className = 'wiertla-categories__hover-preview';
@@ -870,6 +873,9 @@
         filteredProducts = filteredProducts.filter(product => {
           const searchableFields = [
             product.custom_symbol,
+            product.custom_kod_producenta,
+            product.custom_manufacturer,
+            product.custom_srednica,
             product.custom_fi,
             product.custom_drill_length,
             product.vendor,
@@ -1983,7 +1989,7 @@
         // Get SKU prefix for icon
         const skuPrefix = product.sku?.substring(0, 2) || '';
         const iconUrl = iconMap[skuPrefix] || product.image || '';
-
+        console.log(product, product.sku, skuPrefix, iconUrl);
         // Generate row content based on screen width
         if (window.innerWidth <= 768) {
           row.innerHTML = `
@@ -1995,7 +2001,7 @@
                   </div>
                   <div class="wiertla-categories__mobile-fi">
                     <span class="mobile-label">Fi ⌀</span>
-                    <span class="mobile-value">${product.custom_fi || '-'}</span>
+                    <span class="mobile-value">${product.custom_fi || product.custom_srednica || '-'}</span>
                   </div>
                   <div class="wiertla-categories__mobile-dimension">
                     ${product.custom_drill_length || '-'}
@@ -2003,10 +2009,11 @@
                 </div>
                 <div class="wiertla-categories__mobile-bottom">
                   <div class="wiertla-categories__mobile-vendor">
-                    ${product.vendor || '-'}
+                    ${product.vendor || product.custom_manufacturer || '-'}
+
                   </div>
                   <div class="wiertla-categories__mobile-symbol">
-                    ${product.custom_symbol || '-'}
+              ${product.custom_symbol  || product.custom_kod_producenta  ||  '-'}
                   </div>
                   <div class="wiertla-categories__mobile-price-wrapper">
                     <div class="wiertla-categories__mobile-price">
@@ -2061,16 +2068,16 @@
               ${iconUrl ? `<img src="${iconUrl}" alt="${product.type || 'Product'}" width="34" height="34" loading="lazy">` : '-'}
             </td>
             <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
-              ${product.custom_fi ? '⌀ ' + product.custom_fi : '-'}
+              ${product.custom_fi ? '⌀ ' + product.custom_fi || product.custom_srednica : '-'}
             </td>
             <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
               ${product.custom_drill_length || '-'}
             </td>
             <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
-              ${product.custom_symbol || '-'}
+              ${product.custom_symbol  || product.custom_kod_producenta  ||  '-'}
             </td>
             <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
-              ${product.vendor || '-'}
+              ${product.vendor || product.custom_manufacturer || '-'}
             </td>
              <td class="wiertla-categories__table-cell">
               <div class="wiertla-categories__price-wrapper">

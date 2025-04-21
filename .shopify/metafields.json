@@ -42,7 +42,7 @@
     {
       "key": "mounting",
       "namespace": "custom",
-      "name": "Mounting",
+      "name": "mocowanie",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -122,7 +122,7 @@
     {
       "key": "fi",
       "namespace": "custom",
-      "name": "Fi",
+      "name": "średnica",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -142,11 +142,51 @@
     {
       "key": "drill_length",
       "namespace": "custom",
-      "name": "Drill Length",
+      "name": "xd",
       "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
+      }
+    },
+    {
+      "key": "stan",
+      "namespace": "custom",
+      "name": "STAN",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "fi_1",
+      "namespace": "custom",
+      "name": "Fi_1",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "fi_2",
+      "namespace": "custom",
+      "name": "Fi_2",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "fi_3",
+      "namespace": "custom",
+      "name": "Fi_3",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
       }
     }
   ],
