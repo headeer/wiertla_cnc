@@ -2068,7 +2068,18 @@
                   </div>
                   <div class="wiertla-categories__mobile-fi">
                     <span class="mobile-label">Fi ⌀</span>
-                    <span class="mobile-value">${product.custom_fi || product.custom_srednica || '-'}</span>
+                    <span class="mobile-value">${(() => {
+  const fi = product.custom_fi;
+  const srednica = product.custom_srednica;
+  
+  if (fi && fi !== 'null' && fi !== 'undefined' && fi.trim() !== '') {
+    return '⌀ ' + fi;
+  }
+  if (srednica && srednica !== 'null' && srednica !== 'undefined' && srednica.trim() !== '') {
+    return '⌀ ' + srednica;
+  }
+  return '-';
+})()}</span>
                   </div>
                   <div class="wiertla-categories__mobile-dimension">
                     ${product.metafields.custom.custom_working_length || product.custom_working_length || product.custom_xd || '-'}
@@ -2136,8 +2147,18 @@
               ${iconUrl ? `<img src="${iconUrl}" alt="${product.type || 'Product'}" width="34" height="34" loading="lazy">` : '-'}
             </td>
             <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
-              ${product.custom_fi || product.custom_srednica ? '⌀ ' + product.custom_fi || product.custom_srednica : '-'}
-              ${product.custom_fi || product.custom_srednica? '⌀ ' + product.custom_fi || product.custom_srednica : '-'}
+              ${(() => {
+  const fi = product.custom_fi;
+  const srednica = product.custom_srednica;
+  
+  if (fi && fi !== 'null' && fi !== 'undefined' && fi.trim() !== '') {
+    return '⌀ ' + fi;
+  }
+  if (srednica && srednica !== 'null' && srednica !== 'undefined' && srednica.trim() !== '') {
+    return '⌀ ' + srednica;
+  }
+  return '-';
+})()}
             </td>
             <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
                     ${product.metafields.custom.custom_working_length || product.custom_working_length || product.custom_xd || '-'}
