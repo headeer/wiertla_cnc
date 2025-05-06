@@ -10,6 +10,16 @@
   "page": [],
   "product": [
     {
+      "key": "_rednica",
+      "namespace": "custom",
+      "name": "średnica",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
       "key": "symbol",
       "namespace": "custom",
       "name": "Symbol",
@@ -40,7 +50,7 @@
       }
     },
     {
-      "key": "mounting",
+      "key": "mocowanie",
       "namespace": "custom",
       "name": "mocowanie",
       "description": "",
@@ -90,6 +100,26 @@
       }
     },
     {
+      "key": "xd",
+      "namespace": "custom",
+      "name": "xd",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "_stan",
+      "namespace": "custom",
+      "name": " STAN",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
       "key": "length",
       "namespace": "custom",
       "name": "Length",
@@ -120,9 +150,9 @@
       }
     },
     {
-      "key": "fi",
+      "key": "kod_producenta",
       "namespace": "custom",
-      "name": "średnica",
+      "name": "kod producenta",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -140,9 +170,9 @@
       }
     },
     {
-      "key": "drill_length",
+      "key": "marka",
       "namespace": "custom",
-      "name": "xd",
+      "name": "Marka",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -150,9 +180,9 @@
       }
     },
     {
-      "key": "stan",
+      "key": "tytul_2",
       "namespace": "custom",
-      "name": "STAN",
+      "name": "tytul_2",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -160,33 +190,33 @@
       }
     },
     {
-      "key": "fi_1",
+      "key": "uwagi",
       "namespace": "custom",
-      "name": "Fi_1",
+      "name": "uwagi",
       "description": "",
       "type": {
-        "name": "number_decimal",
-        "category": "NUMBER"
+        "name": "single_line_text_field",
+        "category": "TEXT"
       }
     },
     {
-      "key": "fi_2",
+      "key": "szt",
       "namespace": "custom",
-      "name": "Fi_2",
+      "name": "szt",
       "description": "",
       "type": {
-        "name": "number_decimal",
-        "category": "NUMBER"
+        "name": "single_line_text_field",
+        "category": "TEXT"
       }
     },
     {
-      "key": "fi_3",
+      "key": "gatunek",
       "namespace": "custom",
-      "name": "Fi_3",
+      "name": "Gatunek",
       "description": "",
       "type": {
-        "name": "number_decimal",
-        "category": "NUMBER"
+        "name": "single_line_text_field",
+        "category": "TEXT"
       }
     }
   ],

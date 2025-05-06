@@ -38,7 +38,7 @@
       </div>
 
       <div class="wiertla-categories__status-filters--mobile">
-        <button class="wiertla-categories__status-filter active" data-translate="wiertla_categories.status_filters.new">Nowe</button>
+        <button class="wiertla-categories__status-filter" data-translate="wiertla_categories.status_filters.new">Nowe</button>
         <button class="wiertla-categories__status-filter wider" data-translate="wiertla_categories.status_filters.used">Używane</button>
       </div>
       <div class="wiertla-categories__icons mobile">
@@ -307,7 +307,6 @@
           ]
         });
       {% endfor %}
-      console.log(wiertlaProducts);
       // Assign products to global WiertlaCNC object
       window.WiertlaCNC = window.WiertlaCNC || {};
       window.WiertlaCNC.products = wiertlaProducts;
@@ -428,7 +427,6 @@
     
     // Initialize product table data
     let allProducts = wiertlaProducts;
-    console.log(allProducts);
     // Create hover preview element
     const hoverPreview = document.createElement('div');
     hoverPreview.className = 'wiertla-categories__hover-preview';
@@ -863,14 +861,39 @@
     
     // Filter products based on current filters
     function filterProducts() {
-      let filteredProducts = window.WiertlaCNC?.products || [];
       
+      let filteredProducts = window.WiertlaCNC?.products || [];
+
       if (!Array.isArray(filteredProducts) || filteredProducts.length === 0) {
         return [];
       }
 
-      // Apply search filter first if there's a search term
-      const searchTerm = window.currentFilters.search?.toLowerCase();
+      // Apply condition filter first
+      if (window.WiertlaCNC.filters.condition) {
+        filteredProducts = filteredProducts.filter(product => {
+          // Get condition from both metafields.custom.condition and STAN field
+          const condition = product.metafields?.custom?.condition?.value;
+          const stan = product.metafields?.custom?.stan?.value;
+          
+          
+          if (!condition && !stan) {
+            return false;
+          }
+
+          const isNew = window.WiertlaCNC.filters.condition === 'nowe';
+          
+          // Check both fields - if either matches, include the product
+          const conditionMatches = condition && condition.toLowerCase().startsWith(isNew ? 'n' : 'u');
+          const stanMatches = stan && stan.toLowerCase().startsWith(isNew ? 'n' : 'u');
+          
+          const matches = conditionMatches || stanMatches;
+          return matches;
+        });
+        console.log('Products after condition/stan filter:', filteredProducts.length);
+      }
+
+      // Apply search filter if exists
+      const searchTerm = window.currentFilters?.search?.toLowerCase();
       if (searchTerm) {
         filteredProducts = filteredProducts.filter(product => {
           const searchableFields = [
@@ -888,22 +911,8 @@
           return searchableFields.some(field => field.includes(searchTerm));
         });
       }
-
-      // Sort by diameter (FI)
-      filteredProducts.sort((a, b) => {
-        const parseDiameter = (diameter) => {
-          if (!diameter) return Number.MAX_SAFE_INTEGER;
-          const numberStr = diameter.toString().replace(/[^\d.]/g, '');
-          const parsedValue = parseFloat(numberStr);
-          return isNaN(parsedValue) ? Number.MAX_SAFE_INTEGER : parsedValue;
-        };
-
-        const diameterA = parseDiameter(a.custom_fi);
-        const diameterB = parseDiameter(b.custom_fi);
-        return diameterA - diameterB;
-      });
-
-      // Apply category filter
+      console.log('Filtered products:', filteredProducts.length);
+      // Apply category filter if not "wszystkie"
       if (window.selectedCategory && window.selectedCategory !== 'wszystkie') {
         console.log('Applying category filter:', window.selectedCategory);
         const categoryToType = {
@@ -919,10 +928,8 @@
         const expectedType = categoryToType[window.selectedCategory];
         filteredProducts = filteredProducts.filter(product => {
           const matches = expectedType && product.sku && product.sku.startsWith(expectedType);
-          console.log('Product matches category:', matches, 'SKU:', product.sku);
           return matches;
         });
-        console.log('Products after category filter:', filteredProducts.length);
       }
 
       // Apply type filter
@@ -936,44 +943,97 @@
         const expectedType = typeMapping[window.WiertlaCNC.filters.type];
         filteredProducts = filteredProducts.filter(product => {
           const matches = expectedType && product.custom_category && product.custom_category.includes(expectedType);
-          console.log('Product matches type:', matches, 'Category:', product.custom_category);
           return matches;
         });
-        console.log('Products after type filter:', filteredProducts.length);
       }
 
       // Apply status filter
       if (window.WiertlaCNC.filters.status && window.WiertlaCNC.filters.status !== 'all') {
-        console.log('Applying status filter:', window.WiertlaCNC.filters.status);
         filteredProducts = filteredProducts.filter(product => {
           if (window.WiertlaCNC.filters.status === 'rentable') return product.rentable;
           if (window.WiertlaCNC.filters.status === 'non-rentable') return !product.rentable;
           return true;
         });
-        console.log('Products after status filter:', filteredProducts.length);
       }
 
       // Apply manufacturer filter
       if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all') {
-        console.log('Applying manufacturer filter:', window.WiertlaCNC.filters.manufacturer);
         const manufacturerMapping = {
           'sandvik': 'Sandvik',
           'iscar': 'ISCAR',
           'walter': 'WALTER',
           'ksem': 'KSEM',
-          'amec': 'AMEC'
+          'amec': 'AMEC',
+          'GÜHRING': 'GÜHRING',
+          'wnt': 'WNT',
+          'mikrontool': 'MIKRONTOOL',
+          'taegutec': 'TaeguTec',
+          'kennametal': 'KENNAMETAL',
         };
         const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer];
+        console.log(filteredProducts);
         filteredProducts = filteredProducts.filter(product => {
           const matches = expectedManufacturer && product.vendor && 
                  product.vendor.toLowerCase().includes(expectedManufacturer.toLowerCase());
-          console.log('Product matches manufacturer:', matches, 'Vendor:', product.vendor);
           return matches;
         });
-        console.log('Products after manufacturer filter:', filteredProducts.length);
       }
 
-      console.log('Final filtered products count:', filteredProducts.length);
+      // Apply manufacturer filter if exists
+      if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all') {
+        filteredProducts = filteredProducts.filter(product => {
+          const manufacturerMatches = product.vendor && 
+                 product.vendor.toLowerCase().includes(window.WiertlaCNC.filters.manufacturer.toLowerCase());
+          return manufacturerMatches;
+        });
+      }
+
+      // Sort all products by Fi (diameter) from lowest to highest
+      filteredProducts.sort((a, b) => {
+        // Extract Fi values and convert to numbers
+        const getFiValue = (product) => {
+          // Try to get fi value from different possible locations
+          let fiValue = '';
+          
+          // First try custom_fi or custom_srednica
+          if (product.custom_fi && product.custom_fi !== '-') {
+            fiValue = product.custom_fi;
+          } else if (product.custom_srednica && product.custom_srednica !== '-') {
+            fiValue = product.custom_srednica;
+          }
+          
+          // If no value found, try to extract from title
+          if (!fiValue || fiValue === '-') {
+            const titleMatch = product.title?.match(/(?:⌀|Fi)\s*(\d+[.,]?\d*)/i);
+            if (titleMatch) {
+              fiValue = titleMatch[1];
+            }
+          }
+          
+          // If still no value, try metafields
+          if (!fiValue || fiValue === '-') {
+            fiValue = product.metafields?.custom?.diameter?.value || '';
+          }
+
+          // If value is "-" or empty, return MAX_SAFE_INTEGER to move it to the end
+          if (!fiValue || fiValue === '-') {
+            return Number.MAX_SAFE_INTEGER;
+          }
+
+          // Extract numeric value, replacing commas with periods first
+          const numericValue = parseFloat(String(fiValue).replace(/,/g, '.').replace(/[^\d.]/g, ''));
+          // Return the numeric value or MAX_SAFE_INTEGER if not a valid number
+          return isNaN(numericValue) ? Number.MAX_SAFE_INTEGER : numericValue;
+        };
+        
+        const fiA = getFiValue(a);
+        const fiB = getFiValue(b);
+        
+        // Sort ascending (lowest to highest)
+        return fiA - fiB;
+      });
+
+      console.log('Final filtered and sorted products count:', filteredProducts.length);
       return filteredProducts;
     }
     
@@ -1012,19 +1072,23 @@
     
     // Apply filters and pagination
     function applyFilters() {
-
-    const filteredProducts = filterProducts();
+      // Get filtered products using filterProducts function
+      const filteredProducts = filterProducts();
       
+      // Update pagination
       window.totalPages = Math.ceil(filteredProducts.length / window.itemsPerPage);
       
+      // Reset page if needed
       if (window.currentPage > window.totalPages) {
         window.currentPage = window.totalPages > 0 ? window.totalPages : 1;
       }
       
+      // Calculate slice indexes for pagination
       const startIndex = (window.currentPage - 1) * window.itemsPerPage;
       const endIndex = startIndex + window.itemsPerPage;
       const productsToShow = filteredProducts.slice(startIndex, endIndex);
       
+      // Generate table with filtered and paginated products
       generateTable(productsToShow);
       updatePaginationButtons();
       
@@ -1036,7 +1100,9 @@
         const startDisplay = filteredProducts.length > 0 ? startIndex + 1 : 0;
         const endDisplay = Math.min(endIndex, filteredProducts.length);
         const format = translations[currentLanguage].results_format;
-        resultsNumbers.textContent = format.replace('{0}', startDisplay).replace('{1}', endDisplay).replace('{2}', filteredProducts.length);
+        resultsNumbers.textContent = format.replace('{0}', startDisplay)
+                                         .replace('{1}', endDisplay)
+                                         .replace('{2}', filteredProducts.length);
       }
       
       // Synchronize active states for category icons
@@ -1059,15 +1125,17 @@
         }
       });
       
-      // If fullscreen is active, update it too
+      // Update fullscreen mode if active
       const fullscreenMode = document.querySelector('.wiertla-categories__fullscreen-mode');
       if (fullscreenMode && fullscreenMode.classList.contains('active')) {
         applyFullscreenFilters();
       }
       
+      // Update URL parameters
+      updateUrlParams();
     }
     
-    // Make applyFilters globally accessible
+    // Make it globally available
     window.applyFilters = applyFilters;
     
     // Update pagination button states
@@ -1279,8 +1347,8 @@
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--symbol">
             ${product.symbol || '-'}
           </td>
-          <td class="wiertla-categories__table-cell wiertla-categories__table-cell--vendor">
-            ${product.vendor || '-'}
+          <td class="wiertla-categories__table-cell wiertla-categories__table-cell--vendor" data-href="/products/${product.handle || ''}">
+            ${product.vendor || product.custom_manufacturer || '-'}
           </td>
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--price">
             ${product.price ? `${product.price} zł` : '-'}
@@ -1864,7 +1932,19 @@
         previewContainer.src = image;
       }
     }
-    
+    function formatSymbol(symbol) {
+      if (!symbol || symbol === '-') return '-';
+      
+      // Maximum length for symbols before truncation
+      const maxLength = 13;
+      
+      // If symbol is longer than max length, truncate and add ellipsis
+      if (symbol.length > maxLength) {
+        return symbol.substring(0, maxLength) + '...';
+      }
+      
+      return symbol;
+    }
     function hideProductImage() {
       // Hide both hover previews
       const hoverPreview = document.querySelector('.wiertla-categories__hover-preview');
@@ -1909,13 +1989,8 @@
         return;
       }
 
-      // Sort products by diameter (FI), placing items without FI at the end
-      const sortedProducts = [...products].sort((a, b) => {
-        const diameterA = a.custom_fi ? parseFloat(a.custom_fi.replace(/[^\d.]/g, '')) : Number.MAX_SAFE_INTEGER;
-        const diameterB = b.custom_fi ? parseFloat(b.custom_fi.replace(/[^\d.]/g, '')) : Number.MAX_SAFE_INTEGER;
-        return diameterA - diameterB;
-      });
-
+      // Products are already sorted by diameter (FI) in the filterProducts function
+     
       // Create preview container if it doesn't exist
       let previewContainer = document.querySelector('.wiertla-categories__preview-container');
       if (!previewContainer) {
@@ -1941,8 +2016,8 @@
         document.body.appendChild(previewContainer);
       }
 
-      // Generate table rows using sorted products
-      sortedProducts.forEach((product, index) => {
+      // Generate table rows using the provided products
+      products.forEach((product, index) => {
         if (!product) {
           console.warn('Invalid product data at index:', index);
           return;
@@ -1991,7 +2066,6 @@
         // Get SKU prefix for icon
         const skuPrefix = product.sku?.substring(0, 2) || '';
         const iconUrl = iconMap[skuPrefix] || product.image || '';
-        console.log(product, product.sku, skuPrefix, iconUrl);
         // Generate row content based on screen width
         if (window.innerWidth <= 768) {
           row.innerHTML = `
@@ -2012,11 +2086,11 @@
                 </div>
                 <div class="wiertla-categories__mobile-bottom">
                   <div class="wiertla-categories__mobile-vendor">
-                    ${product.vendor || product.custom_manufacturer || '-'}
+                                ${formatSymbol(product.vendor || product.custom_manufacturer || '-')}
 
                   </div>
                   <div class="wiertla-categories__mobile-symbol">
-              ${product.custom_symbol  || product.custom_kod_producenta  ||  '-'}
+                                ${formatSymbol(product.custom_symbol || product.custom_kod_producenta || '-')}
                   </div>
                   <div class="wiertla-categories__mobile-price-wrapper">
                     <div class="wiertla-categories__mobile-price">
@@ -2077,10 +2151,10 @@
                     ${product.metafields.custom.custom_working_length || product.custom_working_length || product.custom_xd || '-'}
             </td>
             <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
-              ${product.custom_symbol  || product.custom_kod_producenta  ||  '-'}
+                                ${formatSymbol(product.custom_symbol  || product.custom_kod_producenta || '-')}
             </td>
             <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
-              ${product.vendor || product.custom_manufacturer || '-'}
+                                ${formatSymbol(product.vendor || product.custom_manufacturer || '-')}
             </td>
              <td class="wiertla-categories__table-cell">
               <div class="wiertla-categories__price-wrapper">
@@ -2560,9 +2634,12 @@
       background-position: center;
       z-index: 5;
     }
-
-    .wiertla-categories__table td {
+    .wiertla-categories__table td:last-child {
       padding: 5.5px 30px 5.5px 17px;
+    
+    }
+    .wiertla-categories__table td {
+      padding: 5.5px 10px 5.5px 17px;
       min-height: 25px;
       line-height: normal;
       vertical-align: middle;
@@ -4837,10 +4914,8 @@ text-transform: lowercase;
 .wiertla-banner {
   position: relative;
   width: 100%;
-  max-width: 100%;
   overflow: hidden;
   padding: 40px 20px;
-  background-color: #f5f5f5;
   text-align: center;
 }
 
@@ -4853,83 +4928,32 @@ text-transform: lowercase;
   document.addEventListener('DOMContentLoaded', function() {
     // Status filter functionality
     const statusFilters = document.querySelectorAll('.wiertla-categories__status-filters.desktop .wiertla-categories__status-filter');
-    const tableRows = document.querySelectorAll('#productsTableBody tr');
-  
+    console.log('Initial status filters:', statusFilters);
+    
+    // Log initial active states
     statusFilters.forEach(filter => {
-      filter.addEventListener('click', function(e) {
-        // If this filter is already active, prevent the click
-        if (this.classList.contains('active')) {
-          e.preventDefault();
-          return;
-        }
-  
-        // Remove active class from all filters
-        statusFilters.forEach(f => f.classList.remove('active'));
-        
-        // Add active class to clicked filter
-        this.classList.add('active');
-  
-        const filterValue = this.textContent.trim().toLowerCase();
-        
-        // Filter table rows based on status
-        tableRows.forEach(row => {
-          const statusCell = row.querySelector('td[data-status]');
-          if (statusCell) {
-            const rowStatus = statusCell.getAttribute('data-status').toLowerCase();
-            if (filterValue === 'wszystkie' || rowStatus === filterValue) {
-              row.style.display = '';
-            } else {
-              row.style.display = 'none';
-            }
-          }
-        });
-  
-        // Update results count
-        updateResultsCount();
-      });
+      console.log('Filter:', filter.textContent.trim(), 'Active:', filter.classList.contains('active'));
     });
-  
-    // Function to update results count
-    function updateResultsCount() {
-      const tableBody = document.querySelector('#productsTableBody');
-      if (!tableBody) return;
-      
-      const allRows = tableBody.querySelectorAll('tr');
-      const totalRows = allRows.length;
-      const visibleRows = document.querySelectorAll('#productsTableBody tr:not([style*="display: none"])').length;
-      
-      const resultsCount = document.querySelector('.wiertla-categories__results-count');
-      const resultsNumbers = document.querySelector('#resultsCount');
-      
-      if (resultsCount && resultsNumbers) {
-        resultsNumbers.textContent = `${visibleRows} z ${totalRows}`;
-      }
+
+    // Remove any initial active states
+    statusFilters.forEach(filter => {
+      filter.classList.remove('active');
+    });
+
+    // Check URL parameters for condition
+    const params = new URLSearchParams(window.location.search);
+    const conditionFromUrl = params.get('condition');
+    
+    if (conditionFromUrl) {
+      // Find and activate the matching filter
+      statusFilters.forEach(filter => {
+        if (filter.textContent.trim().toLowerCase() === conditionFromUrl.toLowerCase()) {
+          filter.classList.add('active');
+        }
+      });
     }
-  
-    // Initial results count
-    updateResultsCount();
-  
-    // Fullscreen view functionality
-    const fullscreenBtns = document.querySelectorAll('.wiertla-categories__fullscreen-btn');
-    const fullscreenView = document.querySelector('.wiertla-categories__fullscreen-view');
-    const mainContent = document.querySelector('.wiertla-categories__content');
-  
-    fullscreenBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        // Toggle fullscreen view
-        if (fullscreenView.style.display === 'none') {
-          fullscreenView.style.display = 'block';
-          mainContent.style.display = 'none';
-          document.body.classList.add('wiertla-categories__fullscreen-mode');
-          document.body.style.overflow = 'hidden';
-        } else {
-          fullscreenView.style.display = 'none';
-          mainContent.style.display = 'flex';
-          document.body.classList.remove('wiertla-categories__fullscreen-mode');
-          document.body.style.overflow = '';
-        }
-      });
-    });
+
+    // Rest of your existing code...
   });
   const desktopTabs = document.querySelectorAll('.wiertla-categories__tabs.desktop .wiertla-categories__tab');
   
@@ -5103,7 +5127,11 @@ text-transform: lowercase;
     'amec': 'AMEC',
     'ksem': 'KSEM',
     'iscar': 'ISCAR',
-    'walter': 'WALTER'
+    'walter': 'WALTER',
+    'GÜHRING': 'GÜHRING',
+    'wnt': 'WNT',
+    'mikrontool': 'MIKRONTOOL',
+    'taegutec': 'TaeguTec'
   };
 
   // Update icon mappings
@@ -5387,11 +5415,15 @@ text-transform: lowercase;
   document.querySelector('.wiertla-categories__filter[data-filter="manufacturer"]').addEventListener('change', function() {
     const value = this.value;
     const manufacturerMapping = {
-      'Sandvik': 'sandvik',
       'AMEC': 'amec',
-      'KSEM': 'ksem',
+      'GÜHRING': 'GÜHRING',
       'ISCAR': 'iscar',
-      'WALTER': 'walter'
+      'KENNAMETAL': 'kennametal',
+      'MIKRONTOOL': 'mikrontool',
+      'Sandvik': 'sandvik',
+      'TaeguTec': 'taegutec',
+      'Walter': 'walter',
+      'WNT': 'wnt'
     };
     
     window.WiertlaCNC.filters.manufacturer = value ? manufacturerMapping[value] : '';

@@ -117,11 +117,14 @@ a:hover {
 }
 .wiertla-banner__text {
   font-size: 1rem;
-  max-width: 600px;
+  max-width: 1440px;
+  margin: 0;
 }
 @media (min-width: 768px) {
   .wiertla-banner__text {
     font-size: 1.2rem;
+    text-align: left;
+    padding-left: 40px;
   }
 }
 /* Search Component */

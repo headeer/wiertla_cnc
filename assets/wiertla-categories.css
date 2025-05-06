@@ -476,6 +476,9 @@
     border: none;
     cursor: pointer;
   }
+  .wiertla-categories__mobile-filter-button img {
+    width: 26px;
+  }
 }
 
 /* Logos Grid Styles */
@@ -1740,7 +1743,6 @@
 .wiertla-categories__mobile-rent-modal .wiertla-categories__mobile-rent-wrapper .wiertla-categories__mobile-rent-content .wiertla-categories__mobile-rent-form-content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
   padding: 24px 0;
 }
 
