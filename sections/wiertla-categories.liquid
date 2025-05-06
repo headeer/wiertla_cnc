@@ -961,31 +961,20 @@
         const manufacturerMapping = {
           'sandvik': 'Sandvik',
           'iscar': 'ISCAR',
-          'walter': 'WALTER',
-          'ksem': 'KSEM',
+          'walter': 'Walter',
+          'kennametal': 'KENNAMETAL',
           'amec': 'AMEC',
-          'GÜHRING': 'GÜHRING',
+          'guhring': 'GÜHRING',
           'wnt': 'WNT',
           'mikrontool': 'MIKRONTOOL',
-          'taegutec': 'TaeguTec',
-          'kennametal': 'KENNAMETAL',
+          'taegutec': 'TaeguTec'
         };
-        const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer];
-        console.log(filteredProducts);
-        filteredProducts = filteredProducts.filter(product => {
-          const matches = expectedManufacturer && product.vendor && 
-                 product.vendor.toLowerCase().includes(expectedManufacturer.toLowerCase());
-          return matches;
-        });
-      }
-
-      // Apply manufacturer filter if exists
-      if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all') {
-        filteredProducts = filteredProducts.filter(product => {
-          const manufacturerMatches = product.vendor && 
-                 product.vendor.toLowerCase().includes(window.WiertlaCNC.filters.manufacturer.toLowerCase());
-          return manufacturerMatches;
-        });
+        const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer.toLowerCase()];
+        if (expectedManufacturer) {
+          filteredProducts = filteredProducts.filter(product => {
+            return product.vendor === expectedManufacturer;
+          });
+        }
       }
 
       // Sort all products by Fi (diameter) from lowest to highest
@@ -1935,8 +1924,11 @@
     function formatSymbol(symbol) {
       if (!symbol || symbol === '-') return '-';
       
+      // Get current window width
+      const isMobile = window.innerWidth <= 768;
+      
       // Maximum length for symbols before truncation
-      const maxLength = 13;
+      const maxLength = isMobile ? 8 : 13;
       
       // If symbol is longer than max length, truncate and add ellipsis
       if (symbol.length > maxLength) {
@@ -2634,10 +2626,11 @@
       background-position: center;
       z-index: 5;
     }
+    @media screen and (min-width: 768px) {
     .wiertla-categories__table td:last-child {
       padding: 5.5px 30px 5.5px 17px;
-    
     }
+  }
     .wiertla-categories__table td {
       padding: 5.5px 10px 5.5px 17px;
       min-height: 25px;
@@ -5172,18 +5165,22 @@ text-transform: lowercase;
     }
     
     // Apply manufacturer filter
-    if (selectedManufacturer && selectedManufacturer !== 'all') {
+    if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all') {
       const manufacturerMapping = {
-        'sandvik': 'SA',
-        'amec': 'AM',
-        'ksem': 'KS',
-        'iscar': 'IS',
-        'walter': 'WA'
+        'sandvik': 'Sandvik',
+        'iscar': 'ISCAR',
+        'walter': 'Walter',
+        'kennametal': 'KENNAMETAL',
+        'amec': 'AMEC',
+        'guhring': 'GÜHRING',
+        'wnt': 'WNT',
+        'mikrontool': 'MIKRONTOOL',
+        'taegutec': 'TaeguTec'
       };
-      const expectedManufacturer = manufacturerMapping[selectedManufacturer];
+      const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer.toLowerCase()];
       if (expectedManufacturer) {
         filteredProducts = filteredProducts.filter(product => {
-          return product.vendor && product.vendor.toLowerCase().includes(expectedManufacturer.toLowerCase());
+          return product.vendor === expectedManufacturer;
         });
       }
     }
@@ -5266,11 +5263,15 @@ text-transform: lowercase;
       // Manufacturer filter
       if (window.WiertlaCNC.filters.manufacturer) {
         const manufacturerMapping = {
-          'sandvik': 'SA',
-          'amec': 'AM',
-          'ksem': 'KS',
-          'iscar': 'IS',
-          'walter': 'WA'
+          'sandvik': 'Sandvik',
+          'iscar': 'ISCAR',
+          'walter': 'Walter',
+          'kennametal': 'KENNAMETAL',
+          'amec': 'AMEC',
+          'guhring': 'GÜHRING',
+          'wnt': 'WNT',
+          'mikrontool': 'MIKRONTOOL',
+          'taegutec': 'TaeguTec'
         };
         const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer];
         if (!expectedManufacturer) return false;
@@ -5416,7 +5417,7 @@ text-transform: lowercase;
     const value = this.value;
     const manufacturerMapping = {
       'AMEC': 'amec',
-      'GÜHRING': 'GÜHRING',
+      'GÜHRING': 'guhring',
       'ISCAR': 'iscar',
       'KENNAMETAL': 'kennametal',
       'MIKRONTOOL': 'mikrontool',
