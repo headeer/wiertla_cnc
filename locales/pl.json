@@ -88,8 +88,8 @@
   "header": {
     "nav": {
       "drills": "wiertła",
-      "plates": "płytki",
-      "crowns": "koronki"
+      "plates": "PŁYTKI DO WIEREŁ",
+      "crowns": "KORONKI DO WIEREŁ"
     },
     "languages": {
       "polish": "PL",
@@ -101,8 +101,8 @@
       "email_icon_alt": "Ikona email"
     },
     "actions": {
-      "buy": "kup",
-      "rent": "wypożycz",
+      "buy": "KUP",
+      "rent": "WYPOŻYCZ",
       "regenerate": "regeneruj",
       "sharpen": "naostrz"
     }

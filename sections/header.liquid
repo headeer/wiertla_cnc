@@ -730,11 +730,8 @@
     <div class="header__container">
       <div class="header__top-content">
         <div class="header__nav-links">
-          <a
-            href="/collections/all"
-            class="header__link header__action-menu"
-            data-translate="header.actions.buy">{{ 'header.actions.buy' | t }}</a>
-          <a href="/collections/plytki-do-wierel" class="header__link">PŁYTKI DO WIEREŁ</a>
+          <a href="#wiertla-table" class="header__link js-scroll-to-table">KORONKI DO WIEREŁ</a>
+          <a href="#wiertla-table" class="header__link js-scroll-to-table">PŁYTKI DO WIEREŁ</a>
           {%- for link in section.settings.menu.links -%}
             {%- if link.title != 'regeneruj/naostrz' -%}
               <a href="{{ link.url }}" class="header__link {% if link.active %}active{% endif %}">
@@ -834,9 +831,9 @@
         </div>
         <div class="header__actions">
           <a
-            href="/collections/all"
+            href="/collections/plytki-do-wierel"
             class="header__link header__action-menu"
-            data-translate="header.actions.buy">{{ 'header.actions.buy' | t }}</a>
+            data-translate="header.actions.buy">KUP</a>
           <a
             href="/pages/wypozycz"
             class="header__link header__action-menu"
@@ -857,7 +854,7 @@
           <a
             href="/pages/regeneruj"
             class="header__link header__action-menu"
-            data-translate="header.actions.regenerate">{{ 'header.actions.regenerate' | t }}</a>
+            data-translate="header.actions.regenerate">Regeneruj</a>
         </div>
       </div>
     </div>
@@ -866,29 +863,27 @@
   <!-- Mobile menu links -->
   <div class="header__mobile-menu-links">
     <a
-      href="/collections/all"
-      class="header__mobile-menu-link"
-      data-translate="header.actions.buy">
+      href="#wiertla-table"
+      class="header__mobile-menu-link js-scroll-to-table">
       <img
-        src="{{ 'shopping_bag.svg' | asset_url }}"
-        alt="Buy"
+        src="{{ 'crown_icon.svg' | asset_url }}"
+        alt="Koronki"
+        width="24"
+        height="24"
         class="header__mobile-menu-icon">
-      KUP
+      KORONKI DO WIEREŁ
     </a>
     <a
-      href="/pages/wypozycz"
-      class="header__mobile-menu-link"
-      data-translate="header.actions.rent">
+      href="#wiertla-table"
+      class="header__mobile-menu-link js-scroll-to-table">
       <img
-        src="{{ 'rent_icon.svg' | asset_url }}"
-        alt="Rent"
+        src="{{ 'plate_icon.svg' | asset_url }}"
+        alt="Płytki"
+        width="24"
+        height="24"
         class="header__mobile-menu-icon">
-      WYPOŻYCZ
+      PŁYTKI DO WIEREŁ
     </a>
-    <a
-      href="/pages/regeneruj"
-      class="header__mobile-menu-link no-underline"
-      data-translate="header.actions.regenerate">REGENERUJ</a>
   </div>
 </header>
 
@@ -1080,6 +1075,35 @@
         }
       });
     }
+
+    // Add scroll functionality for table links
+    document.querySelectorAll('.js-scroll-to-table').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const table = document.querySelector('.wiertla-categories__table');
+        if (table) {
+          // Get header height for offset
+          const header = document.querySelector('.header');
+          const headerHeight = header ? header.offsetHeight : 0;
+          
+          // Calculate scroll position
+          const tableTop = table.getBoundingClientRect().top + window.pageYOffset;
+          const scrollTo = tableTop - headerHeight - 20; // 20px extra padding
+          
+          // Smooth scroll
+          window.scrollTo({
+            top: scrollTo,
+            behavior: 'smooth'
+          });
+          
+          // If on mobile, close the menu if it's open
+          const mobileMenuButton = document.querySelector('.header__mobile-menu-button');
+          if (mobileMenuButton && mobileMenuButton.classList.contains('active')) {
+            mobileMenuButton.click();
+          }
+        }
+      });
+    });
   });
 
   // Move filter modal functions outside DOMContentLoaded

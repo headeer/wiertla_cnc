@@ -29,8 +29,8 @@ window.WiertlaTranslations = {
       },
       nav: {
         drills: "WIERTŁA",
-        plates: "PŁYTKI",
-        crowns: "KORONKI",
+        plates: "PŁYTKI DO WIEREŁ",
+        crowns: "KORONKI DO WIEREŁ",
       },
       contact: {
         phone_icon_alt: "Telefon",
@@ -366,9 +366,9 @@ window.WiertlaTranslations = {
         email_icon_alt: "Email",
       },
       actions: {
-        buy: "BUY",
+        buy: "PLATES",
         rent: "RENT",
-        regenerate: "REGENERATE",
+        regenerate: "REGENERATE/SHARPEN",
         sharpen: "SHARPEN",
       },
     },
@@ -669,9 +669,9 @@ window.WiertlaTranslations = {
         email_icon_alt: "E-Mail",
       },
       actions: {
-        buy: "KAUFEN",
+        buy: "PLATTEN",
         rent: "MIETEN",
-        regenerate: "REGENERIEREN",
+        regenerate: "REGENERIEREN/SCHÄRFEN",
         sharpen: "SCHÄRFEN",
       },
     },
@@ -854,6 +854,7 @@ window.WiertlaTranslations = {
       title: "Marken-CNC-Bohrer zu Top-Preisen",
     },
   },
+
   mainProductHorizontalGallery: {
     addToCart: "In den Warenkorb",
     quantity: "Menge",
