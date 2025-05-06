@@ -2136,7 +2136,8 @@
               ${iconUrl ? `<img src="${iconUrl}" alt="${product.type || 'Product'}" width="34" height="34" loading="lazy">` : '-'}
             </td>
             <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
-              ${product.custom_fi ? '⌀ ' + product.custom_fi || product.custom_srednica : '-'}
+              ${product.custom_fi || product.custom_srednica ? '⌀ ' + product.custom_fi || product.custom_srednica : '-'}
+              ${product.custom_fi || product.custom_srednica? '⌀ ' + product.custom_fi || product.custom_srednica : '-'}
             </td>
             <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
                     ${product.metafields.custom.custom_working_length || product.custom_working_length || product.custom_xd || '-'}

@@ -2026,7 +2026,7 @@ html {
 }
 
 body {
-  font-family: var(--body-font-stack);
+  font-family: Arial, sans-serif;
   font-weight: var(--body-font-weight);
   font-style: var(--body-font-style);
   text-transform: var(--bopy-copy-transform);
@@ -2057,7 +2057,7 @@ body {
 }
 
 .font-body {
-  font-family: var(--body-font-stack);
+  font-family: Arial, sans-serif;
   font-weight: var(--body-font-weight);
   font-style: var(--body-font-style);
   text-transform: var(--body-font-style);
