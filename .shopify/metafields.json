@@ -40,16 +40,6 @@
       }
     },
     {
-      "key": "condition",
-      "namespace": "custom",
-      "name": "Condition",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
       "key": "mocowanie",
       "namespace": "custom",
       "name": "mocowanie",
@@ -90,29 +80,9 @@
       }
     },
     {
-      "key": "working_length",
-      "namespace": "custom",
-      "name": "Working Length",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
       "key": "xd",
       "namespace": "custom",
       "name": "xd",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "_stan",
-      "namespace": "custom",
-      "name": " STAN",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -170,36 +140,6 @@
       }
     },
     {
-      "key": "marka",
-      "namespace": "custom",
-      "name": "Marka",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "tytul_2",
-      "namespace": "custom",
-      "name": "tytul_2",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "uwagi",
-      "namespace": "custom",
-      "name": "uwagi",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
       "key": "szt",
       "namespace": "custom",
       "name": "szt",
@@ -213,6 +153,106 @@
       "key": "gatunek",
       "namespace": "custom",
       "name": "Gatunek",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "condition",
+      "namespace": "custom",
+      "name": "stan",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "gniazdo",
+      "namespace": "custom",
+      "name": "gniazdo",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "ilosc",
+      "namespace": "custom",
+      "name": "ilosc",
+      "description": "",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "cena_s",
+      "namespace": "custom",
+      "name": "cena_s",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "rent_price",
+      "namespace": "custom",
+      "name": "rent_price",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "rent_value",
+      "namespace": "custom",
+      "name": "rent_value",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "plytka_powiazana",
+      "namespace": "custom",
+      "name": "plytka_powiazana",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "narzedzie_powiazane",
+      "namespace": "custom",
+      "name": "narzedzie_powiazane",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "type",
+      "namespace": "custom",
+      "name": "typ",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "rodzaj",
+      "namespace": "custom",
+      "name": "rodzaj",
       "description": "",
       "type": {
         "name": "single_line_text_field",

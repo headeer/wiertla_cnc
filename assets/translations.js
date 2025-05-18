@@ -103,9 +103,9 @@ window.WiertlaTranslations = {
       preview_title: "ZOBACZ OBRAZ POGLĄDOWY",
       preview_instruction:
         "Najedź kursorem na wiertło w tabeli, aby wyświetlić tu powiększony podgląd",
-      fullscreen_title: "WIERTŁA CNC",
+      fullscreen_title: "Przeglądaj wiertła w tabeli",
       fullscreen_description:
-        "Wybierz interesujące Cię wiertło z bogatej oferty naszego sklepu.",
+        "Stale poszerzamy stan magazynowy, aktualizując ofertę o nowe modele wierteł CNC",
       close_fullscreen: "Zamknij tryb pełnoekranowy",
       all: "Wszystkie",
       drill_type: "Typ wiertła",

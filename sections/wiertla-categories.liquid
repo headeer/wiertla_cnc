@@ -2923,6 +2923,18 @@
       background: #F5F5F8;
       border-radius: 20px 20px 0 0;
     }
+    .wiertla-categories__fullscreen-view ..wiertla-categories__filters {
+      padding: 0;
+    }
+    .wiertla-categories__fullscreen-view .wiertla-categories__fullscreen-filters {
+      margi-bottom :16px;
+    }
+    .wiertla-categories__fullscreen-view .wiertla-categories__fullscreen-header {
+      margin-bottom: 16px;
+    }
+    .wiertla-categories__fullscreen-view .wiertla-categories__fullscreen-layout { 
+      margin: 0;
+    }
     .wiertla-categories__filters.desktop {
       background: white;
       margin-bottom: 0;
@@ -3270,14 +3282,6 @@
       display: none;
     }
 
-    .wiertla-categories__fullscreen-header,
-    .wiertla-categories__fullscreen-title,
-    .wiertla-categories__fullscreen-filters,
-    .wiertla-categories__fullscreen-layout,
-    .wiertla-categories__fullscreen-left,
-    .wiertla-categories__fullscreen-right {
-      display: none;
-    }
 
     .wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-header {
       display: flex;
@@ -5056,80 +5060,162 @@ text-transform: lowercase;
 
 <script>
   function toggleFullscreen() {
-    const container = document.querySelector('.wiertla-categories__container');
+    const fullscreenView = document.querySelector('.wiertla-categories__fullscreen-view');
     const fullscreenBtn = document.querySelector('.wiertla-categories__fullscreen-btn');
-    const table = document.querySelector('.wiertla-categories__table');
-    const rightSection = document.querySelector('.wiertla-categories__fullscreen-right');
     
-    if (!container || !fullscreenBtn || !table || !rightSection) return;
+    if (!fullscreenView || !fullscreenBtn) return;
     
-    if (container.classList.contains('fullscreen')) {
-      // Exit fullscreen
-      container.classList.remove('fullscreen');
-      fullscreenBtn.innerHTML = `
-        <img src="{{ 'zoom_out_map.svg' | asset_url }}" alt="Fullscreen" width="24" height="24" class="wiertla-categories__fullscreen-icon">
-        <span>Pełny ekran</span>
-      `;
-      document.body.style.overflow = '';
-      
-      // Move table back to its original container
-      const tableContainer = document.querySelector('.wiertla-categories__table-container');
-      if (tableContainer) {
-        tableContainer.appendChild(table);
-      }
-    } else {
+    if (fullscreenView.style.display === 'none') {
       // Enter fullscreen
-      container.classList.add('fullscreen');
+      fullscreenView.style.display = 'block';
       fullscreenBtn.innerHTML = `
-        <img src="{{ 'zoom_out_map.svg' | asset_url }}" alt="Close fullscreen" width="24" height="24" class="wiertla-categories__fullscreen-icon">
+        <img src="{{ 'zoom_out_map.svg' | asset_url }}" alt="Close fullscreen" class="wiertla-categories__fullscreen-icon">
         <span>Zamknij tryb pełnoekranowy</span>
       `;
       document.body.style.overflow = 'hidden';
-      
-      // Move table to fullscreen container
-      rightSection.appendChild(table);
-      
-      // Ensure table is visible and properly styled
-      table.style.width = '100%';
-      table.style.margin = '0';
-      table.style.borderCollapse = 'collapse';
-      
-      // Ensure right section is properly styled
-      rightSection.style.flex = '1';
-      rightSection.style.overflow = 'auto';
-      rightSection.style.padding = '20px';
+    } else {
+      // Exit fullscreen
+      fullscreenView.style.display = 'none';
+      fullscreenBtn.innerHTML = `
+        <img src="{{ 'zoom_in_map.svg' | asset_url }}" alt="Fullscreen" class="wiertla-categories__fullscreen-icon">
+        <span>Wyświetl tabelę na całej stronie</span>
+      `;
+      document.body.style.overflow = '';
     }
   }
 
-  // Add styles for fullscreen mode
-  const style = document.createElement('style');
-  style.textContent = `
-    .wiertla-categories__container.fullscreen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1000;
-      background: white;
-      display: flex;
-      flex-direction: row;
+  // Add event listener to the fullscreen button
+  document.addEventListener('DOMContentLoaded', function() {
+    const fullscreenBtn = document.querySelector('.wiertla-categories__fullscreen-btn');
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener('click', toggleFullscreen);
     }
-    
-    .wiertla-categories__fullscreen-right {
-      flex: 1;
-      overflow: auto;
-      padding: 20px;
-    }
-    
-    .wiertla-categories__table {
-      width: 100%;
-      margin: 0;
-      border-collapse: collapse;
-    }
-  `;
-  document.head.appendChild(style);
+  });
 </script>
+
+<style>
+  .wiertla-categories__fullscreen-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 40px;
+  }
+
+  .wiertla-categories__fullscreen-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+  }
+
+  .wiertla-categories__fullscreen-title {
+    max-width: 600px;
+  }
+
+  .wiertla-categories__fullscreen-title h2 {
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.2;
+    color: #112832;
+    margin-bottom: 16px;
+  }
+
+  .wiertla-categories__fullscreen-title p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #5D7077;
+  }
+
+  .wiertla-categories__fullscreen-filters {
+    margin-bottom: 40px;
+  }
+body .wiertla-categories__fullscreen-header,body .wiertla-categories__fullscreen-title,body .wiertla-categories__fullscreen-filters,body .wiertla-categories__fullscreen-layout,body .wiertla-categories__fullscreen-left,body .wiertla-categories__fullscreen-right {
+  display: block;
+}
+body div .wiertla-categories__fullscreen-layout {
+  display: flex;
+}
+body div .wiertla-categories__fullscreen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+body div .wiertla-categories__fullscreen-title {
+  max-width: 600px;
+}
+  .wiertla-categories__fullscreen-layout {
+    display: flex;
+    gap: 40px;
+  }
+
+  .wiertla-categories__fullscreen-left {
+    width: 425px;
+    flex-shrink: 0;
+  }
+
+  .wiertla-categories__fullscreen-right {
+    flex: 1;
+  }
+
+  .wiertla-categories__fullscreen-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 17px;
+    background: #FFE500;
+    border: 2px solid #112832;
+    border-radius: 30px;
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 18px;
+    line-height: 16.6px;
+    letter-spacing: 0.06em;
+    color: #112832;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .wiertla-categories__fullscreen-btn:hover {
+    background: #FFD500;
+  }
+
+  .wiertla-categories__fullscreen-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .wiertla-categories__fullscreen-close {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 17px;
+    background: #FFE500;
+    border: 2px solid #112832;
+    border-radius: 30px;
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 16.6px;
+    letter-spacing: 0.06em;
+    color: #112832;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .wiertla-categories__fullscreen-close:hover {
+    background: #FFD500;
+  }
+</style>
 
 <script>
   // Update category mappings
