@@ -1,8 +1,5 @@
 {
   "sections": {
-    "header": {
-      "type": "header"
-    },
     "hero": {
       "type": "wypozycz-hero"
     },
@@ -12,9 +9,15 @@
     "info-section": {
       "type": "wypozycz-info"
     },
-    "footer": {
-      "type": "footer"
+    "rent-section": {
+      "type": "wypozycz-rent"
+    },
+    "stats-section": {
+      "type": "wiertla-stats"
+    },
+    "category-section": {
+      "type": "category-descriptions"
     }
   },
-  "order": ["header", "hero", "image-section", "info-section", "footer"]
+  "order": ["hero", "image-section", "info-section", "rent-section", "stats-section", "category-section"]
 } 

@@ -1,0 +1,468 @@
+<section class="wypozycz-rent">
+  <div class="wypozycz-rent__container">
+    <div class="wiertla-categories__mobile-rent-wrapper">
+      <!-- Rent header -->
+      <div class="wiertla-categories__mobile-rent-header">
+        <div class="wiertla-categories__mobile-rent-icon">
+          <img
+            src="{{ 'icon_calendar.svg' | asset_url }}"
+            alt="Calendar"
+            class="wiertla-categories__mobile-rent-icon-inner"
+            width="24"
+            height="24">
+        </div>
+        <div class="wiertla-categories__mobile-rent-title">WYPOŻYCZ WIERTŁO</div>
+      </div>
+
+      <!-- Rent content -->
+      <div class="wiertla-categories__mobile-rent-content">
+        <p class="wiertla-categories__mobile-rent-description">
+          Oferujemy naszym partnerom, możliwość wypożyczenia wybranego wiertła na wybrany termin i czas.
+        </p>
+        <p class="wiertla-categories__mobile-rent-contact">
+          Skontaktuj się z nami, aby ustalić szczegóły<br>
+          lub wyślij zapytanie o preferowany termin.
+        </p>
+
+        <!-- Contact info -->
+        <div class="wiertla-categories__mobile-rent-contact-info">
+          <div class="wiertla-categories__mobile-rent-phone">
+            <img 
+              src="{{ 'Ico_phone.svg' | asset_url }}" 
+              alt="Phone"
+              width="24"
+              height="24">
+            <a href="tel:+48600673736" class="wiertla-categories__mobile-rent-contact-link">+48 600 67 37 36</a>
+          </div>
+          <div class="wiertla-categories__mobile-rent-email">
+            <img 
+              src="{{ 'Ico_mail.svg' | asset_url }}" 
+              alt="Email"
+              width="24"
+              height="24">
+            <a href="mailto:biuro@hmmetal.pl" class="wiertla-categories__mobile-rent-contact-link">biuro@hmmetal.pl</a>
+          </div>
+        </div>
+
+        <!-- Initial button -->
+        <button class="wiertla-categories__mobile-rent-button" onclick="showRentForm()">
+          <span>Zapytaj o dostępny termin</span>
+          <img src="{{ 'mail_icon_send.svg' | asset_url }}" alt="Send" width="24" height="24">
+        </button>
+
+        <!-- Form (hidden by default) -->
+        <div class="wiertla-categories__mobile-rent-form" style="display: none;">
+          <div class="wiertla-categories__mobile-rent-form-title">Skorzystaj z formularza</div>
+          <form class="wiertla-categories__mobile-rent-form-content">
+            <input type="hidden" name="form_type" value="contact">
+            <input type="hidden" name="utf8" value="✓">
+            <div class="wiertla-categories__mobile-rent-form-group">
+              <img src="{{ 'person.svg' | asset_url }}" alt="Person" class="wiertla-categories__mobile-rent-form-icon" width="20" height="20">
+              <input type="text" name="contact[contact_person]" placeholder="Osoba kontaktowa" required aria-required="true" aria-label="Osoba kontaktowa" class="wiertla-categories__mobile-rent-form-input-with-icon">
+              <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
+            </div>
+            <div class="wiertla-categories__mobile-rent-form-group">
+              <input type="text" name="contact[company_name]" placeholder="Nazwa firmy" required aria-required="true" aria-label="Nazwa firmy">
+              <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
+            </div>
+            <div class="wiertla-categories__mobile-rent-form-row">
+              <div class="wiertla-categories__mobile-rent-form-group">
+                <input type="tel" name="contact[phone]" placeholder="Nr telefonu" required pattern="[0-9+\s\(\)\-]{9,}" aria-required="true" aria-label="Numer telefonu">
+                <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
+              </div>
+              <div class="wiertla-categories__mobile-rent-form-group">
+                <input type="email" name="contact[email]" placeholder="E-mail" required aria-required="true" aria-label="Adres email">
+                <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
+              </div>
+            </div>
+            <div class="wiertla-categories__mobile-rent-form-group">
+              <input type="text" name="contact[drill_symbol]" placeholder="SYMBOL wiertła" required aria-required="true" aria-label="Symbol wiertła">
+              <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
+            </div>
+            <div class="wiertla-categories__mobile-rent-form-group">
+              <input type="date" name="contact[rental_date]" class="wiertla-categories__mobile-rent-date" placeholder="Wpisz preferowany termin wypożyczenia" required aria-required="true" aria-label="Preferowany termin wypożyczenia">
+              <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
+            </div>
+            <button type="submit" class="wiertla-categories__mobile-rent-submit">
+              <span>Wyślij wiadomość</span>
+              <img src="{{ 'mail_icon_send.svg' | asset_url }}" alt="Send" width="24" height="24">
+            </button>
+          </form>
+
+          <!-- Success message (hidden by default) -->
+          <div class="wiertla-categories__mobile-rent-success" style="display: none;">
+            <div class="wiertla-categories__mobile-rent-success-content">
+              <div class="wiertla-categories__mobile-rent-success-icon">
+                <img src="{{ 'mail_sended.svg' | asset_url }}" alt="Mail sent" width="24" height="24">
+              </div>
+              <div class="wiertla-categories__mobile-rent-success-message">
+                Dziękujemy za wysłanie zapytania
+              </div>
+            </div>
+            <p class="wiertla-categories__mobile-rent-success-note">
+              Czas na odpowiedź wynosi zwykle 24 godziny w dni robocze. Jeśli potrzebujesz wiertła szybciej, zadzwoń.
+            </p>
+            <button class="wiertla-categories__mobile-rent-button" style="display: flex; background-color: #FFFFFF; border: 2px solid #FFE500">
+              <span>Wysłano wiadomość</span>
+              <img src="{{ 'mail_sended.svg' | asset_url }}" alt="Send" width="24" height="24">
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.wypozycz-rent {
+  background: var(--light_bg, #F5F5F8);
+  padding: 60px 0;
+}
+
+.wypozycz-rent__container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.wiertla-categories__mobile-rent-wrapper {
+  border-radius: 30px;
+  background: #FFF;
+  box-shadow: 0px 22px 22px 0px rgba(93, 112, 119, 0.22);
+  padding: 30px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.wiertla-categories__mobile-rent-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.wiertla-categories__mobile-rent-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wiertla-categories__mobile-rent-title {
+  color: var(--body_contrast, #112832);
+  font-family: "League Spartan";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 15.6px;
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+}
+
+.wiertla-categories__mobile-rent-description,
+.wiertla-categories__mobile-rent-contact {
+  color: var(--body_contrast, #112832);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.48px;
+  margin-bottom: 15px;
+}
+
+.wiertla-categories__mobile-rent-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 25px;
+}
+
+.wiertla-categories__mobile-rent-phone,
+.wiertla-categories__mobile-rent-email {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wiertla-categories__mobile-rent-contact-link {
+  color: var(--body_contrast, #112832);
+  font-family: "League Spartan";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16.6px;
+  letter-spacing: 1.08px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+  text-transform: uppercase;
+}
+
+.wiertla-categories__mobile-rent-button {
+  width: 100%;
+  display: flex;
+  height: 44px;
+  padding: 11px 17px 11px 22px;
+  align-items: center;
+  gap: 22px;
+  align-self: stretch;
+  justify-content: space-between;
+  background: #FFE500;
+  border: 2px solid var(--body_contrast, #112832);
+  border-radius: 40px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.wiertla-categories__mobile-rent-button span {
+  color: var(--body_contrast, #112832);
+  font-family: "League Spartan";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 15.6px;
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+}
+
+.wiertla-categories__mobile-rent-button:hover {
+  background: #FCD34D;
+}
+
+.wiertla-categories__mobile-rent-form {
+  flex-direction: column;
+}
+
+.wiertla-categories__mobile-rent-form-title {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: #112832;
+  margin-bottom: 15px;
+}
+
+.wiertla-categories__mobile-rent-form-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.wiertla-categories__mobile-rent-form-group {
+  position: relative;
+  margin-bottom: 11px;
+}
+
+.wiertla-categories__mobile-rent-form-row {
+  display: flex;
+  gap: 11px;
+}
+
+.wiertla-categories__mobile-rent-form-row .wiertla-categories__mobile-rent-form-group {
+  flex: 1;
+  width: 50%;
+}
+
+.wiertla-categories__mobile-rent-form-group input {
+  width: 100%;
+  height: 44px;
+  padding: 11px 17px 11px 22px;
+  border: 2px solid #e2e2e7;
+  border-radius: 40px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #112832;
+  transition: border-color 0.3s ease;
+}
+
+.wiertla-categories__mobile-rent-form-group input:focus {
+  outline: none;
+  border-color: #112832;
+}
+
+.wiertla-categories__mobile-rent-form-group input.error {
+  border-color: #ff0000;
+}
+
+.wiertla-categories__mobile-rent-form-error {
+  display: none;
+  color: #ff0000;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  margin-top: 4px;
+  padding-left: 22px;
+}
+
+.wiertla-categories__mobile-rent-form-group.error .wiertla-categories__mobile-rent-form-error {
+  display: block;
+}
+
+.wiertla-categories__mobile-rent-submit {
+  width: 100%;
+  display: flex;
+  height: 44px;
+  padding: 11px 17px 11px 22px;
+  align-items: center;
+  gap: 22px;
+  align-self: stretch;
+  justify-content: space-between;
+  background: #FFE500;
+  border: 2px solid var(--body_contrast, #112832);
+  border-radius: 40px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #112832;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+  margin-top: 16px;
+}
+
+.wiertla-categories__mobile-rent-submit:hover {
+  background: #ffe44d;
+}
+
+.wiertla-categories__mobile-rent-submit img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.wiertla-categories__mobile-rent-success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 16px;
+}
+
+.wiertla-categories__mobile-rent-success-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+.wiertla-categories__mobile-rent-success-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.wiertla-categories__mobile-rent-success-message {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 15.6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #112832;
+}
+
+.wiertla-categories__mobile-rent-success-note {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.03em;
+  color: #112832;
+  margin: 0;
+}
+
+.wiertla-categories__mobile-rent-success .wiertla-categories__mobile-rent-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 44px;
+  background-color: #ffffff;
+  border: 2px solid #FFE500;
+  border-radius: 40px;
+  padding: 11px 22px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #112832;
+  cursor: pointer;
+  margin: 0;
+}
+
+.wiertla-categories__mobile-rent-success .wiertla-categories__mobile-rent-button:hover {
+  background-color: #f5f5f5;
+}
+
+.wiertla-categories__mobile-rent-form-icon {
+  position: absolute;
+  left: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.wiertla-categories__mobile-rent-form-input-with-icon {
+  padding-left: 47px !important; /* 17px + 20px + 10px = 47px */
+}
+
+@media (max-width: 768px) {
+  .wypozycz-rent {
+    padding: 40px 0;
+  }
+  
+  .wiertla-categories__mobile-rent-wrapper {
+    padding: 20px;
+  }
+  
+  .wiertla-categories__mobile-rent-form-row {
+    flex-direction: column;
+  }
+}
+</style>
+
+<script>
+function showRentForm() {
+  const button = document.querySelector('.wiertla-categories__mobile-rent-button');
+  const form = document.querySelector('.wiertla-categories__mobile-rent-form');
+  
+  if (button && form) {
+    button.style.display = 'none';
+    form.style.display = 'flex';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('.wiertla-categories__mobile-rent-form-content');
+  
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Hide form content and show success message
+      const formContent = document.querySelector('.wiertla-categories__mobile-rent-form-content');
+      const successMessage = document.querySelector('.wiertla-categories__mobile-rent-success');
+      
+      if (formContent && successMessage) {
+        formContent.style.display = 'none';
+        successMessage.style.display = 'flex';
+      }
+    });
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "Wypożycz Rent",
+  "settings": []
+}
+{% endschema %} 

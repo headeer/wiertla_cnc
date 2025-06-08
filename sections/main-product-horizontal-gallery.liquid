@@ -190,7 +190,433 @@
     max-height: 400px;
     opacity: 0.5;
   }
+
+  .product-details__availability-stock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .product-details__availability-label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #112832;
+    min-width: 140px;
+  }
+
+  .product-details__availability-count {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #112832;
+    padding: 8px 12px;
+    background-color: #F5F5F8;
+    border-radius: 4px;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  .product-details__availability-unit {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #D32F2F;
+  }
+
+  .product-details__stock {
+    margin: 20px 0;
+    padding: 0;
+  }
+
+  .product-details__stock-container {
+    background: #F5F5F8;
+    border: 3px solid #112832;
+    border-radius: 0;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 4px 4px 0px #112832;
+    transition: all 0.3s ease;
+    animation: slideInUp 0.6s ease-out;
+  }
+
+  .product-details__stock-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px #112832;
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes stockPulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes stockShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+  }
+
+  .product-details__stock-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: stockFadeIn 0.8s ease-out 0.2s both;
+  }
+
+  @keyframes stockFadeIn {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .product-details__stock-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+  }
+
+  .product-details__stock-icon:hover {
+    transform: rotate(360deg);
+  }
+
+  .product-details__stock-icon--in-stock svg {
+    filter: none;
+    animation: stockPulse 2s infinite;
+  }
+
+  .product-details__stock-icon--out-of-stock svg {
+    filter: none;
+    animation: stockShake 0.5s ease-in-out;
+  }
+
+  .product-details__stock-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  .product-details__stock-label {
+    color: #112832;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+  }
+
+  .product-details__stock-count {
+    color: #112832;
+    font-weight: 800;
+    font-size: 18px;
+    background: #FFE500;
+    padding: 4px 12px;
+    border-radius: 0;
+    border: 2px solid #112832;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    animation: stockSlideInRight 0.6s ease-out 0.4s both;
+  }
+
+  .product-details__stock-count:hover {
+    transform: scale(1.1);
+    box-shadow: 2px 2px 0px #112832;
+  }
+
+  @keyframes stockSlideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Low Stock Alert */
+  .product-details__stock-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #FFE500;
+    border: 3px solid #112832;
+    border-radius: 0;
+    padding: 12px 16px;
+    margin-top: 8px;
+    box-shadow: 2px 2px 0px #112832;
+    animation: stockAlertBounce 0.8s ease-out, stockPulseAlert 2s infinite 1s;
+  }
+
+  @keyframes stockAlertBounce {
+    0% {
+      opacity: 0;
+      transform: scale(0.8) translateY(10px);
+    }
+    60% {
+      transform: scale(1.05) translateY(-2px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes stockPulseAlert {
+    0%, 100% {
+      box-shadow: 2px 2px 0px #112832;
+    }
+    50% {
+      box-shadow: 4px 4px 0px #112832;
+      transform: translateY(-1px);
+    }
+  }
+
+  .product-details__stock-alert-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    animation: stockWiggle 1s ease-in-out infinite;
+  }
+
+  @keyframes stockWiggle {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+
+  .product-details__stock-alert-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    line-height: 1.3;
+    color: #112832;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .product-details__stock-alert-text strong {
+    font-weight: 800;
+    color: #112832;
+    animation: stockHighlight 1.5s ease-in-out infinite;
+  }
+
+  @keyframes stockHighlight {
+    0%, 100% { color: #112832; }
+    50% { color: #D32F2F; }
+  }
+
+  /* Stock Progress Bar */
+  .product-details__stock-progress {
+    margin-top: 8px;
+    animation: stockFadeIn 1s ease-out 0.6s both;
+  }
+
+  .product-details__stock-progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: #112832;
+    border-radius: 0;
+    overflow: hidden;
+    margin-bottom: 6px;
+    border: 2px solid #112832;
+  }
+
+  .product-details__stock-progress-fill {
+    height: 100%;
+    background: #FFE500;
+    border-radius: 0;
+    transition: width 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+    animation: stockFillProgress 1.2s ease-out 0.8s both;
+  }
+
+  @keyframes stockFillProgress {
+    from {
+      width: 0 !important;
+    }
+  }
+
+  .product-details__stock-progress-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    color: #112832;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    animation: fadeIn 1.2s ease-out 1s both;
+  }
+
+  /* Mobile responsiveness for stock section */
+  @media screen and (max-width: 768px) {
+    .product-details__stock-container {
+      padding: 12px 16px;
+      gap: 10px;
+      border-width: 2px;
+      box-shadow: 2px 2px 0px #112832;
+    }
+
+    .product-details__stock-text {
+      font-size: 14px;
+    }
+
+    .product-details__stock-count {
+      font-size: 16px;
+      padding: 3px 10px;
+    }
+
+    .product-details__stock-alert {
+      padding: 10px 12px;
+      border-width: 2px;
+      box-shadow: 1px 1px 0px #112832;
+    }
+
+    .product-details__stock-alert-text {
+      font-size: 12px;
+    }
+
+    .product-details__stock-progress-bar {
+      height: 5px;
+    }
+  }
+
+  /* Quantity Button Styling */
+  .product-details__quantity-btn {
+    opacity: 1;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+    cursor: pointer;
+  }
+
+  .product-details__quantity-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f5f5f5;
+  }
+
+  .product-details__quantity-btn:disabled:hover {
+    background-color: #f5f5f5;
+    transform: none;
+  }
+
+  .product-details__add-to-cart:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #cccccc;
+    border-color: #999999;
+  }
+
+  .product-details__add-to-cart:disabled:hover {
+    background-color: #cccccc;
+    transform: none;
+  }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const quantityContainer = document.querySelector('.product-details__quantity');
+  if (!quantityContainer) return;
+
+  const quantityInput = quantityContainer.querySelector('.quantity__input');
+  const decreaseBtn = quantityContainer.querySelector('[data-quantity-decrease]');
+  const increaseBtn = quantityContainer.querySelector('[data-quantity-increase]');
+  const addToCartBtn = document.querySelector('.product-details__add-to-cart');
+  const stockQuantity = parseInt(quantityContainer.dataset.stockQuantity) || 0;
+
+  function updateButtonStates() {
+    if (!quantityInput) return;
+    
+    const currentQuantity = parseInt(quantityInput.value) || 1;
+    
+    // Update decrease button - disable if quantity is 1 or stock is 0
+    if (decreaseBtn) {
+      decreaseBtn.disabled = currentQuantity <= 1 || stockQuantity <= 0;
+    }
+    
+    // Update increase button - disable if quantity equals stock or stock is 0
+    if (increaseBtn) {
+      increaseBtn.disabled = currentQuantity >= stockQuantity || stockQuantity <= 0;
+    }
+    
+    // Update add to cart button - disable if stock is 0
+    if (addToCartBtn) {
+      addToCartBtn.disabled = stockQuantity <= 0;
+    }
+  }
+
+  // Initial button state update
+  updateButtonStates();
+
+  // Handle quantity input changes
+  if (quantityInput) {
+    quantityInput.addEventListener('input', function() {
+      let value = parseInt(this.value) || 1;
+      
+      // Ensure value is within bounds
+      if (value < 1) value = 1;
+      if (value > stockQuantity && stockQuantity > 0) value = stockQuantity;
+      
+      this.value = value;
+      updateButtonStates();
+    });
+  }
+
+  // Handle decrease button
+  if (decreaseBtn) {
+    decreaseBtn.addEventListener('click', function() {
+      if (!quantityInput || this.disabled) return;
+      
+      let currentValue = parseInt(quantityInput.value) || 1;
+      if (currentValue > 1) {
+        quantityInput.value = currentValue - 1;
+        updateButtonStates();
+      }
+    });
+  }
+
+  // Handle increase button
+  if (increaseBtn) {
+    increaseBtn.addEventListener('click', function() {
+      if (!quantityInput || this.disabled) return;
+      
+      let currentValue = parseInt(quantityInput.value) || 1;
+      if (currentValue < stockQuantity) {
+        quantityInput.value = currentValue + 1;
+        updateButtonStates();
+      }
+    });
+  }
+});
+</script>
 
 <div class="product-page">
   <!-- Breadcrumbs -->
@@ -488,7 +914,8 @@
         {%- if section.settings.show_quantity_selector -%}
           <!-- Quantity and Add to Cart Section -->
           <section class="product-details__actions">
-            <div class="product-details__quantity">
+            {% assign stock_quantity = current_variant.inventory_quantity | default: 0 %}
+            <div class="product-details__quantity" data-stock-quantity="{{ stock_quantity }}">
               <div class="product-details__quantity-label" data-translation-key="mainProductHorizontalGallery.quantity">ilość</div>
               <div class="product-details__quantity-input">
                 <input
@@ -496,16 +923,19 @@
                   name="quantity"
                   id="Quantity-{{ section.id }}"
                   min="1"
+                  max="{{ stock_quantity }}"
                   value="1"
                   form="{{ product_form_id }}"
-                  class="quantity__input">
+                  class="quantity__input"
+                  {% if stock_quantity <= 0 %}disabled{% endif %}>
               </div>
               <div class="product-details__quantity-unit">szt.</div>
               <button
                 type="button"
                 class="product-details__quantity-btn product-details__quantity-btn--decrease"
                 aria-label="Decrease quantity"
-                data-quantity-decrease>
+                data-quantity-decrease
+                {% if stock_quantity <= 0 %}disabled{% endif %}>
                 <img
                   src="{{ 'remove_icon.svg' | asset_url }}"
                   alt="Decrease"
@@ -517,7 +947,8 @@
                 type="button"
                 class="product-details__quantity-btn product-details__quantity-btn--increase"
                 aria-label="Increase quantity"
-                data-quantity-increase>
+                data-quantity-increase
+                {% if stock_quantity <= 1 %}disabled{% endif %}>
                 <img
                   src="{{ 'add_icon.svg' | asset_url }}"
                   alt="Increase"
@@ -539,8 +970,15 @@
               <button
                 type="submit"
                 name="add"
-                class="product-details__add-to-cart">
-                <span data-translation-key="mainProductHorizontalGallery.addToCart">DO KOSZYKA</span>
+                class="product-details__add-to-cart"
+                {% if stock_quantity <= 0 %}disabled{% endif %}>
+                <span data-translation-key="mainProductHorizontalGallery.addToCart">
+                  {% if stock_quantity <= 0 %}
+                    NIEDOSTĘPNE
+                  {% else %}
+                    DO KOSZYKA
+                  {% endif %}
+                </span>
                 <img
                   src="{{ 'shopping_cart.svg' | asset_url }}"
                   alt="Cart"
@@ -549,6 +987,77 @@
                   height="20">
               </button>
             {%- endform -%}
+          </section>
+
+          <!-- Stock Availability Section -->
+          <section class="product-details__stock">
+            {% assign stock_quantity = current_variant.inventory_quantity | default: 0 %}
+            
+            <div class="product-details__stock-container">
+              <!-- Stock Status with Icon -->
+              <div class="product-details__stock-status">
+                {% if stock_quantity > 0 %}
+                  <div class="product-details__stock-icon product-details__stock-icon--in-stock">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="8" cy="8" r="8" fill="#22C55E"/>
+                      <path d="M5 8L7 10L11 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="product-details__stock-text">
+                    <span class="product-details__stock-label">W magazynie:</span>
+                    <strong class="product-details__stock-count">{{ stock_quantity }} szt.</strong>
+                  </div>
+                {% else %}
+                  <div class="product-details__stock-icon product-details__stock-icon--out-of-stock">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="8" cy="8" r="8" fill="#EF4444"/>
+                      <path d="M6 6L10 10M10 6L6 10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div class="product-details__stock-text">
+                    <span class="product-details__stock-label">Aktualnie niedostępne</span>
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Low Stock Warning -->
+              {% if stock_quantity > 0 and stock_quantity <= 5 %}
+                <div class="product-details__stock-alert">
+                  <div class="product-details__stock-alert-icon">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 1L13 12H1L7 1Z" fill="#F59E0B" stroke="#F59E0B" stroke-width="2" stroke-linejoin="round"/>
+                      <path d="M7 5V8" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                      <circle cx="7" cy="10" r="0.5" fill="white"/>
+                    </svg>
+                  </div>
+                  <div class="product-details__stock-alert-text">
+                    {% if stock_quantity == 1 %}
+                      <strong>Ostatnia sztuka!</strong> Pospiesz się z zamówieniem
+                    {% elsif stock_quantity <= 3 %}
+                      <strong>Tylko {{ stock_quantity }} sztuki pozostały!</strong> Ograniczona dostępność
+                    {% else %}
+                      <strong>Ograniczona dostępność</strong> - {{ stock_quantity }} sztuk w magazynie
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+
+              <!-- Stock Progress Bar for Visual Interest -->
+              {% if stock_quantity > 0 and stock_quantity <= 10 %}
+                <div class="product-details__stock-progress">
+                  <div class="product-details__stock-progress-bar">
+                    {% assign progress_percentage = stock_quantity | times: 10 %}
+                    {% if progress_percentage > 100 %}
+                      {% assign progress_percentage = 100 %}
+                    {% endif %}
+                    <div class="product-details__stock-progress-fill" style="width: {{ progress_percentage }}%"></div>
+                  </div>
+                  <div class="product-details__stock-progress-label">
+                    Poziom magazynowy
+                  </div>
+                </div>
+              {% endif %}
+            </div>
           </section>
         {%- endif -%}
 
@@ -567,8 +1076,26 @@
                     height="24">
                   <div class="product-details__delivery-label" data-translation-key="mainProductHorizontalGallery.deliveryTime">Czas dostawy</div>
                 </div>
-                <div class="product-details__delivery-value">2-3
-                  <span data-translation-key="mainProductHorizontalGallery.days">dni robocze</span>
+                <div class="product-details__delivery-value">
+                  {% assign sku_char = product.variants.first.sku | slice: 3, 1 %}
+                  {% case sku_char %}
+                    {% when 'M' %}
+                      <span data-translation-key="mainProductHorizontalGallery.nextDay">na następny dzień roboczy</span>
+                    {% when 'T' %}
+                      2-3 <span data-translation-key="mainProductHorizontalGallery.days">dni robocze</span>
+                    {% when 'C' %}
+                      2-3 <span data-translation-key="mainProductHorizontalGallery.days">dni robocze</span>
+                    {% when 'E' %}
+                      3-4 <span data-translation-key="mainProductHorizontalGallery.days">dni robocze</span>
+                    {% when 'U' %}
+                      7 <span data-translation-key="mainProductHorizontalGallery.days">dni roboczych</span>
+                    {% when 'D' %}
+                      <span data-translation-key="mainProductHorizontalGallery.availability">dostępność do potwierdzenia</span>
+                    {% when 'A' %}
+                      7-10 <span data-translation-key="mainProductHorizontalGallery.days">dni roboczych</span>
+                    {% else %}
+                      2-3 <span data-translation-key="mainProductHorizontalGallery.days">dni robocze</span>
+                  {% endcase %}
                 </div>
               </div>
             {%- endif -%}
@@ -769,6 +1296,7 @@
     </div>
   </div>
 </section>
+
 <!-- Category Descriptions Section -->
 <div class="category-desc">
   <div class="category-desc__title" data-translate="wiertla_stats.category_desc.title">KATEGORIE WIERTEŁ</div>
@@ -783,7 +1311,9 @@
             src="{{ 'image-36.png' | asset_url }}"
             loading="lazy"
             class="category-desc__icon"
-            alt="Wiertła koronkowe">
+            alt="Wiertła koronkowe"
+            width="34"
+            height="34">
           <div class="category-desc__name" data-translate="wiertla_stats.category_desc.crown_drills.title">WIERTŁA KORONKOWE</div>
         </div>
         <div class="category-desc__text">
@@ -797,7 +1327,9 @@
             src="{{ 'image-37.png' | asset_url }}"
             loading="lazy"
             class="category-desc__icon"
-            alt="SanDavik 880">
+            alt="SanDavik 880"
+            width="34"
+            height="34">
           <div class="category-desc__name" data-translate="wiertla_categories.sandvik">SanDavik 880</div>
         </div>
         <div class="category-desc__text">
@@ -814,7 +1346,9 @@
             src="{{ 'image-38.png' | asset_url }}"
             loading="lazy"
             class="category-desc__icon"
-            alt="Wiertła PŁYTKOWE">
+            alt="Wiertła PŁYTKOWE"
+            width="34"
+            height="34">
           <div class="category-desc__name" data-translate="wiertla_categories.plate">Wiertła PŁYTKOWE</div>
         </div>
         <div class="category-desc__text">
@@ -828,7 +1362,9 @@
             src="{{ 'image-39.png' | asset_url }}"
             loading="lazy"
             class="category-desc__icon"
-            alt="Wiertła AMEC">
+            alt="Wiertła AMEC"
+            width="34"
+            height="34">
           <div class="category-desc__name" data-translate="wiertla_categories.amec">Wiertła AMEC</div>
         </div>
         <div class="category-desc__text">
@@ -845,7 +1381,9 @@
             src="{{ 'image-40.png' | asset_url }}"
             loading="lazy"
             class="category-desc__icon"
-            alt="Wiertła VHM">
+            alt="Wiertła VHM"
+            width="34"
+            height="34">
           <div class="category-desc__name" data-translate="wiertla_categories.vhm">Wiertła VHM
             <span class="category-desc__subtitle">(Węglik Spiekany)</span>
           </div>
@@ -861,7 +1399,9 @@
             src="{{ 'image-41.png' | asset_url }}"
             loading="lazy"
             class="category-desc__icon"
-            alt="Wiertła KSEM">
+            alt="Wiertła KSEM"
+            width="34"
+            height="34">
           <div class="category-desc__name" data-translate="wiertla_categories.ksem">Wiertła KSEM</div>
         </div>
         <div class="category-desc__text">
@@ -871,6 +1411,7 @@
     </div>
   </div>
 </div>
+
 <style>
 .latest-products {
   padding: 60px 24px;
@@ -2026,6 +2567,7 @@
       flex-wrap: wrap;
     }
   }
+  </style>
 {% endstylesheet %}
 {% schema %}
   {

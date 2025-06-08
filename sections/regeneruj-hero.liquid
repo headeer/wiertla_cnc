@@ -1,7 +1,9 @@
-<div class="product-breadcrumbs">
-  <a href="/" class="product-breadcrumbs__home">Strona główna</a>
-  <span>/</span>
-  <span class="product-breadcrumbs__collection">REGENERUJ</span>
+<div class="product-breadcrumbs-wrapper">
+  <div class="product-breadcrumbs">
+    <a href="/" class="product-breadcrumbs__link">Strona główna</a>
+    <span class="product-breadcrumbs__separator">/</span>
+    <span class="product-breadcrumbs__current">REGENERUJ</span>
+  </div>
 </div>
 
 <section class="wypozycz-hero">
@@ -25,47 +27,49 @@
 </section>
 
 <style>
-.product-breadcrumbs {
-  background: #F5F5F8; 
-  padding: 16px 0;
-  text-align: center;
+.product-breadcrumbs-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.product-breadcrumbs__home {
-  color: var(--text_default_color, #112832);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0.48px;
+.product-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.product-breadcrumbs__link {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-offset: 0%;
+  text-decoration-thickness: 0%;
+  color: #112832;
   text-decoration: none;
 }
 
-.product-breadcrumbs__home:hover {
-  text-decoration: underline;
+.product-breadcrumbs__separator {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  color: #112832;
 }
 
-.product-breadcrumbs span {
-  color: var(--text_default_color, #112832);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0.48px;
-  margin: 0 8px;
-}
-
-.product-breadcrumbs__collection {
-  color: var(--text_default_color, #112832);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 20px;
-  letter-spacing: 0.48px;
-  margin: 0;
+.product-breadcrumbs__current {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  color: #112832;
 }
 
 .wypozycz-hero {
