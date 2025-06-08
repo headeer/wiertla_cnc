@@ -1,0 +1,342 @@
+<section class="wypozycz-info">
+  <div class="wypozycz-info__container">
+    
+    <!-- First row - full width -->
+    <div class="wypozycz-info__row wypozycz-info__row--full">
+      <div class="wypozycz-info__item">
+        <div class="wypozycz-info__header">
+          <img src="{{ 'headphones_zasady.svg' | asset_url }}" alt="Zasady" class="wypozycz-info__icon" width="34" height="34">
+          <h3 class="wypozycz-info__title">
+            {{ section.settings.zasady_title | default: 'ZASADY współpracy w ramach wypożyczalni narzędzi cnC' }}
+          </h3>
+        </div>
+        <div class="wypozycz-info__content">
+          <p>{{ section.settings.zasady_content | default: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second row - two columns -->
+    <div class="wypozycz-info__row wypozycz-info__row--two-columns">
+      <div class="wypozycz-info__item">
+        <div class="wypozycz-info__header">
+          <img src="{{ 'dobor_narzedzi.svg' | asset_url }}" alt="Dobór narzędzi" class="wypozycz-info__icon" width="34" height="34">
+          <h3 class="wypozycz-info__title">
+            {{ section.settings.dobor_title | default: 'Dobór narzędzi' }}
+          </h3>
+        </div>
+        <div class="wypozycz-info__content">
+          <p>{{ section.settings.dobor_content | default: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' }}</p>
+        </div>
+      </div>
+      
+      <div class="wypozycz-info__item">
+        <div class="wypozycz-info__header">
+          <img src="{{ 'transport.svg' | asset_url }}" alt="Transport" class="wypozycz-info__icon" width="34" height="34">
+          <h3 class="wypozycz-info__title">
+            {{ section.settings.transport_title | default: 'Transport' }}
+          </h3>
+        </div>
+        <div class="wypozycz-info__content">
+          <p>{{ section.settings.transport_content | default: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Third row - two columns -->
+    <div class="wypozycz-info__row wypozycz-info__row--two-columns">
+      <div class="wypozycz-info__item">
+        <div class="wypozycz-info__header">
+          <img src="{{ 'oplata_za_wynajem.svg' | asset_url }}" alt="Opłata za wynajem" class="wypozycz-info__icon" width="34" height="34">
+          <h3 class="wypozycz-info__title">
+            {{ section.settings.oplata_title | default: 'Opłata za wynajem' }}
+          </h3>
+        </div>
+        <div class="wypozycz-info__content">
+          <p>{{ section.settings.oplata_content | default: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' }}</p>
+        </div>
+      </div>
+      
+      <div class="wypozycz-info__item">
+        <div class="wypozycz-info__header">
+          <img src="{{ 'events.svg' | asset_url }}" alt="Czas wynajmu" class="wypozycz-info__icon" width="34" height="34">
+          <h3 class="wypozycz-info__title">
+            {{ section.settings.czas_title | default: 'Czas wynajmu' }}
+          </h3>
+        </div>
+        <div class="wypozycz-info__content">
+          <p>{{ section.settings.czas_content | default: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fourth row - two columns -->
+    <div class="wypozycz-info__row wypozycz-info__row--two-columns">
+      <div class="wypozycz-info__item">
+        <div class="wypozycz-info__header">
+          <img src="{{ 'eksploatacja_narzedzi_cnc.svg' | asset_url }}" alt="Eksploatacja narzędzi cnc" class="wypozycz-info__icon" width="34" height="34">
+          <h3 class="wypozycz-info__title">
+            {{ section.settings.eksploatacja_title | default: 'Eksploatacja narzędzi cnc' }}
+          </h3>
+        </div>
+        <div class="wypozycz-info__content">
+          <p>{{ section.settings.eksploatacja_content | default: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' }}</p>
+        </div>
+      </div>
+      
+      <div class="wypozycz-info__item">
+        <div class="wypozycz-info__header">
+          <img src="{{ 'uszkodzenia.svg' | asset_url }}" alt="Uszkodzenia i odpowiedzialność" class="wypozycz-info__icon" width="34" height="34">
+          <h3 class="wypozycz-info__title">
+            {{ section.settings.uszkodzenia_title | default: 'uszkodzenia i Odpowiedzialność' }}
+          </h3>
+        </div>
+        <div class="wypozycz-info__content">
+          <p>{{ section.settings.uszkodzenia_content | default: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fifth row - full width -->
+    <div class="wypozycz-info__row wypozycz-info__row--full">
+      <div class="wypozycz-info__item">
+        <div class="wypozycz-info__header">
+          <img src="{{ 'uwagi.svg' | asset_url }}" alt="Uwagi dodatkowe" class="wypozycz-info__icon" width="34" height="34">
+          <h3 class="wypozycz-info__title">
+            {{ section.settings.uwagi_title | default: 'uwagi dodatkowe' }}
+          </h3>
+        </div>
+        <div class="wypozycz-info__content">
+          <p>{{ section.settings.uwagi_content | default: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.wypozycz-info {
+  background: #ffffff;
+  padding: 0 0 60px 0;
+}
+
+.wypozycz-info__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.wypozycz-info__row {
+  margin-bottom: 40px;
+}
+
+.wypozycz-info__row--full {
+  width: 100%;
+}
+
+.wypozycz-info__row--two-columns {
+  display: flex;
+  gap: 40px;
+}
+
+.wypozycz-info__row--two-columns .wypozycz-info__item {
+  flex: 1;
+}
+
+.wypozycz-info__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.wypozycz-info__icon {
+  width: 34px;
+  height: 34px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.wypozycz-info__title {
+  color: var(--body_contrast, #112832);
+  font-family: "League Spartan", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16.6px;
+  letter-spacing: 1.08px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.wypozycz-info__content {
+  color: var(--body_contrast, #112832);
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0.48px;
+}
+
+.wypozycz-info__content p {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .wypozycz-info__row--two-columns {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .wypozycz-info__row {
+    margin-bottom: 30px;
+  }
+  
+  .wypozycz-info__title {
+    font-size: 16px;
+    line-height: 18px;
+  }
+  
+  .wypozycz-info__content {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Wypożycz Info",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Zasady współpracy"
+    },
+    {
+      "type": "text",
+      "id": "zasady_title",
+      "label": "Zasady Title",
+      "default": "ZASADY współpracy w ramach wypożyczalni narzędzi cnC"
+    },
+    {
+      "type": "textarea",
+      "id": "zasady_content",
+      "label": "Zasady Content",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s."
+    },
+    {
+      "type": "header",
+      "content": "Dobór narzędzi"
+    },
+    {
+      "type": "text",
+      "id": "dobor_title",
+      "label": "Dobór Title",
+      "default": "Dobór narzędzi"
+    },
+    {
+      "type": "textarea",
+      "id": "dobor_content",
+      "label": "Dobór Content",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s."
+    },
+    {
+      "type": "header",
+      "content": "Transport"
+    },
+    {
+      "type": "text",
+      "id": "transport_title",
+      "label": "Transport Title",
+      "default": "Transport"
+    },
+    {
+      "type": "textarea",
+      "id": "transport_content",
+      "label": "Transport Content",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s."
+    },
+    {
+      "type": "header",
+      "content": "Opłata za wynajem"
+    },
+    {
+      "type": "text",
+      "id": "oplata_title",
+      "label": "Opłata Title",
+      "default": "Opłata za wynajem"
+    },
+    {
+      "type": "textarea",
+      "id": "oplata_content",
+      "label": "Opłata Content",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s."
+    },
+    {
+      "type": "header",
+      "content": "Czas wynajmu"
+    },
+    {
+      "type": "text",
+      "id": "czas_title",
+      "label": "Czas Title",
+      "default": "Czas wynajmu"
+    },
+    {
+      "type": "textarea",
+      "id": "czas_content",
+      "label": "Czas Content",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s."
+    },
+    {
+      "type": "header",
+      "content": "Eksploatacja narzędzi CNC"
+    },
+    {
+      "type": "text",
+      "id": "eksploatacja_title",
+      "label": "Eksploatacja Title",
+      "default": "Eksploatacja narzędzi cnc"
+    },
+    {
+      "type": "textarea",
+      "id": "eksploatacja_content",
+      "label": "Eksploatacja Content",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s."
+    },
+    {
+      "type": "header",
+      "content": "Uszkodzenia i odpowiedzialność"
+    },
+    {
+      "type": "text",
+      "id": "uszkodzenia_title",
+      "label": "Uszkodzenia Title",
+      "default": "uszkodzenia i Odpowiedzialność"
+    },
+    {
+      "type": "textarea",
+      "id": "uszkodzenia_content",
+      "label": "Uszkodzenia Content",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s."
+    },
+    {
+      "type": "header",
+      "content": "Uwagi dodatkowe"
+    },
+    {
+      "type": "text",
+      "id": "uwagi_title",
+      "label": "Uwagi Title",
+      "default": "uwagi dodatkowe"
+    },
+    {
+      "type": "textarea",
+      "id": "uwagi_content",
+      "label": "Uwagi Content",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s."
+    }
+  ]
+}
+{% endschema %} 

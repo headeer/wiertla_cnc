@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "header": {
+      "type": "header"
+    },
+    "hero": {
+      "type": "regeneruj-hero"
+    },
+    "image-section": {
+      "type": "regeneruj-images"
+    },
+    "info-section": {
+      "type": "regeneruj-info"
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": ["header", "hero", "image-section", "info-section", "footer"]
+} 

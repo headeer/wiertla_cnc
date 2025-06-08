@@ -3,33 +3,101 @@
   A reusable component to display the category filters for the Wiertla CNC Shopify theme.
 {% endcomment %}
 
-<!-- New Category Icons -->
+<!-- Category Icons Per Tab -->
 <div class="wiertla-categories__icons">
-  <div class="wiertla-categories__icon-item" data-category="koronkowe">
+  <!-- WIERTŁA tab icons -->
+  <div class="wiertla-categories__icon-item wiertla-tab-wiertla" data-category="koronkowe" data-tab="wiertla">
     <img src="{{ 'ico_big_koronkowe.svg' | asset_url }}" alt="Koronkowe" class="wiertla-categories__icon" width="122" height="122">
     <span class="wiertla-categories__icon-label">KORONKOWE</span>
   </div>
-  <div class="wiertla-categories__icon-item" data-category="plytkowe">
+  <div class="wiertla-categories__icon-item wiertla-tab-wiertla" data-category="plytkowe" data-tab="wiertla">
     <img src="{{ 'ico_big_plytkowe.svg' | asset_url }}" alt="Płytkowe" class="wiertla-categories__icon" width="122" height="122">
     <span class="wiertla-categories__icon-label">PŁYTKOWE</span>
   </div>
-  <div class="wiertla-categories__icon-item" data-category="vhm">
-    <img src="{{ 'ico_big_vhm.svg' | asset_url }}" alt="VH" class="wiertla-categories__icon" width="122" height="122">
+  <div class="wiertla-categories__icon-item wiertla-tab-wiertla" data-category="vhm" data-tab="wiertla">
+    <img src="{{ 'ico_big_vhm.svg' | asset_url }}" alt="VHM" class="wiertla-categories__icon" width="122" height="122">
     <span class="wiertla-categories__icon-label">VHM</span>
   </div>
-  <div class="wiertla-categories__icon-item" data-category="sandvik">
+  <div class="wiertla-categories__icon-item wiertla-tab-wiertla" data-category="sandvik" data-tab="wiertla">
     <img src="{{ 'ico_big_sandvik.svg' | asset_url }}" alt="Sandvik 880" class="wiertla-categories__icon" width="122" height="122">
     <span class="wiertla-categories__icon-label">SANDVIK 880</span>
   </div>
-  <div class="wiertla-categories__icon-item" data-category="amec">
-    <img src="{{ 'ico_big_amec.svg' | asset_url }}" alt="AMEC" class="wiertla-categories__icon" width="122" height="122">
-    <span class="wiertla-categories__icon-label">AMEC</span>
-  </div>
-  <div class="wiertla-categories__icon-item" data-category="ksem">
+  <div class="wiertla-categories__icon-item wiertla-tab-wiertla" data-category="ksem" data-tab="wiertla">
     <img src="{{ 'ico_big_ksem.svg' | asset_url }}" alt="KSEM" class="wiertla-categories__icon" width="122" height="122">
     <span class="wiertla-categories__icon-label">KSEM</span>
   </div>
-  <div class="wiertla-categories__icon-item" data-category="wszystkie">
+  <div class="wiertla-categories__icon-item wiertla-tab-wiertla" data-category="amec" data-tab="wiertla">
+    <img src="{{ 'ico_big_amec.svg' | asset_url }}" alt="AMEC" class="wiertla-categories__icon" width="122" height="122">
+    <span class="wiertla-categories__icon-label">AMEC</span>
+  </div>
+  <!-- PŁYTKI tab icons -->
+  <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="wcmx" data-tab="plytki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">WCMX</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="lcmx" data-tab="plytki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">LCMX</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="811" data-tab="plytki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">811</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="dft" data-tab="plytki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">DFT</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="880" data-tab="plytki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">880</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="wogx" data-tab="plytki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">WOGX</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="spgx" data-tab="plytki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">SPGX</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="p284" data-tab="plytki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">P284</span>
+  </div>
+  <!-- KORONKI tab icons -->
+  <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="ksem" data-tab="koronki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">KSEM</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="idi" data-tab="koronki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">IDI</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="p600" data-tab="koronki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">P600</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="icm" data-tab="koronki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">ICM</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="icp" data-tab="koronki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">ICP</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="870" data-tab="koronki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">870</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="amec" data-tab="koronki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">AMEC</span>
+  </div>
+  <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="ktip" data-tab="koronki">
+    <span class="wiertla-categories__icon" style="display:inline-block;width:122px;height:122px;background:#eee;border-radius:10px;text-align:center;line-height:122px;font-size:32px;color:#bbb;">SVG</span>
+    <span class="wiertla-categories__icon-label">ktip</span>
+  </div>
+  <!-- WSZYSTKIE (all) icon -->
+  <div class="wiertla-categories__icon-item wiertla-tab-wiertla wiertla-tab-plytki wiertla-tab-koronki" data-category="wszystkie" data-tab="all">
     <img src="{{ 'ico_big_all.svg' | asset_url }}" alt="Wszystkie" class="wiertla-categories__icon" width="122" height="122">
     <span class="wiertla-categories__icon-label">WSZYSTKIE</span>
   </div>
@@ -37,34 +105,46 @@
 <div class="wiertla-categories__filters desktop">
   <div class="wiertla-categories__filters-left">
     <button class="wiertla-categories__filter-button active" data-filter="wszystkie">Wszystkie</button>
-    <select class="wiertla-categories__filter" data-filter="category">  
+    
+    <!-- Typ wiertła filter (only for wiertla tab) -->
+    <select class="wiertla-categories__filter wiertla-filter-type" data-filter="typ" data-tab="wiertla">
       <option value="">Typ wiertła</option>
-      <option value="VW">Koronkowe</option>
-      <option value="PR">Płytkowe</option>
-      <option value="WW">VHM</option>
-      <option value="PS">Sandvik 880</option>
-      <option value="WK">KSEM</option>
-      <option value="WV">AMEC</option>
+      <option value="koronkowe">Koronkowe</option>
+      <option value="plytkowe">Płytkowe</option>
+      <option value="VHM">VHM</option>
+      <option value="Sandvik 880">Sandvik 880</option>
+      <option value="KSEM">KSEM</option>
+      <option value="AMEC">AMEC</option>
     </select>
-    {% comment %} <select class="wiertla-categories__filter" data-filter="crown">
-      <option value="">Wykaz koronek</option>
-      <option value="KK">KK</option>
-      <option value="KI">KI</option>
-      <option value="KS">KS</option>
-      <option value="KT">KT</option>
-      <option value="KA">KA</option>
-    </select> {% endcomment %}
+    
+    <!-- Rodzaj filter for plytki tab (should appear in same position as Typ wiertła) -->
+    <select class="wiertla-categories__filter wiertla-filter-rodzaj" data-filter="rodzaj" data-tab="plytki" style="display:none;">
+      <option value="">Rodzaj</option>
+      <option value="WCMX">WCMX</option>
+      <option value="LCMX">LCMX</option>
+      <option value="811">811</option>
+      <option value="DFT">DFT</option>
+      <option value="880">880</option>
+      <option value="WOGX">WOGX</option>
+      <option value="SPGX">SPGX</option>
+      <option value="P284">P284</option>
+    </select>
+    
+    <!-- Rodzaj filter for koronki tab (should appear in same position as Typ wiertła) -->
+    <select class="wiertla-categories__filter wiertla-filter-rodzaj" data-filter="rodzaj" data-tab="koronki" style="display:none;">
+      <option value="">Rodzaj</option>
+      <option value="KSEM">KSEM</option>
+      <option value="IDI">IDI</option>
+      <option value="P600">P600</option>
+      <option value="ICM">ICM</option>
+      <option value="ICP">ICP</option>
+      <option value="870">870</option>
+      <option value="AMEC">AMEC</option>
+      <option value="ktip">ktip</option>
+    </select>
+    
     <select class="wiertla-categories__filter" data-filter="manufacturer">
       <option value="">Producent</option>
-      <option value="AMEC">AMEC</option>
-      <option value="GÜHRING">GÜHRING</option>
-      <option value="ISCAR">ISCAR</option>
-      <option value="KENNAMETAL">KENNAMETAL</option>
-      <option value="MIKRONTOOL">MIKRONTOOL</option>
-      <option value="Sandvik">Sandvik</option>
-      <option value="TaeguTec">TaeguTec</option>
-      <option value="Walter">Walter</option>
-      <option value="WNT">WNT</option>
     </select>
   </div>
 
@@ -95,14 +175,14 @@
       <div class="wiertla-categories__modal-filters">
         <div class="wiertla-categories__modal-filter-group">
           <label>Typ wiertła</label>
-          <select class="wiertla-categories__filter" data-filter="type">
+          <select class="wiertla-categories__filter" data-filter="typ">
             <option value="">Wszystkie</option>
-            <option value="VW">Koronkowe (VW)</option>
-            <option value="PR">Płytkowe (PR)</option>
-            <option value="WW">VHM (WW)</option>
-            <option value="PS">Sandvik 880 (PS)</option>
-            <option value="WK">KSEM (WK)</option>
-            <option value="WV">AMEC (WV)</option>
+            <option value="koronkowe">Koronkowe</option>
+            <option value="plytkowe">Płytkowe</option>
+            <option value="VHM">VHM</option>
+            <option value="Sandvik 880">Sandvik 880</option>
+            <option value="KSEM">KSEM</option>
+            <option value="AMEC">AMEC</option>
           </select>
         </div>
         <div class="wiertla-categories__modal-filter-group">
@@ -120,9 +200,6 @@
           <label>Producent</label>
           <select class="wiertla-categories__filter" data-filter="manufacturer">
             <option value="">Wszystkie</option>
-            <option value="Sandvik">Sandvik</option>
-            <option value="AMEC">AMEC</option>
-            <option value="KSEM">KSEM</option>
           </select>
         </div>
       </div>
@@ -135,7 +212,13 @@
 </div>
 
 <script>
+  console.log('=== WIERTLA FILTERS SCRIPT LOADED ===');
+  console.log('Current URL:', window.location.href);
+  console.log('DOM ready state:', document.readyState);
+  
   document.addEventListener('DOMContentLoaded', function() {
+    console.log('=== DOM CONTENT LOADED EVENT FIRED ===');
+    
     // Add event listeners to language buttons
     document.querySelectorAll('.wiertla-categories__language-btn').forEach(btn => {
       btn.addEventListener('click', function() {
@@ -194,7 +277,232 @@
         }
       });
     }
+
+    // Tab-specific producer filter logic
+    function updateProducerOptions(tabType) {
+      document.querySelectorAll('.wiertla-categories__filter[data-filter="manufacturer"]').forEach(function(select) {
+        select.querySelectorAll('option').forEach(function(opt) {
+          if (!opt.className || opt.value === "") {
+            opt.style.display = '';
+            return;
+          }
+          if (
+            (tabType === 'wiertla' && opt.classList.contains('producer-wiertla')) ||
+            (tabType === 'plytki' && opt.classList.contains('producer-plytki')) ||
+            (tabType === 'koronki' && opt.classList.contains('producer-koronki'))
+          ) {
+            opt.style.display = '';
+          } else {
+            opt.style.display = 'none';
+          }
+        });
+        // Reset value if current option is hidden
+        if (select.selectedOptions.length && select.selectedOptions[0].style.display === 'none') {
+          select.value = '';
+        }
+      });
+    }
+
+    // Listen for tab changes
+    function setupProducerTabSync() {
+      document.querySelectorAll('.wiertla-categories__tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          var tabType = this.getAttribute('data-tab-type');
+          updateProducerOptions(tabType);
+        });
+      });
+      // On page load, set correct options
+      var activeTab = document.querySelector('.wiertla-categories__tab.active');
+      if (activeTab) {
+        updateProducerOptions(activeTab.getAttribute('data-tab-type'));
+      }
+    }
+    document.addEventListener('DOMContentLoaded', setupProducerTabSync);
+
+    // Typ/Rodzaj Filter (tab-specific)
+    function updateTypeRodzajDropdown(tabType) {
+      console.log('updateTypeRodzajDropdown called with tabType:', tabType);
+      
+      document.querySelectorAll('.wiertla-filter-type, .wiertla-filter-rodzaj').forEach(function(select) {
+        const selectTab = select.getAttribute('data-tab');
+        const selectClass = select.className;
+        console.log('Processing select:', selectClass, 'data-tab:', selectTab, 'tabType:', tabType);
+        
+        if (selectTab === tabType) {
+          console.log('Showing filter:', selectClass);
+          select.style.display = '';
+        } else {
+          console.log('Hiding filter:', selectClass);
+          select.style.display = 'none';
+          select.value = '';
+        }
+      });
+    }
+    
+    // Function to update active icon based on filter selection
+    function updateActiveIcon(filterValue, tabType) {
+      console.log('updateActiveIcon called with filterValue:', filterValue, 'tabType:', tabType);
+      
+      // Remove active class from all icons
+      document.querySelectorAll('.wiertla-categories__icon-item').forEach(function(icon) {
+        icon.classList.remove('active');
+      });
+      
+      if (filterValue && filterValue !== '') {
+        // Convert filter value to match data-category format
+        const categoryValue = filterValue.toLowerCase();
+        
+        // Find the corresponding icon and make it active
+        let targetIcon = null;
+        
+        // For wiertla tab, look for exact match
+        if (tabType === 'wiertla') {
+          targetIcon = document.querySelector(`.wiertla-categories__icon-item[data-category="${categoryValue}"]`);
+        }
+        // For plytki/koronki tabs, look for exact match
+        else {
+          targetIcon = document.querySelector(`.wiertla-categories__icon-item[data-category="${categoryValue}"]`);
+        }
+        
+        if (targetIcon) {
+          targetIcon.classList.add('active');
+          console.log('Made icon active:', categoryValue);
+        } else {
+          console.log('No matching icon found for category:', categoryValue);
+        }
+      } else {
+        // If no filter selected, make "wszystkie" active
+        const allIcon = document.querySelector('.wiertla-categories__icon-item[data-category="wszystkie"]');
+        if (allIcon) {
+          allIcon.classList.add('active');
+          console.log('Made "wszystkie" icon active');
+        }
+      }
+    }
+    
+    // Function to setup filter change listeners
+    function setupFilterIconSync() {
+      console.log('Setting up filter-icon sync');
+      
+      // Listen for changes on typ wiertła filter
+      document.querySelectorAll('.wiertla-filter-type').forEach(function(select) {
+        select.addEventListener('change', function() {
+          const tabType = this.getAttribute('data-tab');
+          const filterValue = this.value;
+          console.log('Typ filter changed:', filterValue, 'for tab:', tabType);
+          updateActiveIcon(filterValue, tabType);
+        });
+      });
+      
+      // Listen for changes on rodzaj filters
+      document.querySelectorAll('.wiertla-filter-rodzaj').forEach(function(select) {
+        select.addEventListener('change', function() {
+          const tabType = this.getAttribute('data-tab');
+          const filterValue = this.value;
+          console.log('Rodzaj filter changed:', filterValue, 'for tab:', tabType);
+          updateActiveIcon(filterValue, tabType);
+        });
+      });
+    }
+    
+    // Make function available globally for debugging
+    window.testFilterSwitch = function(tabType) {
+      console.log('=== Manual Test: Switching to tab type:', tabType, '===');
+      updateTypeRodzajDropdown(tabType);
+    };
+    
+    window.testIconSync = function(filterValue, tabType) {
+      console.log('=== Manual Test: Setting icon for filter:', filterValue, 'tab:', tabType, '===');
+      updateActiveIcon(filterValue, tabType);
+    };
+    
+    console.log('Setting up tab event listeners');
+    
+    // Debug: Log all available filters
+    console.log('=== Available Filters Debug ===');
+    document.querySelectorAll('.wiertla-filter-type, .wiertla-filter-rodzaj').forEach(function(select, index) {
+      console.log(`Filter ${index + 1}:`, {
+        className: select.className,
+        dataTab: select.getAttribute('data-tab'),
+        dataFilter: select.getAttribute('data-filter'),
+        display: select.style.display || 'default',
+        visible: select.offsetWidth > 0 && select.offsetHeight > 0
+      });
+    });
+    console.log('=== End Filters Debug ===');
+    
+    // Debug: Log all available icons
+    console.log('=== Available Icons Debug ===');
+    document.querySelectorAll('.wiertla-categories__icon-item').forEach(function(icon, index) {
+      console.log(`Icon ${index + 1}:`, {
+        category: icon.getAttribute('data-category'),
+        tab: icon.getAttribute('data-tab'),
+        classList: icon.className,
+        text: icon.querySelector('.wiertla-categories__icon-label')?.textContent?.trim()
+      });
+    });
+    console.log('=== End Icons Debug ===');
+    
+    console.log('=== Looking for tabs ===');
+    const tabs = document.querySelectorAll('.wiertla-categories__tab');
+    console.log('Found', tabs.length, 'tabs');
+    
+    tabs.forEach(function(tab, index) {
+      console.log(`Tab ${index + 1}:`, {
+        text: tab.textContent.trim(),
+        dataTabType: tab.getAttribute('data-tab-type'),
+        classList: tab.className,
+        isActive: tab.classList.contains('active')
+      });
+      
+      tab.addEventListener('click', function() {
+        var tabType = this.getAttribute('data-tab-type');
+        console.log('=== TAB CLICKED ===');
+        console.log('Tab clicked:', this.textContent.trim(), 'tabType:', tabType);
+        updateTypeRodzajDropdown(tabType);
+        
+        // Reset to "wszystkie" when switching tabs
+        updateActiveIcon('', tabType);
+      });
+    });
+    
+    // Setup filter-icon synchronization
+    setupFilterIconSync();
+    
+    // On page load
+    var activeTab = document.querySelector('.wiertla-categories__tab.active');
+    if (activeTab) {
+      var initialTabType = activeTab.getAttribute('data-tab-type');
+      console.log('Initial active tab:', activeTab.textContent.trim(), 'tabType:', initialTabType);
+      updateTypeRodzajDropdown(initialTabType);
+      
+      // Set initial icon state
+      updateActiveIcon('', initialTabType);
+    } else {
+      console.log('No active tab found on page load');
+    }
+    
+    console.log('=== Test Instructions ===');
+    console.log('You can manually test filter switching in console:');
+    console.log('testFilterSwitch("wiertla") - should show Typ wiertła filter');
+    console.log('testFilterSwitch("plytki") - should show Rodzaj filter for plytki'); 
+    console.log('testFilterSwitch("koronki") - should show Rodzaj filter for koronki');
+    console.log('testIconSync("koronkowe", "wiertla") - should activate koronkowe icon');
+    console.log('testIconSync("wcmx", "plytki") - should activate WCMX icon');
   });
+  
+  // Also add immediate check in case DOM is already loaded
+  if (document.readyState === 'loading') {
+    console.log('DOM is still loading, waiting for DOMContentLoaded...');
+  } else {
+    console.log('DOM already loaded, running setup immediately...');
+    // Run the setup immediately if DOM is already loaded
+    setTimeout(function() {
+      console.log('=== IMMEDIATE SETUP (DOM already loaded) ===');
+      const event = new Event('DOMContentLoaded');
+      document.dispatchEvent(event);
+    }, 100);
+  }
 </script>
 
 <style>
@@ -339,5 +647,23 @@
   .wiertla-categories__filters-left {
     display: none;
   }
+}
+
+
+
+
+.wiertla-categories__icon-item.active .wiertla-categories__icon-label {
+  font-weight: 600 !important;
+}
+
+/* Hover effect for better UX */
+.wiertla-categories__icon-item {
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+}
+
+.wiertla-categories__icon-item:hover {
+  transform: scale(1.02) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
 }
 </style> 

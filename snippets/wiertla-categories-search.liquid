@@ -7,26 +7,35 @@
   <span>Wyświetl tabelę na całej stronie</span>
 </button>
 
-<div class="wiertla-categories__search">
-  <div class="wiertla-search__input-group">
-   
-    <input
-      type="search"
-      id="CategorySearch"
-      class="wiertla-search__input"
-      placeholder="fi / nazwa / symbol / producent"
-      autocomplete="off"
-      aria-label="{{ 'general.search.category_label' | t }}"
-    >
-    <button class="wiertla-search__submit" aria-label="Submit">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M15.7549 14.2549H14.9649L14.6849 13.9849C15.6649 12.8449 16.2549 11.3649 16.2549 9.75488C16.2549 6.16488 13.3449 3.25488 9.75488 3.25488C6.16488 3.25488 3.25488 6.16488 3.25488 9.75488C3.25488 13.3449 6.16488 16.2549 9.75488 16.2549C11.3649 16.2549 12.8449 15.6649 13.9849 14.6849L14.2549 14.9649V15.7549L19.2549 20.7449L20.7449 19.2549L15.7549 14.2549ZM9.75488 14.2549C7.26488 14.2549 5.25488 12.2449 5.25488 9.75488C5.25488 7.26488 7.26488 5.25488 9.75488 5.25488C12.2449 5.25488 14.2549 7.26488 14.2549 9.75488C14.2549 12.2449 12.2449 14.2549 9.75488 14.2549Z" fill="currentColor"/>
-      </svg>
-    </button>
-  </div>
+<div class="wiertla-categories__search" data-search-component>
+  <form class="wiertla-search__form">
+    <div class="wiertla-search__input-group">
+     
+      <input
+        type="search"
+        id="CategorySearch"
+        name="q"
+        class="wiertla-search__input"
+        placeholder="fi / nazwa / symbol / producent"
+        autocomplete="off"
+        aria-label="{{ 'general.search.category_label' | t }}"
+      >
+      <button type="submit" class="wiertla-search__submit" aria-label="Submit">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.7549 14.2549H14.9649L14.6849 13.9849C15.6649 12.8449 16.2549 11.3649 16.2549 9.75488C16.2549 6.16488 13.3449 3.25488 9.75488 3.25488C6.16488 3.25488 3.25488 6.16488 3.25488 9.75488C3.25488 13.3449 6.16488 16.2549 9.75488 16.2549C11.3649 16.2549 12.8449 15.6649 13.9849 14.6849L14.2549 14.9649V15.7549L19.2549 20.7449L20.7449 19.2549L15.7549 14.2549ZM9.75488 14.2549C7.26488 14.2549 5.25488 12.2449 5.25488 9.75488C5.25488 7.26488 7.26488 5.25488 9.75488 5.25488C12.2449 5.25488 14.2549 7.26488 14.2549 9.75488C14.2549 12.2449 12.2449 14.2549 9.75488 14.2549Z" fill="currentColor"/>
+        </svg>
+      </button>
+      <button type="button" class="wiertla-search__clear" aria-label="Clear search">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="wiertla-search__suggestions" hidden>
+      <div class="wiertla-search__suggestions-content"></div>
+    </div>
+  </form>
 </div>
-
-
 
 <div class="wiertla-rental-info">
   <!-- Rental Info - Added below search -->
@@ -36,7 +45,50 @@
 <div class="wiertla-categories__preview">
   <h3 class="wiertla-categories__preview-title">ZOBACZ OBRAZ POGLĄDOWY</h3>
   <div class="wiertla-categories__preview-image">
-    <img src="{{ 'custom_icons.png' | asset_url }}" alt="Preview" class="wiertla-categories__preview-img">
+    <img src="{{ 'custom_icons.png' | asset_url }}" alt="Preview" class="wiertla-categories__preview-img" width="300" height="200">
   </div>
   <p class="wiertla-categories__preview-text">Najedź kursorem na wiertło w tabeli, aby wyświetlić tu powiększony podgląd</p>
-</div> 
+</div>
+
+<style>
+  .wiertla-categories__preview {
+    width: 100%;
+    padding: 20px;
+    border: 2px dashed #E2E2E7;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .wiertla-categories__preview.active {
+    border: 2px solid #112832;
+    background-color: rgba(245, 245, 248, 0.5);
+  }
+  
+  .wiertla-categories__preview-image {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 15px 0;
+    overflow: hidden;
+  }
+  
+  .wiertla-categories__preview-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    display: block;
+  }
+  
+  .wiertla-categories__preview.active .wiertla-categories__preview-img {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style for when returning to original custom_icons image */
+  .wiertla-categories__preview:not(.active) .wiertla-categories__preview-img {
+    max-height: 80%;
+  }
+</style> 

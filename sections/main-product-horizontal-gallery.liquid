@@ -173,6 +173,23 @@
     font-size: 16px;
     color: #D32F2F;
   }
+
+  .product-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F5F5F8;
+    border-radius: 8px;
+  }
+
+  .product-image-placeholder-svg {
+    width: 80%;
+    height: 80%;
+    max-height: 400px;
+    opacity: 0.5;
+  }
 </style>
 
 <div class="product-page">
@@ -200,6 +217,10 @@
           loading="lazy"
           width="{{ featured_media.width }}"
           height="{{ featured_media.height }}">
+      {%- else -%}
+        <div class="product-image-placeholder">
+          {{ 'product-1' | placeholder_svg_tag: 'product-image-placeholder-svg' }}
+        </div>
       {%- endif -%}
     </div>
 
@@ -222,112 +243,242 @@
 
           <!-- Product Specifications -->
           <div class="product-details__specs">
-            {%- if product.metafields.custom.symbol != blank -%}
-              <!-- Symbol -->
-              <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.symbol">Symbol</div>
-                <div class="product-details__spec-value">{{ product.metafields.custom.symbol }}</div>
-              </div>
-              <div class="product-details__divider"></div>
-            {%- endif -%}
+            {%- liquid
+              assign sku_prefix = product.first_available_variant.sku | slice: 0, 2
+              assign is_plytki = false
+              assign is_koronki = false  
+              assign is_wiertla = false
+              
+              # Determine product type based on SKU prefix or other logic
+              if sku_prefix == 'PR' or sku_prefix == 'PS'
+                assign is_plytki = true
+              elsif sku_prefix == 'VW' or sku_prefix == 'WK'
+                assign is_koronki = true
+              elsif sku_prefix == 'WW' or sku_prefix == 'WV' or sku_prefix == 'IS' or sku_prefix == 'WA'
+                assign is_wiertla = true
+              else
+                # Default to wiertla if unknown
+                assign is_wiertla = true
+              endif
+            -%}
 
-            {% comment %} {%- if product.metafields.custom.category != blank -%}
-              <!-- Category -->
-              <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.category">Kategoria</div>
-                <div class="product-details__spec-value">{{ product.metafields.custom.category }}</div>
-              </div>
-              <div class="product-details__divider"></div>
-            {%- endif -%} {% endcomment %}
-
-            {%- if product.metafields.custom.fi != blank -%}
-              <!-- Diameter (fi) -->
-              <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.diameter">Średnica</div>
-                <div class="product-details__spec-value">
-                  <span>⌀</span>
-                  <span>{{ product.metafields.custom.fi }}</span>
+            {%- if is_plytki -%}
+              <!-- PŁYTKI SPECIFICATIONS -->
+              {%- if product.metafields.custom.kod_producenta != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Kod producenta</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.kod_producenta }}</div>
                 </div>
-              </div>
-              <div class="product-details__divider"></div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.manufacturer != blank or product.vendor != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Producent</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.manufacturer | default: product.vendor }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.rodzaj != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Rodzaj</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.rodzaj }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.gniazdo != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Gniazdo</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.gniazdo }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.sku != blank or product.first_available_variant.sku != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">SKU</div>
+                  <div class="product-details__spec-value">{{ product.first_available_variant.sku | default: product.sku }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.stan != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Stan</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.stan }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.uwagi != blank or product.metafields.custom.notes != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Uwagi</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.uwagi | default: product.metafields.custom.notes }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+            {%- elsif is_koronki -%}
+              <!-- KORONKI SPECIFICATIONS -->
+              {%- if product.metafields.custom.srednica != blank or product.metafields.custom.fi != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Średnica</div>
+                  <div class="product-details__spec-value">
+                    <span>⌀</span>
+                    <span>{{ product.metafields.custom.srednica | default: product.metafields.custom.fi }}</span>
+                  </div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.manufacturer != blank or product.vendor != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Producent</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.manufacturer | default: product.vendor }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.kod_producenta != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Kod producenta</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.kod_producenta }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.rodzaj != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Rodzaj</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.rodzaj }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.gniazdo != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Gniazdo</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.gniazdo }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.sku != blank or product.first_available_variant.sku != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">SKU</div>
+                  <div class="product-details__spec-value">{{ product.first_available_variant.sku | default: product.sku }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.stan != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Stan</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.stan }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.uwagi != blank or product.metafields.custom.notes != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Uwagi</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.uwagi | default: product.metafields.custom.notes }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.price != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Cena netto</div>
+                  <div class="product-details__spec-value">{{ product.price | money_without_trailing_zeros }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.cena_regeneracji != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Cena regeneracji</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.cena_regeneracji }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+            {%- else -%}
+              <!-- WIERTŁA SPECIFICATIONS (DEFAULT) -->
+              {%- if product.metafields.custom.symbol != blank or product.metafields.custom.kod_producenta != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Symbol</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.symbol | default: product.metafields.custom.kod_producenta }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.srednica != blank or product.metafields.custom.fi != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Średnica</div>
+                  <div class="product-details__spec-value">
+                    <span>⌀</span>
+                    <span>{{ product.metafields.custom.srednica | default: product.metafields.custom.fi }}</span>
+                  </div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.xd != blank or product.metafields.custom.custom_working_length != blank or product.metafields.custom.working_length != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Długość robocza</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.xd | default: product.metafields.custom.custom_working_length | default: product.metafields.custom.working_length }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.chlodzenie != blank or product.metafields.custom.cooling != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Chłodzenie</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.chlodzenie | default: product.metafields.custom.cooling }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.mocowanie != blank or product.metafields.custom.mounting != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Mocowanie</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.mocowanie | default: product.metafields.custom.mounting }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.stan != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Stan</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.stan }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.uwagi != blank or product.metafields.custom.notes != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Uwagi</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.uwagi | default: product.metafields.custom.notes }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.sku != blank or product.first_available_variant.sku != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Indeks/SKU</div>
+                  <div class="product-details__spec-value">{{ product.first_available_variant.sku | default: product.sku }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
             {%- endif -%}
 
-            {%- if product.metafields.custom.drill_length != blank -%}
-              <!-- Drill Length -->
+            {%- if product.price != blank and is_plytki == false and is_koronki == false -%}
+              <!-- Net Price for Wiertła -->
               <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.drillLength">Długość wiertła</div>
-                <div class="product-details__spec-value">{{ product.metafields.custom.drill_length }}</div>
-              </div>
-              <div class="product-details__divider"></div>
-            {%- endif -%}
-
-            {%- if product.metafields.custom.width != blank -%}
-              <!-- Width -->
-              <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.width">Szerokość</div>
-                <div class="product-details__spec-value">{{ product.metafields.custom.width }} MM</div>
-              </div>
-              <div class="product-details__divider"></div>
-            {%- endif -%}
-
-            {%- if product.metafields.custom.height != blank -%}
-              <!-- Height -->
-              <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.height">Wysokość</div>
-                <div class="product-details__spec-value">{{ product.metafields.custom.height }} MM</div>
-              </div>
-              <div class="product-details__divider"></div>
-            {%- endif -%}
-
-            {%- if product.metafields.custom.length != blank -%}
-              <!-- Length -->
-              <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.length">Długość</div>
-                <div class="product-details__spec-value">{{ product.metafields.custom.length }} MM</div>
-              </div>
-              <div class="product-details__divider"></div>
-            {%- endif -%}
-
-            {%- if product.metafields.custom.cooling != blank -%}
-              <!-- Cooling -->
-              <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.cooling">Chłodzenie</div>
-                <div class="product-details__spec-value">{{ product.metafields.custom.cooling }}</div>
-              </div>
-              <div class="product-details__divider"></div>
-            {%- endif -%}
-
-            {%- if product.metafields.custom.mounting != blank -%}
-              <!-- Mounting -->
-              <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.mounting">Mocowanie</div>
-                <div class="product-details__spec-value">{{ product.metafields.custom.mounting }}</div>
-              </div>
-              <div class="product-details__divider"></div>
-            {%- endif -%}
-
-            {%- if product.metafields.custom.notes != blank -%}
-              <!-- Notes -->
-              <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.notes">Uwagi</div>
-                <div class="product-details__spec-value">{{ product.metafields.custom.notes }}</div>
-              </div>
-              <div class="product-details__divider"></div>
-            {%- endif -%}
-
-            {%- if product.metafields.custom.rent != blank -%}
-              <!-- Rent -->
-              <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.rent">Wypożyczenie</div>
-                <div class="product-details__spec-value">{{ product.metafields.custom.rent }}</div>
-              </div>
-              <div class="product-details__divider"></div>
-            {%- endif -%}
-
-            {%- if product.price != blank -%}
-              <!-- Net Price -->
-              <div class="product-details__spec-item">
-                <div class="product-details__spec-label" data-translation-key="mainProductHorizontalGallery.netPrice">Cena netto</div>
+                <div class="product-details__spec-label">Cena netto</div>
                 <div class="product-details__spec-value">{{ product.price | money_without_trailing_zeros }}</div>
               </div>
             {%- endif -%}
@@ -358,7 +509,9 @@
                 <img
                   src="{{ 'remove_icon.svg' | asset_url }}"
                   alt="Decrease"
-                  class="quantity-icon">
+                  class="quantity-icon"
+                  width="16"
+                  height="16">
               </button>
               <button
                 type="button"
@@ -368,7 +521,9 @@
                 <img
                   src="{{ 'add_icon.svg' | asset_url }}"
                   alt="Increase"
-                  class="quantity-icon">
+                  class="quantity-icon"
+                  width="16"
+                  height="16">
               </button>
             </div>
             {%- form 'product'
@@ -389,7 +544,9 @@
                 <img
                   src="{{ 'shopping_cart.svg' | asset_url }}"
                   alt="Cart"
-                  class="cart-icon">
+                  class="cart-icon"
+                  width="20"
+                  height="20">
               </button>
             {%- endform -%}
           </section>
@@ -405,7 +562,9 @@
                   <img
                     src="{{ 'truck_icon.svg' | asset_url }}"
                     alt="Delivery"
-                    class="delivery-icon">
+                    class="delivery-icon"
+                    width="24"
+                    height="24">
                   <div class="product-details__delivery-label" data-translation-key="mainProductHorizontalGallery.deliveryTime">Czas dostawy</div>
                 </div>
                 <div class="product-details__delivery-value">2-3
@@ -423,14 +582,18 @@
                     <img
                       src="{{ 'Ico_phone.svg' | asset_url }}"
                       alt="Phone"
-                      class="contact-icon">
+                      class="contact-icon"
+                      width="20"
+                      height="20">
                     <span>+48 600 67 37 36</span>
                   </a>
                   <a href="mailto:biuro@hmmetal.pl" class="product-details__contact-link">
                     <img
                       src="{{ 'Ico_mail.svg' | asset_url }}"
                       alt="Email"
-                      class="contact-icon">
+                      class="contact-icon"
+                      width="20"
+                      height="20">
                     <span>biuro@hmmetal.pl</span>
                   </a>
                 </div>
@@ -812,11 +975,10 @@
   flex-direction: column;
 }
 .wiertla-stats__title {
-  font-family: 'League Spartan'
-  , sans-serif;
-  font-weight: 700;
+  font-family: "League Spartan";
   font-size: 18px;
-  line-height: 24px;
+  font-weight: 700;
+  line-height: 17px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   margin-bottom: 20px;

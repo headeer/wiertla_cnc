@@ -59,7 +59,15 @@
                           :height="item.featured_image.height"
                           :alt="item.product_title"
                           sizes="(min-width: 48em) 5rem, 3.5rem">
-                        <pre x-text="item.featured_image.src"></pre>
+                      </a>
+                    </div>
+                  </template>
+                  <template x-if="item.featured_image.url === null">
+                    <div class="flex-shrink-0 w-10 md:w-20 mr-4">
+                      <a :href="item.url" class="block" aria-hidden="true" tabindex="-1">
+                        <div class="cart-placeholder w-full h-full flex items-center justify-center bg-gray-100 rounded">
+                          {{ 'product-1' | placeholder_svg_tag: 'w-full h-auto opacity-50' }}
+                        </div>
                       </a>
                     </div>
                   </template>

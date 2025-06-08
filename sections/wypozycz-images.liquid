@@ -1,0 +1,85 @@
+<section class="wypozycz-images">
+  <div class="wypozycz-images__container">
+    <div class="wypozycz-images__content">
+      <div class="wypozycz-images__image">
+        {% if section.settings.image_1 %}
+          <img src="{{ section.settings.image_1 | img_url: 'master' }}" alt="{{ section.settings.image_1_alt | default: 'Image 1' }}" width="600" height="400" loading="lazy">
+        {% else %}
+          <img src="{{ 'image_placeholder.svg' | asset_url }}" alt="Image placeholder" width="600" height="400" loading="lazy">
+        {% endif %}
+      </div>
+      <div class="wypozycz-images__image">
+        {% if section.settings.image_2 %}
+          <img src="{{ section.settings.image_2 | img_url: 'master' }}" alt="{{ section.settings.image_2_alt | default: 'Image 2' }}" width="600" height="400" loading="lazy">
+        {% else %}
+          <img src="{{ 'image_placeholder.svg' | asset_url }}" alt="Image placeholder" width="600" height="400" loading="lazy">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.wypozycz-images {
+  background: #F5F5F8;
+  padding-bottom: 70px;
+}
+
+.wypozycz-images__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.wypozycz-images__content {
+  display: flex;
+  gap: 40px;
+}
+
+.wypozycz-images__image {
+  flex: 1;
+}
+
+.wypozycz-images__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .wypozycz-images__content {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Wypożycz Images",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1"
+    },
+    {
+      "type": "text",
+      "id": "image_1_alt",
+      "label": "Image 1 Alt Text",
+      "default": "Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2"
+    },
+    {
+      "type": "text",
+      "id": "image_2_alt",
+      "label": "Image 2 Alt Text",
+      "default": "Image 2"
+    }
+  ]
+}
+{% endschema %} 

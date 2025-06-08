@@ -584,7 +584,7 @@
     }
 
     .header__top-content {
-      padding: 0 16px;
+      padding: 0;
       height: 42px;
       max-height: 42px;
     }
@@ -730,8 +730,15 @@
     <div class="header__container">
       <div class="header__top-content">
         <div class="header__nav-links">
-          <a href="#wiertla-table" class="header__link js-scroll-to-table">KORONKI DO WIERTEŁ</a>
-          <a href="#wiertla-table" class="header__link js-scroll-to-table">PŁYTKI DO WIERTEŁ</a>
+          <a href="#wiertla-table" class="header__link js-scroll-to-table">
+            KORONKI
+          </a>
+          <a href="#wiertla-table" class="header__link js-scroll-to-table">
+            PŁYTKI
+          </a>
+          <a href="#wiertla-table" class="header__link js-scroll-to-table">
+            WIERTŁA
+          </a>
           {%- for link in section.settings.menu.links -%}
             {%- if link.title != 'regeneruj/naostrz' -%}
               <a href="{{ link.url }}" class="header__link {% if link.active %}active{% endif %}">
@@ -818,14 +825,18 @@
             <img
               src="{{ 'Ico_phone.svg' | asset_url }}"
               class="header__contact-icon"
-              alt="{{ 'header.contact.phone_icon_alt' | t }}">
+              alt="{{ 'header.contact.phone_icon_alt' | t }}"
+              width="28"
+              height="28">
             <span class="header__link header__phone-number">{{ section.settings.phone }}</span>
           </div>
           <div class="header__contact-item">
             <img
               src="{{ 'Ico_mail.svg' | asset_url }}"
               class="header__contact-icon"
-              alt="{{ 'header.contact.email_icon_alt' | t }}">
+              alt="{{ 'header.contact.email_icon_alt' | t }}"
+              width="28"
+              height="28">
             <a href="mailto:{{ section.settings.email }}" class="header__link">{{ section.settings.email }}</a>
           </div>
         </div>
@@ -842,13 +853,17 @@
             <img
               src="{{ 'profile_icon.svg' | asset_url }}"
               alt="Profile"
-              class="header__action-icon">
+              class="header__action-icon"
+              width="28"
+              height="28">
           </a>
           <a href="/cart" class="header__action-link add_to_cart">
             <img
               src="{{ 'shopping_cart.svg' | asset_url }}"
               alt="Cart"
-              class="header__action-icon">
+              class="header__action-icon"
+              width="28"
+              height="28">
             <span class="header__cart-count">{{ cart.item_count }}</span>
           </a>
           <a
@@ -862,27 +877,23 @@
 
   <!-- Mobile menu links -->
   <div class="header__mobile-menu-links">
-    <a
-      href="#wiertla-table"
-      class="header__mobile-menu-link js-scroll-to-table">
-      <img
-        src="{{ 'crown_icon.svg' | asset_url }}"
-        alt="Koronki"
-        width="24"
-        height="24"
-        class="header__mobile-menu-icon">
-      KORONKI DO WIERTEŁ
+    <a href="/" class="header__mobile-menu-link">
+      KUP
     </a>
-    <a
-      href="#wiertla-table"
-      class="header__mobile-menu-link js-scroll-to-table">
-      <img
-        src="{{ 'plate_icon.svg' | asset_url }}"
-        alt="Płytki"
-        width="24"
-        height="24"
-        class="header__mobile-menu-icon">
-      PŁYTKI DO WIERTEŁ
+    <a href="/pages/wypozycz" class="header__mobile-menu-link">
+      WYPOŻYCZ
+    </a>
+    <a href="/pages/regeneruj" class="header__mobile-menu-link">
+      REGENERUJ
+    </a>
+    <a href="#wiertla-table" class="header__mobile-menu-link js-scroll-to-table">
+      KORONKI
+    </a>
+    <a href="#wiertla-table" class="header__mobile-menu-link js-scroll-to-table">
+      PŁYTKI
+    </a>
+    <a href="#wiertla-table" class="header__mobile-menu-link js-scroll-to-table">
+      WIERTŁA
     </a>
   </div>
 </header>

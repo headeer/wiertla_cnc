@@ -29,8 +29,8 @@ window.WiertlaTranslations = {
       },
       nav: {
         drills: "WIERTŁA",
-        plates: "PŁYTKI DO WIEREŁ",
-        crowns: "KORONKI DO WIEREŁ",
+        plates: "PŁYTKI DO WIERTEŁ",
+        crowns: "KORONKI DO WIERTEŁ",
       },
       contact: {
         phone_icon_alt: "Telefon",

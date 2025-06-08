@@ -426,7 +426,9 @@
         alt="Product"
         class="wiertla-categories__mobile-preview-image"
         width="200"
-        height="200">
+        height="200"
+        onerror="this.onerror=null; this.src='{{ 'product-1.svg' | asset_url }}'"
+        loading="lazy">
     </div>
 
     <!-- Product Info -->

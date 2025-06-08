@@ -1,0 +1,168 @@
+<div class="product-breadcrumbs">
+  <a href="/" class="product-breadcrumbs__home">Strona główna</a>
+  <span>/</span>
+  <span class="product-breadcrumbs__collection">WYPOŻYCZ</span>
+</div>
+
+<section class="wypozycz-hero">
+  <div class="wypozycz-hero__container">
+    <div class="wypozycz-hero__content">
+      <div class="wypozycz-hero__left">
+        <h1 class="wypozycz-hero__title">
+          {{ section.settings.main_title | default: 'WypoŻYCZ wiertła CNC dla Twojej firmy' }}
+        </h1>
+      </div>
+      <div class="wypozycz-hero__right">
+        <h2 class="wypozycz-hero__subtitle">
+          {{ section.settings.subtitle | default: 'WYPOżycz narzędzia cnc' }}
+        </h2>
+        <div class="wypozycz-hero__description">
+          <p>{{ section.settings.description | default: 'Innowacyjna oferta dla branży CNC. <strong>Wypożyczalnia Narzędzi CNC</strong> to sposób na optymalizację kosztów, a także oszczędność czasu, wynikająca z szerokiej gamy ofertowej marki Wiertla-CNC.com' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.product-breadcrumbs {
+  background: #F5F5F8; 
+  padding: 16px 0;
+  text-align: center;
+}
+
+.product-breadcrumbs__home {
+  color: var(--text_default_color, #112832);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.48px;
+  text-decoration: none;
+}
+
+.product-breadcrumbs__home:hover {
+  text-decoration: underline;
+}
+
+.product-breadcrumbs span {
+  color: var(--text_default_color, #112832);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.48px;
+  margin: 0 8px;
+}
+
+.product-breadcrumbs__collection {
+  color: var(--text_default_color, #112832);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.48px;
+  margin: 0;
+}
+
+.wypozycz-hero {
+  background: #F5F5F8;
+  padding: 60px 0;
+}
+
+.wypozycz-hero__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.wypozycz-hero__content {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.wypozycz-hero__left,
+.wypozycz-hero__right {
+  flex: 1;
+}
+
+.wypozycz-hero__title {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 52px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-transform: uppercase;
+  color: #112832;
+  margin: 0;
+}
+
+.wypozycz-hero__subtitle {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 6%;
+  text-transform: uppercase;
+  color: #112832;
+  margin: 0 0 15px 0;
+}
+
+.wypozycz-hero__description {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 3%;
+  color: #112832;
+}
+
+.wypozycz-hero__description p {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .wypozycz-hero__content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .wypozycz-hero__title {
+    font-size: 32px;
+  }
+  
+  .wypozycz-hero {
+    padding: 40px 0;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Wypożycz Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Main Title",
+      "default": "WypoŻYCZ wiertła CNC dla Twojej firmy"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "WYPOżycz narzędzia cnc"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Innowacyjna oferta dla branży CNC. <strong>Wypożyczalnia Narzędzi CNC</strong> to sposób na optymalizację kosztów, a także oszczędność czasu, wynikająca z szerokiej gamy ofertowej marki Wiertla-CNC.com</p>"
+    }
+  ]
+}
+{% endschema %} 

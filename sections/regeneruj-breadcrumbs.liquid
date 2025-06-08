@@ -1,0 +1,19 @@
+<div class="product-breadcrumbs">
+  <a href="/" class="product-breadcrumbs__home">{{ 'general.breadcrumbs.home' | t | default: 'Strona główna' }}</a>
+  <span>/</span>
+  <a href="/collections/all" class="product-breadcrumbs__collection">{{ section.settings.breadcrumb_text | default: 'REGENERUJ' }}</a>
+</div>
+
+{% schema %}
+{
+  "name": "Regeneruj Breadcrumbs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "breadcrumb_text",
+      "label": "Breadcrumb Text",
+      "default": "REGENERUJ"
+    }
+  ]
+}
+{% endschema %} 
