@@ -2579,37 +2579,8 @@
           }
           const mobileCard = row.querySelector('.wiertla-categories__mobile-card');
           if (mobileCard) {
-            mobileCard.addEventListener('click', function(e) {
-              e.preventDefault();
-              e.stopPropagation();
-              
-              const previewModal = document.querySelector('.wiertla-categories__mobile-preview-modal');
-              if (!previewModal) return;
-              
-              const modalImage = previewModal.querySelector('.wiertla-categories__preview-modal-image');
-              if (modalImage) {
-                modalImage.src = product.image;
-                modalImage.alt = product.title;
-              }
-              
-              previewModal.addEventListener('click', function(event) {
-                if (event.target === previewModal) {
-                  previewModal.classList.remove('active');
-                  setTimeout(() => {
-                    previewModal.style.display = 'none';
-                    document.body.style.overflow = '';
-                  }, 300);
-                }
-              });
-              
-              previewModal.style.display = 'block';
-              document.body.style.overflow = 'hidden';
-              
-              setTimeout(() => {
-                previewModal.classList.add('active');
-              }, 10);
-            });
-        }
+            // Remove the old conflicting click handler - let the JavaScript file handle it
+          }
         } else {
           if (activeTabType === 'wiertla') {
             // Desktop view for Wiertla: Typ | ⌀ Fi | D/mm | Symbol | Producent | Cena netto
@@ -3033,83 +3004,7 @@
       </button>
     </div>
   </div>
-</div>
-
-<!-- Mobile Preview Modal -->
-<div class="wiertla-categories__mobile-preview-modal">
-  <div class="wiertla-categories__mobile-preview-wrapper">
-    <div class="wiertla-categories__mobile-preview-header">
-      <div class="wiertla-categories__mobile-preview-title">PODGLĄD</div>
-      <div class="wiertla-categories__mobile-preview-close-wrapper">
-        <img
-          src="{{ 'ico_close.svg' | asset_url }}"
-          alt="Close"
-          class="wiertla-categories__mobile-preview-close"
-          data-translate="common.close_icon"
-          width="24"
-          height="24"
-        >
-      </div>
     </div>
-
-    <div class="wiertla-categories__mobile-preview-info">
-      <!-- Diameter and size -->
-      <div class="wiertla-categories__mobile-preview-specs">
-        <div class="wiertla-categories__mobile-preview-type">
-          <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
-            alt="Type"
-            class="wiertla-categories__mobile-preview-type-icon"
-            width="32"
-            height="32"
-          >
-        </div>
-        <div class="wiertla-categories__mobile-preview-diameter">
-          <div class="wiertla-categories__mobile-preview-diameter-label">fi ⌀</div>
-          <div class="wiertla-categories__mobile-preview-diameter-value">-</div>
-        </div>
-        <div class="wiertla-categories__mobile-preview-size">
-          <span class="wiertla-categories__mobile-preview-label">Wymiar:</span>
-          <div class="wiertla-categories__mobile-preview-size-value">-</div>
-        </div>
-        <div class="wiertla-categories__mobile-preview-price">
-          <div class="wiertla-categories__mobile-preview-price-value">-</div>
-          <div class="wiertla-categories__mobile-preview-cart-icon">
-            <img
-              src="{{ 'cart_icon.svg' | asset_url }}"
-              alt="Add to cart"
-              data-translate="common.add_to_cart"
-              width="20"
-              height="20"
-            >
-          </div>
-        </div>
-      </div>
-
-      <!-- Manufacturer and SKU -->
-      <div class="wiertla-categories__mobile-preview-details">
-        <div class="wiertla-categories__mobile-preview-manufacturer">
-          <div class="wiertla-categories__mobile-preview-manufacturer-value">-</div>
-        </div>
-        <div class="wiertla-categories__mobile-preview-sku">
-          <div class="wiertla-categories__mobile-preview-sku-value">-</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="wiertla-categories__mobile-preview-button-container">
-      <a href="#" class="wiertla-categories__mobile-preview-button">
-        <span>Zobacz szczegóły</span>
-        <img
-          src="{{ 'icon_filter.svg' | asset_url }}"
-          alt="Details"
-          class="wiertla-categories__mobile-preview-button-icon"
-          width="24"
-          height="24"
-        >
-      </a>
-    </div>
-  </div>
 </div>
 
 <div class="wiertla-categories__fullscreen-view" style="display: none;">
@@ -4932,5 +4827,7 @@
     </div>
   </div>
 </div>
+
+<!-- Include the mobile filter modal JavaScript -->
 
 {% render 'wiertla-styles' %}

@@ -396,7 +396,7 @@
 </script>
 
 <!-- Mobile Product Preview Modal -->
-<div class="wiertla-categories__mobile-preview-modal" style="display: none;">
+<div class="wiertla-categories__mobile-preview-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 10000; align-items: center; justify-content: center;">
   <div class="wiertla-categories__mobile-preview-wrapper">
     <!-- Preview header -->
     <div class="wiertla-categories__mobile-preview-header">
@@ -409,7 +409,7 @@
           height="24">
       </div>
       <div class="wiertla-categories__mobile-preview-title">Podgląd</div>
-      <div class="wiertla-categories__mobile-preview-close-wrapper">
+      <div class="wiertla-categories__mobile-preview-close-wrapper" onclick="closePreviewModal()">
         <img
           src="{{ 'closee.svg' | asset_url }}"
           alt="Close"
@@ -419,53 +419,31 @@
       </div>
     </div>
 
-    <!-- Product Image -->
-    <div class="wiertla-categories__mobile-preview-image-container">
-      <img
-        src=""
-        alt="Product"
-        class="wiertla-categories__mobile-preview-image"
-        width="200"
-        height="200"
-        onerror="this.onerror=null; this.src='{{ 'product-1.svg' | asset_url }}'"
-        loading="lazy">
-    </div>
-
-    <!-- Product Info -->
-    <div class="wiertla-categories__mobile-preview-info">
-      <!-- Diameter and size -->
-      <div class="wiertla-categories__mobile-preview-specs">
-        <div class="wiertla-categories__mobile-preview-type">
-          <img
-            src=""
-            alt="Type"
-            class="wiertla-categories__mobile-preview-type-icon"
-            width="24"
-            height="24">
+    <!-- Product Card Preview (exact same structure as mobile card) -->
+    <div class="wiertla-categories__mobile-preview-card">
+      <div class="wiertla-categories__mobile-top">
+        <div class="wiertla-categories__mobile-image">
+          <img src="" alt="Product" width="34" height="34" loading="lazy" class="wiertla-categories__mobile-preview-product-image">
         </div>
-        <div class="wiertla-categories__mobile-preview-diameter">
-          <div class="wiertla-categories__mobile-preview-diameter-label">fi ⌀</div>
-          <div class="wiertla-categories__mobile-preview-diameter-value"></div>
+        <div class="wiertla-categories__mobile-fi">
+          <span class="mobile-label">Fi ⌀</span>
+          <span class="mobile-value wiertla-categories__mobile-preview-fi-value">-</span>
         </div>
-        <div class="wiertla-categories__mobile-preview-size">
-          <div class="wiertla-categories__mobile-preview-diameter-label">Wymiar</div>
-          <div class="wiertla-categories__mobile-preview-size-value"></div>
-        </div>
-        <div class="wiertla-categories__mobile-preview-price">
-          <div class="wiertla-categories__mobile-preview-price-value"></div>
-          <div class="wiertla-categories__mobile-preview-cart-icon">
-            <img src="{{ 'cart_icon.svg' | asset_url }}" alt="Add to cart" width="24" height="24">
-          </div>
+        <div class="wiertla-categories__mobile-dimension wiertla-categories__mobile-preview-dimension-value">
+          -
         </div>
       </div>
-
-      <!-- Manufacturer and SKU -->
-      <div class="wiertla-categories__mobile-preview-details">
-        <div class="wiertla-categories__mobile-preview-manufacturer">
-          <div class="wiertla-categories__mobile-preview-manufacturer-value"></div>
+      <div class="wiertla-categories__mobile-bottom">
+        <div class="wiertla-categories__mobile-vendor wiertla-categories__mobile-preview-vendor-value">
+          -
         </div>
-        <div class="wiertla-categories__mobile-preview-sku">
-          <div class="wiertla-categories__mobile-preview-sku-value"></div>
+        <div class="wiertla-categories__mobile-symbol wiertla-categories__mobile-preview-symbol-value">
+          -
+        </div>
+        <div class="wiertla-categories__mobile-price-wrapper">
+          <div class="wiertla-categories__mobile-price wiertla-categories__mobile-preview-price-value">
+            -
+          </div>
         </div>
       </div>
     </div>
@@ -484,3 +462,127 @@
     </div>
   </div>
 </div>
+
+<script>
+  // Close preview modal function
+  window.closePreviewModal = function() {
+    const modal = document.querySelector(".wiertla-categories__mobile-preview-modal");
+    if (modal) {
+      modal.style.display = "none";
+      modal.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+  };
+
+  // Update mobile preview modal with product data
+  window.updateMobilePreview = function(product) {
+    console.log("updateMobilePreview called with:", product); // Debug log
+    
+    const modal = document.querySelector(".wiertla-categories__mobile-preview-modal");
+    if (!modal) {
+      console.error("Modal not found!");
+      return;
+    }
+
+    // Get all elements
+    const productImage = modal.querySelector(".wiertla-categories__mobile-preview-product-image");
+    const fiValue = modal.querySelector(".wiertla-categories__mobile-preview-fi-value");
+    const dimensionValue = modal.querySelector(".wiertla-categories__mobile-preview-dimension-value");
+    const vendorValue = modal.querySelector(".wiertla-categories__mobile-preview-vendor-value");
+    const symbolValue = modal.querySelector(".wiertla-categories__mobile-preview-symbol-value");
+    const priceValue = modal.querySelector(".wiertla-categories__mobile-preview-price-value");
+    const detailsButton = modal.querySelector(".wiertla-categories__mobile-preview-button");
+
+    console.log("Modal elements found:", {
+      productImage: !!productImage,
+      fiValue: !!fiValue,
+      dimensionValue: !!dimensionValue,
+      vendorValue: !!vendorValue,
+      symbolValue: !!symbolValue,
+      priceValue: !!priceValue,
+      detailsButton: !!detailsButton
+    });
+
+    // Set product image
+    if (productImage) {
+      if (product.image && product.image.trim() !== '') {
+        productImage.src = product.image;
+        productImage.style.display = "block";
+      } else {
+        // Use a default placeholder
+        productImage.src = "{{ 'image-8.png' | asset_url }}";
+        productImage.style.display = "block";
+      }
+    }
+
+    // Set all the product data
+    if (fiValue) fiValue.textContent = product.fi || '-';
+    if (dimensionValue) dimensionValue.textContent = product.dimension || '-';
+    if (vendorValue) vendorValue.textContent = product.vendor || '-';
+    if (symbolValue) symbolValue.textContent = product.symbol || '-';
+    if (priceValue) priceValue.textContent = product.price || '-';
+
+    // Set details button link
+    if (detailsButton) {
+      if (product.url && product.url.trim() !== '') {
+        detailsButton.href = product.url;
+        detailsButton.onclick = null;
+      } else {
+        detailsButton.href = "#";
+        detailsButton.onclick = function(e) { e.preventDefault(); };
+      }
+    }
+
+    console.log("Data set in modal"); // Debug log
+
+    // Show modal with proper flex display for overlay
+    modal.style.display = "flex";
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  };
+
+  // Test function to manually trigger modal (for debugging)
+  window.testMobilePreview = function() {
+    console.log("Testing mobile preview modal...");
+    const testProduct = {
+      image: "{{ 'image-8.png' | asset_url }}",
+      fi: "⌀ 12",
+      dimension: "100mm",
+      vendor: "Test Vendor", 
+      symbol: "TEST123",
+      price: "149.99 zł",
+      url: "#"
+    };
+    window.updateMobilePreview(testProduct);
+  };
+
+  // Add event listeners when DOM is ready
+  document.addEventListener("DOMContentLoaded", function() {
+    console.log("=== MOBILE COMPONENTS LOADED ===");
+    console.log("Modal found:", !!document.querySelector(".wiertla-categories__mobile-preview-modal"));
+    console.log("Test function available:", !!window.testMobilePreview);
+    
+    // Handle close button clicks
+    const closeButton = document.querySelector(".wiertla-categories__mobile-preview-close-wrapper");
+    if (closeButton) {
+      closeButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.closePreviewModal();
+      });
+    }
+
+    // Handle outside click to close modal
+    const modal = document.querySelector(".wiertla-categories__mobile-preview-modal");
+    if (modal) {
+      modal.addEventListener("click", function(e) {
+        if (e.target === modal) {
+          window.closePreviewModal();
+        }
+      });
+    }
+  });
+</script>
+
+<!-- Load the mobile filter modal JavaScript -->
+<script src="{{ 'wiertla-filter-modal.js' | asset_url }}" defer></script>

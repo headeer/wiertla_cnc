@@ -4900,4 +4900,228 @@
   .rent-modal__submit:hover {
     background-color: #0056b3;
   }
-</style>
+/* Enhanced Mobile Preview Modal Styling */
+.wiertla-categories__mobile-preview-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.wiertla-categories__mobile-preview-modal.active {
+  display: flex !important;
+}
+.wiertla-categories__mobile-preview-wrapper {
+  background: white;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.wiertla-categories__mobile-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 0;
+  border-bottom: none;
+}
+.wiertla-categories__mobile-preview-title {
+  color: #112832;
+  font-size: 18px;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.08px;
+  flex: 1;
+  text-align: center;
+}
+.wiertla-categories__mobile-preview-close-wrapper {
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+}
+.wiertla-categories__mobile-preview-close-wrapper:hover {
+  background-color: #f5f5f8;
+}
+.wiertla-categories__mobile-preview-close {
+  width: 24px;
+  height: 24px;
+}
+.wiertla-categories__mobile-preview-button-container {
+  padding: 20px;
+  border-top: 1px solid #e2e2e7;
+} .wiertla-categories__mobile-preview-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wiertla-categories__mobile-preview-icon-inner {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+.wiertla-categories__mobile-preview-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0;
+}
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0;
+}
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-image {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #112832;
+  border-right: none;
+}
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-image img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-fi {
+  width: 127px;
+  height: 34px;
+  padding: 1px 10px 0;
+  border: 2px solid #112832;
+  border-right: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-dimension {
+  flex: 1 1 0;
+  height: 34px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  border: 2px solid #112832;
+  border-right: none;
+}
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-price-wrapper {
+  display: flex;
+  border: 2px solid #112832;
+}
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-price {
+  height: 34px;
+  padding: 0 10px;
+  background: #ffe500;
+  display: flex;
+  align-items: center;
+  min-width: 80px;
+}
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-bottom {
+  display: flex;
+  width: 100%;
+}
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-vendor {
+  width: 160px;
+  height: 34px;
+  padding: 0 10px;
+  background: #f5f5f8;
+  border-left: 2px solid #e2e2e7;
+  border-right: 2px solid #e2e2e7;
+  border-bottom: 2px solid #e2e2e7;
+  display: flex;
+  align-items: center;
+}
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-symbol {
+  flex: 1 1 0;
+  height: 34px;
+  padding: 0 10px;
+  background: #f5f5f8;
+  border-right: 2px solid #e2e2e7;
+  border-bottom: 2px solid #e2e2e7;
+  display: flex;
+  align-items: center;
+}
+.wiertla-categories__mobile-preview-card .mobile-label {
+  color: #112832;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.48px;
+}
+.wiertla-categories__mobile-preview-card .mobile-value {
+  color: #112832;
+  font-size: 16px;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.96px;
+}
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-dimension,
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-price,
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-vendor,
+.wiertla-categories__mobile-preview-card .wiertla-categories__mobile-symbol {
+  color: #112832;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.48px;
+}
+.wiertla-categories__mobile-preview-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 44px;
+  gap: 22px;
+  background-color: #ffe500;
+  border: 2px solid #112832;
+  border-radius: 40px;
+  padding: 11px 17px 11px 22px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #112832;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+.wiertla-categories__mobile-preview-button:hover {
+  background-color: #ffe44d;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.wiertla-categories__mobile-preview-button span {
+  flex: 1;
+  text-align: left;
+}
+.wiertla-categories__mobile-preview-button-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+} </style>

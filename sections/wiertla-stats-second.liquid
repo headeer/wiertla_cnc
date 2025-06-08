@@ -1,0 +1,127 @@
+{% comment %} 
+                                                                                                                                      Wiertla Stats Component
+                                                                                                                                      A component to display stats and achievements for the Wiertla CNC Shopify theme. 
+{% endcomment %}
+
+<div class="wiertla-stats">
+    <div class="wiertla-stats__container">
+      <div class="wiertla-stats__item">
+        <img
+          src="{{ 'image-36.png' | asset_url }}"
+          alt="Wiertła"
+          class="wiertla-stats__icon"
+          width="128"
+          height="128">
+        <div class="wiertla-stats__content">
+          <div class="wiertla-stats__title" data-translate="wiertla_stats.tools_title">999+ WIERTEŁ CNC</div>
+          <div class="wiertla-stats__text" data-translate="wiertla_stats.tools_text">Ponad 1000 wierteł CNC na stanie</div>
+        </div>
+      </div>
+      <div class="wiertla-stats__item">
+        <img
+          src="{{ 'image-38.png' | asset_url }}"
+          alt="Lata doświadczenia"
+          class="wiertla-stats__icon"
+          width="128"
+          height="128">
+        <div class="wiertla-stats__content">
+          <div class="wiertla-stats__title" data-translate="wiertla_stats.years_title">8 LAT NA RYNKU</div>
+          <div class="wiertla-stats__text" data-translate="wiertla_stats.years_text">Budujemy silną pozycję jako dostawca narzędzi CNC</div>
+        </div>
+      </div>
+      <div class="wiertla-stats__item">
+        <img
+          src="{{ 'image-24.png' | asset_url }}"
+          alt="Jakość"
+          class="wiertla-stats__icon"
+          width="128"
+          height="128">
+        <div class="wiertla-stats__content">
+          <div class="wiertla-stats__title" data-translate="wiertla_stats.quality_title">NAJWYŻSZA JAKOŚĆ</div>
+          <div class="wiertla-stats__text" data-translate="wiertla_stats.quality_text">Oferujemy markowe wiertła i dedykowane alternatywy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  {% stylesheet %}
+    .wiertla-stats {
+      padding: 60px 0;
+      background-color: #F5F5F8;
+    }
+  
+    .wiertla-stats__container {
+      max-width: 1420px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+  
+    .wiertla-stats__item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+  
+    .wiertla-stats__icon {
+      width: 128px;
+      height: 128px;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+  
+    .wiertla-stats__content {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 100%;
+    }
+  
+    .wiertla-stats__title {
+      font-family: "League Spartan", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 17px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #112832;
+    }
+  
+    .wiertla-stats__text {
+      font-family: "Montserrat", sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 22px;
+      letter-spacing: 0.06em;
+      color: #112832;
+    }
+  
+    @media (max-width: 1024px) {
+      .wiertla-stats__container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0 32px;
+      }
+    }
+  
+    @media (max-width: 768px) {
+      .wiertla-stats__container {
+        padding: 0 16px;
+      }
+  
+      .wiertla-stats__item {
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+  
+      }
+    }
+  {% endstylesheet %}
+  
+  {% schema %}
+  {
+    "name": "Wiertla Stats",
+    "settings": []
+  }
+  {% endschema %}

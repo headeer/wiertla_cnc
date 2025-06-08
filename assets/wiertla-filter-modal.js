@@ -62,126 +62,33 @@ function initFilterModal() {
 
 // Initialize preview modal
 function initPreviewModal() {
-  // Use event delegation on the table container which persists across pagination
-  const tableContainer = document.querySelector(
-    ".wiertla-categories__table-container"
-  );
-  if (!tableContainer) {
-    console.error("Table container not found!");
+  // The modal already exists in the mobile components file, no need to create it
+  const existingModal = document.querySelector(".wiertla-categories__mobile-preview-modal");
+  if (!existingModal) {
+    console.error("Preview modal not found in DOM! Make sure mobile components are loaded.");
     return;
   }
 
-  tableContainer.addEventListener("click", (e) => {
-    const productCard = e.target.closest(".wiertla-categories__mobile-card");
-    if (productCard) {
-      e.preventDefault();
-      e.stopPropagation();
+  console.log("Preview modal found, setting up event listeners...");
 
-      const product = {
-        id: productCard.dataset.productId,
-        url: productCard.dataset.productUrl,
-        image:
-          productCard.querySelector(".wiertla-categories__mobile-image img")
-            ?.src || "",
-        fi:
-          productCard
-            .querySelector(".wiertla-categories__mobile-fi .mobile-value")
-            ?.textContent?.trim() || "-",
-        length:
-          productCard
-            .querySelector(".wiertla-categories__mobile-dimension")
-            ?.textContent?.trim() || "-",
-        price:
-          productCard
-            .querySelector(".wiertla-categories__mobile-price")
-            ?.textContent?.trim() || "-",
-        vendor:
-          productCard
-            .querySelector(".wiertla-categories__mobile-vendor")
-            ?.textContent?.trim() || "-",
-        symbol:
-          productCard
-            .querySelector(".wiertla-categories__mobile-symbol")
-            ?.textContent?.trim() || "-",
-      };
-
-      openPreviewModal(product);
-    }
-  });
-
-  // Add modal HTML if it doesn't exist
-  if (!document.querySelector(".wiertla-categories__mobile-preview-modal")) {
-    document.body.insertAdjacentHTML(
-      "beforeend",
-      `
-      <div class="wiertla-categories__mobile-preview-modal">
-        <div class="wiertla-categories__mobile-preview-wrapper">
-          <!-- Modal Header -->
-          <div class="wiertla-categories__mobile-preview-header">
-            <span class="wiertla-categories__mobile-preview-title">PODGLĄD</span>
-            <button type="button" class="wiertla-categories__mobile-preview-close">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </button>
-          </div>
-
-          <!-- Modal Content -->
-          <div class="wiertla-categories__mobile-preview-content">
-            <div class="wiertla-categories__mobile-preview-image-container">
-              <img class="wiertla-categories__mobile-preview-image" src="" alt="Product Preview" loading="lazy">
-            </div>
-            
-            <div class="wiertla-categories__mobile-preview-details">
-              <div class="wiertla-categories__mobile-preview-row">
-                <span class="wiertla-categories__mobile-preview-label">Średnica:</span>
-                <span class="wiertla-categories__mobile-preview-diameter-value"></span>
-              </div>
-              <div class="wiertla-categories__mobile-preview-row">
-                <span class="wiertla-categories__mobile-preview-label">Wymiar:</span>
-                <span class="wiertla-categories__mobile-preview-size-value"></span>
-              </div>
-              <div class="wiertla-categories__mobile-preview-row">
-                <span class="wiertla-categories__mobile-preview-label">Cena:</span>
-                <span class="wiertla-categories__mobile-preview-price-value"></span>
-              </div>
-              <div class="wiertla-categories__mobile-preview-row">
-                <span class="wiertla-categories__mobile-preview-label">Producent:</span>
-                <span class="wiertla-categories__mobile-preview-manufacturer-value"></span>
-              </div>
-              <div class="wiertla-categories__mobile-preview-row">
-                <span class="wiertla-categories__mobile-preview-label">Symbol:</span>
-                <span class="wiertla-categories__mobile-preview-sku-value"></span>
-              </div>
-            </div>
-
-            <button type="button" class="wiertla-categories__mobile-preview-details-button">Zobacz szczegóły</button>
-          </div>
-        </div>
-      </div>
-    `
-    );
-  }
-
-  // Set up modal close functionality
-  const modalElement = document.querySelector(
-    ".wiertla-categories__mobile-preview-modal"
-  );
-  const closeButton = modalElement.querySelector(
-    ".wiertla-categories__mobile-preview-close"
+  // Set up modal close functionality using the existing modal
+  const closeButton = existingModal.querySelector(
+    ".wiertla-categories__mobile-preview-close-wrapper"
   );
 
   if (closeButton) {
     closeButton.addEventListener("click", () => {
-      modalElement.classList.remove("active");
+      existingModal.classList.remove("active");
+      existingModal.style.display = "none";
       document.body.style.overflow = "";
     });
   }
 
   // Close on outside click
-  modalElement.addEventListener("click", (e) => {
-    if (e.target === modalElement) {
-      modalElement.classList.remove("active");
+  existingModal.addEventListener("click", (e) => {
+    if (e.target === existingModal) {
+      existingModal.classList.remove("active");
+      existingModal.style.display = "none";
       document.body.style.overflow = "";
     }
   });
@@ -189,64 +96,25 @@ function initPreviewModal() {
 
 // Open preview modal with product data
 function openPreviewModal(product) {
-  const previewModal = document.querySelector(
-    ".wiertla-categories__mobile-preview-modal"
-  );
-  if (!previewModal) {
-    console.error("Preview modal not found!");
-    return;
-  }
-
-  // Update modal content with product data
-  const imageContainer = previewModal.querySelector(
-    ".wiertla-categories__mobile-preview-image-container"
-  );
-  const image = previewModal.querySelector(
-    ".wiertla-categories__mobile-preview-image"
-  );
-  const diameterValue = previewModal.querySelector(
-    ".wiertla-categories__mobile-preview-diameter-value"
-  );
-  const sizeValue = previewModal.querySelector(
-    ".wiertla-categories__mobile-preview-size-value"
-  );
-  const priceValue = previewModal.querySelector(
-    ".wiertla-categories__mobile-preview-price-value"
-  );
-  const manufacturerValue = previewModal.querySelector(
-    ".wiertla-categories__mobile-preview-manufacturer-value"
-  );
-  const skuValue = previewModal.querySelector(
-    ".wiertla-categories__mobile-preview-sku-value"
-  );
-  const detailsButton = previewModal.querySelector(
-    ".wiertla-categories__mobile-preview-details-button"
-  );
-
-  // Set values
-  if (product.image) {
-    image.src = product.image;
-    imageContainer.style.display = "block";
+  console.log("Opening preview modal with product:", product);
+  
+  // Use the existing updateMobilePreview function from the mobile components
+  if (window.updateMobilePreview) {
+    console.log("Using existing updateMobilePreview function");
+    // Map our product data to match what updateMobilePreview expects
+    const mappedProduct = {
+      image: product.image,
+      fi: product.fi,
+      dimension: product.length, // Map length to dimension
+      vendor: product.vendor,
+      symbol: product.symbol,
+      price: product.price,
+      url: product.url
+    };
+    window.updateMobilePreview(mappedProduct);
   } else {
-    imageContainer.style.display = "none";
+    console.error("updateMobilePreview function not found!");
   }
-
-  diameterValue.textContent = product.fi || "-";
-  sizeValue.textContent = product.length || "-";
-  priceValue.textContent = product.price || "-";
-  manufacturerValue.textContent = product.vendor || "-";
-  skuValue.textContent = product.symbol || "-";
-
-  // Handle details button click
-  detailsButton.onclick = () => {
-    if (product.url) {
-      window.location.href = product.url;
-    }
-  };
-
-  // Show modal
-  previewModal.classList.add("active");
-  document.body.style.overflow = "hidden";
 }
 
 // Apply filters to table
@@ -396,3 +264,56 @@ window.closeFilterModal = function () {
     document.body.style.overflow = "";
   }
 };
+
+// Test function for manual verification
+window.testModalPreview = function() {
+  console.log("Testing modal preview...");
+  const testProduct = {
+    id: "test-123",
+    url: "#test-url",
+    image: "http://127.0.0.1:9292/cdn/shop/t/135/assets/image-12.png",
+    fi: "⌀ 12.5",
+    length: "150mm",
+    price: "249.99 zł",
+    vendor: "Test Manufacturer",
+    symbol: "TEST-SYM-001"
+  };
+  openPreviewModal(testProduct);
+};
+
+// Mobile preview functionality
+document.addEventListener("click", (e) => {
+  console.log("Click detected on:", e.target);
+  
+  // Check if clicked element is a mobile card or inside one
+  const mobileCard = e.target.closest("button.wiertla-categories__mobile-card");
+  
+  console.log("Mobile card found:", mobileCard);
+  
+  if (mobileCard) {
+    console.log("Mobile card clicked, extracting data...");
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Extract product data from the mobile card using correct selectors based on actual structure
+    const product = {
+      id: mobileCard.dataset.productId || "",
+      url: mobileCard.dataset.productUrl || "",
+      // Get image from the mobile-image img element
+      image: mobileCard.querySelector(".wiertla-categories__mobile-image img")?.src || "",
+      // Get fi from the mobile-value inside fi section
+      fi: mobileCard.querySelector(".wiertla-categories__mobile-fi .mobile-value")?.textContent?.trim() || "-",
+      // Get dimension from the dimension div
+      length: mobileCard.querySelector(".wiertla-categories__mobile-dimension")?.textContent?.trim() || "-", 
+      // Get price from the mobile-price div
+      price: mobileCard.querySelector(".wiertla-categories__mobile-price")?.textContent?.trim() || "-",
+      // Get vendor from the mobile-vendor div
+      vendor: mobileCard.querySelector(".wiertla-categories__mobile-vendor")?.textContent?.trim() || "-",
+      // Get symbol from the mobile-symbol div  
+      symbol: mobileCard.querySelector(".wiertla-categories__mobile-symbol")?.textContent?.trim() || "-"
+    };
+
+    console.log("Extracted product data:", product);
+    openPreviewModal(product);
+  }
+});
