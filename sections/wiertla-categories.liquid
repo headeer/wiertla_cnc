@@ -148,7 +148,7 @@
         </div>
         <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="lcmx" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_lcmx-881.svg' | asset_url }}"
             alt="LCMX"
             class="wiertla-categories__icon"
             width="24"
@@ -158,7 +158,7 @@
         </div>
         <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="dft" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_dft.svg' | asset_url }}"
             alt="DFT"
             class="wiertla-categories__icon"
             width="24"
@@ -168,7 +168,7 @@
         </div>
         <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="880" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_880.svg' | asset_url }}"
             alt="880"
             class="wiertla-categories__icon"
             width="24"
@@ -178,7 +178,7 @@
         </div>
         <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="wogx" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_wogx.svg' | asset_url }}"
             alt="WOGX"
             class="wiertla-categories__icon"
             width="24"
@@ -188,7 +188,7 @@
         </div>
         <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="spgx" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_spgx.svg' | asset_url }}"
             alt="SPGX"
             class="wiertla-categories__icon"
             width="24"
@@ -198,7 +198,7 @@
         </div>
         <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="p284" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_p284.svg' | asset_url }}"
             alt="P284"
             class="wiertla-categories__icon"
             width="24"
@@ -214,7 +214,7 @@
           style="display: none;"
         >
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_ksem.svg' | asset_url }}"
             alt="KSEM"
             class="wiertla-categories__icon"
             width="24"
@@ -224,7 +224,7 @@
         </div>
         <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="idi" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_idi.svg' | asset_url }}"
             alt="IDI"
             class="wiertla-categories__icon"
             width="24"
@@ -234,7 +234,7 @@
         </div>
         <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="p600" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_p600.svg' | asset_url }}"
             alt="P600"
             class="wiertla-categories__icon"
             width="24"
@@ -244,7 +244,7 @@
         </div>
         <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="icm" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_icm.svg' | asset_url }}"
             alt="ICM"
             class="wiertla-categories__icon"
             width="24"
@@ -254,7 +254,7 @@
         </div>
         <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="icp" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_icp.svg' | asset_url }}"
             alt="ICP"
             class="wiertla-categories__icon"
             width="24"
@@ -264,7 +264,7 @@
         </div>
         <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="870" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_870.svg' | asset_url }}"
             alt="870"
             class="wiertla-categories__icon"
             width="24"
@@ -278,7 +278,7 @@
           style="display: none;"
         >
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_amec.svg' | asset_url }}"
             alt="AMEC"
             class="wiertla-categories__icon"
             width="24"
@@ -288,7 +288,7 @@
         </div>
         <div class="wiertla-categories__icon-item wiertla-tab-koronki" data-category="ktip" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_ktip.svg' | asset_url }}"
             alt="KTIP"
             class="wiertla-categories__icon"
             width="24"
@@ -513,6 +513,7 @@
           custom_manufacturer: {{ product.metafields.custom.manufacturer | json }},
           custom_working_length: {{ product.metafields.custom.working_length.value | json }},
           custom_xd: {{ product.metafields.custom.xd | json }},
+          custom_gniazdo: {{ product.metafields.custom.gniazdo | json }},
           // Pricing and Availability
           price: {{ product.price | money_without_trailing_zeros | json }},
           price_min: {{ product.price_min | money_without_trailing_zeros | json }},

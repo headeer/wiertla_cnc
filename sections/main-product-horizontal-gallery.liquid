@@ -539,6 +539,19 @@
     background-color: #cccccc;
     transform: none;
   }
+  
+  /* Quantity Note for MOQ */
+  .product-details__quantity-note {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    font-style: italic;
+  }
+
+  .product-details__quantity-note small {
+    display: block;
+  }
 </style>
 
 <script>
@@ -551,15 +564,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const increaseBtn = quantityContainer.querySelector('[data-quantity-increase]');
   const addToCartBtn = document.querySelector('.product-details__add-to-cart');
   const stockQuantity = parseInt(quantityContainer.dataset.stockQuantity) || 0;
+  const minQuantity = parseInt(quantityContainer.dataset.minQuantity) || 1;
 
   function updateButtonStates() {
     if (!quantityInput) return;
     
-    const currentQuantity = parseInt(quantityInput.value) || 1;
+    const currentQuantity = parseInt(quantityInput.value) || minQuantity;
     
-    // Update decrease button - disable if quantity is 1 or stock is 0
+    // Update decrease button - disable if quantity is at minimum or stock is 0
     if (decreaseBtn) {
-      decreaseBtn.disabled = currentQuantity <= 1 || stockQuantity <= 0;
+      decreaseBtn.disabled = currentQuantity <= minQuantity || stockQuantity <= 0;
     }
     
     // Update increase button - disable if quantity equals stock or stock is 0
@@ -579,11 +593,16 @@ document.addEventListener('DOMContentLoaded', function() {
   // Handle quantity input changes
   if (quantityInput) {
     quantityInput.addEventListener('input', function() {
-      let value = parseInt(this.value) || 1;
+      let value = parseInt(this.value) || minQuantity;
       
-      // Ensure value is within bounds
-      if (value < 1) value = 1;
+      // Ensure value is within bounds and respects MOQ
+      if (value < minQuantity) value = minQuantity;
       if (value > stockQuantity && stockQuantity > 0) value = stockQuantity;
+      
+      // Round to nearest MOQ multiple
+      if (minQuantity > 1) {
+        value = Math.ceil(value / minQuantity) * minQuantity;
+      }
       
       this.value = value;
       updateButtonStates();
@@ -595,9 +614,10 @@ document.addEventListener('DOMContentLoaded', function() {
     decreaseBtn.addEventListener('click', function() {
       if (!quantityInput || this.disabled) return;
       
-      let currentValue = parseInt(quantityInput.value) || 1;
-      if (currentValue > 1) {
-        quantityInput.value = currentValue - 1;
+      let currentValue = parseInt(quantityInput.value) || minQuantity;
+      let newValue = currentValue - minQuantity;
+      if (newValue >= minQuantity) {
+        quantityInput.value = newValue;
         updateButtonStates();
       }
     });
@@ -608,9 +628,10 @@ document.addEventListener('DOMContentLoaded', function() {
     increaseBtn.addEventListener('click', function() {
       if (!quantityInput || this.disabled) return;
       
-      let currentValue = parseInt(quantityInput.value) || 1;
-      if (currentValue < stockQuantity) {
-        quantityInput.value = currentValue + 1;
+      let currentValue = parseInt(quantityInput.value) || minQuantity;
+      let newValue = currentValue + minQuantity;
+      if (newValue <= stockQuantity) {
+        quantityInput.value = newValue;
         updateButtonStates();
       }
     });
@@ -915,21 +936,45 @@ document.addEventListener('DOMContentLoaded', function() {
           <!-- Quantity and Add to Cart Section -->
           <section class="product-details__actions">
             {% assign stock_quantity = current_variant.inventory_quantity | default: 0 %}
-            <div class="product-details__quantity" data-stock-quantity="{{ stock_quantity }}">
+            {%- liquid
+              # Check if product is PW category (uses MOQ of 10) or has custom MOQ
+              assign sku_prefix = current_variant.sku | slice: 0, 2
+              assign is_pw_category = false
+              assign min_quantity = 1
+              assign moq_value = product.metafields.custom.moq | default: 1
+              
+              if sku_prefix == 'PW'
+                assign is_pw_category = true
+                assign min_quantity = 10
+              elsif moq_value > 1
+                assign min_quantity = moq_value
+              endif
+            -%}
+            <div class="product-details__quantity" data-stock-quantity="{{ stock_quantity }}" data-min-quantity="{{ min_quantity }}">
               <div class="product-details__quantity-label" data-translation-key="mainProductHorizontalGallery.quantity">ilość</div>
               <div class="product-details__quantity-input">
                 <input
                   type="number"
                   name="quantity"
                   id="Quantity-{{ section.id }}"
-                  min="1"
+                  min="{{ min_quantity }}"
                   max="{{ stock_quantity }}"
-                  value="1"
+                  value="{{ min_quantity }}"
+                  step="{{ min_quantity }}"
                   form="{{ product_form_id }}"
                   class="quantity__input"
                   {% if stock_quantity <= 0 %}disabled{% endif %}>
               </div>
               <div class="product-details__quantity-unit">szt.</div>
+              {%- if is_pw_category -%}
+                <div class="product-details__quantity-note">
+                  <small>Minimalne zamówienie: {{ min_quantity }} szt. (opakowanie)</small>
+                </div>
+              {%- elsif min_quantity > 1 -%}
+                <div class="product-details__quantity-note">
+                  <small>MOQ: {{ min_quantity }} szt.</small>
+                </div>
+              {%- endif -%}
               <button
                 type="button"
                 class="product-details__quantity-btn product-details__quantity-btn--decrease"
@@ -948,7 +993,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 class="product-details__quantity-btn product-details__quantity-btn--increase"
                 aria-label="Increase quantity"
                 data-quantity-increase
-                {% if stock_quantity <= 1 %}disabled{% endif %}>
+                {% if stock_quantity <= min_quantity %}disabled{% endif %}>
                 <img
                   src="{{ 'add_icon.svg' | asset_url }}"
                   alt="Increase"
@@ -1133,8 +1178,134 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 
-<!-- Latest Products Section -->
+<!-- Related Tools Section -->
+{%- liquid
+  assign current_gniazdo = product.metafields.custom.gniazdo
+  assign related_products = collections.all.products | where: 'metafields.custom.gniazdo', current_gniazdo
+  assign filtered_related_products = ''
+  assign related_count = 0
+  
+  # Filter out current product from related products
+  for related_product in related_products
+    if related_product.id != product.id and related_count < 8
+      assign filtered_related_products = filtered_related_products | append: related_product.id | append: ','
+      assign related_count = related_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if current_gniazdo != blank and related_count > 0 -%}
 <div class="latest-products">
+  <div class="latest-products__title" data-translate="related_tools.title">NARZĘDZIA POWIĄZANE</div>
+  <div class="latest-products__subtitle" data-translate="related_tools.subtitle">Produkty o identycznym mocowaniu ({{ current_gniazdo }})</div>
+
+  <div class="latest-products__swiper swiper">
+    <div class="swiper-wrapper">
+      {% assign filtered_ids = filtered_related_products | split: ',' %}
+      {% for product_id in filtered_ids %}
+        {% if product_id != blank %}
+          {% assign related_product = collections.all.products | where: 'id', product_id | first %}
+          {% if related_product %}
+            {% assign sku_prefix = related_product.first_available_variant.sku | slice: 0, 2 %}
+            {% assign icon_url = '' %}
+            
+            {% if sku_prefix == 'VW' %}
+              {% assign icon_url = 'image-8.png' | asset_url %}
+            {% elsif sku_prefix == 'PR' %}
+              {% assign icon_url = 'image-10.png' | asset_url %}
+            {% elsif sku_prefix == 'WW' %}
+              {% assign icon_url = 'image-12.png' | asset_url %}
+            {% elsif sku_prefix == 'PS' %}
+              {% assign icon_url = 'image-9.png' | asset_url %}
+            {% elsif sku_prefix == 'WK' %}
+              {% assign icon_url = 'image-13.png' | asset_url %}
+            {% elsif sku_prefix == 'WV' %}
+              {% assign icon_url = 'image-11.png' | asset_url %}
+            {% elsif sku_prefix == 'IS' %}
+              {% assign icon_url = 'image-12.png' | asset_url %}
+            {% elsif sku_prefix == 'WA' %}
+              {% assign icon_url = 'image-11.png' | asset_url %}
+            {% else %}
+              {% assign icon_url = 'image-8.png' | asset_url %}
+            {% endif %}
+            
+            <div class="swiper-slide">
+              <a href="{{ related_product.url }}" class="product-card" aria-label="{{ related_product.title }}">
+                <div class="product-card__top">
+                  <div class="product-card__image-container">
+                    <div class="product-card__image-placeholder">
+                      <img
+                        src="{{ icon_url }}"
+                        alt="{{ related_product.title | escape }}"
+                        class="product-card__image"
+                        width="34"
+                        height="34"
+                        loading="lazy">
+                    </div>
+                  </div>
+                  <div class="product-card__fi">
+                    <span class="mobile-label">Fi ⌀</span>
+                    <span class="mobile-value">{{ related_product.metafields.custom.srednica | default: related_product.metafields.custom.fi | default: '' }}</span>
+                  </div>
+                  <div class="product-card__dimension">
+                    {{ related_product.metafields.custom.xd | default: related_product.metafields.custom.custom_working_length | default: related_product.metafields.custom.working_length | default: '' }}
+                  </div>
+                </div>
+
+                <div class="product-card__symbol">
+                  {{ related_product.metafields.custom.kod_producenta | default: related_product.metafields.custom.symbol | default: related_product.sku | default: '' }}
+                </div>
+
+                <div class="product-card__bottom">
+                  <div class="product-card__vendor">
+                    {{ related_product.metafields.custom.manufacturer | default: related_product.vendor | default: '' }}
+                  </div>
+                  <div class="product-card__price-container">
+                    <div class="product-card__price">
+                      {% if related_product.price_varies %}
+                        {{ related_product.price_min | money }}
+                      {% else %}
+                        {{ related_product.price | money }}
+                      {% endif %}
+                    </div>
+                    {% if related_product.metafields.custom.rent_tool %}
+                      <div class="product-card__rent">
+                        {{ 'wiertla_stats.rent_tool_text' | t }}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="17"
+                          height="12"
+                          viewBox="0 0 17 12"
+                          fill="none"
+                          aria-hidden="true">
+                          <path d="M10.5 12L9.1 10.55L12.65 7H0.5V5H12.65L9.1 1.45L10.5 0L16.5 6L10.5 12Z" fill="#112832" />
+                        </svg>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </a>
+            </div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="swiper-navigation">
+      <div class="swiper-button-prev"></div>
+      <div class="pagination-container">
+        {% for i in (1..3) %}
+          <div class="pagination-bar {% if forloop.first %}pagination-active{% else %}pagination-inactive{% endif %}" data-index="{{ forloop.index0 }}"></div>
+        {% endfor %}
+      </div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+<!-- Latest Products Section -->
+{% comment %} <div class="latest-products">
   <div class="latest-products__title" data-translate="wiertla_stats.latest_products.title">NAJNOWSZE W NASZEJ OFERCIE</div>
   <div class="latest-products__subtitle" data-translate="wiertla_stats.latest_products.subtitle">Stale poszerzamy nasz asortyment, aktualizując ofertę o nowe modele wierteł CNC</div>
 
@@ -1234,7 +1405,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="swiper-button-next"></div>
     </div>
   </div>
-</div>
+</div> {% endcomment %}
 
 
 <!-- Wiertla Stats Module -->
@@ -1244,7 +1415,9 @@ document.addEventListener('DOMContentLoaded', function() {
       <img
         src="{{ 'image-36.png' | asset_url }}"
         alt="Wiertła"
-        class="wiertla-stats__icon">
+        class="wiertla-stats__icon"
+        width="128"
+        height="128">
       <div class="wiertla-stats__content">
         <div class="wiertla-stats__title" data-translate="wiertla_stats.tools_title">999+ WIERTEŁ CNC</div>
         <div class="wiertla-stats__text" data-translate="wiertla_stats.tools_text">Ponad 1000 wierteł CNC na stanie</div>
@@ -1254,7 +1427,9 @@ document.addEventListener('DOMContentLoaded', function() {
       <img
         src="{{ 'image-38.png' | asset_url }}"
         alt="Lata doświadczenia"
-        class="wiertla-stats__icon">
+        class="wiertla-stats__icon"
+        width="128"
+        height="128">
       <div class="wiertla-stats__content">
         <div class="wiertla-stats__title" data-translate="wiertla_stats.years_title">8 LAT NA RYNKU</div>
         <div class="wiertla-stats__text" data-translate="wiertla_stats.years_text">Budujemy silną pozycję jako dostawca narzędzi CNC</div>
@@ -1264,7 +1439,9 @@ document.addEventListener('DOMContentLoaded', function() {
       <img
         src="{{ 'image-24.png' | asset_url }}"
         alt="Jakość"
-        class="wiertla-stats__icon">
+        class="wiertla-stats__icon"
+        width="128"
+        height="128">
       <div class="wiertla-stats__content">
         <div class="wiertla-stats__title" data-translate="wiertla_stats.quality_title">NAJWYŻSZA JAKOŚĆ</div>
         <div class="wiertla-stats__text" data-translate="wiertla_stats.quality_text">Oferujemy markowe wiertła i dedykowane alternatywy</div>
@@ -1793,9 +1970,11 @@ document.addEventListener('DOMContentLoaded', function() {
             };
           }
           
-          // Reset quantity to 1
+          // Reset quantity to minimum
           if (quantityInput) {
-            quantityInput.value = 1;
+            const quantityContainer = document.querySelector('.product-details__quantity');
+            const minQuantity = parseInt(quantityContainer.dataset.minQuantity) || 1;
+            quantityInput.value = minQuantity;
             if (decreaseBtn) {
               decreaseBtn.disabled = true;
               decreaseBtn.classList.add('product-details__quantity-btn--disabled');

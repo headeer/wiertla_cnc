@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Warstwa_2" data-name="Warstwa 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99 99">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ffe500;
+        stroke-width: 3px;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #112832;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M49.65,94.5l39.34-13.34s1.52-.17,1.52-2.53,1.86-26.85,1.52-31.58,.17-6.25-2.53-6.25h-29.89V4.5h-20.22V40.8s-27.19,0-29.89,0-2.2,1.52-2.53,6.25,1.52,29.21,1.52,31.58,1.52,2.53,1.52,2.53l39.64,13.34Z"/>
+  <g>
+    <path class="cls-2" d="M40.53,16.66s4.05,2.36,5.23,4.05v11.82s-3.22,2.87-6.09,4.22"/>
+    <polyline class="cls-2" points="64 41.14 60.29 48.23 13.51 48.23 13.51 74.74"/>
+    <line class="cls-2" x1="8.95" y1="74.08" x2="31.92" y2="81.5"/>
+    <polyline class="cls-2" points="40.53 91.12 28.88 80.99 55.05 73.39 64.85 81.67 65.52 89.43"/>
+    <line class="cls-2" x1="60.29" y1="48.23" x2="56.06" y2="73.56"/>
+  </g>
+</svg>

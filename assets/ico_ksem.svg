@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Warstwa_4" data-name="Warstwa 4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99 99">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ffe500;
+        stroke-width: 3px;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #112832;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M48.46,19.35s3.38,2.07,8.64,4.13,9.58,2.63,15.03,3.57,6.01,1.13,22.17,5.26c.56,26.11-.19,47.34-.19,47.34H4.5V32.31c16.15-4.13,16.72-4.32,22.17-5.26s9.77-1.5,15.03-3.57l6.76-4.13Z"/>
+  <path class="cls-2" d="M30.61,78.9l6.57-25.44s10.71-10.52,15.59-14.84c4.88-4.32,6.57-2.01,20.29-.88,11.39,.94,13.36,4.24,13.36,4.24v28.54h-15.99v-7.59H34.2l5.42-21.79s-8.27-7.14-10.9-13.52"/>
+</svg>
