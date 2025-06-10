@@ -502,7 +502,7 @@
           published_at: {{ product.published_at | json }},
           created_at: {{ product.created_at | json }},
           updated_at: {{ product.updated_at | json }},
-          custom_typ: {{ product.metafields.custom.typ | json }},
+          custom_typ: {{ product.metafields.custom.type | json }},
           custom_fi: {{ product.metafields.custom.fi | json }},
           custom_symbol: {{ product.metafields.custom.symbol | json }},
           custom_category: {{ product.metafields.custom.category | json }},
@@ -609,6 +609,39 @@
       // Assign products to global WiertlaCNC object
       window.WiertlaCNC = window.WiertlaCNC || {};
       window.WiertlaCNC.products = wiertlaProducts;
+      
+      // Helper function to list all TYP field values
+      window.listAllTypValues = function() {
+        const typValues = new Set();
+        const productsWithTyp = [];
+        
+        wiertlaProducts.forEach((product, index) => {
+          if (product.custom_typ && product.custom_typ.trim() !== '') {
+            typValues.add(product.custom_typ.toLowerCase());
+            productsWithTyp.push({
+              index: index + 1,
+              title: product.title,
+              sku: product.sku,
+              custom_typ: product.custom_typ,
+              vendor: product.vendor
+            });
+          }
+        });
+        
+        console.group('🔍 ALL TYP FIELD VALUES');
+        console.log(`📊 Total products: ${wiertlaProducts.length}`);
+        console.log(`📊 Products with TYP values: ${productsWithTyp.length}`);
+        console.log(`📋 Unique TYP values:`, Array.from(typValues).sort());
+        console.log(`📝 Sample products with TYP:`, productsWithTyp.slice(0, 10));
+        console.groupEnd();
+        
+        return {
+          totalProducts: wiertlaProducts.length,
+          productsWithTyp: productsWithTyp.length,
+          uniqueTypValues: Array.from(typValues).sort(),
+          sampleProducts: productsWithTyp.slice(0, 10)
+        };
+      };
       
       // Define openRentModal function
       window.WiertlaCNC.openRentModal = function(product) {
@@ -1252,26 +1285,107 @@
       // Apply category filter if not "wszystkie"
       if (window.selectedCategory && window.selectedCategory !== 'wszystkie') {
         let beforeCategoryCount = filteredProducts.length;
-        const categoryToType = {
-          'koronkowe': 'VW',  // First
-          'plytkowe': 'PR',   // Second
-          'vhm': 'WW',        // Third
-          'sandvik': 'PS',    // Fourth
-          'ksem': 'WK',       // Fifth
-          'amec': 'WV',       // Sixth
-          'iscar': 'IS',
-          'walter': 'WA'
-        };
-        const expectedType = categoryToType[window.selectedCategory];
+        const activeTabType = window.WiertlaCNC.activeTabType || 'wiertla';
+        
+        // 🐛 DEBUG: Log category filter details
+        console.group(`🔍 CATEGORY FILTER DEBUG`);
+        console.log(`📂 Selected Category: "${window.selectedCategory}"`);
+        console.log(`📑 Active Tab: "${activeTabType}"`);
+        console.log(`📊 Products before category filter: ${beforeCategoryCount}`);
+        console.log(`🔍 Sample of first product data:`, filteredProducts[0]);
+        
         filteredProducts = filteredProducts.filter(product => {
-          const matches = expectedType && product.sku && product.sku.startsWith(expectedType);
-         
+          const productTyp = (product.custom_typ || '').toLowerCase();
+          const productRodzaj = (product.rodzaj || '').toLowerCase();
+          const categoryLower = window.selectedCategory.toLowerCase();
+          
+          let matches = false;
+          let searchFields = [];
+          let searchValues = [];
+          
+          if (activeTabType === 'wiertla') {
+            // For wiertla tab, search in typ field
+            searchFields = ['typ'];
+            
+            if (window.selectedCategory === 'plytkowe') {
+              // Special case: search for both "płytkowe" and "plytkowe"
+              searchValues = ['płytkowe', 'plytkowe'];
+              matches = searchValues.some(value => productTyp.includes(value));
+            } else if (window.selectedCategory === 'sandvik') {
+              // Special case: search for both "sandvik" and "880" for Sandvik products
+              searchValues = ['sandvik', '880'];
+              matches = searchValues.some(value => productTyp.includes(value));
+            } else {
+              // For other categories like amec, ksem, etc., search case-insensitively
+              // This will match KSEM, KSem, ksem, AMEC, amec, etc.
+              const categoryName = window.selectedCategory.toLowerCase();
+              matches = productTyp.includes(categoryName);
+              
+              // Additional debug for KSEM and AMEC
+              if (categoryName === 'ksem' || categoryName === 'amec') {
+                console.log(`🔍 Searching for "${categoryName}" in productTyp: "${product.custom_typ}"`);
+                console.log(`   productTyp (lowercase): "${productTyp}"`);
+                console.log(`   Match result: ${matches}`);
+              }
+            }
+          } else if (activeTabType === 'plytki' || activeTabType === 'koronki') {
+            // For plytki and koronki tabs, search in both typ and rodzaj fields
+            searchFields = ['typ', 'rodzaj'];
+            
+            if (window.selectedCategory === 'sandvik') {
+              // Special case: search for both "sandvik" and "880" in both fields
+              searchValues = ['sandvik', '880'];
+              matches = searchValues.some(value => productTyp.includes(value) || productRodzaj.includes(value));
+            } else {
+              // Case-insensitive search in both typ and rodzaj fields
+              const categoryName = window.selectedCategory.toLowerCase();
+              matches = productTyp.includes(categoryName) || productRodzaj.includes(categoryName);
+              
+              // Additional debug for KSEM and AMEC in plytki/koronki tabs
+              if (categoryName === 'ksem' || categoryName === 'amec') {
+                console.log(`🔍 [${activeTabType}] Searching for "${categoryName}"`);
+                console.log(`   productTyp: "${product.custom_typ}" → productTyp (lowercase): "${productTyp}"`);
+                console.log(`   productRodzaj: "${product.rodzaj}" → productRodzaj (lowercase): "${productRodzaj}"`);
+                console.log(`   Match result: ${matches}`);
+              }
+            }
+          }
+          
+          // Log each product being checked (show first 5 for brevity)
+          const productIndex = filteredProducts.indexOf(product);
+          if (productIndex < 5) {
+            console.log(`🔍 Product ${productIndex + 1}:`);
+            console.log(`   📝 TYP: "${product.custom_typ || 'N/A'}"`);
+            console.log(`   🔍 Raw metafields:`, product.metafields);
+            console.log(`   🔍 All custom fields:`, {
+              custom_typ: product.custom_typ,
+              custom_symbol: product.custom_symbol,
+              custom_manufacturer: product.custom_manufacturer,
+              custom_category: product.custom_category
+            });
+            if (activeTabType === 'plytki' || activeTabType === 'koronki') {
+              console.log(`   🏷️ RODZAJ: "${product.rodzaj || 'N/A'}"`);
+            }
+            console.log(`   🎯 Searching for: ${searchValues.join(' OR ')} in ${searchFields.join(', ')} field(s)`);
+            console.log(`   ${matches ? '✅ MATCH' : '❌ NO MATCH'}`);
+          }
+          
           return matches;
         });
+        
+        console.log(`📊 Products after category filter: ${filteredProducts.length}`);
+        console.log(`📝 Filter Summary: Looking for "${window.selectedCategory}" in ${activeTabType === 'wiertla' ? 'TYP field' : 'TYP and RODZAJ fields'}`);
+        if (window.selectedCategory === 'plytkowe' && activeTabType === 'wiertla') {
+          console.log(`🇵🇱 Special case: Searching for both "płytkowe" and "plytkowe" (with/without Polish ł)`);
+        }
+        if (window.selectedCategory === 'sandvik') {
+          console.log(`🔧 Special case: Searching for both "sandvik" and "880" for Sandvik products`);
+        }
+        console.groupEnd();
       }
 
       // Apply type filter
-      if (window.WiertlaCNC.filters.typ && window.WiertlaCNC.filters.typ !== 'all') {
+      if (window.WiertlaCNC.filters.typ && window.WiertlaCNC.filters.typ !== 'all' && window.WiertlaCNC.filters.typ !== '') {
         let beforeTypeCount = filteredProducts.length;
         
         const expectedTypeValue = window.WiertlaCNC.filters.typ;
@@ -1966,6 +2080,14 @@
         
         const category = iconItem.dataset.category || 'wszystkie';
         
+        // 🐛 DEBUG: Log icon click details
+        console.group(`🖱️ ICON CLICK DEBUG`);
+        console.log(`📂 Clicked Category: "${category}"`);
+        console.log(`🏷️ Icon Element:`, iconItem);
+        console.log(`📝 Data Attribute: data-category="${iconItem.dataset.category}"`);
+        console.log(`🔄 Will trigger filtering with selectedCategory = "${category}"`);
+        console.groupEnd();
+        
         // If the clicked item is "Wszystkie", reset all filters except pagination
         if (category === 'wszystkie' || !category) {
           currentFilters = {
@@ -2004,6 +2126,10 @@
         // Update selected category and apply filters
         window.selectedCategory = category;
         window.currentPage = 1;
+        
+        // 🐛 DEBUG: Log before applying filters
+        console.log(`🚀 About to call applyFilters() with selectedCategory = "${window.selectedCategory}"`);
+        
         applyFilters();
     
       }
@@ -2062,6 +2188,12 @@
     document.addEventListener('change', function(event) {
       const filterSelect = event.target.closest('.wiertla-categories__filter');
       if (filterSelect) {
+        // Skip processing during category resets to prevent interference
+        if (window.isResettingCategories) {
+          console.log(`🚫 Skipping dropdown change during category reset`);
+          return;
+        }
+        
         const filterType = filterSelect.getAttribute('data-filter');
         if (filterType) {
           // Update filters whether value is changed to something or cleared
@@ -2077,9 +2209,11 @@
             console.log(`🔄 Filter changed: ${filterType} = "${filterSelect.value}"`);
             console.log(`📋 Current WiertlaCNC.filters:`, window.WiertlaCNC.filters);
             
-            // Sync with category icons if this is the type filter
+            // Sync with category icons based on filter type
             if (filterType === 'typ') {
-              syncTypeFilterWithIcons(filterSelect.value);
+              syncTypeFilterWithIcons(filterSelect.value, 'typ');
+            } else if (filterType === 'rodzaj') {
+              syncRodzajFilterWithIcons(filterSelect.value);
             }
             
             window.currentPage = 1;
@@ -4483,6 +4617,303 @@
       applyFilters();
     });
   });
+
+  // Add missing sync functions for category dropdown and icons
+  
+  // Function to sync filter dropdown with category icons (works for both typ and rodzaj)
+  function syncTypeFilterWithIcons(filterValue, filterType = 'typ') {
+    console.log(`🔄 Syncing ${filterType} filter "${filterValue}" with category icons`);
+    
+    // Remove active class from all category icons
+    document.querySelectorAll('.wiertla-categories__icon-item').forEach(icon => {
+      icon.classList.remove('active');
+    });
+    
+    let categoryName = 'wszystkie';
+    
+    if (filterType === 'typ') {
+      // Map typ filter values to category names (for wiertla tab)
+      const filterToCategory = {
+        'koronkowe': 'koronkowe',
+        'plytkowe': 'plytkowe', 
+        'VHM': 'vhm',
+        'Sandvik 880': 'sandvik',
+        'KSEM': 'ksem',
+        'AMEC': 'amec',
+        '': 'wszystkie'
+      };
+      categoryName = filterToCategory[filterValue] || 'wszystkie';
+    } else if (filterType === 'rodzaj') {
+      // Map rodzaj filter values to category names (for plytki/koronki tabs)
+      const rodzajToCategory = {
+        // Plytki values
+        'WCMX': 'wcmx',
+        'LCMX': 'lcmx',
+        '811': '811', 
+        'DFT': 'dft',
+        '880': '880',
+        'WOGX': 'wogx',
+        'SPGX': 'spgx',
+        'P284': 'p284',
+        // Koronki values
+        'KSEM': 'ksem',
+        'IDI': 'idi',
+        'P600': 'p600',
+        'ICM': 'icm',
+        'ICP': 'icp',
+        '870': '870',
+        'AMEC': 'amec',
+        'ktip': 'ktip',
+        '': 'wszystkie'
+      };
+      categoryName = rodzajToCategory[filterValue] || 'wszystkie';
+    }
+    
+    // Set selectedCategory for the filtering system
+    window.selectedCategory = categoryName;
+    
+    // Find and activate the matching category icon
+    const matchingIcon = document.querySelector(`.wiertla-categories__icon-item[data-category="${categoryName}"]`);
+    if (matchingIcon) {
+      matchingIcon.classList.add('active');
+      console.log(`✅ Activated category icon: ${categoryName}`);
+    } else {
+      // If no specific icon found, activate "wszystkie"
+      const wszystkieIcon = document.querySelector('.wiertla-categories__icon-item[data-category="wszystkie"]');
+      if (wszystkieIcon) {
+        wszystkieIcon.classList.add('active');
+        console.log(`✅ Activated default "wszystkie" icon`);
+      }
+    }
+  }
+  
+  // Function to sync rodzaj filter dropdown with category icons
+  function syncRodzajFilterWithIcons(filterValue) {
+    syncTypeFilterWithIcons(filterValue, 'rodzaj');
+  }
+  
+  // Function to sync category icons with appropriate filter dropdown based on active tab
+  function syncIconsWithTypeFilter(categoryName) {
+    const activeTab = window.WiertlaCNC.activeTabType || 'wiertla';
+    console.log(`🔄 Syncing category "${categoryName}" with filter dropdown for tab: ${activeTab}`);
+    
+    if (activeTab === 'wiertla') {
+      // For wiertla tab, use typ filter
+      const categoryToFilter = {
+        'koronkowe': 'koronkowe',
+        'plytkowe': 'plytkowe',
+        'vhm': 'VHM', 
+        'sandvik': 'Sandvik 880',
+        'ksem': 'ksem',
+        'amec': 'amec',
+        'wszystkie': ''
+      };
+      
+      const filterValue = categoryToFilter[categoryName] || '';
+      
+      const typeFilter = document.querySelector('.wiertla-categories__filter[data-filter="typ"]');
+      if (typeFilter) {
+        typeFilter.value = filterValue;
+        console.log(`✅ Set typ filter dropdown to: "${filterValue}"`);
+        
+        if (!window.WiertlaCNC.filters) {
+          window.WiertlaCNC.filters = {};
+        }
+        window.WiertlaCNC.filters.typ = filterValue;
+      }
+    } else {
+      // For plytki/koronki tabs, use rodzaj filter
+      const categoryToRodzaj = {
+        // Plytki categories
+        'wcmx': 'WCMX',
+        'lcmx': 'LCMX', 
+        '811': '811',
+        'dft': 'DFT',
+        '880': '880',
+        'wogx': 'WOGX',
+        'spgx': 'SPGX',
+        'p284': 'P284',
+        // Koronki categories  
+        'ksem': 'KSEM',
+        'idi': 'IDI',
+        'p600': 'P600',
+        'icm': 'ICM',
+        'icp': 'ICP',
+        '870': '870',
+        'amec': 'amec',
+        'ksem': 'ksem',
+        'ktip': 'ktip',
+        'wszystkie': ''
+      };
+      
+      const filterValue = categoryToRodzaj[categoryName] || '';
+      
+      const rodzajFilter = document.querySelector(`.wiertla-categories__filter[data-filter="rodzaj"][data-tab="${activeTab}"]`);
+      if (rodzajFilter) {
+        rodzajFilter.value = filterValue;
+        console.log(`✅ Set rodzaj filter dropdown to: "${filterValue}" for tab: ${activeTab}`);
+        
+        if (!window.WiertlaCNC.filters) {
+          window.WiertlaCNC.filters = {};
+        }
+        window.WiertlaCNC.filters.rodzaj = filterValue;
+      }
+    }
+  }
+  
+  // Function to reset categories when switching tabs
+  function resetCategoriesOnTabSwitch(newTabType) {
+    console.log(`🔄 Resetting categories for tab switch to: ${newTabType}`);
+    
+    // Set reset flag to prevent interference from other handlers
+    window.isResettingCategories = true;
+    
+    // FIRST: Reset selectedCategory to "wszystkie"
+    window.selectedCategory = 'wszystkie';
+    
+    // SECOND: Clear ALL filter states to ensure clean reset
+    if (!window.WiertlaCNC.filters) {
+      window.WiertlaCNC.filters = {};
+    }
+    window.WiertlaCNC.filters.typ = '';
+    window.WiertlaCNC.filters.rodzaj = '';
+    window.WiertlaCNC.filters.category = '';
+    
+    // THIRD: Clear currentFilters as well
+    if (!window.currentFilters) {
+      window.currentFilters = {};
+    }
+    window.currentFilters.typ = '';
+    window.currentFilters.rodzaj = '';
+    window.currentFilters.category = '';
+    
+    // FOURTH: Clear ALL filter dropdowns (both typ and rodzaj) - force clear
+    const allFilterDropdowns = document.querySelectorAll('.wiertla-categories__filter[data-filter="typ"], .wiertla-categories__filter[data-filter="rodzaj"]');
+    allFilterDropdowns.forEach(dropdown => {
+      dropdown.value = '';
+      dropdown.selectedIndex = 0; // Force reset to first option
+    });
+    
+    // FIFTH: Remove active class from all category icons and activate "wszystkie"
+    document.querySelectorAll('.wiertla-categories__icon-item').forEach(icon => {
+      icon.classList.remove('active');
+    });
+    
+    const wszystkieIcon = document.querySelector('.wiertla-categories__icon-item[data-category="wszystkie"]');
+    if (wszystkieIcon) {
+      wszystkieIcon.classList.add('active');
+    }
+    
+    // SIXTH: Reset page to 1
+    window.currentPage = 1;
+    
+    console.log(`🔍 After reset - selectedCategory: "${window.selectedCategory}"`);
+    console.log(`🔍 After reset - WiertlaCNC.filters:`, window.WiertlaCNC.filters);
+    console.log(`🔍 After reset - currentFilters:`, window.currentFilters);
+    
+    // SEVENTH: Double-check and force clear any lingering filter values
+    setTimeout(() => {
+      // Final safety check - force clear all filter values again
+      window.WiertlaCNC.filters.typ = '';
+      window.WiertlaCNC.filters.rodzaj = '';
+      window.WiertlaCNC.filters.category = '';
+      
+      console.log(`🔄 Final check before applying filters - WiertlaCNC.filters:`, window.WiertlaCNC.filters);
+      console.log(`🔄 Applying filters after tab switch to: ${newTabType}`);
+      applyFilters();
+      
+      // Clear reset flag after everything is done
+      window.isResettingCategories = false;
+    }, 150);
+    
+    console.log(`✅ Categories reset for tab: ${newTabType}`);
+  }
+  
+  // Make sync functions globally available
+  window.syncTypeFilterWithIcons = syncTypeFilterWithIcons;
+  window.syncRodzajFilterWithIcons = syncRodzajFilterWithIcons;
+  window.syncIconsWithTypeFilter = syncIconsWithTypeFilter;
+  window.resetCategoriesOnTabSwitch = resetCategoriesOnTabSwitch;
+  
+  // Update the existing tab switching function to reset categories
+  const originalInitializeTabs = initializeTabs;
+  function initializeTabs() {
+    // Function to switch tabs
+    function switchTab(tabType) {
+      const previousTab = window.WiertlaCNC.activeTabType;
+      
+      console.log(`🔄 TAB SWITCH: ${previousTab} → ${tabType}`);
+      
+      window.WiertlaCNC.activeTabType = tabType;
+
+      // Reset categories when switching tabs
+      if (previousTab && previousTab !== tabType) {
+        console.log(`🔄 Calling resetCategoriesOnTabSwitch because tabs changed: ${previousTab} → ${tabType}`);
+        resetCategoriesOnTabSwitch(tabType);
+      } else {
+        console.log(`🔄 Not resetting categories (first load or same tab): ${previousTab} → ${tabType}`);
+      }
+
+      // Update tab visual states
+      document.querySelectorAll('.wiertla-categories__tab').forEach((tab) => {
+        tab.classList.remove('active');
+        if (tab.getAttribute('data-tab-type') === tabType) {
+          tab.classList.add('active');
+        }
+      });
+
+      // Update dropdowns
+      updateDropdowns();
+
+      // Update category icons
+      updateCategoryIcons();
+
+      // Update URL parameter
+      const url = new URL(window.location);
+      url.searchParams.set('mainType', tabType);
+      window.history.replaceState({}, '', url);
+      
+      // Apply filters after tab switch (only if reset wasn't called, to avoid double filtering)
+      if (!previousTab || previousTab === tabType) {
+        console.log(`🔄 Applying filters after tab switch (no reset was called)`);
+        applyFilters();
+      }
+    }
+
+    // Add event listeners for tab buttons
+    document.querySelectorAll('.wiertla-categories__tab').forEach((tab) => {
+      tab.addEventListener('click', function () {
+        const tabType = this.getAttribute('data-tab-type');
+        switchTab(tabType);
+      });
+    });
+
+    // Initialize from URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const mainType = urlParams.get('mainType') || 'wiertla';
+    switchTab(mainType);
+  }
+  
+  // Enhanced icon click handler to sync with dropdown
+  document.addEventListener('click', function(e) {
+    const iconItem = e.target.closest('.wiertla-categories__icon-item');
+    if (iconItem) {
+      const category = iconItem.dataset.category;
+      if (category) {
+        // Skip sync during tab resets to prevent overriding the reset
+       
+        
+        // Update selectedCategory
+        window.selectedCategory = category;
+        
+        // Sync with type filter dropdown
+        syncIconsWithTypeFilter(category);
+        
+        // The existing icon click handler will take care of visual updates and filtering
+      }
+    }
+  });
+
 </script>
 <script>
   // Global filter state
@@ -4691,7 +5122,13 @@
   function initializeTabs() {
     // Function to switch tabs
     function switchTab(tabType) {
+      const previousTab = window.WiertlaCNC.activeTabType;
       window.WiertlaCNC.activeTabType = tabType;
+
+      // Reset categories when switching tabs
+      if (previousTab !== tabType) {
+        resetCategoriesOnTabSwitch(tabType);
+      }
 
       // Update tab visual states
       document.querySelectorAll('.wiertla-categories__tab').forEach((tab) => {
@@ -4711,6 +5148,9 @@
       const url = new URL(window.location);
       url.searchParams.set('mainType', tabType);
       window.history.replaceState({}, '', url);
+      
+      // Apply filters after tab switch
+      applyFilters();
     }
 
     // Add event listeners for tab buttons
@@ -4832,3 +5272,52 @@
 <!-- Include the mobile filter modal JavaScript -->
 
 {% render 'wiertla-styles' %}
+
+    // Debug function for any filter type
+    window.debugFilter = function(filterName) {
+      const filter = filterName.toLowerCase();
+      console.log(`=== ${filter.toUpperCase()} DEBUG ===`);
+      console.log('Total products loaded:', allProducts.length);
+      
+      // Find all products with the filter name in their typ field (case-insensitive)
+      const matchingProducts = allProducts.filter(product => {
+        const typ = (product.custom_typ || '').toLowerCase();
+        const rodzaj = (product.rodzaj || '').toLowerCase();
+        return typ.includes(filter) || rodzaj.includes(filter);
+      });
+      
+      console.log(`Products with "${filter}" in typ/rodzaj field:`, matchingProducts.length);
+      matchingProducts.forEach((product, index) => {
+        console.log(`${filter.toUpperCase()} Product ${index + 1}:`, {
+          sku: product.sku,
+          title: product.title,
+          custom_typ: product.custom_typ,
+          rodzaj: product.rodzaj,
+          vendor: product.vendor
+        });
+      });
+      
+      // Check current filtering state
+      console.log('Current selectedCategory:', window.selectedCategory);
+      console.log('Current WiertlaCNC.filters:', window.WiertlaCNC?.filters);
+      console.log('Current activeTabType:', window.WiertlaCNC?.activeTabType);
+      
+      // Test filtering
+      window.selectedCategory = filter;
+      const filteredProducts = filterProducts();
+      console.log(`After setting selectedCategory to "${filter}", filtered products:`, filteredProducts.length);
+      
+      console.log(`=== END ${filter.toUpperCase()} DEBUG ===`);
+      return {
+        totalProducts: allProducts.length,
+        matchingProducts: matchingProducts.length,
+        filteredProducts: filteredProducts.length,
+        matchingProductsList: matchingProducts
+      };
+    };
+    
+    // Shortcut for KSEM
+    window.debugKSEM = () => debugFilter('ksem');
+    
+    // Shortcut for AMEC
+    window.debugAMEC = () => debugFilter('amec');

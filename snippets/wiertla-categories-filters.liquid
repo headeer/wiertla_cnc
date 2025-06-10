@@ -111,10 +111,10 @@
       <option value="">Typ wiertła</option>
       <option value="koronkowe">Koronkowe</option>
       <option value="plytkowe">Płytkowe</option>
-      <option value="VHM">VHM</option>
-      <option value="Sandvik 880">Sandvik 880</option>
-      <option value="KSEM">KSEM</option>
-      <option value="AMEC">AMEC</option>
+                  <option value="VHM">VHM</option>
+            <option value="Sandvik 880">Sandvik 880</option>
+            <option value="ksem">KSEM</option>
+            <option value="amec">AMEC</option>
     </select>
     
     <!-- Rodzaj filter for plytki tab (should appear in same position as Typ wiertła) -->
@@ -133,13 +133,13 @@
     <!-- Rodzaj filter for koronki tab (should appear in same position as Typ wiertła) -->
     <select class="wiertla-categories__filter wiertla-filter-rodzaj" data-filter="rodzaj" data-tab="koronki" style="display:none;">
       <option value="">Rodzaj</option>
-      <option value="KSEM">KSEM</option>
+      <option value="ksem">KSEM</option>
       <option value="IDI">IDI</option>
       <option value="P600">P600</option>
       <option value="ICM">ICM</option>
       <option value="ICP">ICP</option>
       <option value="870">870</option>
-      <option value="AMEC">AMEC</option>
+      <option value="amec">AMEC</option>
       <option value="ktip">ktip</option>
     </select>
     
@@ -181,8 +181,8 @@
             <option value="plytkowe">Płytkowe</option>
             <option value="VHM">VHM</option>
             <option value="Sandvik 880">Sandvik 880</option>
-            <option value="KSEM">KSEM</option>
-            <option value="AMEC">AMEC</option>
+            <option value="ksem">KSEM</option>
+            <option value="amec">AMEC</option>
           </select>
         </div>
         <div class="wiertla-categories__modal-filter-group">
@@ -459,10 +459,19 @@
         var tabType = this.getAttribute('data-tab-type');
         console.log('=== TAB CLICKED ===');
         console.log('Tab clicked:', this.textContent.trim(), 'tabType:', tabType);
+        
+        // CRITICAL: Reset selectedCategory when switching tabs
+        window.selectedCategory = 'wszystkie';
+        
         updateTypeRodzajDropdown(tabType);
         
         // Reset to "wszystkie" when switching tabs
         updateActiveIcon('', tabType);
+        
+        // Also call the main reset function if available
+        if (typeof window.resetCategoriesOnTabSwitch === 'function') {
+          window.resetCategoriesOnTabSwitch(tabType);
+        }
       });
     });
     
@@ -476,11 +485,11 @@
       console.log('Initial active tab:', activeTab.textContent.trim(), 'tabType:', initialTabType);
       updateTypeRodzajDropdown(initialTabType);
       
-      // Set initial icon state
-      updateActiveIcon('', initialTabType);
+   updateActiveIcon('', initialTabType);
     } else {
       console.log('No active tab found on page load');
     }
+    
     
     console.log('=== Test Instructions ===');
     console.log('You can manually test filter switching in console:');

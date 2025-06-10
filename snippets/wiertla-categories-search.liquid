@@ -8,9 +8,8 @@
 </button>
 
 <div class="wiertla-categories__search" data-search-component>
-  <form class="wiertla-search__form">
+  <form class="wiertla-search__form" action="{{ routes.search_url }}" method="get">
     <div class="wiertla-search__input-group">
-     
       <input
         type="search"
         id="CategorySearch"
@@ -19,6 +18,8 @@
         placeholder="fi / nazwa / symbol / producent"
         autocomplete="off"
         aria-label="{{ 'general.search.category_label' | t }}"
+        value="{{ search.terms | escape }}"
+        data-search-input
       >
       <button type="submit" class="wiertla-search__submit" aria-label="Submit">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -36,6 +37,65 @@
     </div>
   </form>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Enhanced search functionality with synchronization
+  const searchComponent = document.querySelector('[data-search-component]');
+  if (!searchComponent) return;
+
+  const form = searchComponent.querySelector('.wiertla-search__form');
+  const input = searchComponent.querySelector('.wiertla-search__input');
+  const clearButton = searchComponent.querySelector('.wiertla-search__clear');
+  const submitButton = searchComponent.querySelector('.wiertla-search__submit');
+  
+  if (!form || !input) return;
+
+  // Handle clear button
+  if (clearButton) {
+    clearButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      input.value = '';
+      input.focus();
+      
+      // Trigger search sync if available
+      if (window.WiertlaSearchSync) {
+        window.WiertlaSearchSync.setSearch('');
+      }
+    });
+  }
+
+  // Show/hide clear button based on input value
+  function toggleClearButton() {
+    if (clearButton) {
+      const hasValue = input.value.trim().length > 0;
+      clearButton.style.display = hasValue ? 'block' : 'none';
+    }
+  }
+
+  // Handle input changes
+  input.addEventListener('input', function() {
+    toggleClearButton();
+  });
+
+  // Handle focus/blur for styling
+  input.addEventListener('focus', function() {
+    searchComponent.classList.add('focused');
+  });
+
+  input.addEventListener('blur', function() {
+    searchComponent.classList.remove('focused');
+  });
+
+  // Initial state
+  toggleClearButton();
+
+  // The actual search synchronization is handled by wiertla-search.js
+  // This just provides the UI interactions
+});
+</script>
 
 <div class="wiertla-rental-info">
   <!-- Rental Info - Added below search -->
