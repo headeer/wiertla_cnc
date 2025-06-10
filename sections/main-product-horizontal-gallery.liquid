@@ -759,31 +759,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="product-details__divider"></div>
               {%- endif -%}
 
-              {%- if product.metafields.custom.uwagi != blank or product.metafields.custom.notes != blank -%}
+              {%- assign stock_quantity = product.first_available_variant.inventory_quantity | default: 0 -%}
+              <div class="product-details__spec-item">
+                <div class="product-details__spec-label">Dostępność</div>
+                <div class="product-details__spec-value">
+                  {% if stock_quantity > 0 %}
+                    {{ stock_quantity }} szt.
+                  {% else %}
+                    Niedostępne
+                  {% endif %}
+                </div>
+              </div>
+              <div class="product-details__divider"></div>
+
+              {%- if product.price != blank -%}
                 <div class="product-details__spec-item">
-                  <div class="product-details__spec-label">Uwagi</div>
-                  <div class="product-details__spec-value">{{ product.metafields.custom.uwagi | default: product.metafields.custom.notes }}</div>
+                  <div class="product-details__spec-label">Cena netto</div>
+                  <div class="product-details__spec-value">{{ product.price | money_without_trailing_zeros }}</div>
                 </div>
                 <div class="product-details__divider"></div>
               {%- endif -%}
 
             {%- elsif is_koronki -%}
               <!-- KORONKI SPECIFICATIONS -->
-              {%- if product.metafields.custom.srednica != blank or product.metafields.custom.fi != blank -%}
+              {%- assign fi_value = product.metafields.custom._rednica | default: product.metafields.custom.fi | default: product.custom_srednica | default: product.custom_fi -%}
+              {%- if fi_value != blank -%}
                 <div class="product-details__spec-item">
                   <div class="product-details__spec-label">Średnica</div>
                   <div class="product-details__spec-value">
                     <span>⌀</span>
-                    <span>{{ product.metafields.custom.srednica | default: product.metafields.custom.fi }}</span>
+                    <span>{{ fi_value }}</span>
                   </div>
-                </div>
-                <div class="product-details__divider"></div>
-              {%- endif -%}
-
-              {%- if product.metafields.custom.manufacturer != blank or product.vendor != blank -%}
-                <div class="product-details__spec-item">
-                  <div class="product-details__spec-label">Producent</div>
-                  <div class="product-details__spec-value">{{ product.metafields.custom.manufacturer | default: product.vendor }}</div>
                 </div>
                 <div class="product-details__divider"></div>
               {%- endif -%}
@@ -792,6 +798,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="product-details__spec-item">
                   <div class="product-details__spec-label">Kod producenta</div>
                   <div class="product-details__spec-value">{{ product.metafields.custom.kod_producenta }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.manufacturer != blank or product.vendor != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Producent</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.manufacturer | default: product.vendor }}</div>
                 </div>
                 <div class="product-details__divider"></div>
               {%- endif -%}
@@ -828,6 +842,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="product-details__divider"></div>
               {%- endif -%}
 
+              {%- assign stock_quantity = product.first_available_variant.inventory_quantity | default: 0 -%}
+              <div class="product-details__spec-item">
+                <div class="product-details__spec-label">Dostępność</div>
+                <div class="product-details__spec-value">
+                  {% if stock_quantity > 0 %}
+                    {{ stock_quantity }} szt.
+                  {% else %}
+                    Niedostępne
+                  {% endif %}
+                </div>
+              </div>
+              <div class="product-details__divider"></div>
+
               {%- if product.metafields.custom.uwagi != blank or product.metafields.custom.notes != blank -%}
                 <div class="product-details__spec-item">
                   <div class="product-details__spec-label">Uwagi</div>
@@ -862,12 +889,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="product-details__divider"></div>
               {%- endif -%}
 
-              {%- if product.metafields.custom.srednica != blank or product.metafields.custom.fi != blank -%}
+              {%- assign fi_value = product.metafields.custom._rednica | default: product.metafields.custom.fi | default: product.custom_srednica | default: product.custom_fi -%}
+              {%- if fi_value != blank -%}
                 <div class="product-details__spec-item">
                   <div class="product-details__spec-label">Średnica</div>
                   <div class="product-details__spec-value">
                     <span>⌀</span>
-                    <span>{{ product.metafields.custom.srednica | default: product.metafields.custom.fi }}</span>
+                    <span>{{ fi_value }}</span>
                   </div>
                 </div>
                 <div class="product-details__divider"></div>
@@ -966,15 +994,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   {% if stock_quantity <= 0 %}disabled{% endif %}>
               </div>
               <div class="product-details__quantity-unit">szt.</div>
-              {%- if is_pw_category -%}
-                <div class="product-details__quantity-note">
-                  <small>Minimalne zamówienie: {{ min_quantity }} szt. (opakowanie)</small>
-                </div>
-              {%- elsif min_quantity > 1 -%}
-                <div class="product-details__quantity-note">
-                  <small>MOQ: {{ min_quantity }} szt.</small>
-                </div>
-              {%- endif -%}
+              
               <button
                 type="button"
                 class="product-details__quantity-btn product-details__quantity-btn--decrease"
@@ -1002,6 +1022,15 @@ document.addEventListener('DOMContentLoaded', function() {
                   height="16">
               </button>
             </div>
+            {%- if is_pw_category -%}
+              <div class="product-details__quantity-note">
+                <small>Minimalne zamówienie: {{ min_quantity }} szt. (opakowanie)</small>
+              </div>
+            {%- elsif min_quantity > 1 -%}
+              <div class="product-details__quantity-note">
+                <small>MOQ: {{ min_quantity }} szt.</small>
+              </div>
+            {%- endif -%}
             {%- form 'product'
               , product
               , id: product_form_id
@@ -1245,7 +1274,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                   <div class="product-card__fi">
                     <span class="mobile-label">Fi ⌀</span>
-                    <span class="mobile-value">{{ related_product.metafields.custom.srednica | default: related_product.metafields.custom.fi | default: '' }}</span>
+                    <span class="mobile-value">{{ related_product.metafields.custom.srednica | default: related_product.metafields.custom.fi | default: related_product.custom_srednica | default: related_product.custom_fi | default: '' }}</span>
                   </div>
                   <div class="product-card__dimension">
                     {{ related_product.metafields.custom.xd | default: related_product.metafields.custom.custom_working_length | default: related_product.metafields.custom.working_length | default: '' }}
@@ -1351,7 +1380,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
               <div class="product-card__fi" aria-label="{{ 'products.product.diameter' | t }}">
                 <span class="mobile-label">Fi ⌀</span>
-                <span class="mobile-value">{{ product.metafields.custom.srednica | default: product.metafields.custom.fi | default: '' }}</span>
+                <span class="mobile-value">{{ product.metafields.custom.srednica | default: product.metafields.custom.fi | default: product.custom_srednica | default: product.custom_fi | default: '' }}</span>
               </div>
               <div class="product-card__dimension" aria-label="{{ 'products.product.dimension' | t }}">
                 {{ product.metafields.custom.xd | default: product.metafields.custom.custom_working_length | default: product.metafields.custom.working_length | default: '' }}
@@ -1996,6 +2025,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Check if Swiper is available before initializing
+    if (typeof Swiper === 'undefined') {
+      console.warn('Swiper library is not loaded. Skipping swiper initialization.');
+      return;
+    }
+    
     const swiper = new Swiper('.latest-products__swiper', {
       loop: false,
       slidesPerView: 1,
@@ -2137,21 +2172,52 @@ document.addEventListener('DOMContentLoaded', function() {
 
   @media (max-width: 1024px) {
     .wiertla-stats__container {
-      flex-direction: column;
-      align-items: center;
-      padding: 0 32px;
+      display: flex!important;
+      flex-direction: column!important;
+      align-items: flex-start!important;
+      justify-content: flex-start!important;
+      gap: 30px;
+    }
+    .wiertla-stats__content .wiertla-stats__title, .wiertla-stats__content .wiertla-stats__text {
+      text-align: left!important;
+    }
+    .wiertla-stats .wiertla-stats__item {
+      max-width: 100%!important;
+      width: 100%!important;
     }
   }
 
   @media (max-width: 768px) {
+    .wiertla-stats {
+      padding: 40px 0;
+    }
+
     .wiertla-stats__container {
       padding: 0 16px;
+      gap: 25px;
     }
 
     .wiertla-stats__item {
-      flex-direction: row;
+      flex-direction: column;
       align-items: center;
       text-align: center;
+      gap: 15px;
+      max-width: 300px;
+    }
+
+    .wiertla-stats__icon {
+      width: 80px;
+      height: 80px;
+    }
+
+    .wiertla-stats__title {
+      font-size: 16px;
+      line-height: 18px;
+    }
+
+    .wiertla-stats__text {
+      font-size: 14px;
+      line-height: 20px;
     }
   }
 

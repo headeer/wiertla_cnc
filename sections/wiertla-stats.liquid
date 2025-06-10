@@ -276,7 +276,15 @@
               </div>
               <div class="product-card__fi" aria-label="{{ 'products.product.diameter' | t }}">
                 <span class="mobile-label">Fi ⌀</span>
-                <span class="mobile-value">{{ product.metafields.custom.srednica | default: product.metafields.custom.fi | default: '' }}</span>
+                <span class="mobile-value">
+                  {%- assign fi_value = product.metafields.custom.srednica | default: product.metafields.custom.fi | default: product.custom_srednica | default: product.custom_fi | default: '' -%}
+                  {%- if fi_value contains '-' -%}
+                    {%- assign fi_parts = fi_value | split: '-' -%}
+                    {{ fi_parts[0] | strip }}
+                  {%- else -%}
+                    {{ fi_value }}
+                  {%- endif -%}
+                </span>
               </div>
               <div class="product-card__dimension" aria-label="{{ 'products.product.dimension' | t }}">
                 {{ product.metafields.custom.xd | default: product.metafields.custom.custom_working_length | default: product.metafields.custom.working_length | default: '' }}
@@ -518,7 +526,8 @@
       </div>
     </div>
   </div>
-</div></div>{% schema %}
+</div>
+{% schema %}
 {
   "name": "Wiertla Stats",
   "settings": [
@@ -1414,6 +1423,12 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Check if Swiper is available before initializing
+    if (typeof Swiper === 'undefined') {
+      console.warn('Swiper library is not loaded. Skipping swiper initialization.');
+      return;
+    }
+    
     const swiper = new Swiper('.latest-products__swiper', {
       loop: false,
       slidesPerView: 1,

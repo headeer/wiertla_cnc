@@ -32,7 +32,7 @@
   </div>
   <!-- PŁYTKI tab icons -->
   <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="wcmx" data-tab="plytki">
-    <img src="{{ 'ico_big_all.svg' | asset_url }}" alt="WCMX" class="wiertla-categories__icon" width="122" height="122">
+    <img src="{{ 'ico_wcmx.jpeg' | asset_url }}" alt="WCMX" class="wiertla-categories__icon" width="122" height="122">
     <span class="wiertla-categories__icon-label">WCMX</span>
   </div>
   <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="lcmx" data-tab="plytki">
@@ -111,33 +111,33 @@
       <option value="">Typ wiertła</option>
       <option value="koronkowe">Koronkowe</option>
       <option value="plytkowe">Płytkowe</option>
-                  <option value="VHM">VHM</option>
-            <option value="Sandvik 880">Sandvik 880</option>
-            <option value="ksem">KSEM</option>
-            <option value="amec">AMEC</option>
+      <option value="vhm">VHM</option>
+      <option value="sandvik">Sandvik 880</option>
+      <option value="ksem">KSEM</option>
+      <option value="amec">AMEC</option>
     </select>
     
     <!-- Rodzaj filter for plytki tab (should appear in same position as Typ wiertła) -->
     <select class="wiertla-categories__filter wiertla-filter-rodzaj" data-filter="rodzaj" data-tab="plytki" style="display:none;">
       <option value="">Rodzaj</option>
-      <option value="WCMX">WCMX</option>
-      <option value="LCMX">LCMX</option>
+      <option value="wcmx">WCMX</option>
+      <option value="lcmx">LCMX</option>
       <option value="811">811</option>
-      <option value="DFT">DFT</option>
+      <option value="dft">DFT</option>
       <option value="880">880</option>
-      <option value="WOGX">WOGX</option>
-      <option value="SPGX">SPGX</option>
-      <option value="P284">P284</option>
+      <option value="wogx">WOGX</option>
+      <option value="spgx">SPGX</option>
+      <option value="p284">P284</option>
     </select>
     
     <!-- Rodzaj filter for koronki tab (should appear in same position as Typ wiertła) -->
     <select class="wiertla-categories__filter wiertla-filter-rodzaj" data-filter="rodzaj" data-tab="koronki" style="display:none;">
       <option value="">Rodzaj</option>
       <option value="ksem">KSEM</option>
-      <option value="IDI">IDI</option>
-      <option value="P600">P600</option>
-      <option value="ICM">ICM</option>
-      <option value="ICP">ICP</option>
+      <option value="idi">IDI</option>
+      <option value="p600">P600</option>
+      <option value="icm">ICM</option>
+      <option value="icp">ICP</option>
       <option value="870">870</option>
       <option value="amec">AMEC</option>
       <option value="ktip">ktip</option>
@@ -179,8 +179,8 @@
             <option value="">Wszystkie</option>
             <option value="koronkowe">Koronkowe</option>
             <option value="plytkowe">Płytkowe</option>
-            <option value="VHM">VHM</option>
-            <option value="Sandvik 880">Sandvik 880</option>
+            <option value="vhm">VHM</option>
+            <option value="sandvik">Sandvik 880</option>
             <option value="ksem">KSEM</option>
             <option value="amec">AMEC</option>
           </select>
@@ -464,6 +464,7 @@
         window.selectedCategory = 'wszystkie';
         
         updateTypeRodzajDropdown(tabType);
+        updateMobileTypeRodzajDropdown(tabType);
         
         // Reset to "wszystkie" when switching tabs
         updateActiveIcon('', tabType);
@@ -475,8 +476,103 @@
       });
     });
     
+    // Mobile filter synchronization functions
+    function updateMobileTypeRodzajDropdown(tabType) {
+      console.log('updateMobileTypeRodzajDropdown called with tabType:', tabType);
+      
+      document.querySelectorAll('.wiertla-filter-type, .wiertla-filter-rodzaj').forEach(function(select) {
+        const selectTab = select.getAttribute('data-tab');
+        const selectClass = select.className;
+        console.log('Processing mobile select:', selectClass, 'data-tab:', selectTab, 'tabType:', tabType);
+        
+        if (selectTab === tabType) {
+          console.log('Showing mobile filter:', selectClass);
+          select.style.display = '';
+          
+          // Safely check and update parent dropdown container
+          const parentDropdown = select.closest('.wiertla-categories__mobile-filter-dropdown');
+          if (parentDropdown) {
+            parentDropdown.style.display = '';
+          }
+        } else {
+          console.log('Hiding mobile filter:', selectClass);
+          select.style.display = 'none';
+          select.value = '';
+          
+          // Safely check and update parent dropdown container
+          const parentDropdown = select.closest('.wiertla-categories__mobile-filter-dropdown');
+          if (parentDropdown) {
+            parentDropdown.style.display = 'none';
+          }
+        }
+      });
+    }
+    
+    function setupMobileFilterSync() {
+      console.log('Setting up mobile filter sync');
+      
+      // Listen for changes on mobile typ wiertła filter
+      document.querySelectorAll('.wiertla-categories__mobile-filter-select[data-filter="typ"]').forEach(function(select) {
+        select.addEventListener('change', function() {
+          const tabType = this.getAttribute('data-tab');
+          const filterValue = this.value;
+          console.log('Mobile typ filter changed:', filterValue, 'for tab:', tabType);
+          updateActiveIcon(filterValue, tabType);
+          
+          // Sync with category selection
+          if (typeof window.filterByCategory === 'function') {
+            window.filterByCategory(filterValue || 'wszystkie');
+          }
+        });
+      });
+      
+      // Listen for changes on mobile rodzaj filters
+      document.querySelectorAll('.wiertla-categories__mobile-filter-select[data-filter="rodzaj"]').forEach(function(select) {
+        select.addEventListener('change', function() {
+          const tabType = this.getAttribute('data-tab');
+          const filterValue = this.value;
+          console.log('Mobile rodzaj filter changed:', filterValue, 'for tab:', tabType);
+          updateActiveIcon(filterValue, tabType);
+          
+          // Sync with category selection
+          if (typeof window.filterByCategory === 'function') {
+            window.filterByCategory(filterValue || 'wszystkie');
+          }
+        });
+      });
+      
+      // Listen for changes on mobile manufacturer filter
+      document.querySelectorAll('.wiertla-categories__mobile-filter-select[data-filter="manufacturer"]').forEach(function(select) {
+        select.addEventListener('change', function() {
+          const filterValue = this.value;
+          console.log('Mobile manufacturer filter changed:', filterValue);
+          
+          // Apply manufacturer filter
+          if (window.WiertlaCNC && window.WiertlaCNC.filters) {
+            const manufacturerMapping = {
+              'Sandvik': 'sandvik',
+              'Walter': 'walter',
+              'ISCAR': 'iscar',
+              'KENNAMETAL': 'kennametal',
+              'DSK': 'dsk',
+              'AMEC': 'amec'
+            };
+            window.WiertlaCNC.filters.manufacturer = filterValue ? manufacturerMapping[filterValue] : '';
+            
+            // Apply filters
+            if (typeof window.applyFilters === 'function') {
+              window.applyFilters();
+            }
+          }
+        });
+      });
+    }
+    
     // Setup filter-icon synchronization
     setupFilterIconSync();
+    
+    // Setup mobile filter synchronization
+    setupMobileFilterSync();
     
     // On page load
     var activeTab = document.querySelector('.wiertla-categories__tab.active');
@@ -484,6 +580,7 @@
       var initialTabType = activeTab.getAttribute('data-tab-type');
       console.log('Initial active tab:', activeTab.textContent.trim(), 'tabType:', initialTabType);
       updateTypeRodzajDropdown(initialTabType);
+      updateMobileTypeRodzajDropdown(initialTabType);
       
    updateActiveIcon('', initialTabType);
     } else {

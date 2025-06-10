@@ -104,6 +104,7 @@ function openPreviewModal(product) {
     // Map our product data to match what updateMobilePreview expects
     const mappedProduct = {
       image: product.image,
+      featured_image: product.featured_image, // Add the actual product featured image
       fi: product.fi,
       dimension: product.length, // Map length to dimension
       vendor: product.vendor,
@@ -272,6 +273,7 @@ window.testModalPreview = function() {
     id: "test-123",
     url: "#test-url",
     image: "http://127.0.0.1:9292/cdn/shop/t/135/assets/image-12.png",
+    featured_image: "http://127.0.0.1:9292/cdn/shop/t/135/assets/image-12.png", // Main product image
     fi: "⌀ 12.5",
     length: "150mm",
     price: "249.99 zł",
@@ -295,12 +297,23 @@ document.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
 
+    // Check if we're on mobile (window width <= 768px)
+    const isMobile = window.innerWidth <= 768;
+    
     // Extract product data from the mobile card using correct selectors based on actual structure
+    const productId = mobileCard.dataset.productId || "";
+    const productUrl = mobileCard.dataset.productUrl || "";
+    
+    // Check if product has rent icon (calendar icon) by looking for event.png in the price area
+    const hasRentIcon = mobileCard.querySelector(".wiertla-categories__mobile-price img[src*='event.png']");
+    
     const product = {
-      id: mobileCard.dataset.productId || "",
-      url: mobileCard.dataset.productUrl || "",
-      // Get image from the mobile-image img element
+      id: productId,
+      url: productUrl || (productId ? `/products/${productId}` : ""),
+      // Get image from the mobile-image img element (category icon)
       image: mobileCard.querySelector(".wiertla-categories__mobile-image img")?.src || "",
+      // Get featured image from data attribute or fallback to category icon
+      featured_image: mobileCard.dataset.featuredImage || mobileCard.querySelector(".wiertla-categories__mobile-image img")?.src || "",
       // Get fi from the mobile-value inside fi section
       fi: mobileCard.querySelector(".wiertla-categories__mobile-fi .mobile-value")?.textContent?.trim() || "-",
       // Get dimension from the dimension div
@@ -310,10 +323,48 @@ document.addEventListener("click", (e) => {
       // Get vendor from the mobile-vendor div
       vendor: mobileCard.querySelector(".wiertla-categories__mobile-vendor")?.textContent?.trim() || "-",
       // Get symbol from the mobile-symbol div  
-      symbol: mobileCard.querySelector(".wiertla-categories__mobile-symbol")?.textContent?.trim() || "-"
+      symbol: mobileCard.querySelector(".wiertla-categories__mobile-symbol")?.textContent?.trim() || "-",
+      // Add rent availability flag
+      custom_rent: hasRentIcon
     };
 
     console.log("Extracted product data:", product);
-    openPreviewModal(product);
+    console.log("Has rent icon:", hasRentIcon);
+    
+    // On mobile, check if product has rent icon to decide which modal to show
+    if (isMobile) {
+      if (hasRentIcon) {
+        console.log("Mobile device with rent icon detected, opening rent modal");
+        openRentModal(product);
+      } else {
+        console.log("Mobile device without rent icon detected, opening preview modal");
+        openPreviewModal(product);
+      }
+    } else {
+      console.log("Desktop device detected, opening preview modal");
+      openPreviewModal(product);
+    }
   }
 });
+
+// Open rent modal function
+function openRentModal(product) {
+  console.log("Opening rent modal for product:", product);
+  
+  // Try to use existing rent modal functionality
+  if (window.WiertlaCNC && typeof window.WiertlaCNC.openRentModal === 'function') {
+    // Find the product in the global products array
+    const fullProduct = window.WiertlaCNC.products.find(p => p.id === parseInt(product.id));
+    if (fullProduct) {
+      window.WiertlaCNC.openRentModal(fullProduct);
+    } else {
+      console.error("Product not found in WiertlaCNC.products");
+      // Fallback to regular preview modal
+      openPreviewModal(product);
+    }
+  } else {
+    console.error("WiertlaCNC.openRentModal not found, falling back to preview modal");
+    // Fallback to regular preview modal
+    openPreviewModal(product);
+  }
+}

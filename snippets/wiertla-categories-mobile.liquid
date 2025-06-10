@@ -106,64 +106,72 @@
 
     <!-- Filter options -->
     <div class="wiertla-categories__mobile-filter-options">
+      <!-- Typ wiertła filter (only for wiertla tab) -->
       <div class="wiertla-categories__mobile-filter-dropdown">
-        <select class="wiertla-categories__mobile-filter-select" data-filter="type">
+        <select class="wiertla-categories__mobile-filter-select wiertla-filter-type" data-filter="typ" data-tab="wiertla">
           <option value="">Typ wiertła</option>
-          <option value="all">Wszystkie</option>
-          <option value="VW">Koronkowe (VW)</option>
-          <option value="PR">Płytkowe (PR)</option>
-          <option value="WW">VHM (WW)</option>
-          <option value="PS">Sandvik 880 (PS)</option>
-          <option value="WK">KSEM (WK)</option>
-          <option value="WV">AMEC (WV)</option>
+          <option value="koronkowe">Koronkowe</option>
+          <option value="plytkowe">Płytkowe</option>
+          <option value="vhm">VHM</option>
+          <option value="sandvik">Sandvik 880</option>
+          <option value="ksem">KSEM</option>
+          <option value="amec">AMEC</option>
         </select>
       </div>
+      
+      <!-- Rodzaj filter for plytki tab -->
       <div class="wiertla-categories__mobile-filter-dropdown">
-        <select class="wiertla-categories__mobile-filter-select" data-filter="crown">
-          <option value="">Wykaz koronek</option>
-          <option value="all">Wszystkie</option>
-          <option value="KK">KK</option>
-          <option value="KI">KI</option>
-          <option value="KS">KS</option>
-          <option value="KT">KT</option>
-          <option value="KA">KA</option>
+        <select class="wiertla-categories__mobile-filter-select wiertla-filter-rodzaj" data-filter="rodzaj" data-tab="plytki" style="display:none;">
+          <option value="">Rodzaj</option>
+          <option value="wcmx">WCMX</option>
+          <option value="lcmx">LCMX</option>
+          <option value="811">811</option>
+          <option value="dft">DFT</option>
+          <option value="880">880</option>
+          <option value="wogx">WOGX</option>
+          <option value="spgx">SPGX</option>
+          <option value="p284">P284</option>
         </select>
       </div>
+      
+      <!-- Rodzaj filter for koronki tab -->
       <div class="wiertla-categories__mobile-filter-dropdown">
-        <select class="wiertla-categories__mobile-filter-select" data-filter="warehouse">
-          <option value="">Magazyn</option>
-          <option value="all">Wszystkie</option>
-          <option value="M">Poznań</option>
-          <option value="T">Czechy</option>
-          <option value="E">eBay</option>
-          <option value="U">UK</option>
+        <select class="wiertla-categories__mobile-filter-select wiertla-filter-rodzaj" data-filter="rodzaj" data-tab="koronki" style="display:none;">
+          <option value="">Rodzaj</option>
+          <option value="ksem">KSEM</option>
+          <option value="idi">IDI</option>
+          <option value="p600">P600</option>
+          <option value="icm">ICM</option>
+          <option value="icp">ICP</option>
+          <option value="870">870</option>
+          <option value="amec">AMEC</option>
+          <option value="ktip">ktip</option>
         </select>
       </div>
+      
       <div class="wiertla-categories__mobile-filter-dropdown">
         <select class="wiertla-categories__mobile-filter-select" data-filter="manufacturer">
           <option value="">Producent</option>
-          <option value="all">Wszystkie</option>
-          <option value="Sandvik">Sandvik</option>
+          <option value="Sandvik">SANDVIK</option>
+          <option value="Walter">WALTER</option>
+          <option value="ISCAR">ISCAR</option>
+          <option value="KENNAMETAL">KENNAMETAL</option>
+          <option value="DSK">DSK</option>
           <option value="AMEC">AMEC</option>
-          <option value="KSEM">KSEM</option>
         </select>
       </div>
     </div>
 
-    <!-- Filter selection -->
-    <div class="wiertla-categories__mobile-filter-selection">
-      <div class="wiertla-categories__mobile-filter-selection-title">Pokaż</div>
-      <div class="wiertla-categories__mobile-filter-dropdown">
-        <div class="wiertla-categories__mobile-filter-dropdown-text">Wszystkie</div>
+    <!-- Show all button -->
+    <div class="wiertla-categories__mobile-filter-show-all">
+      <button class="wiertla-categories__mobile-show-all-button" onclick="clearAllFilters()">
+        <span>Pokaż wszystkie</span>
+      </button>
     </div>
 
-      <!-- Include Dropdown Menu -->
-      {% render 'wiertla-categories-mobile-dropdown' %}
-    </div>
-
-    <!-- Sort button -->
-    <div class="wiertla-categories__mobile-filter-sort-wrapper">
-      <button class="wiertla-categories__mobile-filter-sort-button">
+    <!-- Filter button -->
+    <div class="wiertla-categories__mobile-filter-button-wrapper">
+      <button class="wiertla-categories__mobile-filter-sort-button" onclick="applyMobileSort()">
         <span>Sortuj wiertła</span>
         <img
           src="{{ 'icon_filter.svg' | asset_url }}"
@@ -173,6 +181,12 @@
           height="24">
       </button>
     </div>
+
+      <!-- Include Dropdown Menu -->
+      {% render 'wiertla-categories-mobile-dropdown' %}
+    </div>
+
+
   </div>
 </div>
 
@@ -418,7 +432,7 @@
           height="24">
       </div>
     </div>
-
+    
     <!-- Product Card Preview (exact same structure as mobile card) -->
     <div class="wiertla-categories__mobile-preview-card">
       <div class="wiertla-categories__mobile-top">
@@ -426,11 +440,15 @@
           <img src="" alt="Product" width="34" height="34" loading="lazy" class="wiertla-categories__mobile-preview-product-image">
         </div>
         <div class="wiertla-categories__mobile-fi">
-          <span class="mobile-label">Fi ⌀</span>
           <span class="mobile-value wiertla-categories__mobile-preview-fi-value">-</span>
         </div>
         <div class="wiertla-categories__mobile-dimension wiertla-categories__mobile-preview-dimension-value">
           -
+        </div>
+        <div class="wiertla-categories__mobile-price-wrapper">
+          <div class="wiertla-categories__mobile-price wiertla-categories__mobile-preview-price-value">
+            -
+          </div>
         </div>
       </div>
       <div class="wiertla-categories__mobile-bottom">
@@ -440,11 +458,7 @@
         <div class="wiertla-categories__mobile-symbol wiertla-categories__mobile-preview-symbol-value">
           -
         </div>
-        <div class="wiertla-categories__mobile-price-wrapper">
-          <div class="wiertla-categories__mobile-price wiertla-categories__mobile-preview-price-value">
-            -
-          </div>
-        </div>
+       
       </div>
     </div>
 
@@ -486,6 +500,7 @@
 
     // Get all elements
     const productImage = modal.querySelector(".wiertla-categories__mobile-preview-product-image");
+    const largeProductImage = modal.querySelector(".wiertla-categories__mobile-preview-large-image");
     const fiValue = modal.querySelector(".wiertla-categories__mobile-preview-fi-value");
     const dimensionValue = modal.querySelector(".wiertla-categories__mobile-preview-dimension-value");
     const vendorValue = modal.querySelector(".wiertla-categories__mobile-preview-vendor-value");
@@ -495,6 +510,7 @@
 
     console.log("Modal elements found:", {
       productImage: !!productImage,
+      largeProductImage: !!largeProductImage,
       fiValue: !!fiValue,
       dimensionValue: !!dimensionValue,
       vendorValue: !!vendorValue,
@@ -503,7 +519,7 @@
       detailsButton: !!detailsButton
     });
 
-    // Set product image
+    // Set product images
     if (productImage) {
       if (product.image && product.image.trim() !== '') {
         productImage.src = product.image;
@@ -513,6 +529,22 @@
         productImage.src = "{{ 'image-8.png' | asset_url }}";
         productImage.style.display = "block";
       }
+    }
+
+    // Set large product image (use the same logic as desktop preview system)
+    if (largeProductImage) {
+      console.log("Product data for large image:", {
+        featured_image: product.featured_image,
+        large_image: product.large_image,
+        image: product.image
+      });
+      
+      // Use same fallback logic as desktop preview: image || large_image || featured_image
+      const imageUrl = product.image || product.large_image || product.featured_image || "{{ 'custom_icons.png' | asset_url }}";
+      console.log("Using image URL:", imageUrl);
+      
+      largeProductImage.src = imageUrl;
+      largeProductImage.style.display = "block";
     }
 
     // Set all the product data
@@ -528,8 +560,15 @@
         detailsButton.href = product.url;
         detailsButton.onclick = null;
       } else {
-        detailsButton.href = "#";
-        detailsButton.onclick = function(e) { e.preventDefault(); };
+        // If no URL, try to construct one from product ID
+        const productId = product.id;
+        if (productId) {
+          detailsButton.href = `/products/${productId}`;
+          detailsButton.onclick = null;
+        } else {
+          detailsButton.href = "#";
+          detailsButton.onclick = function(e) { e.preventDefault(); };
+        }
       }
     }
 
@@ -546,6 +585,7 @@
     console.log("Testing mobile preview modal...");
     const testProduct = {
       image: "{{ 'image-8.png' | asset_url }}",
+      featured_image: "{{ 'image-8.png' | asset_url }}", // Main product image
       fi: "⌀ 12",
       dimension: "100mm",
       vendor: "Test Vendor", 

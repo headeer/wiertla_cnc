@@ -1,6 +1,6 @@
 // Wiertla Categories Filter
 document.addEventListener("DOMContentLoaded", function () {
-  // Category mappings
+  // Category mappings - Updated to use consistent naming
   const categoryMappings = {
     koronkowe: "VW",
     plytkowe: "PR",
@@ -8,6 +8,22 @@ document.addEventListener("DOMContentLoaded", function () {
     sandvik: "PS",
     ksem: "WK",
     amec: "WV",
+    // Additional mappings for plytki categories
+    wcmx: "WCMX",
+    lcmx: "LCMX",
+    "811": "811",
+    dft: "DFT",
+    "880": "880",
+    wogx: "WOGX",
+    spgx: "SPGX",
+    p284: "P284",
+    // Koronki categories
+    idi: "IDI",
+    p600: "P600",
+    icm: "ICM", 
+    icp: "ICP",
+    "870": "870",
+    ktip: "KTIP"
   };
 
   // Crown types

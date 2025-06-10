@@ -138,7 +138,7 @@
         <!-- Płytki Categories -->
         <div class="wiertla-categories__icon-item wiertla-tab-plytki" data-category="wcmx" style="display: none;">
           <img
-            src="{{ 'ico_big_all.svg' | asset_url }}"
+            src="{{ 'ico_wcmx.jpeg' | asset_url }}"
             alt="WCMX"
             class="wiertla-categories__icon"
             width="24"
@@ -524,7 +524,7 @@
           compare_at_price_max: {{ product.compare_at_price_max | money_without_trailing_zeros | json }},
           compare_at_price_varies: {{ product.compare_at_price_varies | json }},
           available: {{ product.available | json }},
-          
+          quantity: {{ product.first_available_variant.inventory_quantity | json }},
           // Variants
           variants: [
             {% for variant in product.variants %}
@@ -609,8 +609,8 @@
       // Assign products to global WiertlaCNC object
       window.WiertlaCNC = window.WiertlaCNC || {};
       window.WiertlaCNC.products = wiertlaProducts;
-      
-      // Helper function to list all TYP field values
+      // Helper function to list all TYP field values]
+
       window.listAllTypValues = function() {
         const typValues = new Set();
         const productsWithTyp = [];
@@ -759,6 +759,58 @@
     
     // Initialize product table data
     let allProducts = wiertlaProducts;
+    
+    // Debug function to display initial products
+    window.showInitialProducts = function(limit = 20) {
+      allProducts.slice(0, limit).forEach((product, index) => {
+        console.log(`\n📦 Product ${index + 1}:`, {
+          id: product.id,
+          title: product.title,
+          sku: product.sku,
+          vendor: product.vendor,
+          custom_typ: product.custom_typ,
+          custom_symbol: product.custom_symbol,
+          custom_manufacturer: product.custom_manufacturer,
+          custom_category: product.custom_category,
+          rodzaj: product.rodzaj,
+          price: product.price,
+          handle: product.handle
+        });
+        
+        // Show all custom fields
+        const customFields = {};
+        Object.keys(product).forEach(key => {
+          if (key.startsWith('custom_')) {
+            customFields[key] = product[key];
+          }
+        });
+      });
+      
+      // Show summary statistics
+      const withTyp = allProducts.filter(p => p.custom_typ && p.custom_typ !== null && p.custom_typ !== 'N/A').length;
+      const withRodzaj = allProducts.filter(p => p.rodzaj && p.rodzaj !== null && p.rodzaj !== 'N/A').length;
+      const withVendor = allProducts.filter(p => p.vendor && p.vendor !== null).length;
+      const withSku = allProducts.filter(p => p.sku && p.sku !== null).length;
+      
+      
+      // Show unique values for key fields
+      const uniqueTyps = [...new Set(allProducts.map(p => p.custom_typ).filter(Boolean))];
+      const uniqueRodzaj = [...new Set(allProducts.map(p => p.rodzaj).filter(Boolean))];
+      const uniqueVendors = [...new Set(allProducts.map(p => p.vendor).filter(Boolean))];
+      
+      return {
+        totalProducts: allProducts.length,
+        withTyp,
+        withRodzaj,
+        withVendor,
+        withSku,
+        uniqueTyps,
+        uniqueRodzaj,
+        uniqueVendors,
+        sampleProducts: allProducts.slice(0, limit)
+      };
+    };
+    
     // Create hover preview element
     const hoverPreview = document.createElement('div');
     hoverPreview.className = 'wiertla-categories__hover-preview';
@@ -1294,121 +1346,277 @@
         console.log(`📊 Products before category filter: ${beforeCategoryCount}`);
         console.log(`🔍 Sample of first product data:`, filteredProducts[0]);
         
+        // Special debug for Sandvik 880 issues
+        if (window.selectedCategory === 'sandvik' && activeTabType === 'wiertla') {
+          console.log(`🔍 SANDVIK 880 DEBUG - Looking for products with "880" or "sandvik"`);
+          let sandvikCount = 0;
+          filteredProducts.forEach((product, index) => {
+            if (index < 10) { // Check first 10 products for debug
+              const has880Anywhere = 
+                (product.custom_typ || '').toLowerCase().includes('880') ||
+                (product.rodzaj || '').toLowerCase().includes('880') ||
+                (product.title || '').toLowerCase().includes('880') ||
+                (product.sku || '').toLowerCase().includes('880') ||
+                (product.custom_symbol || '').toLowerCase().includes('880');
+              
+              const hasSandvikAnywhere = 
+                (product.vendor || '').toLowerCase().includes('sandvik') ||
+                (product.title || '').toLowerCase().includes('sandvik') ||
+                (product.custom_typ || '').toLowerCase().includes('sandvik');
+                
+              if (has880Anywhere || hasSandvikAnywhere) {
+                sandvikCount++;
+                console.log(`🎯 POTENTIAL SANDVIK PRODUCT ${index + 1}:`);
+                console.log(`   TITLE: "${product.title || 'N/A'}"`);
+                console.log(`   SKU: "${product.sku || 'N/A'}"`);
+                console.log(`   SYMBOL: "${product.custom_symbol || 'N/A'}"`);
+                console.log(`   TYP: "${product.custom_typ || 'N/A'}"`);
+                console.log(`   RODZAJ: "${product.rodzaj || 'N/A'}"`);  
+                console.log(`   VENDOR: "${product.vendor || 'N/A'}"`);
+                console.log(`   🔢 Has 880: ${has880Anywhere}`);
+                console.log(`   🏭 Has Sandvik: ${hasSandvikAnywhere}`);
+              }
+            }
+          });
+                     console.log(`📊 Found ${sandvikCount} potential Sandvik products in first 10`);
+           
+           // Look specifically for the mentioned products
+           const targetProducts = ['880 PS.T111', '880 PS.M008', '880 PS.M101'];
+           targetProducts.forEach(targetName => {
+             const foundProduct = filteredProducts.find(p => 
+               (p.title || '').includes(targetName) ||
+               (p.sku || '').includes(targetName) ||
+               (p.custom_symbol || '').includes(targetName)
+             );
+             
+             if (foundProduct) {
+               console.log(`🎯 FOUND TARGET: "${targetName}"`);
+               console.log(`   TITLE: "${foundProduct.title || 'N/A'}"`);
+               console.log(`   SKU: "${foundProduct.sku || 'N/A'}"`);
+               console.log(`   SYMBOL: "${foundProduct.custom_symbol || 'N/A'}"`);
+               console.log(`   TYP: "${foundProduct.custom_typ || 'N/A'}"`);
+               console.log(`   VENDOR: "${foundProduct.vendor || 'N/A'}"`);
+             } else {
+               console.log(`❌ TARGET NOT FOUND: "${targetName}"`);
+             }
+           });
+         }
+        
         filteredProducts = filteredProducts.filter(product => {
           const productTyp = (product.custom_typ || '').toLowerCase();
           const productRodzaj = (product.rodzaj || '').toLowerCase();
+          const productVendor = (product.vendor || '').toLowerCase();
+          const productTitle = (product.title || '').toLowerCase();
           const categoryLower = window.selectedCategory.toLowerCase();
           
           let matches = false;
-          let searchFields = [];
-          let searchValues = [];
           
+          // Unified matching logic for all tabs
           if (activeTabType === 'wiertla') {
-            // For wiertla tab, search in typ field
-            searchFields = ['typ'];
-            
-            if (window.selectedCategory === 'plytkowe') {
-              // Special case: search for both "płytkowe" and "plytkowe"
-              searchValues = ['płytkowe', 'plytkowe'];
-              matches = searchValues.some(value => productTyp.includes(value));
-            } else if (window.selectedCategory === 'sandvik') {
-              // Special case: search for both "sandvik" and "880" for Sandvik products
-              searchValues = ['sandvik', '880'];
-              matches = searchValues.some(value => productTyp.includes(value));
-            } else {
-              // For other categories like amec, ksem, etc., search case-insensitively
-              // This will match KSEM, KSem, ksem, AMEC, amec, etc.
-              const categoryName = window.selectedCategory.toLowerCase();
-              matches = productTyp.includes(categoryName);
+            // For wiertla tab, search primarily in typ field
+            switch (categoryLower) {
+              case 'plytkowe':
+                // Match both "płytkowe" and "plytkowe" variants
+                matches = productTyp.includes('płytkowe') || 
+                         productTyp.includes('plytkowe') || 
+                         productTyp.includes('plate');
+                break;
               
-              // Additional debug for KSEM and AMEC
-              if (categoryName === 'ksem' || categoryName === 'amec') {
-                console.log(`🔍 Searching for "${categoryName}" in productTyp: "${product.custom_typ}"`);
-                console.log(`   productTyp (lowercase): "${productTyp}"`);
-                console.log(`   Match result: ${matches}`);
-              }
+              case 'koronkowe':
+                matches = productTyp.includes('koronkowe') || 
+                         productTyp.includes('crown') ||
+                         productTyp.includes('koronka');
+                break;
+              
+              case 'vhm':
+                matches = productTyp.includes('vhm') || 
+                         productTyp.includes('solid') ||
+                         productTyp.includes('carbide');
+                break;
+              
+              case 'sandvik':
+                // For Sandvik 880: Check for "880" in custom_typ field specifically
+                matches = productTyp.includes('880');
+                
+                // Debug sandvik matching
+                if (matches || productTitle.includes('880')) {
+                  console.log(`🔍 SANDVIK 880 MATCH TEST for: "${product.title || product.sku || 'Unknown'}"`);
+                  console.log(`   📝 custom_typ: "${product.custom_typ || 'N/A'}"`);
+                  console.log(`   📝 TYP has 880: ${productTyp.includes('880')}`);
+                  console.log(`   🎯 FINAL MATCH: ${matches}`);
+                }
+                break;
+              
+              case 'ksem':
+                matches = productTyp.includes('ksem') || 
+                         productVendor.includes('ksem') ||
+                         productTitle.includes('ksem');
+                break;
+              
+              case 'amec':
+                matches = productTyp.includes('amec') || 
+                         productVendor.includes('amec') ||
+                         productTitle.includes('amec');
+                break;
+              
+              default:
+                // Generic case-insensitive matching
+                matches = productTyp.includes(categoryLower);
+                break;
             }
-          } else if (activeTabType === 'plytki' || activeTabType === 'koronki') {
-            // For plytki and koronki tabs, search in both typ and rodzaj fields
-            searchFields = ['typ', 'rodzaj'];
-            
-            if (window.selectedCategory === 'sandvik') {
-              // Special case: search for both "sandvik" and "880" in both fields
-              searchValues = ['sandvik', '880'];
-              matches = searchValues.some(value => productTyp.includes(value) || productRodzaj.includes(value));
-            } else {
-              // Case-insensitive search in both typ and rodzaj fields
-              const categoryName = window.selectedCategory.toLowerCase();
-              matches = productTyp.includes(categoryName) || productRodzaj.includes(categoryName);
-              
-              // Additional debug for KSEM and AMEC in plytki/koronki tabs
-              if (categoryName === 'ksem' || categoryName === 'amec') {
-                console.log(`🔍 [${activeTabType}] Searching for "${categoryName}"`);
-                console.log(`   productTyp: "${product.custom_typ}" → productTyp (lowercase): "${productTyp}"`);
-                console.log(`   productRodzaj: "${product.rodzaj}" → productRodzaj (lowercase): "${productRodzaj}"`);
-                console.log(`   Match result: ${matches}`);
-              }
+          } 
+          else if (activeTabType === 'plytki') {
+            // For plytki tab, search in both typ and rodzaj fields
+            switch (categoryLower) {
+              case 'wcmx':
+                matches = productTyp.includes('wcmx') || productRodzaj.includes('wcmx');
+                break;
+              case 'lcmx':
+                matches = productTyp.includes('lcmx') || productRodzaj.includes('lcmx');
+                break;
+              case '811':
+                matches = productTyp.includes('811') || productRodzaj.includes('811');
+                break;
+              case 'dft':
+                matches = productTyp.includes('dft') || productRodzaj.includes('dft');
+                break;
+              case '880':
+                // Count ALL products with "880" in any relevant field
+                matches = productTyp.includes('880') || 
+                         productRodzaj.includes('880') ||
+                         productVendor.includes('sandvik') ||
+                         productTitle.includes('880') ||
+                         (product.custom_symbol || '').toLowerCase().includes('880') ||
+                         (product.sku || '').toLowerCase().includes('880');
+                break;
+              case 'wogx':
+                matches = productTyp.includes('wogx') || productRodzaj.includes('wogx');
+                break;
+              case 'spgx':
+                matches = productTyp.includes('spgx') || productRodzaj.includes('spgx');
+                break;
+              case 'p284':
+                matches = productTyp.includes('p284') || productRodzaj.includes('p284');
+                break;
+              default:
+                // Generic matching for both fields
+                matches = productTyp.includes(categoryLower) || productRodzaj.includes(categoryLower);
+                break;
+            }
+          }
+          else if (activeTabType === 'koronki') {
+            // For koronki tab, search in both typ and rodzaj fields
+            switch (categoryLower) {
+              case 'ksem':
+                matches = productTyp.includes('ksem') || 
+                         productRodzaj.includes('ksem') ||
+                         productVendor.includes('ksem') ||
+                         productTitle.includes('ksem');
+                break;
+              case 'idi':
+                matches = productTyp.includes('idi') || productRodzaj.includes('idi');
+                break;
+              case 'p600':
+                matches = productTyp.includes('p600') || productRodzaj.includes('p600');
+                break;
+              case 'icm':
+                matches = productTyp.includes('icm') || productRodzaj.includes('icm');
+                break;
+              case 'icp':
+                matches = productTyp.includes('icp') || productRodzaj.includes('icp');
+                break;
+              case '870':
+                matches = productTyp.includes('870') || productRodzaj.includes('870');
+                break;
+              case 'amec':
+                matches = productTyp.includes('amec') || 
+                         productRodzaj.includes('amec') ||
+                         productVendor.includes('amec') ||
+                         productTitle.includes('amec');
+                break;
+              case 'ktip':
+                matches = productTyp.includes('ktip') || productRodzaj.includes('ktip');
+                break;
+              default:
+                // Generic matching for both fields
+                matches = productTyp.includes(categoryLower) || productRodzaj.includes(categoryLower);
+                break;
             }
           }
           
-          // Log each product being checked (show first 5 for brevity)
-          const productIndex = filteredProducts.indexOf(product);
-          if (productIndex < 5) {
-            console.log(`🔍 Product ${productIndex + 1}:`);
-            console.log(`   📝 TYP: "${product.custom_typ || 'N/A'}"`);
-            console.log(`   🔍 Raw metafields:`, product.metafields);
-            console.log(`   🔍 All custom fields:`, {
-              custom_typ: product.custom_typ,
-              custom_symbol: product.custom_symbol,
-              custom_manufacturer: product.custom_manufacturer,
-              custom_category: product.custom_category
-            });
-            if (activeTabType === 'plytki' || activeTabType === 'koronki') {
+          // Debug logging for problematic categories
+          if (categoryLower === 'ksem' || categoryLower === 'amec' || categoryLower === 'sandvik' || categoryLower === '880') {
+            const productIndex = filteredProducts.indexOf(product);
+            if (productIndex < 3) { // Log first 3 products for brevity
+              console.log(`🔍 Product ${productIndex + 1} [${activeTabType}]:`);
+              console.log(`   📝 TYP: "${product.custom_typ || 'N/A'}"`);
               console.log(`   🏷️ RODZAJ: "${product.rodzaj || 'N/A'}"`);
+              console.log(`   🏭 VENDOR: "${product.vendor || 'N/A'}"`);
+              console.log(`   📖 TITLE: "${product.title || 'N/A'}"`);
+              console.log(`   🔗 SKU: "${product.sku || 'N/A'}"`);
+              console.log(`   🏷️ SYMBOL: "${product.custom_symbol || 'N/A'}"`);
+              console.log(`   🎯 Searching for: "${categoryLower}"`);
+              console.log(`   ${matches ? '✅ MATCH' : '❌ NO MATCH'}`);
+              
+              // Special debug for 880/Sandvik products
+              if (categoryLower === 'sandvik' || categoryLower === '880') {
+                const has880InTyp = productTyp.includes('880');
+                const has880InRodzaj = productRodzaj.includes('880');
+                const has880InTitle = productTitle.includes('880');
+                const has880InSku = (product.sku || '').toLowerCase().includes('880');
+                const has880InSymbol = (product.custom_symbol || '').toLowerCase().includes('880');
+                const hasSandvikInVendor = productVendor.includes('sandvik');
+                
+                console.log(`   🔢 880 matches: TYP=${has880InTyp}, RODZAJ=${has880InRodzaj}, TITLE=${has880InTitle}, SKU=${has880InSku}, SYMBOL=${has880InSymbol}`);
+                console.log(`   🏭 Sandvik in vendor: ${hasSandvikInVendor}`);
+              }
             }
-            console.log(`   🎯 Searching for: ${searchValues.join(' OR ')} in ${searchFields.join(', ')} field(s)`);
-            console.log(`   ${matches ? '✅ MATCH' : '❌ NO MATCH'}`);
           }
           
           return matches;
         });
         
         console.log(`📊 Products after category filter: ${filteredProducts.length}`);
-        console.log(`📝 Filter Summary: Looking for "${window.selectedCategory}" in ${activeTabType === 'wiertla' ? 'TYP field' : 'TYP and RODZAJ fields'}`);
-        if (window.selectedCategory === 'plytkowe' && activeTabType === 'wiertla') {
-          console.log(`🇵🇱 Special case: Searching for both "płytkowe" and "plytkowe" (with/without Polish ł)`);
-        }
-        if (window.selectedCategory === 'sandvik') {
-          console.log(`🔧 Special case: Searching for both "sandvik" and "880" for Sandvik products`);
-        }
+        console.log(`📝 Filter Summary: Applied "${window.selectedCategory}" filter for ${activeTabType} tab`);
         console.groupEnd();
       }
 
-      // Apply type filter
+      // Apply type filter - BUT skip if we already applied a category filter that found products
       if (window.WiertlaCNC.filters.typ && window.WiertlaCNC.filters.typ !== 'all' && window.WiertlaCNC.filters.typ !== '') {
         let beforeTypeCount = filteredProducts.length;
         
         const expectedTypeValue = window.WiertlaCNC.filters.typ;
         console.log(`🔍 Type filter: ${window.WiertlaCNC.filters.typ} → Expected TYP value: ${expectedTypeValue}`);
-        console.log(filteredProducts, expectedTypeValue);
         
-        if (expectedTypeValue) {
-          filteredProducts = filteredProducts.filter(product => {
-            // Check multiple possible field names for TYP
-            const typValue = product.custom_typ;
-            console.log(typValue,product.metafields.custom.typ);
-            const matches = typValue && typValue?.toLowerCase()?.includes(expectedTypeValue?.toLowerCase() || '');
-            
-            if (matches) {
-              console.log(`✅ Type match: Product ${product.sku} has TYP="${typValue}" matches "${expectedTypeValue}"`);
-            }
-            
-            return matches;
-          });
-          
-          console.log(`📊 Type filter: ${beforeTypeCount} → ${filteredProducts.length} products (filter: ${window.WiertlaCNC.filters.typ})`);
+        // IMPORTANT: If we already filtered by category and the type matches the category, 
+        // don't apply additional typ filtering as products may not have custom_typ populated
+        const categoryAlreadyFiltered = window.selectedCategory && window.selectedCategory !== 'wszystkie';
+        const typeMatchesCategory = expectedTypeValue === window.selectedCategory;
+        
+        if (categoryAlreadyFiltered && typeMatchesCategory) {
+          console.log(`⚡ SKIPPING type filter because category "${window.selectedCategory}" already applied matching filter`);
+          console.log(`📊 Type filter skipped: keeping all ${beforeTypeCount} products from category filter`);
         } else {
-          console.log(`❌ No mapping found for type filter: ${window.WiertlaCNC.filters.typ}`);
+          console.log(filteredProducts, expectedTypeValue);
+          
+          if (expectedTypeValue) {
+            filteredProducts = filteredProducts.filter(product => {
+              // Check multiple possible field names for TYP
+              const typValue = product.custom_typ;
+              console.log(typValue,product.metafields.custom.typ);
+              const matches = typValue && typValue?.toLowerCase()?.includes(expectedTypeValue?.toLowerCase() || '');
+              
+              if (matches) {
+                console.log(`✅ Type match: Product ${product.sku} has TYP="${typValue}" matches "${expectedTypeValue}"`);
+              }
+              
+              return matches;
+            });
+            
+            console.log(`📊 Type filter: ${beforeTypeCount} → ${filteredProducts.length} products (filter: ${window.WiertlaCNC.filters.typ})`);
+          } else {
+            console.log(`❌ No mapping found for type filter: ${window.WiertlaCNC.filters.typ}`);
+          }
         }
       }
       
@@ -1477,8 +1685,14 @@
         const getFiValue = (product) => {
           let fi = product.custom_fi || product.custom_srednica || '';
           if (typeof fi === 'string') {
-            // Remove any non-numeric characters except decimal point
-            fi = fi.replace(/[^0-9.,]/g, '').replace(',', '.');
+            // Handle range values like "12,50-13,00" by taking the first number
+            if (fi.includes('-')) {
+              fi = fi.split('-')[0].trim();
+            }
+            // Replace comma with dot for decimal conversion
+            fi = fi.replace(',', '.');
+            // Remove any remaining non-numeric characters except decimal point
+            fi = fi.replace(/[^0-9.]/g, '');
           }
           const numValue = parseFloat(fi);
           return isNaN(numValue) ? 0 : numValue;
@@ -1625,6 +1839,21 @@
         if (window.currentPage > 1) {
           window.currentPage--;
           applyFilters();
+          
+          // Scroll to top of table on mobile after pagination
+          if (window.innerWidth <= 768) {
+            const tableContainer = document.querySelector('.wiertla-categories__table-container') || 
+                                 document.querySelector('.wiertla-categories__mobile-view') ||
+                                 document.querySelector('#productsTableBody');
+            
+            if (tableContainer) {
+              const offsetTop = tableContainer.getBoundingClientRect().top + window.pageYOffset - 20;
+              window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+              });
+            }
+          }
         }
       });
     }
@@ -1634,6 +1863,21 @@
         if (window.currentPage < window.totalPages) {
           window.currentPage++;
           applyFilters();
+          
+          // Scroll to top of table on mobile after pagination
+          if (window.innerWidth <= 768) {
+            const tableContainer = document.querySelector('.wiertla-categories__table-container') || 
+                                 document.querySelector('.wiertla-categories__mobile-view') ||
+                                 document.querySelector('#productsTableBody');
+            
+            if (tableContainer) {
+              const offsetTop = tableContainer.getBoundingClientRect().top + window.pageYOffset - 20;
+              window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+              });
+            }
+          }
         }
       });
     }
@@ -2497,8 +2741,22 @@
       // Get current window width
       const isMobile = window.innerWidth <= 768;
       
-      // Maximum length for symbols before truncation
-      const maxLength = isMobile ? 8 : 13;
+              // Maximum length for symbols before truncation - conditional based on tab type
+        let maxLength;
+        if (isMobile) {
+          // Get current active tab type
+          const activeTab = document.querySelector('.wiertla-categories__tab.active');
+          const activeTabType = activeTab ? activeTab.getAttribute('data-tab-type') : 'wiertla';
+          
+          // Different limits for different tabs on mobile
+          if (activeTabType === 'wiertla') {
+            maxLength = 13;  // Wiertla: 20 characters
+          } else {
+            maxLength = 10;  // Plytki/Koronki: 10 characters
+          }
+        } else {
+          maxLength = 13;  // Desktop: 13 characters
+        }
       
       // If symbol is longer than max length, truncate and add ellipsis
       if (symbol.length > maxLength) {
@@ -2630,22 +2888,33 @@
           if (activeTabType === 'wiertla') {
             row.innerHTML = `
               <td class="wiertla-categories__table-cell">
-                <button type="button" class="wiertla-categories__mobile-card" data-product-id="${product.id || ''}" data-product-url="${product.url || ''}">
+                <button type="button" class="wiertla-categories__mobile-card" data-product-id="${product.id || ''}" data-product-image="${product.image || ''}" data-product-url="/products/${product.handle || product.id || ''}">
                   <div class="wiertla-categories__mobile-top">
                     <div class="wiertla-categories__mobile-image">
                       ${iconUrl ? `<img src="${iconUrl}" alt="${product.type || 'Product'}" width="34" height="34" loading="lazy">` : '-'}
                     </div>
                     <div class="wiertla-categories__mobile-fi">
-                      <span class="mobile-label">Fi ⌀</span>
                       <span class="mobile-value">${(() => {
                         const fi = product.custom_fi;
                         const srednica = product.custom_srednica;
                         
-                        if (fi && fi !== 'null' && fi !== 'undefined' && fi.trim() !== '') {
-                          return '⌀ ' + fi;
+                        const formatFiValue = (value) => {
+                          if (!value || value === 'null' || value === 'undefined' || value.trim() === '') return null;
+                          // If it's a range like "12,50-13,00", take only the first value
+                          if (value.includes('-')) {
+                            return value.split('-')[0].trim();
+                          }
+                          return value;
+                        };
+                        
+                        const formattedFi = formatFiValue(fi);
+                        const formattedSrednica = formatFiValue(srednica);
+                        
+                        if (formattedFi) {
+                          return '⌀ ' + formattedFi;
                         }
-                        if (srednica && srednica !== 'null' && srednica !== 'undefined' && srednica.trim() !== '') {
-                          return '⌀ ' + srednica;
+                        if (formattedSrednica) {
+                          return '⌀ ' + formattedSrednica;
                         }
                         return '-';
                       })()}</span>
@@ -2653,6 +2922,9 @@
                     <div class="wiertla-categories__mobile-dimension">
                       ${product.metafields.custom.custom_working_length || product.custom_working_length || product.custom_xd || '-'}
                     </div>
+                     <div class="wiertla-categories__mobile-price">
+                        ${product.price}${product.custom_rent ? ` <img src="{{ 'event.png' | asset_url }}" alt="Event" width="20" height="20" loading="lazy" style="margin-left: 8px; vertical-align: middle;">` : ''}
+                      </div>
                   </div>
                   <div class="wiertla-categories__mobile-bottom">
                     <div class="wiertla-categories__mobile-vendor">
@@ -2662,14 +2934,7 @@
                       ${formatSymbol(product.custom_symbol || product.custom_kod_producenta || '-')}
                     </div>
                     <div class="wiertla-categories__mobile-price-wrapper">
-                      <div class="wiertla-categories__mobile-price">
-                        ${product.price}
-                      </div>
-                      ${product.custom_rent ? `
-                        <button class="wiertla-categories__mobile-rent-button" data-product-id="${product.id}">
-                          <span>RENT A TOOL</span>
-                        </button>
-                      ` : ''}
+                     
                     </div>
                   </div>
                 </button>
@@ -2679,18 +2944,20 @@
             // Mobile view for Plytki/Koronki tabs - show different layout
             row.innerHTML = `
               <td class="wiertla-categories__table-cell">
-                <button type="button" class="wiertla-categories__mobile-card" data-product-id="${product.id || ''}" data-product-url="${product.url || ''}">
+                <button type="button" class="wiertla-categories__mobile-card" data-product-id="${product.id || ''}" data-product-url="/products/${product.handle || product.id || ''}">
                   <div class="wiertla-categories__mobile-top">
                     <div class="wiertla-categories__mobile-image">
                       ${iconUrl ? `<img src="${iconUrl}" alt="${product.type || 'Product'}" width="34" height="34" loading="lazy">` : '-'}
                     </div>
                     <div class="wiertla-categories__mobile-fi">
-                      <span class="mobile-label">Gniazdo</span>
                       <span class="mobile-value">${product.custom_gniazdo || '-'}</span>
                     </div>
                     <div class="wiertla-categories__mobile-dimension">
                       ${product.custom_rodzaj || '-'}
                     </div>
+                     <div class="wiertla-categories__mobile-price">
+                        ${product.price}${product.custom_rent ? ` <img src="{{ 'event.png' | asset_url }}" alt="Event" width="20" height="20" loading="lazy" style="margin-left: 8px; vertical-align: middle;">` : ''}
+                      </div>
                   </div>
                   <div class="wiertla-categories__mobile-bottom">
                     <div class="wiertla-categories__mobile-vendor">
@@ -2700,11 +2967,9 @@
                       ${formatSymbol(product.custom_kod_producenta || '-')}
                     </div>
                     <div class="wiertla-categories__mobile-price-wrapper">
-                      <div class="wiertla-categories__mobile-price">
-                        ${product.price}
-                      </div>
+                     
                       <div class="wiertla-categories__mobile-quantity">
-                        Ilość: ${product.custom_szt || '-'}
+                        ${product.quantity || '-'}
                       </div>
                     </div>
                   </div>
@@ -2728,11 +2993,23 @@
                   const fi = product.custom_fi;
                   const srednica = product.custom_srednica;
                   
-                  if (fi && fi !== 'null' && fi !== 'undefined' && fi.trim() !== '') {
-                    return '⌀ ' + fi;
+                  const formatFiValue = (value) => {
+                    if (!value || value === 'null' || value === 'undefined' || value.trim() === '') return null;
+                    // If it's a range like "12,50-13,00", take only the first value
+                    if (value.includes('-')) {
+                      return value.split('-')[0].trim();
+                    }
+                    return value;
+                  };
+                  
+                  const formattedFi = formatFiValue(fi);
+                  const formattedSrednica = formatFiValue(srednica);
+                  
+                  if (formattedFi) {
+                    return '⌀ ' + formattedFi;
                   }
-                  if (srednica && srednica !== 'null' && srednica !== 'undefined' && srednica.trim() !== '') {
-                    return '⌀ ' + srednica;
+                  if (formattedSrednica) {
+                    return '⌀ ' + formattedSrednica;
                   }
                   return '-';
                 })()}
@@ -3022,6 +3299,111 @@
       modal.classList.remove('active');
       document.body.style.overflow = '';
     }
+  };
+
+  // Clear all mobile filters function
+  window.clearAllFilters = function() {
+    console.log('Clearing all mobile filters');
+    
+    // Reset all mobile filter selects to default values
+    document.querySelectorAll('.wiertla-categories__mobile-filter-select').forEach(function(select) {
+      select.value = '';
+      console.log('Reset filter:', select.getAttribute('data-filter'), 'to empty');
+    });
+    
+    // Reset selectedCategory to default
+    window.selectedCategory = 'wszystkie';
+    console.log('Reset selectedCategory to:', window.selectedCategory);
+    
+    // Get current active tab to update icons
+    const activeTab = document.querySelector('.wiertla-categories__tab.active');
+    const currentTabType = activeTab ? activeTab.getAttribute('data-tab-type') : 'wiertla';
+    
+    // Update the active icon to "wszystkie"
+    if (typeof updateActiveIcon === 'function') {
+      updateActiveIcon('wszystkie', currentTabType);
+      console.log('Updated active icon to wszystkie for tab:', currentTabType);
+    }
+    
+    // Apply filters to refresh the table
+    if (typeof window.applyFilters === 'function') {
+      console.log('Applying filters after reset');
+      window.applyFilters();
+    }
+    
+    // Update the mobile dropdown text to show "Wszystkie"
+    const dropdownText = document.querySelector('.wiertla-categories__mobile-filter-dropdown-text');
+    if (dropdownText) {
+      dropdownText.textContent = 'Wszystkie';
+    }
+    
+    console.log('All filters cleared successfully');
+  };
+
+  // Mobile sort function
+  window.applyMobileSort = function() {
+    console.log('Mobile sort button clicked');
+    
+    // Get current active tab
+    const activeTab = document.querySelector('.wiertla-categories__tab.active');
+    const currentTabType = activeTab ? activeTab.getAttribute('data-tab-type') : 'wiertla';
+    console.log('Current tab type:', currentTabType);
+    
+    // Get mobile filter values
+    const mobileFilters = {};
+    const mobileSelects = document.querySelectorAll('.wiertla-categories__mobile-filter-select');
+    
+    mobileSelects.forEach(function(select) {
+      const filterType = select.getAttribute('data-filter');
+      const tabType = select.getAttribute('data-tab');
+      const value = select.value;
+      
+      console.log('Checking mobile select:', {
+        filterType: filterType,
+        tabType: tabType,
+        value: value,
+        currentTabType: currentTabType
+      });
+      
+      // Only process filters for the current tab that have values
+      if (tabType === currentTabType && value && value !== '' && value !== 'all') {
+        mobileFilters[filterType] = value;
+        console.log('Mobile filter captured:', filterType, '=', value, 'for tab:', tabType);
+      }
+    });
+    
+    console.log('All mobile filter values:', mobileFilters);
+    
+    // Set the selectedCategory based on the mobile filter
+    if (mobileFilters.typ) {
+      window.selectedCategory = mobileFilters.typ;
+      console.log('Set selectedCategory from typ to:', window.selectedCategory);
+    } else if (mobileFilters.rodzaj) {
+      window.selectedCategory = mobileFilters.rodzaj;
+      console.log('Set selectedCategory from rodzaj to:', window.selectedCategory);
+    } else {
+      window.selectedCategory = 'wszystkie';
+      console.log('Set selectedCategory to default: wszystkie');
+    }
+    
+    // Update the active icon to match the selected filter
+    if (typeof updateActiveIcon === 'function') {
+      updateActiveIcon(window.selectedCategory, currentTabType);
+      console.log('Updated active icon for:', window.selectedCategory, currentTabType);
+    }
+    
+    // Close the filter modal first
+    window.closeFilterModal();
+    
+    // Apply filters using the main filtering function
+    if (typeof window.applyFilters === 'function') {
+      console.log('Calling applyFilters() with selectedCategory:', window.selectedCategory);
+      window.applyFilters();
+    } else {
+      console.error('applyFilters function not found');
+    }
+    
+    return false;
   };
 
   // Wait for full DOM loading
@@ -4377,13 +4759,13 @@
 </script>
 
 <script>
-  // Update category mappings
+  // Update category mappings - Legacy SKU prefix mappings
   window.WiertlaCNC.categoryMappings = {
-    // Wiertła categories
+    // Wiertła categories - SKU prefixes
     'koronkowe': 'VW',  // First
     'plytkowe': 'PR',   // Second
-    'vhm': 'WW',        // Third - fixing from VH to WW
-    'sandvik': 'PS',    // Fourth - fixing from SANDVIK to PS
+    'vhm': 'WW',        // Third
+    'sandvik': 'PS',    // Fourth
     'ksem': 'WK',       // Fifth
     'amec': 'WV',       // Sixth
     'iscar': 'IS',
@@ -4394,7 +4776,7 @@
     
     // Koronki categories
     'koronki_kk': 'KK',
-    'koronki_kw': 'KW',
+    'koronki_kw': 'KW', 
     'koronki_ki': 'KI',
     'koronki_kt': 'KT',
     'koronki_ks': 'KS',
@@ -4408,29 +4790,62 @@
     'taegutec': 'TaeguTec'
   };
   
+  // Modern category names for content-based filtering
+  window.WiertlaCNC.modernCategoryNames = {
+    'koronkowe': 'koronkowe',
+    'plytkowe': 'plytkowe',
+    'vhm': 'vhm',
+    'sandvik': 'sandvik',
+    'ksem': 'ksem',
+    'amec': 'amec',
+    'wcmx': 'wcmx',
+    'lcmx': 'lcmx',
+    '811': '811',
+    'dft': 'dft',
+    '880': '880',
+    'wogx': 'wogx',
+    'spgx': 'spgx',
+    'p284': 'p284',
+    'idi': 'idi',
+    'p600': 'p600',
+    'icm': 'icm',
+    'icp': 'icp',
+    '870': '870',
+    'ktip': 'ktip'
+  };
+  
         // Define dropdown options for each tab type
       window.WiertlaCNC.tabTypeOptions = {
         'wiertla': [
           { value: '', text: 'Typ wiertła' },
-          { value: 'VW', text: 'Koronkowe' },
-          { value: 'PR', text: 'Płytkowe' },
-          { value: 'WW', text: 'VHM' },
-          { value: 'PS', text: 'Sandvik 880' },
-          { value: 'WK', text: 'KSEM' },
-          { value: 'WV', text: 'AMEC' }
+          { value: 'koronkowe', text: 'Koronkowe' },
+          { value: 'plytkowe', text: 'Płytkowe' },
+          { value: 'vhm', text: 'VHM' },
+          { value: 'sandvik', text: 'Sandvik 880' },
+          { value: 'ksem', text: 'KSEM' },
+          { value: 'amec', text: 'AMEC' }
         ],
         'plytki': [
-          { value: '', text: 'Typ płytki' },
-          { value: 'PW', text: 'Płytki wiertarskie' }
+          { value: '', text: 'Rodzaj płytki' },
+          { value: 'wcmx', text: 'WCMX' },
+          { value: 'lcmx', text: 'LCMX' },
+          { value: '811', text: '811' },
+          { value: 'dft', text: 'DFT' },
+          { value: '880', text: '880' },
+          { value: 'wogx', text: 'WOGX' },
+          { value: 'spgx', text: 'SPGX' },
+          { value: 'p284', text: 'P284' }
         ],
         'koronki': [
-          { value: '', text: 'Typ koronki' },
-          { value: 'KSEM', text: 'KSEM' },
-          { value: 'IDI', text: 'IDI' },
-          { value: 'P600', text: 'P600' },
-          { value: 'ICM', text: 'ICM' },
-          { value: 'ICP', text: 'ICP' },
-          { value: '870', text: '870' }
+          { value: '', text: 'Rodzaj koronki' },
+          { value: 'ksem', text: 'KSEM' },
+          { value: 'idi', text: 'IDI' },
+          { value: 'p600', text: 'P600' },
+          { value: 'icm', text: 'ICM' },
+          { value: 'icp', text: 'ICP' },
+          { value: '870', text: '870' },
+          { value: 'amec', text: 'AMEC' },
+          { value: 'ktip', text: 'ktip' }
         ]
       };
       
@@ -4485,7 +4900,7 @@
       }
       
       // Function to show/hide category icons based on active tab
-      function updateCategoryIcons() {
+      window.updateCategoryIcons = function() {
         const tabType = window.WiertlaCNC.activeTabType;
         const allIcons = document.querySelectorAll('.wiertla-categories__icon-item');
         
@@ -4636,10 +5051,10 @@
       const filterToCategory = {
         'koronkowe': 'koronkowe',
         'plytkowe': 'plytkowe', 
-        'VHM': 'vhm',
-        'Sandvik 880': 'sandvik',
-        'KSEM': 'ksem',
-        'AMEC': 'amec',
+        'vhm': 'vhm',
+        'sandvik': 'sandvik',
+        'ksem': 'ksem',
+        'amec': 'amec',
         '': 'wszystkie'
       };
       categoryName = filterToCategory[filterValue] || 'wszystkie';
@@ -4647,22 +5062,22 @@
       // Map rodzaj filter values to category names (for plytki/koronki tabs)
       const rodzajToCategory = {
         // Plytki values
-        'WCMX': 'wcmx',
-        'LCMX': 'lcmx',
+        'wcmx': 'wcmx',
+        'lcmx': 'lcmx',
         '811': '811', 
-        'DFT': 'dft',
+        'dft': 'dft',
         '880': '880',
-        'WOGX': 'wogx',
-        'SPGX': 'spgx',
-        'P284': 'p284',
+        'wogx': 'wogx',
+        'spgx': 'spgx',
+        'p284': 'p284',
         // Koronki values
-        'KSEM': 'ksem',
-        'IDI': 'idi',
-        'P600': 'p600',
-        'ICM': 'icm',
-        'ICP': 'icp',
+        'ksem': 'ksem',
+        'idi': 'idi',
+        'p600': 'p600',
+        'icm': 'icm',
+        'icp': 'icp',
         '870': '870',
-        'AMEC': 'amec',
+        'amec': 'amec',
         'ktip': 'ktip',
         '': 'wszystkie'
       };
@@ -4702,8 +5117,8 @@
       const categoryToFilter = {
         'koronkowe': 'koronkowe',
         'plytkowe': 'plytkowe',
-        'vhm': 'VHM', 
-        'sandvik': 'Sandvik 880',
+        'vhm': 'vhm', 
+        'sandvik': 'sandvik',
         'ksem': 'ksem',
         'amec': 'amec',
         'wszystkie': ''
@@ -4725,23 +5140,22 @@
       // For plytki/koronki tabs, use rodzaj filter
       const categoryToRodzaj = {
         // Plytki categories
-        'wcmx': 'WCMX',
-        'lcmx': 'LCMX', 
+        'wcmx': 'wcmx',
+        'lcmx': 'lcmx', 
         '811': '811',
-        'dft': 'DFT',
+        'dft': 'dft',
         '880': '880',
-        'wogx': 'WOGX',
-        'spgx': 'SPGX',
-        'p284': 'P284',
+        'wogx': 'wogx',
+        'spgx': 'spgx',
+        'p284': 'p284',
         // Koronki categories  
-        'ksem': 'KSEM',
-        'idi': 'IDI',
-        'p600': 'P600',
-        'icm': 'ICM',
-        'icp': 'ICP',
+        'ksem': 'ksem',
+        'idi': 'idi',
+        'p600': 'p600',
+        'icm': 'icm',
+        'icp': 'icp',
         '870': '870',
         'amec': 'amec',
-        'ksem': 'ksem',
         'ktip': 'ktip',
         'wszystkie': ''
       };
