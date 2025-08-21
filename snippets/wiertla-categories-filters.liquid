@@ -212,12 +212,8 @@
 </div>
 
 <script>
-  console.log('=== WIERTLA FILTERS SCRIPT LOADED ===');
-  console.log('Current URL:', window.location.href);
-  console.log('DOM ready state:', document.readyState);
   
   document.addEventListener('DOMContentLoaded', function() {
-    console.log('=== DOM CONTENT LOADED EVENT FIRED ===');
     
     // Add event listeners to language buttons
     document.querySelectorAll('.wiertla-categories__language-btn').forEach(btn => {
@@ -321,18 +317,14 @@
 
     // Typ/Rodzaj Filter (tab-specific)
     function updateTypeRodzajDropdown(tabType) {
-      console.log('updateTypeRodzajDropdown called with tabType:', tabType);
       
       document.querySelectorAll('.wiertla-filter-type, .wiertla-filter-rodzaj').forEach(function(select) {
         const selectTab = select.getAttribute('data-tab');
         const selectClass = select.className;
-        console.log('Processing select:', selectClass, 'data-tab:', selectTab, 'tabType:', tabType);
         
         if (selectTab === tabType) {
-          console.log('Showing filter:', selectClass);
           select.style.display = '';
         } else {
-          console.log('Hiding filter:', selectClass);
           select.style.display = 'none';
           select.value = '';
         }
@@ -341,7 +333,6 @@
     
     // Function to update active icon based on filter selection
     function updateActiveIcon(filterValue, tabType) {
-      console.log('updateActiveIcon called with filterValue:', filterValue, 'tabType:', tabType);
       
       // Remove active class from all icons
       document.querySelectorAll('.wiertla-categories__icon-item').forEach(function(icon) {
@@ -366,30 +357,24 @@
         
         if (targetIcon) {
           targetIcon.classList.add('active');
-          console.log('Made icon active:', categoryValue);
-        } else {
-          console.log('No matching icon found for category:', categoryValue);
         }
       } else {
         // If no filter selected, make "wszystkie" active
         const allIcon = document.querySelector('.wiertla-categories__icon-item[data-category="wszystkie"]');
         if (allIcon) {
           allIcon.classList.add('active');
-          console.log('Made "wszystkie" icon active');
         }
       }
     }
     
     // Function to setup filter change listeners
     function setupFilterIconSync() {
-      console.log('Setting up filter-icon sync');
       
       // Listen for changes on typ wiertła filter
       document.querySelectorAll('.wiertla-filter-type').forEach(function(select) {
         select.addEventListener('change', function() {
           const tabType = this.getAttribute('data-tab');
           const filterValue = this.value;
-          console.log('Typ filter changed:', filterValue, 'for tab:', tabType);
           updateActiveIcon(filterValue, tabType);
         });
       });
@@ -399,7 +384,6 @@
         select.addEventListener('change', function() {
           const tabType = this.getAttribute('data-tab');
           const filterValue = this.value;
-          console.log('Rodzaj filter changed:', filterValue, 'for tab:', tabType);
           updateActiveIcon(filterValue, tabType);
         });
       });
@@ -407,58 +391,21 @@
     
     // Make function available globally for debugging
     window.testFilterSwitch = function(tabType) {
-      console.log('=== Manual Test: Switching to tab type:', tabType, '===');
       updateTypeRodzajDropdown(tabType);
     };
     
     window.testIconSync = function(filterValue, tabType) {
-      console.log('=== Manual Test: Setting icon for filter:', filterValue, 'tab:', tabType, '===');
       updateActiveIcon(filterValue, tabType);
     };
     
-    console.log('Setting up tab event listeners');
     
-    // Debug: Log all available filters
-    console.log('=== Available Filters Debug ===');
-    document.querySelectorAll('.wiertla-filter-type, .wiertla-filter-rodzaj').forEach(function(select, index) {
-      console.log(`Filter ${index + 1}:`, {
-        className: select.className,
-        dataTab: select.getAttribute('data-tab'),
-        dataFilter: select.getAttribute('data-filter'),
-        display: select.style.display || 'default',
-        visible: select.offsetWidth > 0 && select.offsetHeight > 0
-      });
-    });
-    console.log('=== End Filters Debug ===');
-    
-    // Debug: Log all available icons
-    console.log('=== Available Icons Debug ===');
-    document.querySelectorAll('.wiertla-categories__icon-item').forEach(function(icon, index) {
-      console.log(`Icon ${index + 1}:`, {
-        category: icon.getAttribute('data-category'),
-        tab: icon.getAttribute('data-tab'),
-        classList: icon.className,
-        text: icon.querySelector('.wiertla-categories__icon-label')?.textContent?.trim()
-      });
-    });
-    console.log('=== End Icons Debug ===');
-    
-    console.log('=== Looking for tabs ===');
     const tabs = document.querySelectorAll('.wiertla-categories__tab');
-    console.log('Found', tabs.length, 'tabs');
     
     tabs.forEach(function(tab, index) {
-      console.log(`Tab ${index + 1}:`, {
-        text: tab.textContent.trim(),
-        dataTabType: tab.getAttribute('data-tab-type'),
-        classList: tab.className,
-        isActive: tab.classList.contains('active')
-      });
+     
       
       tab.addEventListener('click', function() {
         var tabType = this.getAttribute('data-tab-type');
-        console.log('=== TAB CLICKED ===');
-        console.log('Tab clicked:', this.textContent.trim(), 'tabType:', tabType);
         
         // CRITICAL: Reset selectedCategory when switching tabs
         window.selectedCategory = 'wszystkie';
@@ -478,15 +425,12 @@
     
     // Mobile filter synchronization functions
     function updateMobileTypeRodzajDropdown(tabType) {
-      console.log('updateMobileTypeRodzajDropdown called with tabType:', tabType);
       
       document.querySelectorAll('.wiertla-filter-type, .wiertla-filter-rodzaj').forEach(function(select) {
         const selectTab = select.getAttribute('data-tab');
         const selectClass = select.className;
-        console.log('Processing mobile select:', selectClass, 'data-tab:', selectTab, 'tabType:', tabType);
         
         if (selectTab === tabType) {
-          console.log('Showing mobile filter:', selectClass);
           select.style.display = '';
           
           // Safely check and update parent dropdown container
@@ -495,7 +439,6 @@
             parentDropdown.style.display = '';
           }
         } else {
-          console.log('Hiding mobile filter:', selectClass);
           select.style.display = 'none';
           select.value = '';
           
@@ -509,14 +452,12 @@
     }
     
     function setupMobileFilterSync() {
-      console.log('Setting up mobile filter sync');
       
       // Listen for changes on mobile typ wiertła filter
       document.querySelectorAll('.wiertla-categories__mobile-filter-select[data-filter="typ"]').forEach(function(select) {
         select.addEventListener('change', function() {
           const tabType = this.getAttribute('data-tab');
           const filterValue = this.value;
-          console.log('Mobile typ filter changed:', filterValue, 'for tab:', tabType);
           updateActiveIcon(filterValue, tabType);
           
           // Sync with category selection
@@ -531,7 +472,6 @@
         select.addEventListener('change', function() {
           const tabType = this.getAttribute('data-tab');
           const filterValue = this.value;
-          console.log('Mobile rodzaj filter changed:', filterValue, 'for tab:', tabType);
           updateActiveIcon(filterValue, tabType);
           
           // Sync with category selection
@@ -545,7 +485,6 @@
       document.querySelectorAll('.wiertla-categories__mobile-filter-select[data-filter="manufacturer"]').forEach(function(select) {
         select.addEventListener('change', function() {
           const filterValue = this.value;
-          console.log('Mobile manufacturer filter changed:', filterValue);
           
           // Apply manufacturer filter
           if (window.WiertlaCNC && window.WiertlaCNC.filters) {
@@ -578,33 +517,21 @@
     var activeTab = document.querySelector('.wiertla-categories__tab.active');
     if (activeTab) {
       var initialTabType = activeTab.getAttribute('data-tab-type');
-      console.log('Initial active tab:', activeTab.textContent.trim(), 'tabType:', initialTabType);
       updateTypeRodzajDropdown(initialTabType);
       updateMobileTypeRodzajDropdown(initialTabType);
       
    updateActiveIcon('', initialTabType);
     } else {
-      console.log('No active tab found on page load');
     }
     
     
-    console.log('=== Test Instructions ===');
-    console.log('You can manually test filter switching in console:');
-    console.log('testFilterSwitch("wiertla") - should show Typ wiertła filter');
-    console.log('testFilterSwitch("plytki") - should show Rodzaj filter for plytki'); 
-    console.log('testFilterSwitch("koronki") - should show Rodzaj filter for koronki');
-    console.log('testIconSync("koronkowe", "wiertla") - should activate koronkowe icon');
-    console.log('testIconSync("wcmx", "plytki") - should activate WCMX icon');
   });
   
   // Also add immediate check in case DOM is already loaded
   if (document.readyState === 'loading') {
-    console.log('DOM is still loading, waiting for DOMContentLoaded...');
   } else {
-    console.log('DOM already loaded, running setup immediately...');
     // Run the setup immediately if DOM is already loaded
     setTimeout(function() {
-      console.log('=== IMMEDIATE SETUP (DOM already loaded) ===');
       const event = new Event('DOMContentLoaded');
       document.dispatchEvent(event);
     }, 100);

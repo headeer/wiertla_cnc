@@ -490,7 +490,6 @@
 
   // Update mobile preview modal with product data
   window.updateMobilePreview = function(product) {
-    console.log("updateMobilePreview called with:", product); // Debug log
     
     const modal = document.querySelector(".wiertla-categories__mobile-preview-modal");
     if (!modal) {
@@ -508,16 +507,7 @@
     const priceValue = modal.querySelector(".wiertla-categories__mobile-preview-price-value");
     const detailsButton = modal.querySelector(".wiertla-categories__mobile-preview-button");
 
-    console.log("Modal elements found:", {
-      productImage: !!productImage,
-      largeProductImage: !!largeProductImage,
-      fiValue: !!fiValue,
-      dimensionValue: !!dimensionValue,
-      vendorValue: !!vendorValue,
-      symbolValue: !!symbolValue,
-      priceValue: !!priceValue,
-      detailsButton: !!detailsButton
-    });
+   
 
     // Set product images
     if (productImage) {
@@ -533,15 +523,10 @@
 
     // Set large product image (use the same logic as desktop preview system)
     if (largeProductImage) {
-      console.log("Product data for large image:", {
-        featured_image: product.featured_image,
-        large_image: product.large_image,
-        image: product.image
-      });
+      
       
       // Use same fallback logic as desktop preview: image || large_image || featured_image
       const imageUrl = product.image || product.large_image || product.featured_image || "{{ 'custom_icons.png' | asset_url }}";
-      console.log("Using image URL:", imageUrl);
       
       largeProductImage.src = imageUrl;
       largeProductImage.style.display = "block";
@@ -572,7 +557,6 @@
       }
     }
 
-    console.log("Data set in modal"); // Debug log
 
     // Show modal with proper flex display for overlay
     modal.style.display = "flex";
@@ -580,27 +564,10 @@
     document.body.style.overflow = "hidden";
   };
 
-  // Test function to manually trigger modal (for debugging)
-  window.testMobilePreview = function() {
-    console.log("Testing mobile preview modal...");
-    const testProduct = {
-      image: "{{ 'image-8.png' | asset_url }}",
-      featured_image: "{{ 'image-8.png' | asset_url }}", // Main product image
-      fi: "⌀ 12",
-      dimension: "100mm",
-      vendor: "Test Vendor", 
-      symbol: "TEST123",
-      price: "149.99 zł",
-      url: "#"
-    };
-    window.updateMobilePreview(testProduct);
-  };
+  
 
   // Add event listeners when DOM is ready
   document.addEventListener("DOMContentLoaded", function() {
-    console.log("=== MOBILE COMPONENTS LOADED ===");
-    console.log("Modal found:", !!document.querySelector(".wiertla-categories__mobile-preview-modal"));
-    console.log("Test function available:", !!window.testMobilePreview);
     
     // Handle close button clicks
     const closeButton = document.querySelector(".wiertla-categories__mobile-preview-close-wrapper");

@@ -3,7 +3,7 @@
 development:
   # This should be a Theme Access password (starts with shptka_)
   # NOT your store admin password
-  password: shptka_2ee042aa4163acfc6b73b7a69d13cf14
+  password: shptka_3881ff546262162931f899984b332589
   # Optional: If you want to work with an existing theme, add its ID here
-  # theme_id: "123456789"
-  store: 1v1e1w-nc.myshopify.com
+  theme_id: "185232916854"
+  store: zmyfkc-q4.myshopify.com

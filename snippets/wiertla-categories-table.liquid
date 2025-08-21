@@ -176,7 +176,6 @@
 <script>
   // Function to update table headers based on active tab
   function updateTableHeaders(tabType) {
-    console.log('Updating table headers for tab type:', tabType);
     
     // Remove all tab-active classes
     const tableContainer = document.querySelector('.wiertla-categories__table-container');
@@ -221,7 +220,6 @@
   
   // Make function available globally for debugging
   window.testTableHeaders = function(tabType) {
-    console.log('=== Manual Test: Updating table headers for:', tabType, '===');
     updateTableHeaders(tabType);
   };
 </script>

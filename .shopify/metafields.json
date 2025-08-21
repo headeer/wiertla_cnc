@@ -10,19 +10,9 @@
   "page": [],
   "product": [
     {
-      "key": "_rednica",
+      "key": "narzedzie_powiazane",
       "namespace": "custom",
-      "name": "średnica",
-      "description": "",
-      "type": {
-        "name": "number_decimal",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "symbol",
-      "namespace": "custom",
-      "name": "Symbol",
+      "name": "narzedzie_powiazane",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -30,9 +20,9 @@
       }
     },
     {
-      "key": "manufacturer",
+      "key": "plytka_powiazana",
       "namespace": "custom",
-      "name": "Manufacturer",
+      "name": "plytka_powiazana",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -40,9 +30,9 @@
       }
     },
     {
-      "key": "mocowanie",
+      "key": "rodzaj",
       "namespace": "custom",
-      "name": "mocowanie",
+      "name": "rodzaj",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -50,9 +40,9 @@
       }
     },
     {
-      "key": "notes",
+      "key": "typ",
       "namespace": "custom",
-      "name": "Notes",
+      "name": "TYP",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -60,139 +50,9 @@
       }
     },
     {
-      "key": "cooling",
+      "key": "rent_value",
       "namespace": "custom",
-      "name": "Cooling",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "rent",
-      "namespace": "custom",
-      "name": "Rent",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "xd",
-      "namespace": "custom",
-      "name": "xd",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "length",
-      "namespace": "custom",
-      "name": "Length",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "width",
-      "namespace": "custom",
-      "name": "Width",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "height",
-      "namespace": "custom",
-      "name": "Height",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "kod_producenta",
-      "namespace": "custom",
-      "name": "kod producenta",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "category",
-      "namespace": "custom",
-      "name": "Category",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "szt",
-      "namespace": "custom",
-      "name": "szt",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "gatunek",
-      "namespace": "custom",
-      "name": "Gatunek",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "condition",
-      "namespace": "custom",
-      "name": "stan",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "gniazdo",
-      "namespace": "custom",
-      "name": "gniazdo",
-      "description": "",
-      "type": {
-        "name": "single_line_text_field",
-        "category": "TEXT"
-      }
-    },
-    {
-      "key": "ilosc",
-      "namespace": "custom",
-      "name": "ilosc",
-      "description": "",
-      "type": {
-        "name": "number_integer",
-        "category": "NUMBER"
-      }
-    },
-    {
-      "key": "cena_s",
-      "namespace": "custom",
-      "name": "cena_s",
+      "name": "rent_value",
       "description": "",
       "type": {
         "name": "number_decimal",
@@ -210,9 +70,109 @@
       }
     },
     {
-      "key": "rent_value",
+      "key": "gniazdo",
       "namespace": "custom",
-      "name": "rent_value",
+      "name": "GNIAZDO",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "stan",
+      "namespace": "custom",
+      "name": "stan",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "szt",
+      "namespace": "custom",
+      "name": "szt",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "kod_producenta",
+      "namespace": "custom",
+      "name": "kod producenta",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "xd",
+      "namespace": "custom",
+      "name": "xD",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "rent",
+      "namespace": "custom",
+      "name": "Rent",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "chlodzenie",
+      "namespace": "custom",
+      "name": "chlodzenie",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "uwagi",
+      "namespace": "custom",
+      "name": "uwagi",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "mocowanie",
+      "namespace": "custom",
+      "name": "mocowanie",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "symbol",
+      "namespace": "custom",
+      "name": "Symbol",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "srednica",
+      "namespace": "custom",
+      "name": "średnica",
       "description": "",
       "type": {
         "name": "number_decimal",
@@ -220,9 +180,9 @@
       }
     },
     {
-      "key": "plytka_powiazana",
+      "key": "nazwa_en",
       "namespace": "custom",
-      "name": "plytka_powiazana",
+      "name": "nazwa_en",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -230,9 +190,9 @@
       }
     },
     {
-      "key": "narzedzie_powiazane",
+      "key": "nazwa_de",
       "namespace": "custom",
-      "name": "narzedzie_powiazane",
+      "name": "nazwa_de",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -240,9 +200,9 @@
       }
     },
     {
-      "key": "type",
+      "key": "nazwa_pl",
       "namespace": "custom",
-      "name": "typ",
+      "name": "nazwa_pl",
       "description": "",
       "type": {
         "name": "single_line_text_field",
@@ -250,13 +210,63 @@
       }
     },
     {
-      "key": "rodzaj",
+      "key": "gatunek",
       "namespace": "custom",
-      "name": "rodzaj",
+      "name": "Gatunek",
       "description": "",
       "type": {
         "name": "single_line_text_field",
         "category": "TEXT"
+      }
+    },
+    {
+      "key": "ilosc",
+      "namespace": "custom",
+      "name": "ilosc",
+      "description": "",
+      "type": {
+        "name": "number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "czas_dostawy",
+      "namespace": "custom",
+      "name": "czas dostawy",
+      "description": "",
+      "type": {
+        "name": "rich_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "srednica_display",
+      "namespace": "custom",
+      "name": "srednica_display",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "srednia_min",
+      "namespace": "custom",
+      "name": "srednia min",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "srednia_max",
+      "namespace": "custom",
+      "name": "srednia max",
+      "description": "",
+      "type": {
+        "name": "number_decimal",
+        "category": "NUMBER"
       }
     }
   ],

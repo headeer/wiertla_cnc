@@ -69,7 +69,6 @@ function initPreviewModal() {
     return;
   }
 
-  console.log("Preview modal found, setting up event listeners...");
 
   // Set up modal close functionality using the existing modal
   const closeButton = existingModal.querySelector(
@@ -96,11 +95,9 @@ function initPreviewModal() {
 
 // Open preview modal with product data
 function openPreviewModal(product) {
-  console.log("Opening preview modal with product:", product);
   
   // Use the existing updateMobilePreview function from the mobile components
   if (window.updateMobilePreview) {
-    console.log("Using existing updateMobilePreview function");
     // Map our product data to match what updateMobilePreview expects
     const mappedProduct = {
       image: product.image,
@@ -266,34 +263,16 @@ window.closeFilterModal = function () {
   }
 };
 
-// Test function for manual verification
-window.testModalPreview = function() {
-  console.log("Testing modal preview...");
-  const testProduct = {
-    id: "test-123",
-    url: "#test-url",
-    image: "http://127.0.0.1:9292/cdn/shop/t/135/assets/image-12.png",
-    featured_image: "http://127.0.0.1:9292/cdn/shop/t/135/assets/image-12.png", // Main product image
-    fi: "⌀ 12.5",
-    length: "150mm",
-    price: "249.99 zł",
-    vendor: "Test Manufacturer",
-    symbol: "TEST-SYM-001"
-  };
-  openPreviewModal(testProduct);
-};
+
 
 // Mobile preview functionality
 document.addEventListener("click", (e) => {
-  console.log("Click detected on:", e.target);
   
   // Check if clicked element is a mobile card or inside one
   const mobileCard = e.target.closest("button.wiertla-categories__mobile-card");
   
-  console.log("Mobile card found:", mobileCard);
   
   if (mobileCard) {
-    console.log("Mobile card clicked, extracting data...");
     e.preventDefault();
     e.stopPropagation();
 
@@ -328,20 +307,15 @@ document.addEventListener("click", (e) => {
       custom_rent: hasRentIcon
     };
 
-    console.log("Extracted product data:", product);
-    console.log("Has rent icon:", hasRentIcon);
     
     // On mobile, check if product has rent icon to decide which modal to show
     if (isMobile) {
       if (hasRentIcon) {
-        console.log("Mobile device with rent icon detected, opening rent modal");
         openRentModal(product);
       } else {
-        console.log("Mobile device without rent icon detected, opening preview modal");
         openPreviewModal(product);
       }
     } else {
-      console.log("Desktop device detected, opening preview modal");
       openPreviewModal(product);
     }
   }
@@ -349,7 +323,6 @@ document.addEventListener("click", (e) => {
 
 // Open rent modal function
 function openRentModal(product) {
-  console.log("Opening rent modal for product:", product);
   
   // Try to use existing rent modal functionality
   if (window.WiertlaCNC && typeof window.WiertlaCNC.openRentModal === 'function') {

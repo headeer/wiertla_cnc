@@ -170,10 +170,7 @@
     // Initial translation of the page
     translateElements();
 
-    // Log initialization
-    console.log(
-      `Translation system initialized with language: ${currentLanguage}`
-    );
+   
   }
 
   // Expose public methods
