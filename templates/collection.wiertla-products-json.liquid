@@ -1,0 +1,47 @@
+{%- layout none -%}
+{%- paginate collection.products by 2500 -%}
+{
+  "collection": {
+    "handle": {{ collection.handle | json }},
+    "title": {{ collection.title | json }}
+  },
+  "pagination": {
+    "per_page": 2500,
+    "current_page": {{ paginate.current_page }},
+    "pages": {{ paginate.pages }},
+    "has_next": {{ paginate.next | json }},
+    "has_previous": {{ paginate.previous | json }}
+  },
+  "products": [
+    {%- for product in collection.products -%}
+    {
+      "id": {{ product.id | json }},
+      "title": {{ product.title | json }},
+      "handle": {{ product.handle | json }},
+      "sku": {{ product.first_available_variant.sku | json }},
+      "vendor": {{ product.vendor | json }},
+      "published_at": {{ product.published_at | json }},
+      "available": {{ product.available | json }},
+      "quantity": {{ product.first_available_variant.inventory_quantity | json }},
+      "price": {{ product.price | money_without_trailing_zeros | json }},
+      "price_min": {{ product.price_min | money_without_trailing_zeros | json }},
+      "price_max": {{ product.price_max | money_without_trailing_zeros | json }},
+
+      "custom_typ": {{ product.metafields.custom.type | default: product.metafields.custom.typ | json }},
+      "custom_fi": {{ product.metafields.custom.fi | json }},
+      "custom_symbol": {{ product.metafields.custom.symbol | json }},
+      "custom_kod_producenta": {{ product.metafields.custom.kod_producenta | json }},
+      "custom_manufacturer": {{ product.metafields.custom.manufacturer | json }},
+      "custom_working_length": {{ product.metafields.custom.working_length.value | json }},
+      "custom_xd": {{ product.metafields.custom.xd | json }},
+      "custom_gniazdo": {{ product.metafields.custom.gniazdo | json }},
+      "custom_szt": {{ product.metafields.custom.szt | json }},
+      "custom_ilosc": {{ product.metafields.custom.ilosc | json }},
+      "custom_srednica": {{ product.metafields.custom.srednica | default: product.metafields.custom._rednica | json }},
+      "custom_srednica_display": {{ product.metafields.custom.srednica_display | json }},
+      "custom_rodzaj": {{ product.metafields.custom.rodzaj | json }}
+    }{%- if forloop.last == false -%},{%- endif -%}
+    {%- endfor -%}
+  ]
+}
+{%- endpaginate -%}

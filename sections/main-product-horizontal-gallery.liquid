@@ -782,7 +782,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             {%- elsif is_koronki -%}
               <!-- KORONKI SPECIFICATIONS -->
-              {%- assign fi_value = product.metafields.custom._rednica | default: product.metafields.custom.fi | default: product.custom_srednica | default: product.custom_fi -%}
+              {%- assign fi_value = product.metafields.custom._rednica | default: product.metafields.custom.srednica | default: product.metafields.custom.srednica_display | default: product.metafields.custom.fi | default: product.metafields.custom.diameter.value | default: product.metafields.custom.diameter | default: product.custom_srednica | default: product.custom_srednica_display | default: product.custom_fi | default: product.fi -%}
+              {%- if fi_value contains '-' -%}
+                {%- assign fi_value = fi_value | split: '-' | first | strip -%}
+              {%- endif -%}
+              {%- if fi_value == 'null' or fi_value == 'undefined' -%}
+                {%- assign fi_value = '' -%}
+              {%- endif -%}
               {%- if fi_value != blank -%}
                 <div class="product-details__spec-item">
                   <div class="product-details__spec-label">Średnica</div>
@@ -889,7 +895,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="product-details__divider"></div>
               {%- endif -%}
 
-              {%- assign fi_value = product.metafields.custom._rednica | default: product.metafields.custom.fi | default: product.custom_srednica | default: product.custom_fi -%}
+              {%- assign fi_value = product.metafields.custom._rednica | default: product.metafields.custom.srednica | default: product.metafields.custom.srednica_display | default: product.metafields.custom.fi | default: product.metafields.custom.diameter.value | default: product.metafields.custom.diameter | default: product.custom_srednica | default: product.custom_srednica_display | default: product.custom_fi | default: product.fi -%}
+              {%- if fi_value contains '-' -%}
+                {%- assign fi_value = fi_value | split: '-' | first | strip -%}
+              {%- endif -%}
+              {%- if fi_value == 'null' or fi_value == 'undefined' -%}
+                {%- assign fi_value = '' -%}
+              {%- endif -%}
               {%- if fi_value != blank -%}
                 <div class="product-details__spec-item">
                   <div class="product-details__spec-label">Średnica</div>
