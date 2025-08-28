@@ -348,13 +348,13 @@
   <!-- Include scripts directly -->
   <script>
       // Define isMobileView at the very start so it's available throughout the codebase
-      let isMobileView = window.innerWidth <= 768;
+      let isMobileView = window.innerWidth <= 1024;
     
       // Ensure we call applyFilters when the script runs
       document.addEventListener('DOMContentLoaded', function() {
     
     // Force check mobile view
-    isMobileView = window.innerWidth <= 768;
+    isMobileView = window.innerWidth <= 1024;
     
           // Initialize WiertlaCNC object and filters if they don't exist
       if (!window.WiertlaCNC) {
@@ -521,7 +521,7 @@
       
       // Force another check after a short delay in case of any race conditions
       setTimeout(function() {
-        const currentIsMobileView = window.innerWidth <= 768;
+        const currentIsMobileView = window.innerWidth <= 1024;
         if (currentIsMobileView !== isMobileView) {
           isMobileView = currentIsMobileView;
           applyFilters();
@@ -2163,7 +2163,7 @@
           applyFilters();
           
           // Scroll to top of table on mobile after pagination
-          if (window.innerWidth <= 768) {
+          if (window.innerWidth <= 1024) {
             const tableContainer = document.querySelector('.wiertla-categories__table-container') || 
                                  document.querySelector('.wiertla-categories__mobile-view') ||
                                  document.querySelector('#productsTableBody');
@@ -2187,7 +2187,7 @@
           applyFilters();
           
           // Scroll to top of table on mobile after pagination
-          if (window.innerWidth <= 768) {
+          if (window.innerWidth <= 1024) {
             const tableContainer = document.querySelector('.wiertla-categories__table-container') || 
                                  document.querySelector('.wiertla-categories__mobile-view') ||
                                  document.querySelector('#productsTableBody');
@@ -3001,7 +3001,7 @@
     
     // After DOM is fully loaded, force a redraw based on current size
     document.addEventListener('DOMContentLoaded', function() {
-      const currentIsMobileView = window.innerWidth <= 768;
+      const currentIsMobileView = window.innerWidth <= 1024;
       // Update global isMobileView
       isMobileView = currentIsMobileView;
       
@@ -3017,7 +3017,7 @@
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(function() {
         // Use the same approach as in generateTable
-        const currentIsMobileView = window.innerWidth <= 768;
+        const currentIsMobileView = window.innerWidth <= 1024;
         if (currentIsMobileView !== isMobileView) {
           isMobileView = currentIsMobileView;
           applyFilters(); // This will regenerate the table with the correct view
@@ -3061,7 +3061,7 @@
       if (!symbol || symbol === '-') return '-';
       
       // Get current window width
-      const isMobile = window.innerWidth <= 768;
+      const isMobile = window.innerWidth <= 1024;
       
               // Maximum length for symbols before truncation - conditional based on tab type
         let maxLength;
@@ -3206,7 +3206,7 @@
         const iconUrl = iconMap[skuPrefix] || product.image || '';
         const activeTabType = getActiveTabType();
         // Generate row content based on screen width
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 1024) {
           if (activeTabType === 'wiertla') {
             row.innerHTML = `
               <td class="wiertla-categories__table-cell">

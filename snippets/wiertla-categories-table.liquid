@@ -52,36 +52,7 @@
 </style>
 
 <div class="wiertla-categories__table-container">
-  <!-- Mobile Table Header for Wiertla -->
-  <div class="wiertla-categories__mobile-table-header wiertla-categories__mobile-header-wiertla mobile">
-    <!-- First header row -->
-    <div class="wiertla-categories__mobile-header-top">
-      <div class="wiertla-categories__mobile-header-img">
-        <img src="{{ 'first_th.png' | asset_url }}" alt="Header icon" width="34" height="34">
-      </div>
-      <div class="wiertla-categories__mobile-header-fi">
-        <div>⌀</div>
-        <div>Fi</div>
-      </div>
-      <div class="wiertla-categories__mobile-header-dimension">
-        <div>D/ mm</div>
-      </div>
-      <div class="wiertla-categories__mobile-header-price">
-        <div>Cena netto</div>
-      </div>
-    </div>
-    
-    <!-- Second header row -->
-    <div class="wiertla-categories__mobile-header-bottom">
-      <div class="wiertla-categories__mobile-header-vendor">
-        <div>PRODUCENT</div>
-      </div>
-      <div class="wiertla-categories__mobile-header-symbol">
-        <div>SYMBOL</div>
-      </div>
-    </div>
-  </div>
-
+  
   <!-- Mobile Table Header for Plytki/Koronki -->
   <div class="wiertla-categories__mobile-table-header wiertla-categories__mobile-header-plytki mobile" style="display: none;">
     <!-- First header row -->
@@ -184,17 +155,26 @@
       tableContainer.classList.add(`tab-active-${tabType}`);
     }
     
-    // Update mobile headers
+    // Always hide any mobile header containers first
     const mobileHeaders = document.querySelectorAll('.wiertla-categories__mobile-table-header');
-    mobileHeaders.forEach(header => {
-      header.style.display = 'none';
-    });
+    mobileHeaders.forEach(header => { header.style.display = 'none'; });
     
-    if (tabType === 'wiertla') {
-      const wiertlaHeader = document.querySelector('.wiertla-categories__mobile-header-wiertla');
-      if (wiertlaHeader) wiertlaHeader.style.display = 'block';
-    } else {
-      // Both plytki and koronki use the same header structure
+    // Explicitly control thead rows visibility
+    const headW = document.querySelector('.wiertla-categories__table-header-wiertla');
+    const headP = document.querySelector('.wiertla-categories__table-header-plytki');
+    const headK = document.querySelector('.wiertla-categories__table-header-koronki');
+    if (headW) headW.style.display = 'none';
+    if (headP) headP.style.display = 'none';
+    if (headK) headK.style.display = 'none';
+    const isTabletMobile = window.innerWidth <= 1024;
+    if (!isTabletMobile) {
+      if (tabType === 'wiertla' && headW) headW.style.display = 'table-row';
+      if (tabType === 'plytki' && headP) headP.style.display = 'table-row';
+      if (tabType === 'koronki' && headK) headK.style.display = 'table-row';
+    }
+    
+    // Show mobile header only on tablet/mobile
+    if (isTabletMobile) {
       const plytki = document.querySelector('.wiertla-categories__mobile-header-plytki');
       if (plytki) plytki.style.display = 'block';
     }
@@ -208,6 +188,12 @@
       const tabType = activeTab.getAttribute('data-tab-type');
       updateTableHeaders(tabType);
     }
+    // Re-evaluate on resize to keep headers consistent
+    window.addEventListener('resize', function() {
+      const active = document.querySelector('.wiertla-categories__tab.active');
+      const t = active ? active.getAttribute('data-tab-type') : 'wiertla';
+      updateTableHeaders(t);
+    });
     
     // Add event listeners to all tabs
     document.querySelectorAll('.wiertla-categories__tab').forEach(function(tab) {

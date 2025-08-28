@@ -190,7 +190,7 @@
     object-fit: contain;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     .header__nav-link::after {
       display: none;
     }
@@ -236,7 +236,7 @@
     transform: scaleX(0);
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     .header__link::after {
       display: none;
     }
@@ -267,7 +267,7 @@
     margin-top: -5px;
     transition: height var(--header-transition);
   }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     .header__logo {
       margin-top: 0;
     }
@@ -314,7 +314,7 @@
     display: none;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     .header__logo-text {
       font-size: 22px;
     }
@@ -517,7 +517,7 @@
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .header,
     .header--sticky {
       overflow: visible;
@@ -525,47 +525,52 @@
     .header__container {
       padding: 0 var(--mobile-edge-spacing, 16px);
     }
-
-    .header__mobile-menu-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      padding: 0;
-      margin: 0;
-    }
-
-    .header__mobile-icons {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0;
-      margin: 0;
-    }
-
-    .header__mobile-icon-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      padding: 0;
-      margin: 0;
-    }
-
-    .header__mobile-icon-button img {
-      width: 44px;
-      height: 44px;
-    }
-
-    .header__logo {
-      height: 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0;
-    }
+ 
+     .header__mobile-menu-button {
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       width: 24px;
+       height: 24px;
+       padding: 0;
+       margin: 0;
+     }
+ 
+     .header__mobile-icons {
+       display: flex;
+       align-items: center;
+       gap: 8px;
+       padding: 0;
+       margin: 0;
+     }
+ 
+     .header__mobile-icon-button {
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       width: 46px;
+       height: 44px;
+       padding: 0;
+       margin: 0;
+       gap: 22px;
+       border-radius: 40px;
+       background: #F5F5F8;
+     }
+ 
+     .header__mobile-icon-button img {
+       width: auto;
+       height: 26px;
+       max-height: 26px;
+       object-fit: contain;
+     }
+ 
+     .header__logo {
+       height: 60px;
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       padding: 0;
+     }
 
     .header__logo-container {
       height: 60px;
@@ -666,7 +671,7 @@
  .header__mobile-menu-links.open .header__mobile-menu-link:nth-child(2) { transition-delay: 120ms; }
  .header__mobile-menu-links.open .header__mobile-menu-link:nth-child(3) { transition-delay: 180ms; }
  
- @media screen and (max-width: 768px) {
+ @media screen and (max-width: 1024px) {
    .header__mobile-menu-links.open {
      display: flex;
    }
@@ -674,7 +679,7 @@
 }
 
 /* Desktop-only styles */
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .header__mobile-icons,
   .header__mobile-menu-links {
     display: none;
@@ -731,7 +736,7 @@
   display: none;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .header__phone-number {
     pointer-events: auto;
     cursor: pointer;
@@ -799,21 +804,21 @@
     <div class="header__mobile-icons mobile ">
       <button class="header__mobile-icon-button header__mobile-phone" id="mobile-phone-button">
         <img
-          src="{{ 'phone_icon_mobile.png' | asset_url }}"
+          src="{{ 'Ico_phone.svg' | asset_url }}"
           alt="Phone"
           width="24"
           height="24">
       </button>
       <a href="/pages/login" class="header__mobile-icon-button header__mobile-user">
         <img
-          src="{{ 'user_icon.png' | asset_url }}"
+          src="{{ 'user_icon.svg' | asset_url }}"
           alt="Account"
           width="24"
           height="24">
       </a>
       <a href="{{ routes.cart_url }}" class="header__mobile-icon-button header__mobile-cart">
         <img
-          src="{{ 'shopping_cart_icon.png' | asset_url }}"
+          src="{{ 'shopping_cart.svg' | asset_url }}"
           alt="Cart"
           width="24"
           height="24">
