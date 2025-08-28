@@ -371,7 +371,7 @@
   .wiertla-categories__pagination-button:hover {
     background-color: #ffffff;
     color: #112832;
-    border-color: #e2e2e7;
+    border: 2px solid #e2e2e7;
   }
 
   .wiertla-categories__pagination-button.active {
@@ -2742,8 +2742,13 @@
 
   .wiertla-categories__table-cell--diameter .wiertla-fi__value {
     font-weight: 700;
+    margin-left: 6px;
   }
-
+  .wiertla-fi .wiertla-fi__value {
+    font-weight: 700;
+    margin-left: 6px;
+  
+  }
   .wiertla-categories__table td:empty::after {
     content: '...';
   }
@@ -4302,9 +4307,6 @@
       cursor: not-allowed;
     }
 
-    .wiertla-categories__pagination-button:hover:not(:disabled) {
-      background-color: #1a3c4b;
-    }
 
     /* Ensure mobile text shows properly */
     .wiertla-categories__results-text.desktop {

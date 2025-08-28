@@ -22,7 +22,7 @@
     letter-spacing: 0.96px;
     will-change: transform;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;r
+    overflow: hidden;
   }
 
   /* Sticky Header */
@@ -518,6 +518,10 @@
   }
 
   @media (max-width: 768px) {
+    .header,
+    .header--sticky {
+      overflow: visible;
+    }
     .header__container {
       padding: 0 var(--mobile-edge-spacing, 16px);
     }
@@ -591,63 +595,82 @@
     .header__lang-links,
     .header__contact,
     .header__actions {}
-
-  .header__mobile-menu-links {
-    position: absolute;
-    top: 100%;
-    right: -100%;
-    width: 100%;
-    height: 80px;
-    background-color: white;
-    padding: 0;
-    transition: right 0.3s ease;
-    z-index: 999;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-  }
-
-  .header__mobile-menu-links.open {
-    right: 0;
-  }
-
-  .header__mobile-menu-link {
-    font-family: "League Spartan"
-    , sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 16.6px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #112832;
-    position: relative;
-    transition: color var(--header-transition);
-    text-decoration: none;
-  }
-
-  .header__mobile-menu-link::after {
-    content: '';
-    position: absolute;
-    width: calc(100% - 32px);
-    height: 1px;
-    bottom: -2px;
-    left: 16px;
-    background-color: #112832;
-    transition: transform 0.3s ease;
-    transform-origin: left;
-    transform: scaleX(1);
-  }
-
-  .header__mobile-menu-link:hover::after {
-    transform: scaleX(0);
-  }
-
-  @media screen and (max-width: 768px) {
-    .header__mobile-menu-links {
-      display: flex;
-    }
-  }
+ 
+ .header__mobile-menu-links {
+   position: absolute;
+   top: 100%;
+   right: 0;
+   width: 100%;
+   height: 80px;
+   background-color: white;
+   padding: 0 12px;
+   transition: transform 0.3s ease, opacity 0.25s ease;
+   z-index: 999;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   display: flex;
+   align-items: center;
+   justify-content: space-evenly;
+   gap: 16px;
+   opacity: 0;
+   transform: translateY(-10px);
+   visibility: hidden;
+   pointer-events: none;
+ }
+ 
+ .header__mobile-menu-links.open {
+   opacity: 1;
+   transform: translateY(0);
+   visibility: visible;
+   pointer-events: auto;
+ }
+ 
+ .header__mobile-menu-link {
+   font-family: "League Spartan"
+   , sans-serif;
+   font-weight: 700;
+   font-size: 18px;
+   line-height: 16.6px;
+   letter-spacing: 0.06em;
+   text-transform: uppercase;
+   color: #112832;
+   position: relative;
+   transition: color var(--header-transition), opacity 0.25s ease, transform 0.3s ease;
+   text-decoration: none;
+   opacity: 0;
+   transform: translateY(-6px);
+ }
+ 
+ .header__mobile-menu-link::after {
+   content: '';
+   position: absolute;
+   width: calc(100% - 32px);
+   height: 1px;
+   bottom: -2px;
+   left: 16px;
+   background-color: #112832;
+   transition: transform 0.3s ease;
+   transform-origin: left;
+   transform: scaleX(1);
+ }
+ 
+ .header__mobile-menu-link:hover::after {
+   transform: scaleX(0);
+ }
+ 
+ /* Staggered links when opening */
+ .header__mobile-menu-links.open .header__mobile-menu-link {
+   opacity: 1;
+   transform: translateY(0);
+ }
+ .header__mobile-menu-links.open .header__mobile-menu-link:nth-child(1) { transition-delay: 60ms; }
+ .header__mobile-menu-links.open .header__mobile-menu-link:nth-child(2) { transition-delay: 120ms; }
+ .header__mobile-menu-links.open .header__mobile-menu-link:nth-child(3) { transition-delay: 180ms; }
+ 
+ @media screen and (max-width: 768px) {
+   .header__mobile-menu-links.open {
+     display: flex;
+   }
+ }
 }
 
 /* Desktop-only styles */
@@ -799,18 +822,12 @@
         class="header__mobile-icon-button header__mobile-menu-button"
         aria-label="Menu"
         aria-expanded="false">
-        <img
-          src="{{ 'menu_icon.svg' | asset_url }}"
-          alt="Menu"
-          width="24"
-          height="24"
-          class="header__menu-icon closed">
-        <img
-          src="{{ 'menu_icon_open.svg' | asset_url }}"
-          alt="Close Menu"
-          width="24"
-          height="24"
-          class="header__menu-icon open">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" class="header__menu-icon closed">
+          <path d="M2.75 16.5V14.6667H19.25V16.5H2.75ZM2.75 11.9167V10.0833H19.25V11.9167H2.75ZM2.75 7.33333V5.5H19.25V7.33333H2.75Z" fill="#112832"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="header__menu-icon open">
+          <path d="M3 18V16H16V18H3ZM19.6 17L14.6 12L19.6 7L21 8.4L17.4 12L21 15.6L19.6 17ZM3 13V11H13V13H3ZM3 8V6H16V8H3Z" fill="#112832"/>
+        </svg>
       </button>
     </div>
   </div>
@@ -883,15 +900,6 @@
     </a>
     <a href="/pages/regeneruj" class="header__mobile-menu-link">
       REGENERUJ
-    </a>
-    <a href="#wiertla-table" class="header__mobile-menu-link js-scroll-to-table">
-      KORONKI
-    </a>
-    <a href="#wiertla-table" class="header__mobile-menu-link js-scroll-to-table">
-      PŁYTKI
-    </a>
-    <a href="#wiertla-table" class="header__mobile-menu-link js-scroll-to-table">
-      WIERTŁA
     </a>
   </div>
 </header>

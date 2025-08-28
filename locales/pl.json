@@ -117,5 +117,12 @@
       "submit": "Szukaj",
       "no_results": "Nie znaleziono wyników"
     }
+  },
+  "cart": {
+    "general": {
+      "title": "Koszyk",
+      "empty": "Twój koszyk jest pusty.",
+      "continue_shopping": "Kontynuuj zakupy"
+    }
   }
 }

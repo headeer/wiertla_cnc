@@ -59,7 +59,7 @@
   .product-layout {
     display: flex;
     gap: 30px;
-    width: 100%;
+    width: calc(100% - 30px);
     height: 100%;
     max-height: 800px;
   }
@@ -743,6 +743,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="product-details__divider"></div>
               {%- endif -%}
 
+              {%- assign ilosc_value = product.metafields.custom.custom_szt | default: product.metafields.custom.szt | default: product.metafields.custom.ilosc -%}
+              {%- if ilosc_value != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Ilość</div>
+                  <div class="product-details__spec-value">{{ ilosc_value }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
               {%- if product.sku != blank or product.first_available_variant.sku != blank -%}
                 <div class="product-details__spec-item">
                   <div class="product-details__spec-label">SKU</div>
@@ -798,6 +807,12 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                 </div>
                 <div class="product-details__divider"></div>
+              {%- elsif product.metafields.custom.gniazdo != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Gniazdo</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.gniazdo }}</div>
+                </div>
+                <div class="product-details__divider"></div>
               {%- endif -%}
 
               {%- if product.metafields.custom.kod_producenta != blank -%}
@@ -828,6 +843,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="product-details__spec-item">
                   <div class="product-details__spec-label">Gniazdo</div>
                   <div class="product-details__spec-value">{{ product.metafields.custom.gniazdo }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- assign ilosc_value = product.metafields.custom.custom_szt | default: product.metafields.custom.szt | default: product.metafields.custom.ilosc -%}
+              {%- if ilosc_value != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Ilość</div>
+                  <div class="product-details__spec-value">{{ ilosc_value }}</div>
                 </div>
                 <div class="product-details__divider"></div>
               {%- endif -%}
@@ -911,6 +935,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                 </div>
                 <div class="product-details__divider"></div>
+              
               {%- endif -%}
 
               {%- if product.metafields.custom.xd != blank or product.metafields.custom.custom_working_length != blank or product.metafields.custom.working_length != blank -%}
@@ -933,6 +958,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="product-details__spec-item">
                   <div class="product-details__spec-label">Mocowanie</div>
                   <div class="product-details__spec-value">{{ product.metafields.custom.mocowanie | default: product.metafields.custom.mounting }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- if product.metafields.custom.gniazdo != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Gniazdo</div>
+                  <div class="product-details__spec-value">{{ product.metafields.custom.gniazdo }}</div>
+                </div>
+                <div class="product-details__divider"></div>
+              {%- endif -%}
+
+              {%- assign ilosc_value = product.metafields.custom.custom_szt | default: product.metafields.custom.szt | default: product.metafields.custom.ilosc -%}
+              {%- if ilosc_value != blank -%}
+                <div class="product-details__spec-item">
+                  <div class="product-details__spec-label">Ilość</div>
+                  <div class="product-details__spec-value">{{ ilosc_value }}</div>
                 </div>
                 <div class="product-details__divider"></div>
               {%- endif -%}
@@ -1222,114 +1264,16 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- Related Tools Section -->
 {%- liquid
   assign current_gniazdo = product.metafields.custom.gniazdo
-  assign related_products = collections.all.products | where: 'metafields.custom.gniazdo', current_gniazdo
-  assign filtered_related_products = ''
-  assign related_count = 0
-  
-  # Filter out current product from related products
-  for related_product in related_products
-    if related_product.id != product.id and related_count < 8
-      assign filtered_related_products = filtered_related_products | append: related_product.id | append: ','
-      assign related_count = related_count | plus: 1
-    endif
-  endfor
 -%}
 
-{%- if current_gniazdo != blank and related_count > 0 -%}
-<div class="latest-products">
+{%- if current_gniazdo != blank -%}
+<div class="latest-products" id="related-by-gniazdo" data-gniazdo="{{ current_gniazdo | escape }}" data-current-id="{{ product.id }}" style="display:none;">
   <div class="latest-products__title" data-translate="related_tools.title">NARZĘDZIA POWIĄZANE</div>
   <div class="latest-products__subtitle" data-translate="related_tools.subtitle">Produkty o identycznym mocowaniu ({{ current_gniazdo }})</div>
 
-  <div class="latest-products__swiper swiper">
-    <div class="swiper-wrapper">
-      {% assign filtered_ids = filtered_related_products | split: ',' %}
-      {% for product_id in filtered_ids %}
-        {% if product_id != blank %}
-          {% assign related_product = collections.all.products | where: 'id', product_id | first %}
-          {% if related_product %}
-            {% assign sku_prefix = related_product.first_available_variant.sku | slice: 0, 2 %}
-            {% assign icon_url = '' %}
-            
-            {% if sku_prefix == 'VW' %}
-              {% assign icon_url = 'image-8.png' | asset_url %}
-            {% elsif sku_prefix == 'PR' %}
-              {% assign icon_url = 'image-10.png' | asset_url %}
-            {% elsif sku_prefix == 'WW' %}
-              {% assign icon_url = 'image-12.png' | asset_url %}
-            {% elsif sku_prefix == 'PS' %}
-              {% assign icon_url = 'image-9.png' | asset_url %}
-            {% elsif sku_prefix == 'WK' %}
-              {% assign icon_url = 'image-13.png' | asset_url %}
-            {% elsif sku_prefix == 'WV' %}
-              {% assign icon_url = 'image-11.png' | asset_url %}
-            {% elsif sku_prefix == 'IS' %}
-              {% assign icon_url = 'image-12.png' | asset_url %}
-            {% elsif sku_prefix == 'WA' %}
-              {% assign icon_url = 'image-11.png' | asset_url %}
-            {% else %}
-              {% assign icon_url = 'image-8.png' | asset_url %}
-            {% endif %}
-            
-            <div class="swiper-slide">
-              <a href="{{ related_product.url }}" class="product-card" aria-label="{{ related_product.title }}">
-                <div class="product-card__top">
-                  <div class="product-card__image-container">
-                    <div class="product-card__image-placeholder">
-                      <img
-                        src="{{ icon_url }}"
-                        alt="{{ related_product.title | escape }}"
-                        class="product-card__image"
-                        width="34"
-                        height="34"
-                        loading="lazy">
-                    </div>
-                  </div>
-                  <div class="product-card__fi">
-                    <span class="mobile-label">Fi ⌀</span>
-                    <span class="mobile-value">{{ related_product.metafields.custom.srednica | default: related_product.metafields.custom.fi | default: related_product.custom_srednica | default: related_product.custom_fi | default: '' }}</span>
-                  </div>
-                  <div class="product-card__dimension">
-                    {{ related_product.metafields.custom.xd | default: related_product.metafields.custom.custom_working_length | default: related_product.metafields.custom.working_length | default: '' }}
-                  </div>
-                </div>
-
-                <div class="product-card__symbol">
-                  {{ related_product.metafields.custom.kod_producenta | default: related_product.metafields.custom.symbol | default: related_product.sku | default: '' }}
-                </div>
-
-                <div class="product-card__bottom">
-                  <div class="product-card__vendor">
-                    {{ related_product.metafields.custom.manufacturer | default: related_product.vendor | default: '' }}
-                  </div>
-                  <div class="product-card__price-container">
-                    <div class="product-card__price">
-                      {% if related_product.price_varies %}
-                        {{ related_product.price_min | money }}
-                      {% else %}
-                        {{ related_product.price | money }}
-                      {% endif %}
-                    </div>
-                    {% if related_product.metafields.custom.rent_tool %}
-                      <div class="product-card__rent">
-                        {{ 'wiertla_stats.rent_tool_text' | t }}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="17"
-                          height="12"
-                          viewBox="0 0 17 12"
-                          fill="none"
-                          aria-hidden="true">
-                          <path d="M10.5 12L9.1 10.55L12.65 7H0.5V5H12.65L9.1 1.45L10.5 0L16.5 6L10.5 12Z" fill="#112832" />
-                        </svg>
-                      </div>
-                    {% endif %}
-                  </div>
-                </div>
-              </a>
-            </div>
-          {% endif %}
-        {% endif %}
-      {% endfor %}
+  <div class="latest-products__swiper">
+    <div class="swiper-wrapper" id="related-by-gniazdo-wrapper">
+      
     </div>
 
     <div class="swiper-navigation">
@@ -1344,6 +1288,108 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 {%- endif -%}
+
+<script>
+  (function() {
+    function getIconBySkuPrefix(sku) {
+      var prefix = (sku || '').toString().slice(0,2).toUpperCase();
+      var map = {
+        VW: '{{ "image-8.png" | asset_url }}',
+        PR: '{{ "ico_plytkowe.png" | asset_url }}',
+        WW: '{{ "ico_vhm.png" | asset_url }}',
+        PS: '{{ "ico_sandvik.png" | asset_url }}',
+        WK: '{{ "ico_ksem_table.png" | asset_url }}',
+        WV: '{{ "ico_sandvik.png" | asset_url }}',
+        IS: '{{ "ico_big_koronkowe.svg" | asset_url }}',
+        WA: '{{ "ico_amec_table.png" | asset_url }}'
+      };
+      return map[prefix] || '{{ "image-8.png" | asset_url }}';
+    }
+
+    async function fetchAllProducts() {
+      var results = [];
+      try {
+        var baseUrl = '/collections/all?view=wiertla-products-json';
+        var res = await fetch(baseUrl + '&page=1', { credentials: 'same-origin' });
+        if (!res.ok) return results;
+        var data = await res.json();
+        var pages = Number(data.pagination && data.pagination.pages) || 1;
+        if (Array.isArray(data.products)) results = results.concat(data.products);
+        for (var p = 2; p <= pages; p++) {
+          var r = await fetch(baseUrl + '&page=' + p, { credentials: 'same-origin' });
+          if (!r.ok) continue;
+          var d = await r.json();
+          if (Array.isArray(d.products)) results = results.concat(d.products);
+        }
+      } catch (e) {}
+      return results;
+    }
+
+    function buildCard(prod) {
+      var icon = getIconBySkuPrefix(prod.sku);
+      var fi = prod.custom_srednica || prod.custom_srednica_display || prod.custom_fi || '';
+      var gniazdo = prod.custom_gniazdo || (prod.metafields && prod.metafields.custom && prod.metafields.custom.gniazdo) || '';
+      var xd = prod.custom_xd || prod.custom_working_length || (prod.metafields && prod.metafields.custom && prod.metafields.custom.working_length) || '';
+      var rodzaj = prod.custom_rodzaj || (prod.metafields && prod.metafields.custom && prod.metafields.custom.rodzaj) || '';
+      var symbol = prod.custom_kod_producenta || prod.custom_symbol || prod.sku || '';
+      var vendor = prod.custom_manufacturer || prod.vendor || '';
+      var price = prod.price || '';
+      var handle = prod.handle || '';
+      var skuPrefix = (prod.sku || '').toString().slice(0,2).toUpperCase();
+      return (
+        '<div class="swiper-slide">' +
+          '<a href="/products/' + handle + '" class="product-card" aria-label="' + (prod.title || '') + '">' +
+            '<div class="product-card__top">' +
+              '<div class="product-card__image-container">' +
+                '<div class="product-card__image-placeholder">' +
+                  '<img src="' + icon + '" alt="' + (prod.title || '') + '" class="product-card__image" width="34" height="34" loading="lazy" />' +
+                '</div>' +
+              '</div>' +
+              '<div class="product-card__fi"><span class="mobile-label">' + (fi ? 'Fi ⌀ ' : 'Gniazdo ') + '</span> <span class="mobile-value">' + (fi || gniazdo || '') + '</span></div>' +
+              '<div class="product-card__dimension">' + ((skuPrefix === 'PR' || skuPrefix === 'PS') ? (rodzaj ? ('Rodzaj: ' + rodzaj) : '') : (xd ? ('xD: ' + xd) : '')) + '</div>' +
+            '</div>' +
+            '<div class="product-card__symbol">' + symbol + '</div>' +
+            '<div class="product-card__bottom">' +
+              '<div class="product-card__vendor">' + vendor + '</div>' +
+              '<div class="product-card__price-container"><div class="product-card__price">' + price + '</div></div>' +
+            '</div>' +
+          '</a>' +
+        '</div>'
+      );
+    }
+
+    async function renderRelated() {
+      try {
+        var host = document.getElementById('related-by-gniazdo');
+        if (!host) return;
+        var gniazdo = host.getAttribute('data-gniazdo');
+        var currentId = Number(host.getAttribute('data-current-id'));
+        if (!gniazdo) { host.style.display = 'none'; return; }
+        var dataset = (window.WiertlaCNC && Array.isArray(window.WiertlaCNC.products) && window.WiertlaCNC.products.length)
+          ? window.WiertlaCNC.products
+          : (Array.isArray(window.WiertlaCNC && window.WiertlaCNC._inlineProducts) ? window.WiertlaCNC._inlineProducts : []);
+        if (!dataset.length) {
+          dataset = await fetchAllProducts();
+        }
+        var matches = dataset.filter(function(p){
+          var g = (p.custom_gniazdo || (p.metafields && p.metafields.custom && p.metafields.custom.gniazdo) || '').toString().trim();
+          return g && g.toLowerCase() === gniazdo.toLowerCase() && Number(p.id) !== currentId;
+        }).slice(0, 8);
+        if (!matches.length) { host.style.display = 'none'; return; }
+        var wrapper = document.getElementById('related-by-gniazdo-wrapper');
+        if (!wrapper) return;
+        wrapper.innerHTML = matches.map(buildCard).join('');
+        // Reveal the section only after we have content
+        host.style.display = '';
+      } catch (e) {}
+    }
+
+    // Initial attempt and refresh after hydration
+    document.addEventListener('DOMContentLoaded', renderRelated);
+    window.addEventListener('wiertla:productsUpdated', renderRelated);
+    window.addEventListener('wiertla:hydrateComplete', renderRelated);
+  })();
+</script>
 
 <!-- Latest Products Section -->
 {% comment %} <div class="latest-products">
@@ -1504,16 +1550,6 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 
-<!-- Category Description Section -->
-<section class="category-desc">
-  <div class="category-desc__container">
-    <div class="category-desc__content">
-      {%- if collection.description != blank -%}
-        {{ collection.description }}
-      {%- endif -%}
-    </div>
-  </div>
-</section>
 
 <!-- Category Descriptions Section -->
 <div class="category-desc">
@@ -2391,7 +2427,7 @@ document.addEventListener('DOMContentLoaded', function() {
   @media screen and (max-width: 1024px) {
     .latest-products__swiper .swiper-navigation {
       position: absolute;
-      bottom: 0;
+      bottom: -13px;
     }
   }
 

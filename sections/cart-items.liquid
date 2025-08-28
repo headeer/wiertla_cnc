@@ -200,11 +200,9 @@
         <div class="supports-cookies">
           <p class="mb-8">{{ 'cart.general.empty' | t }}</p>
           {% assign continue_shopping = 'cart.general.continue_shopping' | t %}
-          {%- render 'link-underline',
-            section_color: section_color,
-            text: continue_shopping,
-            link: routes.root_url
-          -%}
+          <a href="{{ routes.root_url }}" class="inline-flex justify-center items-center text-base px-8 py-2 {% render 'button-style', section_color: section_color %}  {% render 'button-color', section_color: section_color %} ">
+            <span class="{% if settings.button_uppercase %}uppercase{% endif %}">{{ continue_shopping }}{% if settings.buttons_show_arrow %}&nbsp;&rarr;{% endif %}</span>
+          </a>
         </div>
 
         {% comment %}

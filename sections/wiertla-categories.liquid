@@ -552,6 +552,7 @@
           custom_category: {{ product.metafields.custom.category | json }},
           custom_drill_length: {{ product.metafields.custom.drill_length | json }},
           custom_rent: {{ product.metafields.custom.rent | json }},
+          custom_rodzaj: {{ product.metafields.custom.rodzaj | json }},
           custom_srednica: {{ product.metafields.custom._rednica | json }},
           custom_srednica_display: {{ product.metafields.custom.srednica_display | json }},
           custom_kod_producenta: {{ product.metafields.custom.kod_producenta | json }},
@@ -637,7 +638,8 @@
               manufacturer: {{ product.metafields.custom.manufacturer.value | json }},
               width: {{ product.metafields.custom.width.value | json }},
               height: {{ product.metafields.custom.height.value | json }},
-              custom_category: {{ product.metafields.custom.custom_category.value | json }}
+              custom_category: {{ product.metafields.custom.custom_category.value | json }},
+              custom_rent_value: {{ product.metafields.custom.rent_value | json }}
             }
           },
           
@@ -712,6 +714,9 @@
         applyFilters();
         window.currentPage = prevPage;
         applyFilters();
+        try {
+          window.dispatchEvent(new CustomEvent('wiertla:productsUpdated', { detail: { total: after } }));
+        } catch (_) {}
       };
       
       // Incremental background hydration across all pages
@@ -752,6 +757,9 @@
             await new Promise(r => setTimeout(r, 50));
           }
           console.log('[Wiertla] Hydration: complete');
+          try {
+            window.dispatchEvent(new CustomEvent('wiertla:hydrateComplete', { detail: { total: (window.WiertlaCNC.products || []).length } }));
+          } catch (_) {}
         } catch (e) {
           console.error('[Wiertla] Hydration: incremental fetch failed', e);
         }
@@ -958,6 +966,54 @@
       };
     };
 
+    // Debug: log 20 płytki products with quantity-related fields
+    window.logPlytkiSamples = function(limit = 20) {
+      try {
+        const products = (window.WiertlaCNC && Array.isArray(window.WiertlaCNC.products) && window.WiertlaCNC.products.length)
+          ? window.WiertlaCNC.products
+          : (Array.isArray(allProducts) ? allProducts : []);
+        const toLower = (v) => (v || '').toString().toLowerCase();
+        const isPlytki = (p) => {
+          const typ = toLower(p.custom_typ || p.rodzaj || '');
+          const sku = (p.sku || '').toString();
+          return typ.includes('płytkowe') || typ.includes('plytkowe') || typ.includes('plate') || sku.startsWith('PR');
+        };
+        const plytki = products.filter(isPlytki);
+        console.group('[DEBUG] PLYTKI SAMPLES');
+        console.log('Total products:', products.length, 'Plytki count:', plytki.length);
+        plytki.slice(0, limit).forEach((p, idx) => {
+          console.log(`#${idx + 1}`, {
+            id: p.id,
+            title: p.title,
+            handle: p.handle,
+            sku: p.sku,
+            vendor: p.vendor,
+            custom_typ: p.custom_typ,
+            rodzaj: p.rodzaj,
+            // Quantity-related
+            custom_szt: p.custom_szt,
+            custom_ilosc: p.custom_ilosc,
+            metafields_szt: p?.metafields?.custom?.szt,
+            metafields_ilosc: p?.metafields?.custom?.ilosc,
+            inventory_quantity: p.quantity,
+          });
+        });
+        console.groupEnd();
+        return plytki.slice(0, limit);
+      } catch (e) {
+        try { console.error('[DEBUG] logPlytkiSamples failed', e); } catch (_) {}
+        return [];
+      }
+    };
+
+    // Auto-log on initial load and after hydration completes
+    try { window.logPlytkiSamples(20); } catch (_) {}
+    try {
+      window.addEventListener('wiertla:hydrateComplete', function() {
+        try { window.logPlytkiSamples(20); } catch (_) {}
+      });
+    } catch (_) {}
+
     // Render a table with counts of products by custom_typ
     window.renderTypStats = function() {
       try {
@@ -1000,6 +1056,63 @@
         `;
       } catch (_) {}
     };
+    
+    // Simple RODZAJ stats (debug): outputs lines like "icm: 20" across ALL products
+    window.renderRodzajStatsSimple = function() {
+       try {
+         const products = window.WiertlaCNC?.products || allProducts || [];
+         const counts = {};
+         const labels = {};
+         products.forEach(p => {
+           const raw = (p.custom_rodzaj || p?.metafields?.custom?.rodzaj || '').toString().trim();
+           if (!raw || raw === '-' || raw === 'N/A') return;
+           const key = raw.toLowerCase();
+           labels[key] = labels[key] || raw;
+           counts[key] = (counts[key] || 0) + 1;
+         });
+ 
+         let container = document.getElementById('rodzajStatsSimple');
+         if (!container) {
+           container = document.createElement('div');
+           container.id = 'rodzajStatsSimple';
+           container.style.marginTop = '12px';
+           const host = document.querySelector('.wiertla-categories');
+           if (host) host.appendChild(container);
+         }
+ 
+         const entries = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+         const lines = entries.length
+           ? entries.map(([k,v]) => `${labels[k]}: ${v}`).join('<br>')
+           : 'brak danych';
+ 
+         container.innerHTML = `
+           <h3 style=\"margin:16px 0 8px; display:none;\">Rodzaj (custom_rodzaj)</h3>
+           <div style=\"font-family:monospace; white-space:pre-line; display:none;\">${lines}</div>
+         `;
+       } catch (_) {}
+     };
+
+    // Initial simple rodzaj stats render
+    try { window.renderRodzajStatsSimple(); } catch (_) {}
+
+    // Update when switching to PŁYTKI tab
+    try {
+      document.querySelectorAll('.wiertla-categories__tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          var tabType = this.getAttribute('data-tab-type');
+          if (tabType === 'plytki') {
+            window.renderRodzajStatsSimple();
+          }
+        });
+      });
+    } catch (_) {}
+    
+    // Also update after hydration completes (when products array becomes available)
+    try {
+      window.addEventListener('wiertla:hydrateComplete', function() {
+        try { window.renderRodzajStatsSimple(); } catch (_) {}
+      });
+    } catch (_) {}
     
     // Create hover preview element
     const hoverPreview = document.createElement('div');
@@ -1442,6 +1555,37 @@
         return [];
       }
       
+      // Safety: ensure helpers exist even if defined later in other scopes
+      if (typeof rodzajSynonyms === 'undefined') {
+        var rodzajSynonyms = {
+          plytki: {
+            'wcmx': ['wcmx', 'wc', 'wcm'],
+            'lcmx': ['lcmx', 'lcm'],
+            '811': ['811'],
+            'dft': ['dft'],
+            '880': ['880'],
+            'wogx': ['wogx'],
+            'spgx': ['spgx', 'spgm', 'spg'],
+            'p284': ['p284', 'p484']
+          },
+          koronki: {
+            'ksem': ['ksem'],
+            'idi': ['idi'],
+            'p600': ['p600'],
+            'icm': ['icm', 'icmx'],
+            'icp': ['icp'],
+            '870': ['870'],
+            'amec': ['amec'],
+            'ktip': ['ktip']
+          }
+        };
+      }
+      if (typeof includesAny === 'undefined') {
+        var includesAny = function(text, needles) {
+          const t = (text || '').toLowerCase();
+          return Array.isArray(needles) && needles.some(n => t.includes(n));
+        };
+      }
       
       // Apply tab type filter first (wiertla, plytki, koronki)
       const activeTabType = window.WiertlaCNC.activeTabType || 'wiertla';
@@ -1571,19 +1715,10 @@
                 
               if (has880Anywhere || hasSandvikAnywhere) {
                 sandvikCount++;
-                console.log(`🎯 POTENTIAL SANDVIK PRODUCT ${index + 1}:`);
-                console.log(`   TITLE: "${product.title || 'N/A'}"`);
-                console.log(`   SKU: "${product.sku || 'N/A'}"`);
-                console.log(`   SYMBOL: "${product.custom_symbol || 'N/A'}"`);
-                console.log(`   TYP: "${product.custom_typ || 'N/A'}"`);
-                console.log(`   RODZAJ: "${product.rodzaj || 'N/A'}"`);  
-                console.log(`   VENDOR: "${product.vendor || 'N/A'}"`);
-                console.log(`   🔢 Has 880: ${has880Anywhere}`);
-                console.log(`   🏭 Has Sandvik: ${hasSandvikAnywhere}`);
+                
               }
             }
           });
-                     console.log(`📊 Found ${sandvikCount} potential Sandvik products in first 10`);
            
            // Look specifically for the mentioned products
            const targetProducts = ['880 PS.T111', '880 PS.M008', '880 PS.M101'];
@@ -1594,16 +1729,7 @@
                (p.custom_symbol || '').includes(targetName)
              );
              
-             if (foundProduct) {
-               console.log(`🎯 FOUND TARGET: "${targetName}"`);
-               console.log(`   TITLE: "${foundProduct.title || 'N/A'}"`);
-               console.log(`   SKU: "${foundProduct.sku || 'N/A'}"`);
-               console.log(`   SYMBOL: "${foundProduct.custom_symbol || 'N/A'}"`);
-               console.log(`   TYP: "${foundProduct.custom_typ || 'N/A'}"`);
-               console.log(`   VENDOR: "${foundProduct.vendor || 'N/A'}"`);
-             } else {
-               console.log(`❌ TARGET NOT FOUND: "${targetName}"`);
-             }
+            
            });
          }
         
@@ -1613,7 +1739,7 @@
             return true;
           }
           const productTyp = (product.custom_typ || '').toLowerCase();
-          const productRodzaj = (product.rodzaj || '').toLowerCase();
+          const productRodzaj = (product.custom_rodzaj || product.rodzaj || '').toLowerCase();
           const productVendor = (product.vendor || '').toLowerCase();
           const productTitle = (product.title || '').toLowerCase();
           const categoryLower = window.selectedCategory.toLowerCase();
@@ -1675,80 +1801,78 @@
             }
           } 
           else if (activeTabType === 'plytki') {
-            // For plytki tab, search in both typ and rodzaj fields
+            // For plytki tab, search using rodzaj synonyms (and typ as fallback)
+            const synonyms = (rodzajSynonyms.plytki && rodzajSynonyms.plytki[categoryLower]) || [categoryLower];
             switch (categoryLower) {
               case 'wcmx':
-                matches = productTyp.includes('wcmx') || productRodzaj.includes('wcmx');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case 'lcmx':
-                matches = productTyp.includes('lcmx') || productRodzaj.includes('lcmx');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case '811':
-                matches = productTyp.includes('811') || productRodzaj.includes('811');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case 'dft':
-                matches = productTyp.includes('dft') || productRodzaj.includes('dft');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case '880':
                 // Count ALL products with "880" in any relevant field
                 matches = productTyp.includes('880') || 
-                         productRodzaj.includes('880') ||
+                         includesAny(productRodzaj, synonyms) ||
                          productVendor.includes('sandvik') ||
                          productTitle.includes('880') ||
                          (product.custom_symbol || '').toLowerCase().includes('880') ||
                          (product.sku || '').toLowerCase().includes('880');
                 break;
               case 'wogx':
-                matches = productTyp.includes('wogx') || productRodzaj.includes('wogx');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case 'spgx':
-                matches = productTyp.includes('spgx') || productRodzaj.includes('spgx');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case 'p284':
-                matches = productTyp.includes('p284') || productRodzaj.includes('p284');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               default:
                 // Generic matching for both fields
-                matches = productTyp.includes(categoryLower) || productRodzaj.includes(categoryLower);
+                matches = includesAny(productRodzaj, [categoryLower]) || includesAny(productTyp, [categoryLower]);
                 break;
             }
           }
           else if (activeTabType === 'koronki') {
-            // For koronki tab, search in both typ and rodzaj fields
+            // For koronki tab, search using rodzaj synonyms (and typ as fallback)
+            const synonyms = (rodzajSynonyms.koronki && rodzajSynonyms.koronki[categoryLower]) || [categoryLower];
             switch (categoryLower) {
               case 'ksem':
-                matches = productTyp.includes('ksem') || 
-                         productRodzaj.includes('ksem') ||
-                         productVendor.includes('ksem') ||
-                         productTitle.includes('ksem');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms) ||
+                          productVendor.includes('ksem') ||
+                          productTitle.includes('ksem');
                 break;
               case 'idi':
-                matches = productTyp.includes('idi') || productRodzaj.includes('idi');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case 'p600':
-                matches = productTyp.includes('p600') || productRodzaj.includes('p600');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case 'icm':
-                matches = productTyp.includes('icm') || productRodzaj.includes('icm');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case 'icp':
-                matches = productTyp.includes('icp') || productRodzaj.includes('icp');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case '870':
-                matches = productTyp.includes('870') || productRodzaj.includes('870');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case 'amec':
-                matches = productTyp.includes('amec') || 
-                         productRodzaj.includes('amec') ||
-                         productVendor.includes('amec') ||
-                         productTitle.includes('amec');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case 'ktip':
-                matches = productTyp.includes('ktip') || productRodzaj.includes('ktip');
+                matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               default:
                 // Generic matching for both fields
-                matches = productTyp.includes(categoryLower) || productRodzaj.includes(categoryLower);
+                matches = includesAny(productRodzaj, [categoryLower]) || includesAny(productTyp, [categoryLower]);
                 break;
             }
           }
@@ -1757,15 +1881,6 @@
           if (categoryLower === 'ksem' || categoryLower === 'amec' || categoryLower === 'sandvik' || categoryLower === '880') {
             const productIndex = filteredProducts.indexOf(product);
             if (productIndex < 3) { // Log first 3 products for brevity
-              console.log(`🔍 Product ${productIndex + 1} [${activeTabType}]:`);
-              console.log(`   📝 TYP: "${product.custom_typ || 'N/A'}"`);
-              console.log(`   🏷️ RODZAJ: "${product.rodzaj || 'N/A'}"`);
-              console.log(`   🏭 VENDOR: "${product.vendor || 'N/A'}"`);
-              console.log(`   📖 TITLE: "${product.title || 'N/A'}"`);
-              console.log(`   🔗 SKU: "${product.sku || 'N/A'}"`);
-              console.log(`   🏷️ SYMBOL: "${product.custom_symbol || 'N/A'}"`);
-              console.log(`   🎯 Searching for: "${categoryLower}"`);
-              console.log(`   ${matches ? '✅ MATCH' : '❌ NO MATCH'}`);
               
               // Special debug for 880/Sandvik products
               if (categoryLower === 'sandvik' || categoryLower === '880') {
@@ -1776,8 +1891,6 @@
                 const has880InSymbol = (product.custom_symbol || '').toLowerCase().includes('880');
                 const hasSandvikInVendor = productVendor.includes('sandvik');
                 
-                console.log(`   🔢 880 matches: TYP=${has880InTyp}, RODZAJ=${has880InRodzaj}, TITLE=${has880InTitle}, SKU=${has880InSku}, SYMBOL=${has880InSymbol}`);
-                console.log(`   🏭 Sandvik in vendor: ${hasSandvikInVendor}`);
               }
             }
           }
@@ -1785,8 +1898,6 @@
           return matches;
         });
         
-        console.log(`📊 Products after category filter: ${filteredProducts.length}`);
-        console.log(`📝 Filter Summary: Applied "${window.selectedCategory}" filter for ${activeTabType} tab`);
         console.groupEnd();
       }
 
@@ -1795,7 +1906,6 @@
         let beforeTypeCount = filteredProducts.length;
         
         const expectedTypeValue = window.WiertlaCNC.filters.typ;
-        console.log(`🔍 Type filter: ${window.WiertlaCNC.filters.typ} → Expected TYP value: ${expectedTypeValue}`);
         
         // IMPORTANT: If we already filtered by category and the type matches the category, 
         // don't apply additional typ filtering as products may not have custom_typ populated
@@ -1803,10 +1913,7 @@
         const typeMatchesCategory = expectedTypeValue === window.selectedCategory;
         
         if (categoryAlreadyFiltered && typeMatchesCategory) {
-          console.log(`⚡ SKIPPING type filter because category "${window.selectedCategory}" already applied matching filter`);
-          console.log(`📊 Type filter skipped: keeping all ${beforeTypeCount} products from category filter`);
         } else {
-          console.log(filteredProducts, expectedTypeValue);
           
           if (expectedTypeValue) {
             filteredProducts = filteredProducts.filter(product => {
@@ -1815,16 +1922,11 @@
               console.log(typValue,product.metafields.custom.typ);
               const matches = typValue && typValue?.toLowerCase()?.includes(expectedTypeValue?.toLowerCase() || '');
               
-              if (matches) {
-                console.log(`✅ Type match: Product ${product.sku} has TYP="${typValue}" matches "${expectedTypeValue}"`);
-              }
               
               return matches;
             });
             
-            console.log(`📊 Type filter: ${beforeTypeCount} → ${filteredProducts.length} products (filter: ${window.WiertlaCNC.filters.typ})`);
           } else {
-            console.log(`❌ No mapping found for type filter: ${window.WiertlaCNC.filters.typ}`);
           }
         }
       }
@@ -1922,6 +2024,8 @@
         // Sort in ascending order (smallest to largest)
         return fiA - fiB;
       });
+
+
 
       return filteredProducts;
     }
@@ -3188,9 +3292,10 @@
                      
                       <div class="wiertla-categories__mobile-quantity">
                         ${(() => {
-                          const v = (product.custom_szt || product.custom_ilosc || '').toString().trim();
+                          const raw = (product.custom_szt || product.custom_ilosc || (product.metafields && product.metafields.custom && (product.metafields.custom.szt || product.metafields.custom.ilosc)) || '').toString();
+                          const v = raw.trim();
                           if (!v || v.toLowerCase() === 'null' || v.toLowerCase() === 'undefined' || v === '-') return '-';
-                          return v;
+                          return v.length > 12 ? (v.slice(0, 12) + '...') : v;
                         })()}
                       </div>
                     </div>
@@ -3210,7 +3315,7 @@
               <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
                 ${iconUrl ? `<img src="${iconUrl}" alt="${product.type || 'Product'}" width="34" height="34" loading="lazy">` : '-'}
               </td>
-              <td class="wiertla-categories__table-cell wiertla-categories__table-cell--diameter" data-href="/products/${product.handle || ''}">
+              <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
                 ${(() => {
                   const fi = product.custom_fi;
                   const srednica = product.custom_srednica || product.custom_srednica_display;
@@ -3245,7 +3350,8 @@
               <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
                 ${formatSymbol(product.vendor || product.custom_manufacturer || '-')}
               </td>
-               <td class="wiertla-categories__table-cell">
+              ${product.custom_rent_value ? `<td class="wiertla-categories__table-cell" title="Wynajem">${product.custom_rent_value}</td>` : ''}
+              <td class="wiertla-categories__table-cell">
                 <div class="wiertla-categories__price-wrapper">
                   <span class="wiertla-categories__price" data-href="/products/${product.handle}">${product.price}</span>
                   ${product.custom_rent ? `
@@ -3273,9 +3379,10 @@
               </td>
               <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
                 ${(() => {
-                  const v = (product.custom_szt || product.custom_ilosc || '').toString().trim();
+                  const raw = (product.custom_szt || product.custom_ilosc || (product.metafields && product.metafields.custom && (product.metafields.custom.szt || product.metafields.custom.ilosc)) || '').toString();
+                  const v = raw.trim();
                   if (!v || v.toLowerCase() === 'null' || v.toLowerCase() === 'undefined' || v === '-') return '-';
-                  return v;
+                  return v.length > 12 ? (v.slice(0, 12) + '...') : v;
                 })()}
               </td>
                <td class="wiertla-categories__table-cell">

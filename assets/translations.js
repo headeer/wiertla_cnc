@@ -70,6 +70,12 @@ window.WiertlaTranslations = {
       szt: "szt.",
     },
 
+    // Related tools (by gniazdo)
+    related_tools: {
+      title: "NARZĘDZIA POWIĄZANE",
+      subtitle: "Produkty o identycznym mocowaniu",
+    },
+
     // Wiertla Categories
     wiertla_categories: {
       tabs: {
@@ -373,6 +379,12 @@ window.WiertlaTranslations = {
       },
     },
 
+    // Related tools (by socket)
+    related_tools: {
+      title: "RELATED TOOLS",
+      subtitle: "Products with identical mounting",
+    },
+
     // Wiertla Categories
     wiertla_categories: {
       tabs: {
@@ -674,6 +686,12 @@ window.WiertlaTranslations = {
         regenerate: "REGENERIEREN/SCHÄRFEN",
         sharpen: "SCHÄRFEN",
       },
+    },
+
+    // Related tools (by socket)
+    related_tools: {
+      title: "VERWANDTE WERKZEUGE",
+      subtitle: "Produkte mit identischer Aufnahme",
     },
 
     // Wiertla Categories
