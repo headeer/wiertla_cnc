@@ -127,7 +127,10 @@
       },
       "header": {
         "type": "header",
-        "settings": {}
+        "settings": {
+          "phone": "+48600673736",
+          "email": "ania@hmmetal.pl"
+        }
       },
       "footer": {
         "type": "footer",
@@ -145,7 +148,14 @@
           "newsletter_subheading": "<p>Subscribe to our newsletter to receive special offers and first look at new products.</p>",
           "newsletter_color_scheme": "secondary",
           "show_grid_border": false,
-          "color_scheme": "primary"
+          "color_scheme": "primary",
+          "brand_name": "HMMETAL LESZEK KIJEWSKI",
+          "copyright_year": "2025",
+          "designer_name": "Kresky",
+          "address_line1": "Jana Pawła II 14/231",
+          "address_line2": "61-139 Poznań, Polska",
+          "phone_number": "+48600673736",
+          "email": "ania@hmmetal.pl"
         }
       },
       "popup": {

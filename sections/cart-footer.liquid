@@ -18,7 +18,7 @@
           </dd>
         {%- endfor -%}
         <dt class="">{{ 'cart.general.subtotal' | t }}</dt>
-        <dd class="">{{ cart.total_price | money_with_currency }}</dd>
+        <dd class="">{{ cart.total_price | money }}</dd>
       </dl>
 
       {%- capture taxes_shipping_checkout -%}

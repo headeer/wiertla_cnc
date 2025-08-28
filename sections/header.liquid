@@ -743,10 +743,10 @@
   }
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 1025px) {
   .header__phone-number {
-    pointer-events: none;
-    cursor: default;
+    pointer-events: auto;
+    cursor: pointer;
   }
 }
 </style>
@@ -775,17 +775,17 @@
         </div>
         <div class="header__lang-links">
           <a
-            href="#"
+            href="{{ request.path }}?locale=pl"
             class="header__link"
             data-lang="pl"
             data-translate="header.languages.polish">{{ 'header.languages.polish' | t }}</a>
           <a
-            href="#"
+            href="{{ request.path }}?locale=en"
             class="header__link"
             data-lang="en"
             data-translate="header.languages.english">{{ 'header.languages.english' | t }}</a>
           <a
-            href="#"
+            href="{{ request.path }}?locale=de"
             class="header__link"
             data-lang="de"
             data-translate="header.languages.german">{{ 'header.languages.german' | t }}</a>
@@ -805,27 +805,27 @@
       <button class="header__mobile-icon-button header__mobile-phone" id="mobile-phone-button">
         <img
           src="{{ 'Ico_phone.svg' | asset_url }}"
-          alt="Phone"
+          alt="{{ 'header.contact.phone_icon_alt' | t }}"
           width="24"
           height="24">
       </button>
       <a href="/pages/login" class="header__mobile-icon-button header__mobile-user">
         <img
           src="{{ 'user_icon.svg' | asset_url }}"
-          alt="Account"
+          alt="{{ 'layout.customer.account' | t }}"
           width="24"
           height="24">
       </a>
       <a href="{{ routes.cart_url }}" class="header__mobile-icon-button header__mobile-cart">
         <img
           src="{{ 'shopping_cart.svg' | asset_url }}"
-          alt="Cart"
+          alt="{{ 'layout.cart.title' | t }}"
           width="24"
           height="24">
       </a>
       <button
         class="header__mobile-icon-button header__mobile-menu-button"
-        aria-label="Menu"
+        aria-label="{{ 'layout.navigation.menu' | t }}"
         aria-expanded="false">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" class="header__menu-icon closed">
           <path d="M2.75 16.5V14.6667H19.25V16.5H2.75ZM2.75 11.9167V10.0833H19.25V11.9167H2.75ZM2.75 7.33333V5.5H19.25V7.33333H2.75Z" fill="#112832"/>
@@ -848,7 +848,7 @@
               alt="{{ 'header.contact.phone_icon_alt' | t }}"
               width="28"
               height="28">
-            <span class="header__link header__phone-number">{{ section.settings.phone }}</span>
+            <a href="tel:{{ section.settings.phone }}" class="header__link header__phone-number">{{ section.settings.phone }}</a>
           </div>
           <div class="header__contact-item">
             <img
@@ -864,7 +864,7 @@
           <a
             href="/"
             class="header__link header__action-menu active"
-            data-translate="header.actions.buy">KUP</a>
+            data-translate="header.actions.buy">{{ 'header.actions.buy' | t }}</a>
           <a
             href="/pages/wypozycz"
             class="header__link header__action-menu"
@@ -872,7 +872,7 @@
           <a href="/account" class="header__action-link">
             <img
               src="{{ 'profile_icon.svg' | asset_url }}"
-              alt="Profile"
+              alt="{{ 'layout.customer.account' | t }}"
               class="header__action-icon"
               width="28"
               height="28">
@@ -880,7 +880,7 @@
           <a href="/cart" class="header__action-link add_to_cart">
             <img
               src="{{ 'shopping_cart.svg' | asset_url }}"
-              alt="Cart"
+              alt="{{ 'layout.cart.title' | t }}"
               class="header__action-icon"
               width="28"
               height="28">
@@ -889,7 +889,7 @@
           <a
             href="/pages/regeneruj"
             class="header__link header__action-menu"
-            data-translate="header.actions.regenerate">Regeneruj</a>
+            data-translate="header.actions.regenerate">{{ 'header.actions.regenerate' | t }}</a>
         </div>
       </div>
     </div>
@@ -897,15 +897,9 @@
 
   <!-- Mobile menu links -->
   <div class="header__mobile-menu-links">
-    <a href="/" class="header__mobile-menu-link">
-      KUP
-    </a>
-    <a href="/pages/wypozycz" class="header__mobile-menu-link">
-      WYPOŻYCZ
-    </a>
-    <a href="/pages/regeneruj" class="header__mobile-menu-link">
-      REGENERUJ
-    </a>
+    <a href="/" class="header__mobile-menu-link" data-translate="header.actions.buy">{{ 'header.actions.buy' | t }}</a>
+    <a href="/pages/wypozycz" class="header__mobile-menu-link" data-translate="header.actions.rent">{{ 'header.actions.rent' | t }}</a>
+    <a href="/pages/regeneruj" class="header__mobile-menu-link" data-translate="header.actions.regenerate">{{ 'header.actions.regenerate' | t }}</a>
   </div>
 </header>
 
