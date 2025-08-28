@@ -1,30 +1,643 @@
 {
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Zur Hauptinhaltsseite",
+      "close_modal": "Schließen",
+      "link_messages": {
+        "new_window": "Öffnet in einem neuen Fenster.",
+        "external": "Öffnet eine externe Website.",
+        "new_window_and_external": "Öffnet eine externe Website in einem neuen Fenster."
+      },
+      "refresh_page": "Die Auswahl führt zu einem vollständigen Neuladen der Seite.",
+      "selection_help": "Drücke die Leertaste und verwende die Pfeiltasten zur Auswahl.",
+      "unit_price_separator": "pro",
+      "error": "Fehler",
+      "increment_one": "Eins hinzufügen",
+      "decrement_one": "Eins entfernen",
+      "loading": "Laden..."
+    },
+    "meta": {
+      "tags": "Markiert \"{{ tags }}\"",
+      "page": "Seite {{ page }}"
+    },
+    "404": {
+      "title": "404 — Seite nicht gefunden",
+      "subtext": "Die angeforderte Seite existiert nicht.",
+      "link": "Weiter einkaufen"
+    },
+    "pagination": {
+      "previous": "Zurück",
+      "next": "Weiter",
+      "current_page": "Seite {{ current }} von {{ total }}"
+    },
+    "password_page": {
+      "opening_soon": "Eröffnung in Kürze",
+      "login_form_heading": "Mit Passwort in den Shop",
+      "login_form_password_label": "Passwort",
+      "login_form_password_placeholder": "Dein Passwort",
+      "login_form_submit": "Einloggen",
+      "signup_form_email_label": "E-Mail",
+      "signup_form_success": "Wir schreiben dir kurz vor der Eröffnung!",
+      "admin_link_html": "Bist du der Shop-Inhaber? <a href=\"/admin\" class=\"text-link\">Hier einloggen</a>",
+      "password_link": "Mit Passwort einloggen",
+      "powered_by_shopify_html": "Dieser Shop wird betrieben von {{ shopify }}"
+    },
+    "social": {
+      "title": "Teilen",
+      "facebook": "Facebook",
+      "twitter": "Tweet",
+      "pinterest": "Pinterest",
+      "share_on_facebook": "Teilen",
+      "share_on_twitter": "Tweet",
+      "share_on_pinterest": "Merken",
+      "alt_text": {
+        "share_on_facebook": "Auf Facebook teilen",
+        "share_on_twitter": "Auf Twitter tweeten",
+        "share_on_pinterest": "Auf Pinterest merken"
+      }
+    },
+    "search": {
+      "label": "Suche",
+      "placeholder": "Suchbegriff eingeben...",
+      "category_label": "In Kategorien suchen",
+      "category_placeholder": "Produktname, Durchmesser, Symbol oder Hersteller eingeben",
+      "clear": "Suche löschen",
+      "submit": "Suchen",
+      "no_results": "Keine Ergebnisse gefunden",
+      "empty_search_message": "Suchfeld darf nicht leer sein",
+      "results_with_count": {
+        "one": "{{ count }} Ergebnis für \"{{ terms }}\"",
+        "other": "{{ count }} Ergebnisse für \"{{ terms }}\""
+      },
+      "title": "Unsere Seite durchsuchen",
+      "heading": {
+        "one": "Suchergebnis",
+        "other": "Suchergebnisse"
+      },
+      "search_for": "Suchen nach",
+      "products": "Produkte",
+      "loading": "Laden",
+      "clear_search_term": "Suchbegriff löschen",
+      "number_of_results": "{{ result_number }} von {{ results_count }}",
+      "number_of_results_found": "{{ results_count }} Ergebnisse gefunden",
+      "one_result_found": "1 Ergebnis gefunden",
+      "results_count": {
+        "one": "{{ count }} Ergebnis",
+        "other": "{{ count }} Ergebnisse"
+      }
+    },
+    "newsletter_form": {
+      "newsletter_email": "Für den Newsletter anmelden",
+      "email_placeholder": "E-Mail-Adresse",
+      "confirmation": "Danke für die Anmeldung!",
+      "submit": "Anmelden"
+    },
+    "filters": {
+      "show_more": "Mehr anzeigen",
+      "show_less": "Weniger anzeigen"
+    },
+    "payment": {
+      "method": "Zahlungsarten"
+    },
+    "country": {
+      "dropdown_label": "Land/Region"
+    },
+    "language": {
+      "dropdown_label": "Sprache"
+    },
+    "breadcrumbs": {
+      "home": "Startseite"
+    }
+  },
+  "sections": {
+    "header": {
+      "announcement_bar_label": "Ankündigung"
+    },
+    "slideshow": {
+      "next_slide": "Nächste Folie",
+      "previous_slide": "Vorherige Folie",
+      "pause_slideshow": "Diashow pausieren",
+      "rotate_slideshow": "Diashow starten",
+      "load_slide": "Folie {{ slide_number }} laden",
+      "navigation_instructions": "Mit den Pfeiltasten navigieren oder auf Mobilgeräten wischen"
+    },
+    "featured_product": {
+      "title": "Vorgestelltes Produkt",
+      "gallery_thumbnail_alt": "Bild in die Galerie laden, {{ imageAlt }}",
+      "video_thumbnail_alt": "Video in der Galerie laden und abspielen, {{ imageAlt }}",
+      "model_thumbnail_alt": "3D-Modell in die Galerie laden, {{ imageAlt }}"
+    },
+    "map": {
+      "address_error": "Fehler bei der Adresssuche",
+      "address_no_results": "Keine Ergebnisse für diese Adresse",
+      "address_query_limit_html": "Du hast das Google-API-Kontingent überschritten. Erwäge ein Upgrade auf den <a href=\"https://developers.google.com/maps/premium/usage-limits\">Premium-Plan</a>.",
+      "auth_error_html": "Problem bei der Authentifizierung deines Google-Maps-Kontos.",
+      "section_heading": "Standort"
+    },
+    "video": {
+      "play": "Video {{ video_title }} abspielen",
+      "pause": "Video {{ video_title }} pausieren",
+      "resume": "Video {{ video_title }} fortsetzen",
+      "close": "Video {{ video_title }} schließen"
+    },
+    "wiertla_logos": {
+      "name": "Vertrauenspartner",
+      "settings": {
+        "title": {
+          "label": "Titel",
+          "default": "Unsere Vertrauenspartner"
+        },
+        "subtitle": {
+          "label": "Untertitel",
+          "default": "Wir arbeiten mit den besten Marken der Branche"
+        }
+      },
+      "brands": {
+        "sandvik": "Sandvik",
+        "seco": "Seco",
+        "walter": "Walter",
+        "kennametal": "Kennametal",
+        "iscar": "Iscar"
+      },
+      "presets": {
+        "name": "Vertrauenspartner",
+        "category": "Benutzerdefinierte Sektionen"
+      }
+    },
+    "wiertla_categories": {
+      "name": "Shop-Kategorien",
+      "settings": {
+        "title": {
+          "label": "Titel",
+          "default": "Nach Kategorie einkaufen"
+        },
+        "subtitle": {
+          "label": "Untertitel",
+          "default": "Entdecke unsere große Auswahl an CNC-Werkzeugen und Zubehör"
+        },
+        "view_all_link": {
+          "label": "Link \"Alle anzeigen\""
+        }
+      },
+      "blocks": {
+        "category": {
+          "name": "Kategorie",
+          "settings": {
+            "name": {
+              "label": "Kategoriename",
+              "info": "Name der Kategorie"
+            },
+            "icon": {
+              "label": "Kategoriesymbol",
+              "info": "Emoticon oder Textsymbol verwenden"
+            },
+            "link": {
+              "label": "Kategorielink"
+            },
+            "count": {
+              "label": "Produktanzahl"
+            }
+          }
+        }
+      },
+      "categories": {
+        "drill_bits": "Bohrer",
+        "end_mills": "Schaftfräser",
+        "lathe_tools": "Drehwerkzeuge",
+        "tool_holders": "Werkzeugaufnahmen"
+      },
+      "products": "Produkte",
+      "view_all": "Alle Kategorien anzeigen",
+      "presets": {
+        "name": "Shop-Kategorien",
+        "category": "Benutzerdefinierte Sektionen"
+      }
+    }
+  },
+  "blogs": {
+    "article": {
+      "view_all": "Alle anzeigen",
+      "view_all_blogs": "Mehr {{ blog }}",
+      "all_topics": "Alle Themen",
+      "by_author": "von {{ author }}",
+      "posted_in": "Veröffentlicht in",
+      "read_more": "Weiterlesen",
+      "read_more_title": "Weiterlesen: {{ title }}",
+      "back_to_blog": "Zurück zu {{ title }}",
+      "tags": "Tags",
+      "older_post": "Älter",
+      "newer_post": "Neuer",
+      "article_with_count": {
+        "one": "{{ count }} Artikel",
+        "other": "{{ count }} Artikel"
+      }
+    },
+    "comments": {
+      "title": "Kommentar hinterlassen",
+      "name": "Name",
+      "email": "E-Mail",
+      "message": "Nachricht",
+      "post": "Kommentar senden",
+      "moderated": "Bitte beachte: Kommentare werden vor der Veröffentlichung geprüft",
+      "success_moderated": "Dein Kommentar wurde erfolgreich gesendet. Wir veröffentlichen ihn in Kürze, da unser Blog moderiert wird.",
+      "success": "Dein Kommentar wurde erfolgreich gesendet! Danke!",
+      "unapproved": "Die angegebene E-Mail-Adresse ist nicht für Kommentare zugelassen.",
+      "comments_with_count": {
+        "one": "{{ count }} Kommentar",
+        "other": "{{ count }} Kommentare"
+      }
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Warenkorb",
+      "note": "Notiz zur Bestellung hinzufügen",
+      "removed_item_html": "<span class=\"cart__removed-product-details\">({{ quantity }}) {{ link }}</span> aus dem Warenkorb entfernt.",
+      "remove": "Entfernen",
+      "subtotal": "Zwischensumme",
+      "new_subtotal": "Neue Zwischensumme",
+      "savings": "Du sparst",
+      "taxes_and_shipping_at_checkout": "Steuern und Versand werden an der Kasse berechnet",
+      "taxes_and_shipping_policy_at_checkout_html": "Steuern und <a href=\"{{ link }}\">Versand</a> werden an der Kasse berechnet",
+      "taxes_included_but_shipping_at_checkout": "Steuer enthalten, Versand an der Kasse",
+      "taxes_included_and_shipping_policy_html": "Steuer enthalten. <a href=\"{{ link }}\">Versand</a> an der Kasse.",
+      "update": "Aktualisieren",
+      "checkout": "Zur Kasse",
+      "empty": "Dein Warenkorb ist derzeit leer.",
+      "cookies_required": "Aktiviere Cookies, um den Warenkorb zu nutzen",
+      "continue_shopping": "Weiter einkaufen",
+      "cart_error": "Beim Aktualisieren des Warenkorbs ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+      "cart_add_error": "Alle {{ title }} befinden sich bereits im Warenkorb.",
+      "cart_quantity_error_html": "Du kannst nur [quantity] Stück dieses Produkts in den Warenkorb legen."
+    },
+    "label": {
+      "discounted_total": "Summe nach Rabatt",
+      "product": "Produkt",
+      "price": "Preis",
+      "price_column": "Siehe Rabatthinweise in der Spalte Preis.",
+      "product_details": "Produktdetails",
+      "quantity": "Menge",
+      "qty": "Stk",
+      "regular_total": "Reguläre Summe",
+      "remove": "{{ product }} entfernen",
+      "total": "Gesamt",
+      "update": "Aktualisieren",
+      "discounted_price": "Preis nach Rabatt",
+      "original_price": "Originalpreis"
+    },
+    "popup": {
+      "added_to_cart": "Zum Warenkorb hinzugefügt",
+      "cart_count": {
+        "one": "{{ count }} Artikel",
+        "other": "{{ count }} Artikel"
+      },
+      "product_details": "Produktdetails",
+      "quantity": "Stk",
+      "quantity_label": "Menge: {{ quantity_count }}"
+    }
+  },
+  "collections": {
+    "general": {
+      "view_all": "Alle anzeigen",
+      "view_all_label": "Alle Produkte in der Kollektion {{ collection_name }} anzeigen",
+      "no_matches": "Leider gibt es in dieser Kollektion keine Produkte",
+      "items_with_count": {
+        "one": "{{ count }} Produkt",
+        "other": "{{ count }} Produkte"
+      },
+      "collection_label": "Kollektion"
+    },
+    "catalog": {
+      "title": "Katalog"
+    },
+    "sorting": {
+      "title": "Sortieren"
+    },
+    "filters": {
+      "title_tags": "Filter",
+      "clear": "Löschen",
+      "all_tags": "Alle Produkte",
+      "to": "Bis",
+      "from": "Von"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefonnummer",
+      "message": "Nachricht",
+      "submit": "Senden",
+      "post_success": "Danke für deine Nachricht. Wir melden uns so schnell wie möglich.",
+      "error_heading": "Bitte korrigiere Folgendes:"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Mein Konto",
+      "details": "Kontodetails",
+      "view_addresses": "Adressen anzeigen",
+      "return": "Zurück zu Kontodetails"
+    },
+    "activate_account": {
+      "title": "Konto aktivieren",
+      "subtext": "Lege ein Passwort fest, um dein Konto zu aktivieren.",
+      "password": "Passwort",
+      "password_confirm": "Passwort bestätigen",
+      "submit": "Konto aktivieren",
+      "cancel": "Einladung ablehnen"
+    },
+    "addresses": {
+      "title": "Deine Adressen",
+      "default": "Standard",
+      "add_new": "Neue Adresse hinzufügen",
+      "edit_address": "Adresse bearbeiten",
+      "first_name": "Vorname",
+      "last_name": "Nachname",
+      "company": "Firma",
+      "address1": "Adresse",
+      "address2": "Wohnung, Suite usw.",
+      "city": "Stadt",
+      "country": "Land/Region",
+      "province": "Bundesland",
+      "zip": "PLZ",
+      "phone": "Telefon",
+      "set_default": "Als Standard festlegen",
+      "add": "Adresse hinzufügen",
+      "update": "Adresse aktualisieren",
+      "cancel": "Abbrechen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "delete_confirm": "Möchtest du diese Adresse wirklich löschen?"
+    },
+    "login": {
+      "title": "Anmeldung",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "forgot_password": "Passwort vergessen?",
+      "sign_in": "Anmelden",
+      "guest_title": "Als Gast fortfahren",
+      "guest_continue": "Fortfahren"
+    },
+    "orders": {
+      "title": "Bestellhistorie",
+      "order_number": "Bestellung",
+      "order_number_link": "Bestellnummer {{ number }}",
+      "date": "Datum",
+      "payment_status": "Zahlungsstatus",
+      "fulfillment_status": "Fulfillment-Status",
+      "total": "Gesamt",
+      "none": "Du hast noch keine Bestellungen aufgegeben."
+    },
+    "order": {
+      "title": "Bestellung {{ name }}",
+      "date_html": "Aufgegeben am {{ date }}",
+      "cancelled_html": "Bestellung am {{ date }} storniert",
+      "cancelled_reason": "Grund: {{ reason }}",
+      "billing_address": "Rechnungsadresse",
+      "payment_status": "Zahlungsstatus",
+      "shipping_address": "Lieferadresse",
+      "fulfillment_status": "Fulfillment-Status",
+      "discount": "Rabatt",
+      "shipping": "Versand",
+      "tax": "Steuer",
+      "product": "Produkt",
+      "sku": "SKU",
+      "price": "Preis",
+      "quantity": "Menge",
+      "total": "Gesamt",
+      "refund_amount": "Rückerstattungsbetrag",
+      "fulfilled_at": "Erfüllt am",
+      "track_shipment": "Sendung verfolgen",
+      "tracking_url": "Tracking-Link",
+      "tracking_company": "Versanddienst",
+      "tracking_number": "Sendungsnummer",
+      "subtotal": "Zwischensumme"
+    },
+    "recover_password": {
+      "title": "Passwort zurücksetzen",
+      "email": "E-Mail",
+      "submit": "Absenden",
+      "cancel": "Abbrechen",
+      "subtext": "Wir senden dir eine E-Mail zum Zurücksetzen deines Passworts.",
+      "success": "Wir haben dir eine E-Mail mit einem Link zum Aktualisieren deines Passworts gesendet."
+    },
+    "reset_password": {
+      "title": "Passwort festlegen",
+      "subtext": "Neues Passwort für {{ email }} eingeben",
+      "password": "Passwort",
+      "password_confirm": "Passwort bestätigen",
+      "submit": "Passwort zurücksetzen"
+    },
+    "register": {
+      "title": "Konto erstellen",
+      "first_name": "Vorname",
+      "last_name": "Nachname",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "submit": "Erstellen"
+    }
+  },
+  "homepage": {
+    "general": {
+      "title": "Startseite"
+    },
+    "onboarding": {
+      "product_title": "Produktname",
+      "product_description": "Hier beschreibst du die Details deines Produkts: Aussehen, Material, Stil, Farben, Materialien, Größen und Herstellungsort.",
+      "collection_title": "Name der Kollektion",
+      "blog_title": "Beitragstitel",
+      "blog_excerpt": "Es wurden noch keine Blogbeiträge veröffentlicht. Nutze den Blog für Neuheiten, Tipps oder andere News.",
+      "blog_author": "Autor",
+      "no_content": "Dieser Abschnitt enthält noch keine Inhalte. Füge Inhalte über die Seitenleiste hinzu."
+    }
+  },
+  "layout": {
+    "navigation": {
+      "search": "Suche",
+      "expand": "ausklappen",
+      "collapse": "einklappen",
+      "menu": "Menü"
+    },
+    "cart": {
+      "title": "Warenkorb",
+      "items_count": {
+        "one": "Artikel",
+        "other": "Artikel"
+      }
+    },
+    "customer": {
+      "account": "Konto",
+      "log_out": "Abmelden",
+      "log_in": "Anmelden",
+      "create_account": "Konto erstellen"
+    },
+    "footer": {
+      "social_platform": "{{ name }} auf {{ platform }}"
+    }
+  },
+  "products": {
+    "product": {
+      "regular_price": "Regulärer Preis",
+      "sold_out": "Ausverkauft",
+      "unavailable": "Nicht verfügbar",
+      "availability": "Verfügbarkeit",
+      "on_sale": "Sale",
+      "from_lowest_price_html": "ab {{ lowest_price }}",
+      "sale_price": "Aktionspreis",
+      "quantity": "Menge",
+      "add_to_cart": "In den Warenkorb",
+      "loader_label": "Produkt wird dem Warenkorb hinzugefügt",
+      "back_to_collection": "Zurück zu {{ title }}",
+      "vendor": "Hersteller",
+      "quantity_minimum_message": "Menge muss mindestens 1 sein",
+      "include_taxes": "inkl. MwSt.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Versand</a> wird an der Kasse berechnet.",
+      "unit_price_label": "Stückpreis",
+      "view_cart": "Warenkorb anzeigen",
+      "on_sale_from_html": "Im Angebot ab {{ price }}",
+      "add_to_cart_confirm_html": "<a data-after-add-cart-trigger href=\"{{ cart_url }}\">Warenkorb ansehen</a> oder <a href=\"{{ link_url }}\">weiter einkaufen</a>",
+      "view_in_space": "In deinem Raum ansehen",
+      "view_in_space_label": "In deinem Raum ansehen — öffnet AR-Fenster",
+      "color_swatch_trigger": "Farbe",
+      "read_more": "Mehr erfahren"
+    }
+  },
+  "store_availability": {
+    "general": {
+      "view_store_info": "Shop-Informationen anzeigen",
+      "check_other_stores": "Verfügbarkeit in anderen Shops prüfen",
+      "pick_up_available": "Abholung verfügbar",
+      "pick_up_currently_unavailable": "Abholung derzeit nicht verfügbar",
+      "pick_up_available_at_html": "Abholung verfügbar bei <strong>{{ location_name }}</strong>",
+      "pick_up_unavailable_at_html": "Abholung derzeit nicht verfügbar bei <strong>{{ location_name }}</strong>"
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title_html": "Hier ist deine Geschenkkarte über {{ value }} für {{ shop }}!",
+      "subtext": "Deine Geschenkkarte",
+      "gift_card_code": "Geschenkkartencode",
+      "disabled": "Deaktiviert",
+      "expired": "Abgelaufen am {{ expiry }}",
+      "active": "Läuft ab am {{ expiry }}",
+      "redeem_html": "Diesen Code an der Kasse eingeben, um die Geschenkkarte über {{ value }} einzulösen",
+      "shop_link": "Jetzt einkaufen",
+      "print": "Geschenkkarte drucken",
+      "remaining_html": "Verbleibend: {{ balance }}",
+      "add_to_apple_wallet": "Zu Apple Wallet hinzufügen",
+      "qr_image_alt": "QR-Code — zum Einlösen scannen"
+    }
+  },
+  "date_formats": {
+    "month_day_year": "%d. %B %Y"
+  },
+  "footer": {
+    "main_title": "CNC-Bohrer – Markenbohrer zu Top-Preisen",
+    "main_description": "Wir bieten eine große Auswahl an CNC-Bohrern von renommierten Herstellern wie Sandvik, Guhring, Arno und vielen anderen. Unsere Produkte zeichnen sich durch hohe Qualität, präzise Verarbeitung und wettbewerbsfähige Preise aus. Das Angebot umfasst Bohrer in verschiedenen Durchmessern und Anwendungen – ideal für professionelle Werkstätten und Hobbyanwender.",
+    "contact": {
+      "title": "KONTAKT",
+      "phone_icon_alt": "Telefonsymbol",
+      "email_icon_alt": "E-Mail-Symbol"
+    },
+    "address": {
+      "title": "ADRESSE"
+    },
+    "credits": {
+      "design_by": "DESIGN BY"
+    },
+    "scroll_to_top": "Nach oben",
+    "scroll_icon_alt": "Nach oben scrollen"
+  },
   "wiertla_stats": {
+    "tools_icon_alt": "Werkzeuge",
+    "tools_title": "999+ CNC-Werkzeuge",
+    "tools_text": "Über 1000 CNC-Bohrer auf Lager",
+    "years_icon_alt": "Jahre Erfahrung",
+    "years_title": "8 Jahre am Markt",
+    "years_text": "Wir bauen eine starke Position als CNC-Werkzeuglieferant auf",
+    "quality_icon_alt": "Qualität",
+    "quality_title": "Höchste Qualität",
+    "quality_text": "Wir bieten Markenbohrer sowie dedizierte Alternativen",
+    "latest_products": {
+      "title": "Neu in unserem Angebot",
+      "subtitle": "Wir erweitern kontinuierlich unseren Bestand und aktualisieren das Angebot mit neuen CNC-Bohrern"
+    },
+    "rent_tool_text": "Werkzeug mieten",
+    "rent_tools": {
+      "title_line1": "CNC-Bohrer mieten",
+      "title_line2": "zu vorteilhaften Konditionen",
+      "icon1_alt": "Symbol 1",
+      "icon2_alt": "Symbol 2",
+      "icon3_alt": "Symbol 3",
+      "icon4_alt": "Symbol 4",
+      "icon5_alt": "Symbol 5",
+      "icon6_alt": "Symbol 6",
+      "description": "Zur stetigen Verbesserung von Qualität und Komfort bieten wir die Möglichkeit, CNC-Bohrer zu mieten.",
+      "learn_more": "Mehr erfahren",
+      "arrow_alt": "Pfeil"
+    },
     "faq": {
-      "main_title": "HÄUFIG GESTELLTE FRAGEN",
+      "main_title": "CNC-Bohrer – Häufige Fragen",
       "question1": {
-        "title": "Lieferungen",
-        "subtitle1": "Versand",
-        "text1": "Die Standardbearbeitungszeit für Bestellungen beträgt 1-2 Werktage.",
-        "subtitle2": "Zahlungen",
-        "text2": "Wir akzeptieren Banküberweisungen, Kartenzahlungen und PayPal."
+        "title": "1. Welche CNC-Bohrer für Metall?",
+        "subtitle1": "Kronenbohrer",
+        "text1": "Ideal für große Bohrungen in Metall. Kronenbohrer ermöglichen effizientes und schnelles Bohren selbst in harten Materialien und minimieren dabei Beschädigungen am Werkstück. Häufig im Bau- und Maschinenbau eingesetzt.",
+        "subtitle2": "VHM-Bohrer",
+        "text2": "(Hartmetall): Langlebig und sehr robust – ideal für harte Metalle. Hartmetallbohrer zeichnen sich durch außergewöhnliche Härte und Verschleißfestigkeit aus und sind perfekt für anspruchsvolle Bedingungen. Weit verbreitet, wo Präzision und Werkzeuglebensdauer entscheidend sind."
       },
       "question2": {
-        "title": "Welche Bohrer sind in unserem Angebot verfügbar?",
-        "text": "In unserem Angebot finden Sie eine große Auswahl an CNC-Bohrern von renommierten Herstellern. Wir bieten Kronenbohrer, Plattenbohrer, VHM, Sandvik 880, AMEC und KSEM Bohrer an."
+        "title": "2. Sind Sandvik 880 Bohrer für schwierige Materialien geeignet?",
+        "text": "Ja, Sandvik 880 Bohrer sind für ihre Effizienz und Haltbarkeit bekannt und daher ideal für schwierige Materialien. Ihre Konstruktion und Beschichtungen erhöhen die Lebensdauer und Präzision, weshalb sie in der Luft- und Automobilindustrie beliebt sind."
       },
       "question3": {
-        "title": "Ist es möglich, Bohrer zu mieten?",
-        "text": "Ja, wir bieten die Möglichkeit, CNC-Bohrer zu wettbewerbsfähigen Bedingungen zu mieten. Kontaktieren Sie uns für detaillierte Informationen."
+        "title": "3. Vorteile von KSEM-Bohrern?",
+        "text": "KSEM-Bohrer bieten innovative Lösungen für hervorragende Ergebnisse, auch in sehr harten Materialien. Dank moderner Technologie ermöglichen sie schnelle, effiziente Bearbeitung bei minimalen Stillstandszeiten – ideal für Serienfertigung und Präzisionsanwendungen."
       },
       "question4": {
-        "title": "Bieten Sie Bohrer-Regenerierungsdienste an?",
-        "text": "Ja, wir bieten professionelle CNC-Bohrer-Regenerierungsdienste an. Der Service umfasst die Diagnose des Werkzeugzustands, Regenerierung und Tests nach der Regenerierung."
+        "title": "4. Anwendungen von Plattenbohrern?",
+        "subtitle": "Plattenbohrer",
+        "text": "Plattenbohrer sind vielseitig einsetzbar – u. a. für Verbundstoffe, Nichteisenmetalle und Kunststoffe. Ihre Konstruktion gewährleistet hohe Präzision und lange Lebensdauer – unverzichtbar in Luftfahrt, Automobil und Elektronikfertigung."
       },
       "question5": {
-        "title": "Bieten Sie gebrauchte Bohrer an?",
-        "text": "Ja, in unserem Angebot finden Sie sowohl neue als auch gebrauchte Bohrer in gutem Zustand, die eine strenge Qualitätskontrolle bestanden haben."
+        "title": "5. Warum AMEC-Bohrer wählen?",
+        "subtitle": "AMEC-Bohrer",
+        "text": "AMEC-Bohrer stehen für Qualität und Zuverlässigkeit. Dank moderner Fertigung liefern sie beste Ergebnisse auch unter härtesten Bedingungen – mit langer Lebensdauer und geringen Betriebskosten, ideal für anspruchsvolle industrielle Anwendungen."
       }
+    },
+    "category_desc": {
+      "title": "Kategoriebeschreibungen auf der CNC-Bohrer-Seite",
+      "crown_drills": {
+        "icon_alt": "Kronenbohrer",
+        "title": "Kronenbohrer",
+        "text": "Kronenbohrer sind unverzichtbar, wenn große Bohrungen erforderlich sind. Unser Angebot umfasst verschiedene Durchmesser, geeignet für Metall und Beton. Die fortschrittliche Konstruktion sorgt für schnelles, effizientes Bohren bei minimaler Werkstückbeschädigung. Ideal für Bau und Industrie."
+      }
+    }
+  },
+  "wiertla_banner": {
+    "subtitle": "NEU • GEBRAUCHT • GETESTET",
+    "title": "Marken-CNC-Bohrer zu Top-Preisen"
+  },
+  "header": {
+    "nav": {
+      "drills": "bohrer",
+      "plates": "platten",
+      "crowns": "kronen"
+    },
+    "languages": {
+      "polish": "PL",
+      "english": "EN",
+      "german": "DE"
+    },
+    "contact": {
+      "phone_icon_alt": "Telefonsymbol",
+      "email_icon_alt": "E-Mail-Symbol"
+    },
+    "actions": {
+      "buy": "kaufen",
+      "rent": "mieten",
+      "regenerate": "regenerieren",
+      "sharpen": "schärfen"
     }
   }
 }

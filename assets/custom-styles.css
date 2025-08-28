@@ -1,3 +1,17 @@
+/* Fullscreen table scrolling */
+.wiertla-categories__fullscreen-content,
+.wiertla-categories__fullscreen-right,
+.wiertla-categories__fullscreen-right .wiertla-categories__table-container {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+/* Add conditional spacing above wiertla-stats when Latest Products is absent on product pages */
+.template-product .wiertla-stats--spacer {
+  margin-top: 80px;
+}
+
+/* Wiertla fullscreen hook (CSP-safe logging styles placeholder if needed) */
 /* Custom Styles for Wiertla CNC Shopify Theme */
 /* Variables */
 /* Mixins */

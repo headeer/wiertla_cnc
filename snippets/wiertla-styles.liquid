@@ -5209,4 +5209,41 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Fullscreen table: sticky header and scrollable body */
+.wiertla-categories__fullscreen-mode .wiertla-categories__table-container {
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+.wiertla-categories__fullscreen-mode .wiertla-categories__table thead th,
+.wiertla-categories__fullscreen-mode .wiertla-categories__table thead tr {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+}
++
+/* When content cannot fit side-by-side, allow column layout */
+.wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-layout.is-column {
+  flex-direction: column;
+}
++
+/* Default fullscreen layout remains row; right column should flex and constrain table */
+.wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-right {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.wiertla-categories__fullscreen-mode .wiertla-categories__fullscreen-right .wiertla-categories__table-container {
+  flex: 1 1 auto;
+}
+
+  /* Ensure mainType dropdown is normal case and inline */
+  .wiertla-filter-mainType {
+    text-transform: none !important;
+    display: inline-block;
+    margin-left: 10px;
+    height: 36px;
+    padding: 6px 10px;
+  }
+
 </style>

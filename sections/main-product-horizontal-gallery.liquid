@@ -2182,7 +2182,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   .wiertla-stats__item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 20px;
   }
 
@@ -2541,7 +2541,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
   }
-
+  .wiertla-stats:not(:has(.latest-products))  {
+  margin-top: 120px;
+}
   .rent-tools__title-line1,
   .rent-tools__title-line2 {
     font-family: 'League Spartan'

@@ -1,4 +1,537 @@
 {
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Przejdź do treści",
+      "close_modal": "Zamknij",
+      "link_messages": {
+        "new_window": "Otwiera się w nowym oknie.",
+        "external": "Otwiera zewnętrzną stronę.",
+        "new_window_and_external": "Otwiera zewnętrzną stronę w nowym oknie."
+      },
+      "refresh_page": "Wybranie opcji powoduje pełne odświeżenie strony.",
+      "selection_help": "Naciśnij spację, a następnie klawisze strzałek, aby wybrać.",
+      "unit_price_separator": "za",
+      "error": "Błąd",
+      "increment_one": "Dodaj jeden",
+      "decrement_one": "Usuń jeden",
+      "loading": "Ładowanie..."
+    },
+    "meta": {
+      "tags": "Otagowano \"{{ tags }}\"",
+      "page": "Strona {{ page }}"
+    },
+    "404": {
+      "title": "404 — Strony nie znaleziono",
+      "subtext": "Strona, której szukasz, nie istnieje.",
+      "link": "Kontynuuj zakupy"
+    },
+    "pagination": {
+      "previous": "Poprzednia",
+      "next": "Następna",
+      "current_page": "Strona {{ current }} z {{ total }}"
+    },
+    "password_page": {
+      "opening_soon": "Wkrótce otwarcie",
+      "login_form_heading": "Wejdź do sklepu, używając hasła",
+      "login_form_password_label": "Hasło",
+      "login_form_password_placeholder": "Twoje hasło",
+      "login_form_submit": "Wejdź",
+      "signup_form_email_label": "Email",
+      "signup_form_success": "Wyślemy Ci wiadomość tuż przed otwarciem!",
+      "admin_link_html": "Jesteś właścicielem sklepu? <a href=\"/admin\" class=\"text-link\">Zaloguj się tutaj</a>",
+      "password_link": "Wejdź używając hasła",
+      "powered_by_shopify_html": "Ten sklep będzie działał dzięki {{ shopify }}"
+    },
+    "social": {
+      "title": "Udostępnij",
+      "facebook": "Facebook",
+      "twitter": "Tweet",
+      "pinterest": "Pinterest",
+      "share_on_facebook": "Udostępnij",
+      "share_on_twitter": "Tweet",
+      "share_on_pinterest": "Przypnij",
+      "alt_text": {
+        "share_on_facebook": "Udostępnij na Facebooku",
+        "share_on_twitter": "Tweetuj na Twitterze",
+        "share_on_pinterest": "Przypnij na Pinterest"
+      }
+    },
+    "search": {
+      "label": "Szukaj",
+      "placeholder": "Wpisz szukaną frazę...",
+      "category_label": "Szukaj w kategoriach",
+      "category_placeholder": "Wpisz nazwę produktu, średnicę, symbol lub producenta",
+      "clear": "Wyczyść wyszukiwanie",
+      "submit": "Szukaj",
+      "no_results": "Nie znaleziono wyników",
+      "empty_search_message": "Pole wyszukiwania nie może być puste",
+      "results_with_count": {
+        "one": "{{ count }} wynik dla \"{{ terms }}\"",
+        "other": "{{ count }} wyników dla \"{{ terms }}\""
+      },
+      "title": "Przeszukaj naszą stronę",
+      "heading": {
+        "one": "Wynik wyszukiwania",
+        "other": "Wyniki wyszukiwania"
+      },
+      "search_for": "Szukaj",
+      "products": "Produkty",
+      "loading": "Ładowanie",
+      "clear_search_term": "Wyczyść frazę",
+      "number_of_results": "{{ result_number }} z {{ results_count }}",
+      "number_of_results_found": "Znaleziono {{ results_count }} wyników",
+      "one_result_found": "Znaleziono 1 wynik",
+      "results_count": {
+        "one": "{{ count }} wynik",
+        "other": "{{ count }} wyniki"
+      }
+    },
+    "newsletter_form": {
+      "newsletter_email": "Zapisz się do newslettera",
+      "email_placeholder": "Adres e-mail",
+      "confirmation": "Dziękujemy za zapis!",
+      "submit": "Zapisz się"
+    },
+    "filters": {
+      "show_more": "Pokaż więcej",
+      "show_less": "Pokaż mniej"
+    },
+    "payment": {
+      "method": "Metody płatności"
+    },
+    "country": {
+      "dropdown_label": "Kraj/region"
+    },
+    "language": {
+      "dropdown_label": "Język"
+    },
+    "breadcrumbs": {
+      "home": "Strona główna"
+    }
+  },
+  "sections": {
+    "header": {
+      "announcement_bar_label": "Komunikat"
+    },
+    "slideshow": {
+      "next_slide": "Następny slajd",
+      "previous_slide": "Poprzedni slajd",
+      "pause_slideshow": "Wstrzymaj pokaz slajdów",
+      "rotate_slideshow": "Odtwórz pokaz slajdów",
+      "load_slide": "Wczytaj slajd {{ slide_number }}",
+      "navigation_instructions": "Użyj strzałek lewo/prawo lub przesuń palcem, aby nawigować"
+    },
+    "featured_product": {
+      "title": "Polecany produkt",
+      "gallery_thumbnail_alt": "Wczytaj obraz do galerii, {{ imageAlt }}",
+      "video_thumbnail_alt": "Wczytaj i odtwórz wideo w galerii, {{ imageAlt }}",
+      "model_thumbnail_alt": "Wczytaj model 3D do galerii, {{ imageAlt }}"
+    },
+    "map": {
+      "address_error": "Błąd podczas wyszukiwania adresu",
+      "address_no_results": "Brak wyników dla tego adresu",
+      "address_query_limit_html": "Przekroczono limit użycia Google API. Rozważ uaktualnienie do <a href=\"https://developers.google.com/maps/premium/usage-limits\">Planu Premium</a>.",
+      "auth_error_html": "Wystąpił problem z autoryzacją konta Google Maps.",
+      "section_heading": "Lokalizacja"
+    },
+    "video": {
+      "play": "Odtwórz wideo {{ video_title }}",
+      "pause": "Wstrzymaj wideo {{ video_title }}",
+      "resume": "Wznów wideo {{ video_title }}",
+      "close": "Zamknij wideo {{ video_title }}"
+    },
+    "wiertla_logos": {
+      "name": "Zaufani partnerzy",
+      "settings": {
+        "title": {
+          "label": "Tytuł",
+          "default": "Nasi zaufani partnerzy"
+        },
+        "subtitle": {
+          "label": "Podtytuł",
+          "default": "Współpracujemy z najlepszymi markami w branży"
+        }
+      },
+      "brands": {
+        "sandvik": "Sandvik",
+        "seco": "Seco",
+        "walter": "Walter",
+        "kennametal": "Kennametal",
+        "iscar": "Iscar"
+      },
+      "presets": {
+        "name": "Zaufani partnerzy",
+        "category": "Sekcje niestandardowe"
+      }
+    },
+    "wiertla_categories": {
+      "name": "Kategorie sklepu",
+      "settings": {
+        "title": {
+          "label": "Tytuł",
+          "default": "Kupuj wg kategorii"
+        },
+        "subtitle": {
+          "label": "Podtytuł",
+          "default": "Przeglądaj naszą szeroką ofertę narzędzi i akcesoriów CNC"
+        },
+        "view_all_link": {
+          "label": "Link \"Zobacz wszystkie\""
+        }
+      },
+      "blocks": {
+        "category": {
+          "name": "Kategoria",
+          "settings": {
+            "name": {
+              "label": "Nazwa kategorii",
+              "info": "Nazwa kategorii"
+            },
+            "icon": {
+              "label": "Ikona kategorii",
+              "info": "Użyj emotikony lub ikony tekstowej"
+            },
+            "link": {
+              "label": "Link do kategorii"
+            },
+            "count": {
+              "label": "Liczba produktów"
+            }
+          }
+        }
+      },
+      "categories": {
+        "drill_bits": "Wiertła",
+        "end_mills": "Frez trzpieniowy",
+        "lathe_tools": "Narzędzia tokarskie",
+        "tool_holders": "Oprawki narzędziowe"
+      },
+      "products": "produkty",
+      "view_all": "Zobacz wszystkie kategorie",
+      "presets": {
+        "name": "Kategorie sklepu",
+        "category": "Sekcje niestandardowe"
+      }
+    }
+  },
+  "blogs": {
+    "article": {
+      "view_all": "Zobacz wszystkie",
+      "view_all_blogs": "Więcej {{ blog }}",
+      "all_topics": "Wszystkie tematy",
+      "by_author": "autor: {{ author }}",
+      "posted_in": "Opublikowano w",
+      "read_more": "Czytaj więcej",
+      "read_more_title": "Czytaj więcej: {{ title }}",
+      "back_to_blog": "Wróć do {{ title }}",
+      "tags": "Tagi",
+      "older_post": "Starsze",
+      "newer_post": "Nowsze",
+      "article_with_count": {
+        "one": "{{ count }} artykuł",
+        "other": "{{ count }} artykuły"
+      }
+    },
+    "comments": {
+      "title": "Zostaw komentarz",
+      "name": "Imię",
+      "email": "Email",
+      "message": "Wiadomość",
+      "post": "Dodaj komentarz",
+      "moderated": "Uwaga: komentarze są publikowane po zatwierdzeniu",
+      "success_moderated": "Komentarz został dodany. Opublikujemy go wkrótce, ponieważ blog jest moderowany.",
+      "success": "Komentarz został dodany! Dziękujemy!",
+      "unapproved": "Podany adres e-mail nie jest zatwierdzony do publikowania komentarzy.",
+      "comments_with_count": {
+        "one": "{{ count }} komentarz",
+        "other": "{{ count }} komentarze"
+      }
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Koszyk",
+      "note": "Dodaj uwagę do zamówienia",
+      "removed_item_html": "Usunięto <span class=\"cart__removed-product-details\">({{ quantity }}) {{ link }}</span> z koszyka.",
+      "remove": "Usuń",
+      "subtotal": "Suma częściowa",
+      "new_subtotal": "Nowa suma częściowa",
+      "savings": "Oszczędzasz",
+      "taxes_and_shipping_at_checkout": "Podatki i dostawa naliczane przy kasie",
+      "taxes_and_shipping_policy_at_checkout_html": "Podatki i <a href=\"{{ link }}\">dostawa</a> naliczane przy kasie",
+      "taxes_included_but_shipping_at_checkout": "Podatek wliczony, dostawa naliczana przy kasie",
+      "taxes_included_and_shipping_policy_html": "Podatek wliczony. <a href=\"{{ link }}\">Dostawa</a> naliczana przy kasie.",
+      "update": "Aktualizuj",
+      "checkout": "Przejdź do kasy",
+      "empty": "Twój koszyk jest pusty.",
+      "cookies_required": "Włącz ciasteczka, aby korzystać z koszyka",
+      "continue_shopping": "Kontynuuj zakupy",
+      "cart_error": "Wystąpił błąd podczas aktualizacji koszyka. Spróbuj ponownie.",
+      "cart_add_error": "Wszystkie {{ title }} znajdują się już w koszyku.",
+      "cart_quantity_error_html": "Możesz dodać tylko [quantity] sztuk tego produktu do koszyka."
+    },
+    "label": {
+      "discounted_total": "Suma po rabacie",
+      "product": "Produkt",
+      "price": "Cena",
+      "price_column": "Szczegóły rabatu w kolumnie Cena.",
+      "product_details": "Szczegóły produktu",
+      "quantity": "Ilość",
+      "qty": "Szt",
+      "regular_total": "Suma regularna",
+      "remove": "Usuń {{ product }}",
+      "total": "Razem",
+      "update": "Aktualizuj",
+      "discounted_price": "Cena po rabacie",
+      "original_price": "Cena regularna"
+    },
+    "popup": {
+      "added_to_cart": "Dodano do koszyka",
+      "cart_count": {
+        "one": "{{ count }} produkt",
+        "other": "{{ count }} produkty"
+      },
+      "product_details": "Szczegóły produktu",
+      "quantity": "Szt",
+      "quantity_label": "Ilość: {{ quantity_count }}"
+    }
+  },
+  "collections": {
+    "general": {
+      "view_all": "Zobacz wszystkie",
+      "view_all_label": "Zobacz wszystkie produkty w kolekcji {{ collection_name }}",
+      "no_matches": "Przepraszamy, w tej kolekcji nie ma produktów",
+      "items_with_count": {
+        "one": "{{ count }} produkt",
+        "other": "{{ count }} produktów"
+      },
+      "collection_label": "Kolekcja"
+    },
+    "catalog": {
+      "title": "Katalog"
+    },
+    "sorting": {
+      "title": "Sortuj"
+    },
+    "filters": {
+      "title_tags": "Filtruj",
+      "clear": "Wyczyść",
+      "all_tags": "Wszystkie produkty",
+      "to": "Do",
+      "from": "Od"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Imię",
+      "email": "Email",
+      "phone": "Numer telefonu",
+      "message": "Wiadomość",
+      "submit": "Wyślij",
+      "post_success": "Dziękujemy za kontakt. Odezwiemy się najszybciej jak to możliwe.",
+      "error_heading": "Popraw następujące błędy:"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Moje konto",
+      "details": "Szczegóły konta",
+      "view_addresses": "Zobacz adresy",
+      "return": "Powrót do szczegółów konta"
+    },
+    "activate_account": {
+      "title": "Aktywuj konto",
+      "subtext": "Utwórz hasło, aby aktywować konto.",
+      "password": "Hasło",
+      "password_confirm": "Potwierdź hasło",
+      "submit": "Aktywuj konto",
+      "cancel": "Odrzuć zaproszenie"
+    },
+    "addresses": {
+      "title": "Twoje adresy",
+      "default": "Domyślny",
+      "add_new": "Dodaj nowy adres",
+      "edit_address": "Edytuj adres",
+      "first_name": "Imię",
+      "last_name": "Nazwisko",
+      "company": "Firma",
+      "address1": "Adres",
+      "address2": "Mieszkanie, lokal itp.",
+      "city": "Miasto",
+      "country": "Kraj/region",
+      "province": "Województwo",
+      "zip": "Kod pocztowy",
+      "phone": "Telefon",
+      "set_default": "Ustaw jako domyślny",
+      "add": "Dodaj adres",
+      "update": "Zaktualizuj adres",
+      "cancel": "Anuluj",
+      "edit": "Edytuj",
+      "delete": "Usuń",
+      "delete_confirm": "Czy na pewno chcesz usunąć ten adres?"
+    },
+    "login": {
+      "title": "Logowanie",
+      "email": "Email",
+      "password": "Hasło",
+      "forgot_password": "Zapomniałeś hasła?",
+      "sign_in": "Zaloguj się",
+      "guest_title": "Kontynuuj jako gość",
+      "guest_continue": "Kontynuuj"
+    },
+    "orders": {
+      "title": "Historia zamówień",
+      "order_number": "Zamówienie",
+      "order_number_link": "Numer zamówienia {{ number }}",
+      "date": "Data",
+      "payment_status": "Status płatności",
+      "fulfillment_status": "Status realizacji",
+      "total": "Razem",
+      "none": "Nie złożyłeś jeszcze żadnych zamówień."
+    },
+    "order": {
+      "title": "Zamówienie {{ name }}",
+      "date_html": "Złożono {{ date }}",
+      "cancelled_html": "Zamówienie anulowane {{ date }}",
+      "cancelled_reason": "Powód: {{ reason }}",
+      "billing_address": "Adres rozliczeniowy",
+      "payment_status": "Status płatności",
+      "shipping_address": "Adres dostawy",
+      "fulfillment_status": "Status realizacji",
+      "discount": "Rabat",
+      "shipping": "Dostawa",
+      "tax": "Podatek",
+      "product": "Produkt",
+      "sku": "SKU",
+      "price": "Cena",
+      "quantity": "Ilość",
+      "total": "Razem",
+      "refund_amount": "Kwota zwrotu",
+      "fulfilled_at": "Data realizacji",
+      "track_shipment": "Śledź przesyłkę",
+      "tracking_url": "Link do śledzenia",
+      "tracking_company": "Przewoźnik",
+      "tracking_number": "Numer śledzenia",
+      "subtotal": "Suma częściowa"
+    },
+    "recover_password": {
+      "title": "Zresetuj hasło",
+      "email": "Email",
+      "submit": "Wyślij",
+      "cancel": "Anuluj",
+      "subtext": "Wyślemy Ci wiadomość e-mail z linkiem do resetu hasła.",
+      "success": "Wysłaliśmy e-mail z linkiem do aktualizacji hasła."
+    },
+    "reset_password": {
+      "title": "Ustaw nowe hasło",
+      "subtext": "Wprowadź nowe hasło dla {{ email }}",
+      "password": "Hasło",
+      "password_confirm": "Potwierdź hasło",
+      "submit": "Zresetuj hasło"
+    },
+    "register": {
+      "title": "Utwórz konto",
+      "first_name": "Imię",
+      "last_name": "Nazwisko",
+      "email": "Email",
+      "password": "Hasło",
+      "submit": "Utwórz"
+    }
+  },
+  "homepage": {
+    "general": {
+      "title": "Strona główna"
+    },
+    "onboarding": {
+      "product_title": "Nazwa produktu",
+      "product_description": "To miejsce służy do opisu szczegółów produktu. Opowiedz o wyglądzie, materiale i stylu. Dodaj informacje o kolorze, materiałach, rozmiarze i miejscu produkcji.",
+      "collection_title": "Nazwa kolekcji",
+      "blog_title": "Tytuł wpisu",
+      "blog_excerpt": "Sklep nie opublikował jeszcze wpisów na blogu. Blog służy do informowania o nowych produktach, poradach lub innych wiadomościach dla klientów.",
+      "blog_author": "Autor",
+      "no_content": "Ta sekcja nie zawiera jeszcze treści. Dodaj treść w panelu bocznym."
+    }
+  },
+  "layout": {
+    "navigation": {
+      "search": "Szukaj",
+      "expand": "rozwiń",
+      "collapse": "zwiń",
+      "menu": "Menu"
+    },
+    "cart": {
+      "title": "Koszyk",
+      "items_count": {
+        "one": "produkt",
+        "other": "produkty"
+      }
+    },
+    "customer": {
+      "account": "Konto",
+      "log_out": "Wyloguj",
+      "log_in": "Zaloguj",
+      "create_account": "Utwórz konto"
+    },
+    "footer": {
+      "social_platform": "{{ name }} w serwisie {{ platform }}"
+    }
+  },
+  "products": {
+    "product": {
+      "regular_price": "Cena regularna",
+      "sold_out": "Wyprzedane",
+      "unavailable": "Niedostępne",
+      "availability": "Dostępność",
+      "on_sale": "Promocja",
+      "from_lowest_price_html": "od {{ lowest_price }}",
+      "sale_price": "Cena promocyjna",
+      "quantity": "Ilość",
+      "add_to_cart": "Dodaj do koszyka",
+      "loader_label": "Dodawanie produktu do koszyka",
+      "back_to_collection": "Wróć do {{ title }}",
+      "vendor": "Producent",
+      "quantity_minimum_message": "Ilość musi wynosić co najmniej 1",
+      "include_taxes": "Podatek wliczony.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Dostawa</a> naliczana przy kasie.",
+      "unit_price_label": "Cena jednostkowa",
+      "view_cart": "Zobacz koszyk",
+      "on_sale_from_html": "W promocji od {{ price }}",
+      "add_to_cart_confirm_html": "<a data-after-add-cart-trigger href=\"{{ cart_url }}\">Zobacz koszyk</a> lub <a href=\"{{ link_url }}\">kontynuuj zakupy</a>",
+      "view_in_space": "Zobacz w przestrzeni",
+      "view_in_space_label": "Zobacz w przestrzeni — otwiera okno AR",
+      "color_swatch_trigger": "Kolor",
+      "read_more": "Czytaj więcej"
+    }
+  },
+  "store_availability": {
+    "general": {
+      "view_store_info": "Zobacz informacje o sklepie",
+      "check_other_stores": "Sprawdź dostępność w innych sklepach",
+      "pick_up_available": "Odbiór dostępny",
+      "pick_up_currently_unavailable": "Odbiór chwilowo niedostępny",
+      "pick_up_available_at_html": "Odbiór dostępny w <strong>{{ location_name }}</strong>",
+      "pick_up_unavailable_at_html": "Odbiór chwilowo niedostępny w <strong>{{ location_name }}</strong>"
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title_html": "Oto Twoja karta podarunkowa {{ value }} dla {{ shop }}!",
+      "subtext": "Twoja karta podarunkowa",
+      "gift_card_code": "Kod karty podarunkowej",
+      "disabled": "Wyłączona",
+      "expired": "Wygasła dnia {{ expiry }}",
+      "active": "Wygasa dnia {{ expiry }}",
+      "redeem_html": "Użyj tego kodu przy kasie, aby zrealizować kartę na kwotę {{ value }}",
+      "shop_link": "Zacznij zakupy",
+      "print": "Wydrukuj kartę",
+      "remaining_html": "Pozostało: {{ balance }}",
+      "add_to_apple_wallet": "Dodaj do Apple Wallet",
+      "qr_image_alt": "Kod QR — zeskanuj, aby zrealizować kartę"
+    }
+  },
+  "date_formats": {
+    "month_day_year": "%B %d, %Y"
+  },
   "footer": {
     "main_title": "Wiertła CNC - Markowe Wiertła w Super Cenach",
     "main_description": "Oferujemy szeroki wybór wierteł CNC od renomowanych producentów takich jak Sandvik, Guhring, Arno oraz wiele innych. Nasze produkty charakteryzują się wysoką jakością, precyzją wykonania oraz konkurencyjnymi cenami. W ofercie znajdują się wiertła o różnych średnicach i zastosowaniach, idealne zarówno do profesjonalnych warsztatów, jak i do zastosowań hobbystycznych.",
@@ -105,24 +638,6 @@
       "rent": "WYPOŻYCZ",
       "regenerate": "regeneruj",
       "sharpen": "naostrz"
-    }
-  },
-  "general": {
-    "search": {
-      "label": "Szukaj",
-      "placeholder": "Wpisz szukaną frazę...",
-      "category_label": "Szukaj w kategoriach",
-      "category_placeholder": "Wpisz nazwę, średnicę, symbol lub producenta",
-      "clear": "Wyczyść",
-      "submit": "Szukaj",
-      "no_results": "Nie znaleziono wyników"
-    }
-  },
-  "cart": {
-    "general": {
-      "title": "Koszyk",
-      "empty": "Twój koszyk jest pusty.",
-      "continue_shopping": "Kontynuuj zakupy"
     }
   }
 }

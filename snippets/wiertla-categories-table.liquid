@@ -145,64 +145,96 @@
 </div>
 
 <script>
-  // Function to update table headers based on active tab
+  // Function to update table headers based on active tab (applies to all instances)
   function updateTableHeaders(tabType) {
-    
-    // Remove all tab-active classes
-    const tableContainer = document.querySelector('.wiertla-categories__table-container');
-    if (tableContainer) {
-      tableContainer.classList.remove('tab-active-wiertla', 'tab-active-plytki', 'tab-active-koronki');
-      tableContainer.classList.add(`tab-active-${tabType}`);
-    }
-    
-    // Always hide any mobile header containers first
-    const mobileHeaders = document.querySelectorAll('.wiertla-categories__mobile-table-header');
-    mobileHeaders.forEach(header => { header.style.display = 'none'; });
-    
-    // Explicitly control thead rows visibility
-    const headW = document.querySelector('.wiertla-categories__table-header-wiertla');
-    const headP = document.querySelector('.wiertla-categories__table-header-plytki');
-    const headK = document.querySelector('.wiertla-categories__table-header-koronki');
-    if (headW) headW.style.display = 'none';
-    if (headP) headP.style.display = 'none';
-    if (headK) headK.style.display = 'none';
     const isTabletMobile = window.innerWidth <= 1024;
-    if (!isTabletMobile) {
-      if (tabType === 'wiertla' && headW) headW.style.display = 'table-row';
-      if (tabType === 'plytki' && headP) headP.style.display = 'table-row';
-      if (tabType === 'koronki' && headK) headK.style.display = 'table-row';
-    }
-    
-    // Show mobile header only on tablet/mobile
-    if (isTabletMobile) {
-      const plytki = document.querySelector('.wiertla-categories__mobile-header-plytki');
-      if (plytki) plytki.style.display = 'block';
-    }
+    // For each table container present (normal and fullscreen clones)
+    document.querySelectorAll('.wiertla-categories__table-container').forEach(function(container) {
+      // Toggle tab-active class on this container
+      container.classList.remove('tab-active-wiertla', 'tab-active-plytki', 'tab-active-koronki');
+      container.classList.add(`tab-active-${tabType}`);
+
+      // Hide mobile header blocks within this container
+      container.querySelectorAll('.wiertla-categories__mobile-table-header').forEach(function(header) {
+        header.style.display = 'none';
+      });
+
+      // Control visibility of thead rows within this container only
+      const headW = container.querySelector('.wiertla-categories__table-header-wiertla');
+      const headP = container.querySelector('.wiertla-categories__table-header-plytki');
+      const headK = container.querySelector('.wiertla-categories__table-header-koronki');
+      if (headW) headW.style.display = 'none';
+      if (headP) headP.style.display = 'none';
+      if (headK) headK.style.display = 'none';
+
+      if (!isTabletMobile) {
+        if (tabType === 'wiertla' && headW) headW.style.display = 'table-row';
+        if (tabType === 'plytki' && headP) headP.style.display = 'table-row';
+        if (tabType === 'koronki' && headK) headK.style.display = 'table-row';
+      } else {
+        const plytkiHeader = container.querySelector('.wiertla-categories__mobile-header-plytki');
+        if (plytkiHeader) plytkiHeader.style.display = 'block';
+      }
+    });
   }
   
   // Listen for tab changes
-  document.addEventListener('DOMContentLoaded', function() {
-    // Set initial state
-    const activeTab = document.querySelector('.wiertla-categories__tab.active');
-    if (activeTab) {
-      const tabType = activeTab.getAttribute('data-tab-type');
+  (function initWiertlaCategoriesTable() {
+    function bind() {
+      // Set initial state
+      const params = new URLSearchParams(window.location.search);
+      let tabType = params.get('mainType');
+      if (!tabType) {
+        const activeTab = document.querySelector('.wiertla-categories__tab.active');
+        tabType = activeTab ? activeTab.getAttribute('data-tab-type') : null;
+      }
+      if (!tabType) tabType = 'wiertla';
       updateTableHeaders(tabType);
-    }
-    // Re-evaluate on resize to keep headers consistent
-    window.addEventListener('resize', function() {
-      const active = document.querySelector('.wiertla-categories__tab.active');
-      const t = active ? active.getAttribute('data-tab-type') : 'wiertla';
-      updateTableHeaders(t);
-    });
-    
-    // Add event listeners to all tabs
-    document.querySelectorAll('.wiertla-categories__tab').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        const tabType = this.getAttribute('data-tab-type');
-        updateTableHeaders(tabType);
+
+      // Re-evaluate on resize to keep headers consistent
+      window.addEventListener('resize', function() {
+        const active = document.querySelector('.wiertla-categories__tab.active');
+        const t = active ? active.getAttribute('data-tab-type') : 'wiertla';
+        updateTableHeaders(t);
       });
-    });
-  });
+
+      // Add event listeners to all tabs
+      document.querySelectorAll('.wiertla-categories__tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          const tt = this.getAttribute('data-tab-type');
+          updateTableHeaders(tt);
+        });
+      });
+
+      // Make rows clickable via delegation
+      const tableBody = document.getElementById('productsTableBody');
+      if (tableBody && !tableBody.dataset.clickBound) {
+        tableBody.addEventListener('click', function(e) {
+          if (e.target.closest('.wiertla-categories__rent-button')) return;
+          const hrefEl = e.target.closest('[data-href]');
+          let url = hrefEl ? hrefEl.getAttribute('data-href') : '';
+          if (!url) {
+            const tr = e.target.closest('tr[data-href]');
+            if (tr) url = tr.getAttribute('data-href');
+          }
+          if (url) {
+            if (e.metaKey || e.ctrlKey) {
+              window.open(url, '_blank');
+            } else {
+              window.location.href = url;
+            }
+          }
+        });
+        tableBody.dataset.clickBound = 'true';
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bind);
+    } else {
+      bind();
+    }
+    document.addEventListener('shopify:section:load', bind);
+  })();
   
   // Make function available globally for debugging
   window.testTableHeaders = function(tabType) {

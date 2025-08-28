@@ -417,6 +417,58 @@
             return v;
         }
       };
+
+      // Expose fullscreen helpers to window for manual debugging
+      try {
+        if (!window.WiertlaCNC) window.WiertlaCNC = {};
+        window.WiertlaCNC.applyFullscreenFilters = function() {
+          try { console.log('[Wiertla] manual call → applyFullscreenFilters'); } catch (e) {}
+          try { applyFullscreenFilters(); } catch (e) { console.error(e); }
+        };
+        window.WiertlaCNC.debugState = function() {
+          const state = {
+            activeTabType: window.WiertlaCNC.activeTabType,
+            itemsPerPage: window.itemsPerPage,
+            currentPage: window.currentPage,
+            productsLen: window.WiertlaCNC && window.WiertlaCNC.products ? window.WiertlaCNC.products.length : 'n/a'
+          };
+          console.table(state);
+          return state;
+        };
+      } catch (e) {}
+
+      // Log and trigger when fullscreen is toggled via button
+      document.addEventListener('click', function(e) {
+        const fsBtn = e.target.closest('.wiertla-categories__fullscreen-btn');
+        if (!fsBtn) return;
+
+        // If the button is inside the fullscreen header, it's the CLOSE button → do nothing here
+        if (fsBtn.closest('.wiertla-categories__fullscreen-header')) return;
+
+        try { console.log('[Wiertla] fullscreen open button clicked'); } catch (e2) {}
+        // Open fullscreen and clone content
+        setTimeout(function(){
+          try { window.openWiertlaFullscreen && window.openWiertlaFullscreen(); } catch (e4) { console.error(e4); }
+        }, 100);
+      });
+
+      // Observe fullscreen activation and render
+      (function observeFullscreen() {
+        const fs = document.querySelector('.wiertla-categories__fullscreen-view');
+        if (!fs || !window.MutationObserver) return;
+        const obs = new MutationObserver(function(muts){
+          muts.forEach(m => {
+            if (m.attributeName === 'class') {
+              const isActive = fs.classList.contains('active');
+              try { console.log('[Wiertla] fullscreen active:', isActive); } catch (e) {}
+              if (isActive) {
+                try { applyFullscreenFilters(); } catch (e) { console.error(e); }
+              }
+            }
+          });
+        });
+        obs.observe(fs, { attributes: true });
+      })();
     
     // Add event listeners for the status filter buttons (Nowe/Używane)
     const statusFilterButtons = document.querySelectorAll('.wiertla-categories__status-filter');
@@ -655,36 +707,24 @@
           ]
         });
       {% endfor %}
+{% endpaginate %}
       // Assign products to global WiertlaCNC object
       window.WiertlaCNC = window.WiertlaCNC || {};
       // Initialize with only the first 250 for fast first paint
       window.WiertlaCNC.products = Array.isArray(wiertlaProducts) && wiertlaProducts.length > 250
         ? wiertlaProducts.slice(0, 250)
         : wiertlaProducts;
-      // Debug: initial inline dataset
-      try {
-        console.log('[Wiertla] Initial dataset (inline):', {
-          count: window.WiertlaCNC.products ? window.WiertlaCNC.products.length : 0,
-          sample: (window.WiertlaCNC.products || []).slice(0, 5)
-        });
-      } catch (_) {}
 
       // Background: lazy fetch all products from JSON view and merge
       window.WiertlaCNC.fetchAllShopProducts = async function() {
         try {
           const url = '/collections/all?view=wiertla-products-json&limit=2500';
-          console.log('[Wiertla] Hydration: fetching', url);
-          console.time('[Wiertla] Hydration fetch');
           const res = await fetch(url, { credentials: 'same-origin' });
           if (!res.ok) {
-            console.warn('[Wiertla] Hydration: response not OK', res.status);
-            console.timeEnd('[Wiertla] Hydration fetch');
             return [];
           }
           const data = await res.json();
           const products = Array.isArray(data.products) ? data.products : [];
-          console.timeEnd('[Wiertla] Hydration fetch');
-          console.log('[Wiertla] Hydration: received', products.length, 'products');
           return products;
         } catch (e) {
           console.error('[Wiertla] Hydration: fetch failed', e);
@@ -695,7 +735,6 @@
 
       window.WiertlaCNC.mergeAndRefresh = function(newProducts) {
         if (!Array.isArray(newProducts) || newProducts.length === 0) {
-          console.log('[Wiertla] Hydration: nothing to merge');
           return;
         }
         const before = (window.WiertlaCNC.products || []).length;
@@ -707,8 +746,6 @@
         });
         window.WiertlaCNC.products = Array.from(byId.values());
         const after = window.WiertlaCNC.products.length;
-        console.log('[Wiertla] Hydration: merged', newProducts.length, '→ total', after, '(was', before, ')');
-        console.log('[Wiertla] Hydration: sample after merge:', window.WiertlaCNC.products.slice(0, 5));
         // Keep current page if possible
         const prevPage = window.currentPage || 1;
         applyFilters();
@@ -723,11 +760,8 @@
       window.WiertlaCNC.hydrateAllShopProductsIncremental = async function() {
         const baseUrl = '/collections/all?view=wiertla-products-json';
         try {
-          console.log('[Wiertla] Hydration: starting incremental fetch');
           // Fetch page 1
-          console.time('[Wiertla] Hydration page 1');
           let res = await fetch(baseUrl + '&page=1', { credentials: 'same-origin' });
-          console.timeEnd('[Wiertla] Hydration page 1');
           if (!res.ok) {
             console.warn('[Wiertla] Hydration: page 1 not OK', res.status);
             return;
@@ -735,7 +769,6 @@
           let data = await res.json();
           let products = Array.isArray(data.products) ? data.products : [];
           const totalPages = Number(data.pagination && data.pagination.pages) || 1;
-          console.log('[Wiertla] Hydration: page 1/', totalPages, 'received', products.length);
           if (products.length) {
             window.WiertlaCNC.mergeAndRefresh(products);
           }
@@ -750,13 +783,11 @@
             }
             data = await res.json();
             products = Array.isArray(data.products) ? data.products : [];
-            console.log('[Wiertla] Hydration: page', p, '/', totalPages, 'received', products.length);
             if (products.length) {
               window.WiertlaCNC.mergeAndRefresh(products);
             }
             await new Promise(r => setTimeout(r, 50));
           }
-          console.log('[Wiertla] Hydration: complete');
           try {
             window.dispatchEvent(new CustomEvent('wiertla:hydrateComplete', { detail: { total: (window.WiertlaCNC.products || []).length } }));
           } catch (_) {}
@@ -783,12 +814,6 @@
           }
         });
         
-        console.group('🔍 ALL TYP FIELD VALUES');
-        console.log(`📊 Total products: ${wiertlaProducts.length}`);
-        console.log(`📊 Products with TYP values: ${productsWithTyp.length}`);
-        console.log(`📋 Unique TYP values:`, Array.from(typValues).sort());
-        console.log(`📝 Sample products with TYP:`, productsWithTyp.slice(0, 10));
-        console.groupEnd();
         
         return {
           totalProducts: wiertlaProducts.length,
@@ -918,19 +943,7 @@
     // Debug function to display initial products
     window.showInitialProducts = function(limit = 20) {
       allProducts.slice(0, limit).forEach((product, index) => {
-        console.log(`\n📦 Product ${index + 1}:`, {
-          id: product.id,
-          title: product.title,
-          sku: product.sku,
-          vendor: product.vendor,
-          custom_typ: product.custom_typ,
-          custom_symbol: product.custom_symbol,
-          custom_manufacturer: product.custom_manufacturer,
-          custom_category: product.custom_category,
-          rodzaj: product.rodzaj,
-          price: product.price,
-          handle: product.handle
-        });
+        
         
         // Show all custom fields
         const customFields = {};
@@ -979,26 +992,7 @@
           return typ.includes('płytkowe') || typ.includes('plytkowe') || typ.includes('plate') || sku.startsWith('PR');
         };
         const plytki = products.filter(isPlytki);
-        console.group('[DEBUG] PLYTKI SAMPLES');
-        console.log('Total products:', products.length, 'Plytki count:', plytki.length);
-        plytki.slice(0, limit).forEach((p, idx) => {
-          console.log(`#${idx + 1}`, {
-            id: p.id,
-            title: p.title,
-            handle: p.handle,
-            sku: p.sku,
-            vendor: p.vendor,
-            custom_typ: p.custom_typ,
-            rodzaj: p.rodzaj,
-            // Quantity-related
-            custom_szt: p.custom_szt,
-            custom_ilosc: p.custom_ilosc,
-            metafields_szt: p?.metafields?.custom?.szt,
-            metafields_ilosc: p?.metafields?.custom?.ilosc,
-            inventory_quantity: p.quantity,
-          });
-        });
-        console.groupEnd();
+       
         return plytki.slice(0, limit);
       } catch (e) {
         try { console.error('[DEBUG] logPlytkiSamples failed', e); } catch (_) {}
@@ -1689,15 +1683,9 @@
         const activeTabType = window.WiertlaCNC.activeTabType || 'wiertla';
         
         // 🐛 DEBUG: Log category filter details
-        console.group(`🔍 CATEGORY FILTER DEBUG`);
-        console.log(`📂 Selected Category: "${window.selectedCategory}"`);
-        console.log(`📑 Active Tab: "${activeTabType}"`);
-        console.log(`📊 Products before category filter: ${beforeCategoryCount}`);
-        console.log(`🔍 Sample of first product data:`, filteredProducts[0]);
         
         // Special debug for Sandvik 880 issues
         if (window.selectedCategory === 'sandvik' && activeTabType === 'wiertla') {
-          console.log(`🔍 SANDVIK 880 DEBUG - Looking for products with "880" or "sandvik"`);
           let sandvikCount = 0;
           filteredProducts.forEach((product, index) => {
             if (index < 10) { // Check first 10 products for debug
@@ -1775,10 +1763,6 @@
                 
                 // Debug sandvik matching
                 if (matches || productTitle.includes('880')) {
-                  console.log(`🔍 SANDVIK 880 MATCH TEST for: "${product.title || product.sku || 'Unknown'}"`);
-                  console.log(`   📝 custom_typ: "${product.custom_typ || 'N/A'}"`);
-                  console.log(`   📝 TYP has 880: ${productTyp.includes('880')}`);
-                  console.log(`   🎯 FINAL MATCH: ${matches}`);
                 }
                 break;
               
@@ -1919,7 +1903,6 @@
             filteredProducts = filteredProducts.filter(product => {
               // Check multiple possible field names for TYP
               const typValue = product.custom_typ;
-              console.log(typValue,product.metafields.custom.typ);
               const matches = typValue && typValue?.toLowerCase()?.includes(expectedTypeValue?.toLowerCase() || '');
               
               
@@ -2297,6 +2280,62 @@
           </div>
         `;
     
+        // Inject mainType dropdown into cloned filters-left, next to "Wszystkie"
+        (function addMainTypeDropdown() {
+          const filtersLeft = filters.querySelector('.wiertla-categories__filters-left');
+          if (!filtersLeft) return;
+          const wszBtn = filtersLeft.querySelector('.wiertla-categories__filter-button[data-filter="wszystkie"]');
+          const select = document.createElement('select');
+          select.className = 'wiertla-categories__filter wiertla-filter-mainType';
+          select.setAttribute('data-filter', 'mainType');
+          select.innerHTML = `
+            <option value="wiertla">WIERTŁA</option>
+            <option value="plytki">PŁYTKI</option>
+            <option value="koronki">KORONKI</option>
+          `;
+          if (wszBtn) {
+            wszBtn.insertAdjacentElement('afterend', select);
+          } else {
+            filtersLeft.insertBefore(select, filtersLeft.firstChild);
+          }
+
+          // Show correct filter select based on tab
+          function setFilterVisibility(tabType) {
+            const typSel = filtersLeft.querySelector('.wiertla-filter-type[data-tab="wiertla"]');
+            const rodzP = filtersLeft.querySelector('.wiertla-filter-rodzaj[data-tab="plytki"]');
+            const rodzK = filtersLeft.querySelector('.wiertla-filter-rodzaj[data-tab="koronki"]');
+            if (typSel) typSel.style.display = (tabType === 'wiertla') ? '' : 'none';
+            if (rodzP) rodzP.style.display = (tabType === 'plytki') ? '' : 'none';
+            if (rodzK) rodzK.style.display = (tabType === 'koronki') ? '' : 'none';
+          }
+
+          // Initialize selection from URL or default
+          const urlParams = new URLSearchParams(window.location.search);
+          const initialTabType = urlParams.get('mainType') || (window.WiertlaCNC && window.WiertlaCNC.activeTabType) || 'wiertla';
+          select.value = initialTabType;
+          if (!window.WiertlaCNC) window.WiertlaCNC = {};
+          window.WiertlaCNC.activeTabType = initialTabType;
+          setFilterVisibility(initialTabType);
+
+          // Handle changes
+          select.addEventListener('change', function() {
+            const tabType = this.value;
+            window.WiertlaCNC.activeTabType = tabType;
+            // Update URL param
+            const url = new URL(window.location.href);
+            url.searchParams.set('mainType', tabType);
+            window.history.replaceState({}, '', url.toString());
+            // Reset pagination and enforce 250 per page in fullscreen
+            window.currentPage = 1;
+            window.itemsPerPage = 250;
+            // Update headers and rerender
+            try { updateTableHeaders(tabType); } catch (e) {}
+            setFilterVisibility(tabType);
+            applyFullscreenFilters();
+          });
+        })();
+
+        rightColumn.appendChild(fullscreenTabs);
         // Add filters and table to right column
         rightColumn.appendChild(filters);
         rightColumn.appendChild(tableContainer);
@@ -2313,6 +2352,47 @@
         // Show fullscreen mode
         fullscreenMode.classList.add('active');
         document.body.style.overflow = 'hidden';
+    
+        // Use URL or default to set initial tab for fullscreen
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialTabType = urlParams.get('mainType') || (window.WiertlaCNC && window.WiertlaCNC.activeTabType) || 'wiertla';
+        if (!window.WiertlaCNC) window.WiertlaCNC = {};
+        window.WiertlaCNC.activeTabType = initialTabType;
+
+        // Set items per page to 250 in fullscreen context
+        window.currentPage = 1;
+        window.itemsPerPage = 250;
+
+        // Activate initial tab button
+        fullscreenTabs.querySelectorAll('.wiertla-categories__fullscreen-tab').forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-tab-type') === initialTabType);
+        });
+
+        // Ensure headers display according to current tab and viewport in fullscreen too
+        try { updateTableHeaders(initialTabType); } catch (e) {}
+
+        // Render table contents for fullscreen
+        applyFullscreenFilters();
+
+        // Wire up tab switching inside fullscreen
+        fullscreenTabs.addEventListener('click', function(e) {
+          const tabBtn = e.target.closest('.wiertla-categories__fullscreen-tab');
+          if (!tabBtn) return;
+          const tabType = tabBtn.getAttribute('data-tab-type');
+          // Update active state
+          fullscreenTabs.querySelectorAll('.wiertla-categories__fullscreen-tab').forEach(btn => btn.classList.remove('active'));
+          tabBtn.classList.add('active');
+          // Update global active tab and URL
+          window.WiertlaCNC.activeTabType = tabType;
+          const url = new URL(window.location.href);
+          url.searchParams.set('mainType', tabType);
+          window.history.replaceState({}, '', url.toString());
+          // Reset pagination for fullscreen and re-render
+          window.currentPage = 1;
+          window.itemsPerPage = 250;
+          try { updateTableHeaders(tabType); } catch (e) {}
+          applyFullscreenFilters();
+        });
     
         // Re-apply filters to the cloned table
         applyFullscreenFilters();
@@ -2332,14 +2412,17 @@
     }
     
     function applyFullscreenFilters() {
+      try { console.log('[Fullscreen] applyFullscreenFilters start', { activeTabType: window.WiertlaCNC && window.WiertlaCNC.activeTabType, itemsPerPage: window.itemsPerPage, currentPage: window.currentPage }); } catch (e) {}
       const filteredProducts = filterProducts();
+      try { console.log('[Fullscreen] filtered count', filteredProducts && filteredProducts.length); } catch (e) {}
       const startIndex = (window.currentPage - 1) * window.itemsPerPage;
       const endIndex = startIndex + window.itemsPerPage;
       const productsToShow = filteredProducts.slice(startIndex, endIndex);
       
-      const tableBody = document.getElementById('fullscreenProductsTableBody');
+      const tableBody = document.querySelector('.wiertla-categories__fullscreen-content .wiertla-categories__table tbody') || document.getElementById('fullscreenProductsTableBody');
+      try { console.log('[Fullscreen] tableBody found', !!tableBody); } catch (e) {}
       if (!tableBody) {
-        console.error('Fullscreen table body element not found!');
+        console.error('[Fullscreen] table body element not found!');
         return;
       }
       
@@ -2349,9 +2432,11 @@
         const noResultsRow = document.createElement('tr');
         noResultsRow.innerHTML = `<td colspan="7" style="text-align: center; padding: 20px;">${translations[currentLanguage].no_results}</td>`;
         tableBody.appendChild(noResultsRow);
+        try { console.log('[Fullscreen] no results'); } catch (e) {}
         return;
       }
       
+      try { console.log('[Fullscreen] render rows', productsToShow.length); } catch (e) {}
       productsToShow.forEach(product => {
         const row = document.createElement('tr');
         row.className = 'wiertla-categories__table-row';
@@ -2364,19 +2449,37 @@
         row.setAttribute('data-crown', product.custom_crown || '');
         row.setAttribute('data-vendor', product.vendor || product.custom_manufacturer || '');
         row.setAttribute('data-sku', product.sku || product.custom_symbol || product.custom_kod_producenta || '');
+        const productUrl = (product.url && product.url !== '#') ? product.url : (product.handle ? ('/products/' + product.handle) : '');
+        if (productUrl) row.setAttribute('data-href', productUrl);
+
+        const fiVal = (function(p){
+          const fi = p.custom_fi || p.custom_srednica || p.fi || (p.metafields && p.metafields.custom && p.metafields.custom.diameter) || p.diameter;
+          if (!fi) return '-';
+          const fiStr = String(fi).trim();
+          return fiStr ? ('⌀ ' + fiStr.replace(/^⌀\s*/, '')) : '-';
+        })(product);
+        const lenVal = (function(p){
+          const v = p.custom_working_length || p.custom_xd || (p.metafields && p.metafields.custom && p.metafields.custom.working_length) || p.length || p.d || p.depth;
+          return (v && String(v).trim()) ? String(v) : '-';
+        })(product);
+        const symVal = (function(p){
+          const v = p.custom_symbol || p.custom_kod_producenta || p.symbol || p.sku;
+          return (v && String(v).trim()) ? String(v) : '-';
+        })(product);
+        try { console.log('[Fullscreen] row', { fi: fiVal, len: lenVal, sym: symVal }); } catch (e) {}
         
         row.innerHTML = `
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--type">
             <img src="${product.typeIcon}" alt="${product.type}" class="wiertla-categories__type-icon">
           </td>
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--diameter">
-            ${product.diameter || '-'}
+            ${fiVal}
           </td>
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--length">
-            ${product.length || '-'}
+            ${lenVal}
           </td>
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--symbol">
-            ${product.symbol || '-'}
+            ${symVal}
           </td>
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--vendor" data-href="/products/${product.handle || ''}">
             ${product.vendor || product.custom_manufacturer || '-'}
@@ -2425,7 +2528,7 @@
       });
       
       // Update result count in fullscreen mode
-      const resultsCount = document.getElementById('fullscreenResultsCount');
+      const resultsCount = document.getElementById('fullscreenResultsCount') || document.querySelector('.wiertla-categories__fullscreen-right .wiertla-categories__results-numbers');
       if (resultsCount) {
         const startIndex = (window.currentPage - 1) * window.itemsPerPage + 1;
         const endIndex = Math.min(startIndex + productsToShow.length - 1, filteredProducts.length);
@@ -2434,8 +2537,8 @@
       }
       
       // Update pagination buttons
-      const prevButton = document.getElementById('fullscreenPrevPage');
-      const nextButton = document.getElementById('fullscreenNextPage');
+      const prevButton = document.getElementById('fullscreenPrevPage') || document.querySelector('.wiertla-categories__fullscreen-right #prevPage');
+      const nextButton = document.getElementById('fullscreenNextPage') || document.querySelector('.wiertla-categories__fullscreen-right #nextPage');
       
       if (prevButton) {
         prevButton.disabled = window.currentPage <= 1;
@@ -2647,12 +2750,6 @@
         const category = iconItem.dataset.category || 'wszystkie';
         
         // 🐛 DEBUG: Log icon click details
-        console.group(`🖱️ ICON CLICK DEBUG`);
-        console.log(`📂 Clicked Category: "${category}"`);
-        console.log(`🏷️ Icon Element:`, iconItem);
-        console.log(`📝 Data Attribute: data-category="${iconItem.dataset.category}"`);
-        console.log(`🔄 Will trigger filtering with selectedCategory = "${category}"`);
-        console.groupEnd();
         
         // If the clicked item is "Wszystkie", reset all filters except pagination
         if (category === 'wszystkie' || !category) {
@@ -2693,8 +2790,6 @@
         window.selectedCategory = category;
         window.currentPage = 1;
         
-        // 🐛 DEBUG: Log before applying filters
-        console.log(`🚀 About to call applyFilters() with selectedCategory = "${window.selectedCategory}"`);
         
         applyFilters();
     
@@ -2756,7 +2851,6 @@
       if (filterSelect) {
         // Skip processing during category resets to prevent interference
         if (window.isResettingCategories) {
-          console.log(`🚫 Skipping dropdown change during category reset`);
           return;
         }
         
@@ -2772,8 +2866,6 @@
             }
             window.WiertlaCNC.filters[filterType] = filterSelect.value;
             
-            console.log(`🔄 Filter changed: ${filterType} = "${filterSelect.value}"`);
-            console.log(`📋 Current WiertlaCNC.filters:`, window.WiertlaCNC.filters);
             
             // Sync with category icons based on filter type
             if (filterType === 'typ') {
@@ -3564,7 +3656,6 @@
 
   {% assign drill_stats_nav = sections['drill-stats-nav'] %}
   {% render 'drill-stats-nav' %}
-{% endpaginate %}
 
 {% schema %}
 {
@@ -3603,7 +3694,7 @@
 }
 {% endschema %}
 
-<script>
+<script type="application/json" data-disabled="wiertla-inline-main">
   // Make the openFilterModal function globally available
   window.openFilterModal = function () {
     const modal = document.querySelector('.wiertla-categories__mobile-filter-modal');
@@ -3636,17 +3727,14 @@
 
   // Clear all mobile filters function
   window.clearAllFilters = function() {
-    console.log('Clearing all mobile filters');
     
     // Reset all mobile filter selects to default values
     document.querySelectorAll('.wiertla-categories__mobile-filter-select').forEach(function(select) {
       select.value = '';
-      console.log('Reset filter:', select.getAttribute('data-filter'), 'to empty');
     });
     
     // Reset selectedCategory to default
     window.selectedCategory = 'wszystkie';
-    console.log('Reset selectedCategory to:', window.selectedCategory);
     
     // Get current active tab to update icons
     const activeTab = document.querySelector('.wiertla-categories__tab.active');
@@ -3655,12 +3743,10 @@
     // Update the active icon to "wszystkie"
     if (typeof updateActiveIcon === 'function') {
       updateActiveIcon('wszystkie', currentTabType);
-      console.log('Updated active icon to wszystkie for tab:', currentTabType);
     }
     
     // Apply filters to refresh the table
     if (typeof window.applyFilters === 'function') {
-      console.log('Applying filters after reset');
       window.applyFilters();
     }
     
@@ -3670,17 +3756,14 @@
       dropdownText.textContent = 'Wszystkie';
     }
     
-    console.log('All filters cleared successfully');
   };
 
   // Mobile sort function
   window.applyMobileSort = function() {
-    console.log('Mobile sort button clicked');
     
     // Get current active tab
     const activeTab = document.querySelector('.wiertla-categories__tab.active');
     const currentTabType = activeTab ? activeTab.getAttribute('data-tab-type') : 'wiertla';
-    console.log('Current tab type:', currentTabType);
     
     // Get mobile filter values
     const mobileFilters = {};
@@ -3691,38 +3774,27 @@
       const tabType = select.getAttribute('data-tab');
       const value = select.value;
       
-      console.log('Checking mobile select:', {
-        filterType: filterType,
-        tabType: tabType,
-        value: value,
-        currentTabType: currentTabType
-      });
+      
       
       // Only process filters for the current tab that have values
       if (tabType === currentTabType && value && value !== '' && value !== 'all') {
         mobileFilters[filterType] = value;
-        console.log('Mobile filter captured:', filterType, '=', value, 'for tab:', tabType);
       }
     });
     
-    console.log('All mobile filter values:', mobileFilters);
     
     // Set the selectedCategory based on the mobile filter
     if (mobileFilters.typ) {
       window.selectedCategory = mobileFilters.typ;
-      console.log('Set selectedCategory from typ to:', window.selectedCategory);
     } else if (mobileFilters.rodzaj) {
       window.selectedCategory = mobileFilters.rodzaj;
-      console.log('Set selectedCategory from rodzaj to:', window.selectedCategory);
     } else {
       window.selectedCategory = 'wszystkie';
-      console.log('Set selectedCategory to default: wszystkie');
     }
     
     // Update the active icon to match the selected filter
     if (typeof updateActiveIcon === 'function') {
       updateActiveIcon(window.selectedCategory, currentTabType);
-      console.log('Updated active icon for:', window.selectedCategory, currentTabType);
     }
     
     // Close the filter modal first
@@ -3730,7 +3802,6 @@
     
     // Apply filters using the main filtering function
     if (typeof window.applyFilters === 'function') {
-      console.log('Calling applyFilters() with selectedCategory:', window.selectedCategory);
       window.applyFilters();
     } else {
       console.error('applyFilters function not found');
@@ -3890,8 +3961,9 @@
   </div>
 </div>
 
-<!-- Fullscreen functionality -->
-<script>
+<!-- Fullscreen functionality (inline disabled; handled in assets/theme.js) -->
+<script type="application/json" data-disabled="fullscreen-inline">
+  // Moved handlers into assets/theme.js to comply with CSP. Keep minimal no-op here.
   document.addEventListener('DOMContentLoaded', function () {
     // Toggle fullscreen functionality
     const fullscreenView = document.querySelector('.wiertla-categories__fullscreen-view');
@@ -3936,7 +4008,7 @@
       crown: '',
       manufacturer: '',
       search: '',
-      itemsPerPage: 20,
+      itemsPerPage: 250,
       currentPage: 1,
     };
 
@@ -3998,16 +4070,30 @@
         const tempResultsCount = tempFullscreen.querySelector('.wiertla-categories__results-numbers');
 
         // Get all product data directly from the window object for the fullscreen table
-        // This will let us access all 235 products instead of just the paginated 20 in the main table
+        // Use hydrated dataset when available to include all products
         if (tempTableBody) {
-          // Check if we have access to the full products data via window object
-          if (window.wiertlaProducts && window.wiertlaProducts.length > 0) {
+          // Trigger hydration if not hydrated yet
+          if (window.WiertlaCNC && (!Array.isArray(window.WiertlaCNC.products) || !window.WiertlaCNC.products.length) && typeof window.WiertlaCNC.hydrateAllShopProductsIncremental === 'function') {
+            try {
+              window.WiertlaCNC.hydrateAllShopProductsIncremental();
+            } catch (e) {}
+          }
+
+          // Prefer hydrated products, fallback to inline
+          var sourceProducts = Array.isArray(window.WiertlaCNC && window.WiertlaCNC.products) && window.WiertlaCNC.products.length
+            ? window.WiertlaCNC.products
+            : (Array.isArray(window.wiertlaProducts) ? window.wiertlaProducts : []);
+
+          if (sourceProducts.length > 0) {
             // Clear the table first
             tempTableBody.innerHTML = '';
 
             // For each product, create a table row with all data
-            window.wiertlaProducts.forEach((product) => {
+            sourceProducts.forEach((product) => {
               const row = document.createElement('tr');
+              row.className = 'wiertla-categories__table-row';
+              const productUrl = (product.url && product.url !== '#') ? product.url : (product.handle ? ('/products/' + product.handle) : '');
+              row.setAttribute('data-href', productUrl);
 
               // Get all possible field values from various property names that might be used
               const sku = product.sku || product.symbol || product.custom_symbol || '';
@@ -4032,6 +4118,10 @@
                 product.custom_srednica.trim() !== ''
               ) {
                 diameter = '⌀ ' + product.custom_srednica;
+              } else if (
+                product.metafields && product.metafields.custom && (product.metafields.custom.srednica || product.metafields.custom.diameter)
+              ) {
+                diameter = '⌀ ' + (product.metafields.custom.srednica || product.metafields.custom.diameter);
               } else if (product.diameter) {
                 diameter = product.diameter;
               } else if (product.fi) {
@@ -4109,6 +4199,9 @@
               }
 
               // Create table cells with product data
+              // Prefer custom symbol fields over raw SKU for the Symbol column
+              const displaySymbol = product.custom_symbol || product.custom_kod_producenta || sku;
+
               row.innerHTML = `
                    <td class="wiertla-categories__table-cell wiertla-categories__table-cell--type">
                      ${typeIcon ? `<img src="${typeIcon}" alt="${type}" class="wiertla-categories__type-icon">` : type}
@@ -4120,7 +4213,7 @@
                      ${length || '-'}
                    </td>
                    <td class="wiertla-categories__table-cell wiertla-categories__table-cell--symbol">
-                     ${sku || '-'}
+                     ${displaySymbol || '-'}
                    </td>
                    <td class="wiertla-categories__table-cell wiertla-categories__table-cell--vendor">
                      ${vendor || '-'}
@@ -4139,6 +4232,9 @@
 
             window.products.forEach((product) => {
               const row = document.createElement('tr');
+              row.className = 'wiertla-categories__table-row';
+              const productUrl = (product.url && product.url !== '#') ? product.url : (product.handle ? ('/products/' + product.handle) : '');
+              row.setAttribute('data-href', productUrl);
 
               // Get all possible field values from various property names that might be used
               const sku = product.sku || product.symbol || product.custom_symbol || '';
@@ -4356,7 +4452,7 @@
           crown: '',
           manufacturer: '',
           search: '',
-          itemsPerPage: 20, // Default items per page - explicitly set to 20
+          itemsPerPage: 250, // Default items per page - explicitly set to 250
           currentPage: 1,
         };
 
@@ -4725,10 +4821,10 @@
 
             // Set active state
             const btnValue = parseInt(newBtn.getAttribute('data-value'));
-            if (btnValue === 20) {
-              // Force 20 as the default active button
+            if (btnValue === 250) {
+              // Force 250 as the default active button
               newBtn.classList.add('active');
-              tempFilters.itemsPerPage = 20; // Force itemsPerPage to 20
+              tempFilters.itemsPerPage = 250; // Force itemsPerPage to 250
               foundActiveButton = true;
             } else {
               newBtn.classList.remove('active');
@@ -4869,7 +4965,7 @@
       }
 
       // Update perPage parameter
-      if (window.itemsPerPage && window.itemsPerPage !== 20) {
+      if (window.itemsPerPage && window.itemsPerPage !== 250) {
         url.searchParams.set('perPage', window.itemsPerPage);
       }
 
@@ -4877,125 +4973,30 @@
       window.history.replaceState({}, '', url);
     }
 
-    // Add a global click handler for all fullscreen buttons
-    document.addEventListener('click', function (event) {
-      // Check if clicked element is a fullscreen button or inside one
-      const clickedFullscreenBtn = event.target.closest('.wiertla-categories__fullscreen-btn');
-
-      if (clickedFullscreenBtn) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        // Call the toggle function
-        toggleFullscreen();
-      }
-    });
+    // Handled globally in theme.js
 
     // Also add direct event listeners to buttons
-    if (openFullscreenBtns && openFullscreenBtns.length) {
-      openFullscreenBtns.forEach((btn) => {
-        btn.addEventListener('click', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          toggleFullscreen();
-        });
-      });
-    } else {
-      console.error('No open fullscreen buttons found');
-    }
+    // Handled globally in theme.js
 
     // Event listener for close fullscreen button
-    if (closeFullscreenBtn) {
-      closeFullscreenBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleFullscreen();
-      });
-    } else {
-      console.error('No close fullscreen button found');
-    }
+    // Handled globally in theme.js
 
     // Event listeners for search
-    if (fullscreenSearch) {
-      fullscreenSearch.addEventListener('input', function () {
-        fullscreenFilters.search = this.value.trim();
-        fullscreenFilters.currentPage = 1;
-        filterFullscreenProducts();
-      });
-    }
+    // Handled in theme.js
 
     // Event listeners for category icons
-    if (fullscreenCategoryBtns) {
-      fullscreenCategoryBtns.forEach((btn) => {
-        btn.addEventListener('click', function () {
-          const category = this.getAttribute('data-category');
-
-          // Set active class
-          fullscreenCategoryBtns.forEach((el) => el.classList.remove('active'));
-          this.classList.add('active');
-
-          // Update filter and reapply
-          fullscreenFilters.category = category;
-          fullscreenFilters.currentPage = 1;
-          filterFullscreenProducts();
-        });
-      });
-    }
+    // Handled in theme.js
 
     // Event listeners for filter selects
-    if (fullscreenFilterSelects) {
-      fullscreenFilterSelects.forEach((select) => {
-        select.addEventListener('change', function () {
-          const filterType = this.getAttribute('data-filter');
-          fullscreenFilters[filterType] = this.value;
-          fullscreenFilters.currentPage = 1;
-          filterFullscreenProducts();
-        });
-      });
-    }
+    // Handled in theme.js
 
     // Event listeners for items per page
-    if (fullscreenPerPageBtns) {
-      fullscreenPerPageBtns.forEach((btn) => {
-        btn.addEventListener('click', function () {
-          // Set active class
-          fullscreenPerPageBtns.forEach((el) => el.classList.remove('active'));
-          this.classList.add('active');
-
-          // Update filter and reapply
-          fullscreenFilters.itemsPerPage = parseInt(this.getAttribute('data-value'));
-          fullscreenFilters.currentPage = 1;
-          filterFullscreenProducts();
-        });
-      });
-    }
+    // Handled in theme.js
 
     // Event listeners for pagination
-    if (fullscreenPrevPage) {
-      fullscreenPrevPage.addEventListener('click', function () {
-        if (fullscreenFilters.currentPage > 1) {
-          fullscreenFilters.currentPage--;
-          filterFullscreenProducts();
-        }
-      });
-    }
+    // Handled in theme.js
 
-    if (fullscreenNextPage) {
-      fullscreenNextPage.addEventListener('click', function () {
-        const rows = fullscreenTableBody.querySelectorAll('tr');
-        const totalVisible = Array.from(rows).filter((row) => {
-          const style = window.getComputedStyle(row);
-          return style.display !== 'none';
-        }).length;
-
-        const totalPages = Math.ceil(totalVisible / fullscreenFilters.itemsPerPage);
-
-        if (fullscreenFilters.currentPage < totalPages) {
-          fullscreenFilters.currentPage++;
-          filterFullscreenProducts();
-        }
-      });
-    }
+    // Handled in theme.js
   });
 </script>
 
@@ -5092,6 +5093,7 @@
 
 <script>
   // Update category mappings - Legacy SKU prefix mappings
+  window.WiertlaCNC = window.WiertlaCNC || {};
   window.WiertlaCNC.categoryMappings = {
     // Wiertła categories - SKU prefixes
     'koronkowe': 'VW',  // First
@@ -5369,7 +5371,6 @@
   
   // Function to sync filter dropdown with category icons (works for both typ and rodzaj)
   function syncTypeFilterWithIcons(filterValue, filterType = 'typ') {
-    console.log(`🔄 Syncing ${filterType} filter "${filterValue}" with category icons`);
     
     // Remove active class from all category icons
     document.querySelectorAll('.wiertla-categories__icon-item').forEach(icon => {
@@ -5423,13 +5424,11 @@
     const matchingIcon = document.querySelector(`.wiertla-categories__icon-item[data-category="${categoryName}"]`);
     if (matchingIcon) {
       matchingIcon.classList.add('active');
-      console.log(`✅ Activated category icon: ${categoryName}`);
     } else {
       // If no specific icon found, activate "wszystkie"
       const wszystkieIcon = document.querySelector('.wiertla-categories__icon-item[data-category="wszystkie"]');
       if (wszystkieIcon) {
         wszystkieIcon.classList.add('active');
-        console.log(`✅ Activated default "wszystkie" icon`);
       }
     }
   }
@@ -5442,7 +5441,6 @@
   // Function to sync category icons with appropriate filter dropdown based on active tab
   function syncIconsWithTypeFilter(categoryName) {
     const activeTab = window.WiertlaCNC.activeTabType || 'wiertla';
-    console.log(`🔄 Syncing category "${categoryName}" with filter dropdown for tab: ${activeTab}`);
     
     if (activeTab === 'wiertla') {
       // For wiertla tab, use typ filter
@@ -5461,7 +5459,6 @@
       const typeFilter = document.querySelector('.wiertla-categories__filter[data-filter="typ"]');
       if (typeFilter) {
         typeFilter.value = filterValue;
-        console.log(`✅ Set typ filter dropdown to: "${filterValue}"`);
         
         if (!window.WiertlaCNC.filters) {
           window.WiertlaCNC.filters = {};
@@ -5497,7 +5494,6 @@
       const rodzajFilter = document.querySelector(`.wiertla-categories__filter[data-filter="rodzaj"][data-tab="${activeTab}"]`);
       if (rodzajFilter) {
         rodzajFilter.value = filterValue;
-        console.log(`✅ Set rodzaj filter dropdown to: "${filterValue}" for tab: ${activeTab}`);
         
         if (!window.WiertlaCNC.filters) {
           window.WiertlaCNC.filters = {};
@@ -5509,7 +5505,6 @@
   
   // Function to reset categories when switching tabs
   function resetCategoriesOnTabSwitch(newTabType) {
-    console.log(`🔄 Resetting categories for tab switch to: ${newTabType}`);
     
     // Set reset flag to prevent interference from other handlers
     window.isResettingCategories = true;
@@ -5553,9 +5548,6 @@
     // SIXTH: Reset page to 1
     window.currentPage = 1;
     
-    console.log(`🔍 After reset - selectedCategory: "${window.selectedCategory}"`);
-    console.log(`🔍 After reset - WiertlaCNC.filters:`, window.WiertlaCNC.filters);
-    console.log(`🔍 After reset - currentFilters:`, window.currentFilters);
     
     // SEVENTH: Double-check and force clear any lingering filter values
     setTimeout(() => {
@@ -5564,15 +5556,12 @@
       window.WiertlaCNC.filters.rodzaj = '';
       window.WiertlaCNC.filters.category = '';
       
-      console.log(`🔄 Final check before applying filters - WiertlaCNC.filters:`, window.WiertlaCNC.filters);
-      console.log(`🔄 Applying filters after tab switch to: ${newTabType}`);
       applyFilters();
       
       // Clear reset flag after everything is done
       window.isResettingCategories = false;
     }, 150);
     
-    console.log(`✅ Categories reset for tab: ${newTabType}`);
   }
   
   // Make sync functions globally available
@@ -5588,16 +5577,13 @@
     function switchTab(tabType) {
       const previousTab = window.WiertlaCNC.activeTabType;
       
-      console.log(`🔄 TAB SWITCH: ${previousTab} → ${tabType}`);
       
       window.WiertlaCNC.activeTabType = tabType;
 
       // Reset categories when switching tabs
       if (previousTab && previousTab !== tabType) {
-        console.log(`🔄 Calling resetCategoriesOnTabSwitch because tabs changed: ${previousTab} → ${tabType}`);
         resetCategoriesOnTabSwitch(tabType);
       } else {
-        console.log(`🔄 Not resetting categories (first load or same tab): ${previousTab} → ${tabType}`);
       }
 
       // Update tab visual states
@@ -5621,7 +5607,6 @@
       
       // Apply filters after tab switch (only if reset wasn't called, to avoid double filtering)
       if (!previousTab || previousTab === tabType) {
-        console.log(`🔄 Applying filters after tab switch (no reset was called)`);
         applyFilters();
       }
     }
@@ -5660,6 +5645,56 @@
     }
   });
 
+  // Inject mainType dropdown into static fullscreen filters-left
+  (function addStaticFullscreenMainTypeDropdown() {
+    const filtersLeft = document.querySelector('.wiertla-categories__fullscreen-filters .wiertla-categories__filters-left');
+    if (!filtersLeft) return;
+    if (filtersLeft.querySelector('.wiertla-filter-mainType')) return; // avoid duplicates
+    const wszBtn = filtersLeft.querySelector('.wiertla-categories__filter-button[data-filter="wszystkie"]');
+    const select = document.createElement('select');
+    select.className = 'wiertla-categories__filter wiertla-filter-mainType';
+    select.setAttribute('data-filter', 'mainType');
+    select.innerHTML = `
+      <option value="wiertla">WIERTŁA</option>
+      <option value="plytki">PŁYTKI</option>
+      <option value="koronki">KORONKI</option>
+    `;
+    if (wszBtn) {
+      wszBtn.insertAdjacentElement('afterend', select);
+    } else {
+      filtersLeft.insertBefore(select, filtersLeft.firstChild);
+    }
+
+    function setFilterVisibility(tabType) {
+      const typSel = filtersLeft.querySelector('.wiertla-filter-type[data-tab="wiertla"]');
+      const rodzP = filtersLeft.querySelector('.wiertla-filter-rodzaj[data-tab="plytki"]');
+      const rodzK = filtersLeft.querySelector('.wiertla-filter-rodzaj[data-tab="koronki"]');
+      if (typSel) typSel.style.display = (tabType === 'wiertla') ? '' : 'none';
+      if (rodzP) rodzP.style.display = (tabType === 'plytki') ? '' : 'none';
+      if (rodzK) rodzK.style.display = (tabType === 'koronki') ? '' : 'none';
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialTabType = urlParams.get('mainType') || (window.WiertlaCNC && window.WiertlaCNC.activeTabType) || 'wiertla';
+    if (!window.WiertlaCNC) window.WiertlaCNC = {};
+    window.WiertlaCNC.activeTabType = initialTabType;
+    select.value = initialTabType;
+    setFilterVisibility(initialTabType);
+    try { updateTableHeaders(initialTabType); } catch (e) {}
+
+    select.addEventListener('change', function() {
+      const tabType = this.value;
+      window.WiertlaCNC.activeTabType = tabType;
+      const url = new URL(window.location.href);
+      url.searchParams.set('mainType', tabType);
+      window.history.replaceState({}, '', url.toString());
+      window.currentPage = 1;
+      window.itemsPerPage = 250;
+      setFilterVisibility(tabType);
+      try { updateTableHeaders(tabType); } catch (e) {}
+      applyFullscreenFilters();
+    });
+  })();
 </script>
 <script>
   // Global filter state

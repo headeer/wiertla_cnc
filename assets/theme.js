@@ -633,7 +633,6 @@
               }
             };
           };
-
           var loader = (function () {
             var preloadElems,
               isCompleted,
@@ -3227,7 +3226,6 @@
                * @author    Naotoshi Fujita
                * @copyright Naotoshi Fujita. All rights reserved.
                */
-
               /**
                * The main class for applying Splide to an element,
                * providing some APIs to control the behavior.
@@ -3938,7 +3936,6 @@
                *
                * @return {Object} - The component object.
                */
-
               /* harmony default export */ const components_elements =
                 function (Splide, Components) {
                   /**
@@ -4554,7 +4551,6 @@
                *
                * @return {Object} - The component object.
                */
-
               /* harmony default export */ const track = function (
                 Splide,
                 Components
@@ -5293,7 +5289,6 @@
                *
                * @return {Object} - The resolver object.
                */
-
               /* harmony default export */ const vertical = function (
                 Splide,
                 Components
@@ -7526,7 +7521,6 @@
                *
                * @type {String[]}
                */
-
               var TRIGGER_KEYS = [" ", "Enter", "Spacebar"];
               /**
                * The component for synchronizing a slider with another.
@@ -8037,7 +8031,7 @@
             ((function (e, t) {
               e.exports = (function () {
                 var e =
-                  /^v?(?:\d+)(\.(?:[x*]|\d+)(\.(?:[x*]|\d+)(\.(?:[x*]|\d+))?(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?)?)?$/i;
+                  /^v?(?:\d+)(\.(?:[x*]|\d+)(\.(?:[x*]|\d+)(\.(?:[x*]|\d+))?(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?)?$/i;
                 function t(e) {
                   var t,
                     r = e.replace(/^v/, "").replace(/\+.*$/, ""),
@@ -8465,42 +8459,6 @@
       /***/
     },
     /* 7 */
-    /***/ function (module, exports) {
-      /**
-       * Checks if `value` is the
-       * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
-       * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
-       *
-       * @static
-       * @memberOf _
-       * @since 0.1.0
-       * @category Lang
-       * @param {*} value The value to check.
-       * @returns {boolean} Returns `true` if `value` is an object, else `false`.
-       * @example
-       *
-       * _.isObject({});
-       * // => true
-       *
-       * _.isObject([1, 2, 3]);
-       * // => true
-       *
-       * _.isObject(_.noop);
-       * // => true
-       *
-       * _.isObject(null);
-       * // => false
-       */
-      function isObject(value) {
-        var type = typeof value;
-        return value != null && (type == "object" || type == "function");
-      }
-
-      module.exports = isObject;
-
-      /***/
-    },
-    /* 8 */
     /***/ function (module, exports, __webpack_require__) {
       var freeGlobal = __webpack_require__(23);
 
@@ -8515,7 +8473,7 @@
 
       /***/
     },
-    /* 9 */
+    /* 8 */
     /***/ function (module, exports, __webpack_require__) {
       var root = __webpack_require__(8);
 
@@ -8526,7 +8484,7 @@
 
       /***/
     },
-    /* 10 */
+    /* 9 */
     /***/ function (module, exports, __webpack_require__) {
       var __WEBPACK_AMD_DEFINE_FACTORY__,
         __WEBPACK_AMD_DEFINE_ARRAY__,
@@ -11718,7 +11676,6 @@
             }
           );
         }
-
         function generateModelAssignmentFunction(el, modifiers, expression) {
           if (el.type === "radio") {
             // Radio buttons only work properly when they share a name attribute.
@@ -12251,7 +12208,6 @@
           });
           return copy;
         }
-
         class Component {
           constructor(el, componentForClone = null) {
             this.$el = el;
@@ -13475,7 +13431,6 @@
 
           return InertNode;
         })();
-
         /**
          * InertManager is a per-document singleton object which manages all inert roots and nodes.
          *
@@ -14689,7 +14644,7 @@
        */
 
       /**
-       * Make a selector from an element’s class and its data- and aria- attributes
+       * Make a selector from an element's class and its data- and aria- attributes
        *
        * @param {HTMLElement} element The element to create a selector from
        * @param {Array.<String>} exclusions Attribute names to exclude
@@ -14845,10 +14800,10 @@
       }
 
       /**
-       * Generate an srcset given an image’s src
+       * Generate an srcset given an image's src
        * and an array of sizes
        *
-       * @param {string} src The image’s src
+       * @param {string} src The image's src
        * @param {(string|number)[]} sizes The sizes
        *
        * @returns {string}
@@ -15862,7 +15817,6 @@
           "Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."
         );
       }
-
       function _unsupportedIterableToArray(o, minLen) {
         if (!o) return;
         if (typeof o === "string") return _arrayLikeToArray(o, minLen);
@@ -16632,7 +16586,6 @@
 
         liveRegion(_liveRegionContent(), true);
       }
-
       function variantLiveRegion(variant) {
         const templateString =
           "[Availability] [Regular] [$$] [Sale] [$]. [UnitPrice] [$$$]";
@@ -16649,8 +16602,8 @@
         }
 
         /**
-         * Compose the live region’s content based on the
-         * variant’s properties.
+         * Compose the live region's content based on the
+         * variant's properties.
          *
          * @param {Object} variant The variant
          */
@@ -17520,7 +17473,7 @@
           {
             /**
              * @description
-             * Gets information about a variant’s store
+             * Gets information about a variant's store
              * pickup availability from its section response,
              * and replaces the inner HTML of the container element
              * with the one from the section response
@@ -17652,7 +17605,6 @@
        * `section:load` events.
        * @param {string} container - selector for the section container DOM element
        */
-
       register("product", {
         onLoad: function onLoad() {
           var _this = this;
@@ -18770,7 +18722,7 @@
             /**
              * Start observing the video section
              *
-             * @param {HTMLElement} containerEl The video section’s container element
+             * @param {HTMLElement} containerEl The video section's container element
              */
 
             observe: function (containerEl) {
@@ -18790,7 +18742,7 @@
             /**
              * Stop observing the video section
              *
-             * @param {HTMLElement} containerEl The video section’s container element
+             * @param {HTMLElement} containerEl The video section's container element
              */
 
             unobserve: function (containerEl) {
@@ -19934,7 +19886,6 @@
         }
         return arr2;
       }
-
       register("search", {
         onLoad: function onLoad() {
           var section = this;
@@ -20230,6 +20181,109 @@
       var themeName = "Baseline",
         themeVersion = "2.5.0";
       load("*");
+
+      // --- Wiertla: fullscreen table (CSP-safe) ---
+      (function(){
+        if (typeof document === 'undefined') return;
+
+        function getActiveTabType(){
+          var t = document.querySelector('.wiertla-categories__tab.active');
+          return t ? t.getAttribute('data-tab-type') : 'wiertla';
+        }
+        function getMainTbody(){
+          var all = document.querySelectorAll('#productsTableBody');
+          for (var i=0;i<all.length;i++){
+            if (!all[i].closest('.wiertla-categories__fullscreen-right')) return all[i];
+          }
+          return null;
+        }
+        function getFsTbody(){
+          return document.querySelector('.wiertla-categories__fullscreen-right #productsTableBody') ||
+                 document.querySelector('.wiertla-categories__fullscreen-right tbody');
+        }
+        function syncHeaders(){
+          try {
+            var t = getActiveTabType();
+            if (typeof window.updateTableHeaders === 'function') window.updateTableHeaders(t);
+          } catch(e) {}
+        }
+        function cloneRowsIntoFullscreen(){
+          var src = getMainTbody();
+          var dst = getFsTbody();
+          if (src && dst && src.children.length){
+            dst.innerHTML = '';
+            var frag = document.createDocumentFragment();
+            for (var i=0;i<src.children.length;i++){
+              var clone = src.children[i].cloneNode(true);
+              clone.style.display = '';
+              frag.appendChild(clone);
+            }
+            dst.appendChild(frag);
+            return true;
+          }
+          return false;
+        }
+
+        function openFs(){
+          var view = document.querySelector('.wiertla-categories__fullscreen-view');
+          if (!view) return;
+          view.style.display = 'block';
+          if (document.body) document.body.style.overflow = 'hidden';
+          // Try immediate clone; if main table not ready, retry a few times
+          if (!cloneRowsIntoFullscreen()){
+            var attempts = 0;
+            var timer = setInterval(function(){
+              attempts++;
+              if (cloneRowsIntoFullscreen() || attempts >= 10){
+                clearInterval(timer);
+                syncHeaders();
+              }
+            }, 150);
+          }
+          syncHeaders();
+        }
+        function closeFs(){
+          var view = document.querySelector('.wiertla-categories__fullscreen-view');
+          if (!view) return;
+          view.style.display = 'none';
+          if (document.body) document.body.style.overflow = '';
+        }
+
+        // Toggle buttons
+        document.addEventListener('click', function(e){
+          var btn = e.target && e.target.closest && e.target.closest('.wiertla-categories__fullscreen-btn');
+          if (!btn) return;
+          e.preventDefault();
+          e.stopPropagation();
+          var isClose = !!btn.closest('.wiertla-categories__fullscreen-header');
+          if (isClose) closeFs(); else openFs();
+        });
+
+        // Row click inside fullscreen
+        document.addEventListener('click', function(e){
+          var fsRight = e.target && e.target.closest && e.target.closest('.wiertla-categories__fullscreen-right');
+          if (!fsRight) return;
+          var tr = e.target.closest('tr[data-href]');
+          var href = tr ? tr.getAttribute('data-href') : '';
+          if (!href){
+            var btn = e.target.closest('[data-product-url]');
+            if (btn) href = btn.getAttribute('data-product-url');
+          }
+          if (!href) return;
+          if (e.metaKey || e.ctrlKey) window.open(href, '_blank'); else window.location.href = href;
+        });
+
+        // Keep headers in sync on tab change
+        var last;
+        setInterval(function(){
+          var cur = getActiveTabType();
+          if (cur !== last) { last = cur; syncHeaders(); }
+        }, 700);
+
+        // Expose opens for legacy inline callers
+        window.openWiertlaFullscreen = openFs;
+        window.applyFullscreenFilters = window.openWiertlaFullscreen;
+      })();
 
       /***/
     },
