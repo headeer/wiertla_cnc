@@ -1889,6 +1889,7 @@
       }
 
       // Sort by FI (diameter) in ascending order (rosnąco) for all tab types
+      // Products without FI/średnica are pushed to the end
       filteredProducts.sort((a, b) => {
         // Get FI values from different possible fields
         const getFiValue = (product) => {
@@ -1904,11 +1905,19 @@
             fi = fi.replace(/[^0-9.]/g, '');
           }
           const numValue = parseFloat(fi);
-          return isNaN(numValue) ? 0 : numValue;
+          // Missing/invalid values return Infinity so they go to the end
+          return isNaN(numValue) ? Number.POSITIVE_INFINITY : numValue;
         };
         
         const fiA = getFiValue(a);
         const fiB = getFiValue(b);
+        const aFinite = isFinite(fiA);
+        const bFinite = isFinite(fiB);
+        
+        // Explicitly push non-finite (missing) values to the end
+        if (!aFinite && bFinite) return 1;
+        if (aFinite && !bFinite) return -1;
+        if (!aFinite && !bFinite) return 0;
         
         // Sort in ascending order (smallest to largest)
         return fiA - fiB;
@@ -3075,13 +3084,13 @@
         // Define icon mapping
         const iconMap = {
           'VW': "{{ 'image-8.png' | asset_url }}",
-          'PR': "{{ 'image-10.png' | asset_url }}",
-          'WW': "{{ 'image-12.png' | asset_url }}",
-          'PS': "{{ 'image-9.png' | asset_url }}",
-          'WK': "{{ 'image-13.png' | asset_url }}",
-          'WV': "{{ 'image-11.png' | asset_url }}",
+          'PR': "{{ 'ico_plytkowe.png' | asset_url }}",
+          'WW': "{{ 'ico_vhm.png' | asset_url }}",
+          'PS': "{{ 'ico_sandvik.png' | asset_url }}",
+          'WK': "{{ 'ico_ksem_table.png' | asset_url }}",
+          'WV': "{{ 'ico_sandvik.png' | asset_url }}",
           'IS': "{{ 'ico_big_koronkowe.svg' | asset_url }}",
-          'WA': "{{ 'ico_big_vhm.svg' | asset_url }}"
+          'WA': "{{ 'ico_amec_table.png' | asset_url }}"
         };
         function getActiveTabType() {
           const activeTab = document.querySelector('.wiertla-categories__tab.active');
@@ -3201,7 +3210,7 @@
               <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
                 ${iconUrl ? `<img src="${iconUrl}" alt="${product.type || 'Product'}" width="34" height="34" loading="lazy">` : '-'}
               </td>
-              <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
+              <td class="wiertla-categories__table-cell wiertla-categories__table-cell--diameter" data-href="/products/${product.handle || ''}">
                 ${(() => {
                   const fi = product.custom_fi;
                   const srednica = product.custom_srednica || product.custom_srednica_display;
@@ -3219,10 +3228,10 @@
                   const formattedSrednica = formatFiValue(srednica);
                   
                   if (formattedFi) {
-                    return '⌀ ' + formattedFi;
+                    return '<span class="wiertla-fi"><span class="wiertla-fi__icon">⌀</span><span class="wiertla-fi__value">' + formattedFi + '</span></span>';
                   }
                   if (formattedSrednica) {
-                    return '⌀ ' + formattedSrednica;
+                    return '<span class="wiertla-fi"><span class="wiertla-fi__icon">⌀</span><span class="wiertla-fi__value">' + formattedSrednica + '</span></span>';
                   }
                   return '-';
                 })()}
@@ -3981,13 +3990,13 @@
                 const skuPrefix = sku.substring(0, 2).toUpperCase();
                 const iconMapping = {
                   VW: '{{ "image-8.png" | asset_url }}',
-                  PR: '{{ "image-10.png" | asset_url }}',
-                  WW: '{{ "image-12.png" | asset_url }}',
-                  PS: '{{ "image-9.png" | asset_url }}',
-                  WK: '{{ "image-13.png" | asset_url }}',
-                  WV: '{{ "image-11.png" | asset_url }}',
+                  PR: '{{ "ico_plytkowe.png" | asset_url }}',
+                  WW: '{{ "ico_vhm.png" | asset_url }}',
+                  PS: '{{ "ico_sandvik.png" | asset_url }}',
+                  WK: '{{ "ico_ksem_table.png" | asset_url }}',
+                  WV: '{{ "ico_sandvik.png" | asset_url }}',
                   IS: '{{ "ico_big_koronkowe.svg" | asset_url }}',
-                  WA: '{{ "ico_big_vhm.svg" | asset_url }}',
+                  WA: '{{ "ico_amec_table.png" | asset_url }}',
                 };
                 typeIcon = iconMapping[skuPrefix] || '';
               }
@@ -4112,13 +4121,13 @@
                 const skuPrefix = sku.substring(0, 2).toUpperCase();
                 const iconMapping = {
                   VW: '{{ "image-8.png" | asset_url }}',
-                  PR: '{{ "image-10.png" | asset_url }}',
-                  WW: '{{ "image-12.png" | asset_url }}',
-                  PS: '{{ "image-9.png" | asset_url }}',
-                  WK: '{{ "image-13.png" | asset_url }}',
-                  WV: '{{ "image-11.png" | asset_url }}',
+                  PR: '{{ "ico_plytkowe.png" | asset_url }}',
+                  WW: '{{ "ico_vhm.png" | asset_url }}',
+                  PS: '{{ "ico_sandvik.png" | asset_url }}',
+                  WK: '{{ "ico_ksem_table.png" | asset_url }}',
+                  WV: '{{ "ico_sandvik.png" | asset_url }}',
                   IS: '{{ "ico_big_koronkowe.svg" | asset_url }}',
-                  WA: '{{ "ico_big_vhm.svg" | asset_url }}',
+                  WA: '{{ "ico_amec_table.png" | asset_url }}',
                 };
                 typeIcon = iconMapping[skuPrefix] || '';
               }

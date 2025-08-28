@@ -898,7 +898,6 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM Content Loaded');
     
     const header = document.querySelector('[data-header]');
     const mobileMenuButton = document.querySelector('.header__mobile-menu-button');
@@ -913,15 +912,6 @@
       menuIconOpen.style.display = 'none';
     }
 
-    console.log('Elements found:', {
-      header: !!header,
-      mobileMenuButton: !!mobileMenuButton,
-      mobileMenuLinks: !!mobileMenuLinks,
-      mobilePhoneButton: !!mobilePhoneButton,
-      menuIconClosed: !!menuIconClosed,
-      menuIconOpen: !!menuIconOpen,
-      headerHeight: headerHeight
-    });
 
     let lastScrollTop = 0;
     let scrollThreshold = 100;
@@ -931,10 +921,8 @@
     // Phone number copy function
     if (mobilePhoneButton) {
       mobilePhoneButton.addEventListener('click', function() {
-        console.log('Phone button clicked');
         const phoneNumber = '{{ section.settings.phone }}';
         navigator.clipboard.writeText(phoneNumber).then(function() {
-          console.log('Phone number copied to clipboard');
           const toast = document.createElement('div');
           toast.className = 'header__toast';
           toast.textContent = 'Numer telefonu skopiowany!';
@@ -958,29 +946,22 @@
     
     // Mobile menu toggle with animation
     if (mobileMenuButton && mobileMenuLinks) {
-      console.log('Setting up mobile menu toggle');
       mobileMenuButton.addEventListener('click', function() {
-        console.log('Menu button clicked');
         const isActive = this.classList.toggle('active');
-        console.log('Menu active state:', isActive);
         
         mobileMenuLinks.classList.toggle('open');
-        console.log('Menu links open state:', mobileMenuLinks.classList.contains('open'));
         
         // Toggle menu icons
         if (isActive) {
-          console.log('Animating to open state');
           menuIconClosed.style.display = 'none';
           menuIconOpen.style.display = 'block';
         } else {
-          console.log('Animating to closed state');
           menuIconClosed.style.display = 'block';
           menuIconOpen.style.display = 'none';
         }
         
         // Accessibility
         this.setAttribute('aria-expanded', isActive);
-        console.log('Aria expanded:', isActive);
       });
     } else {
       console.error('Mobile menu elements not found:', {
@@ -992,7 +973,6 @@
     // Close mobile menu on escape key
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && mobileMenuLinks && mobileMenuLinks.classList.contains('open')) {
-        console.log('Escape key pressed, closing menu');
         mobileMenuButton.click();
       }
     });
@@ -1057,11 +1037,9 @@
     // Close mobile menu on resize
     let resizeTimer;
     window.addEventListener('resize', function() {
-      console.log('Window resized');
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(function() {
         if (window.innerWidth > 768 && mobileMenuLinks && mobileMenuLinks.classList.contains('open')) {
-          console.log('Closing menu on resize');
           mobileMenuButton.click();
         }
       }, 250);
