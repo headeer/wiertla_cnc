@@ -649,9 +649,7 @@ document.addEventListener('DOMContentLoaded', function() {
     {%- liquid
       assign locale_code = request.locale.iso_code | downcase
       assign translated_title = product.title
-      if locale_code == 'pl' and product.metafields.custom.nazwa_pl != blank
-        assign translated_title = product.metafields.custom.nazwa_pl
-      elsif locale_code == 'de' and product.metafields.custom.nazwa_de != blank
+      if locale_code == 'de' and product.metafields.custom.nazwa_de != blank
         assign translated_title = product.metafields.custom.nazwa_de
       elsif locale_code == 'en' and product.metafields.custom.nazwa_en != blank
         assign translated_title = product.metafields.custom.nazwa_en
