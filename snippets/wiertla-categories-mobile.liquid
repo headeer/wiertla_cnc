@@ -364,14 +364,21 @@
   document.addEventListener("DOMContentLoaded", function() {
   
     // Handle rent button click to show form
-    const rentButton = document.querySelector(".wiertla-categories__mobile-rent-button");
+    const rentButton = document.querySelector(".wiertla-categories__mobile-rent-button:not(.wiertla-categories__mobile-rent-success-close)");
     const rentForm = document.querySelector(".wiertla-categories__mobile-rent-form");
+    const rentFormContent = document.querySelector(".wiertla-categories__mobile-rent-form-content");
+    const successEl = document.querySelector(".wiertla-categories__mobile-rent-success");
+    const formTitle = document.querySelector(".wiertla-categories__mobile-rent-form-title");
     
     if (rentButton && rentForm) {
       rentButton.addEventListener("click", function(e) {
         e.preventDefault();
         e.stopPropagation();
+        // Show form wrapper and inner form; hide success state
         rentForm.style.setProperty('display', 'flex');
+        if (rentFormContent) rentFormContent.style.setProperty('display', 'flex');
+        if (successEl) successEl.style.setProperty('display', 'none');
+        if (formTitle) formTitle.style.setProperty('display', 'block');
         rentButton.style.setProperty('display', 'none');
       });
     }

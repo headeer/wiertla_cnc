@@ -54,8 +54,8 @@
     {%- if template == 'password' -%}
       {{ shop.name }}
     {%- else -%}
-      {%- unless page_title contains shop.name -%}
-        &ndash; {{ shop.name }}
+      {%- unless page_title contains 'wiertla-cnc.com' -%}
+        &ndash; wiertla-cnc.com
       {%- endunless -%}
     {%- endif -%}
   {%- endcapture -%}
