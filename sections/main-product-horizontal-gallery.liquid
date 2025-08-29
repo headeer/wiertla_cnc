@@ -646,7 +646,18 @@ document.addEventListener('DOMContentLoaded', function() {
     <span>/</span>
     <a href="/collections/all" class="product-breadcrumbs__collection">Products</a>
     <span>/</span>
-    <span class="product-breadcrumbs__current">{{ product.title }}</span>
+    {%- liquid
+      assign locale_code = request.locale.iso_code | downcase
+      assign translated_title = product.title
+      if locale_code == 'pl' and product.metafields.custom.nazwa_pl != blank
+        assign translated_title = product.metafields.custom.nazwa_pl
+      elsif locale_code == 'de' and product.metafields.custom.nazwa_de != blank
+        assign translated_title = product.metafields.custom.nazwa_de
+      elsif locale_code == 'en' and product.metafields.custom.nazwa_en != blank
+        assign translated_title = product.metafields.custom.nazwa_en
+      endif
+    -%}
+    <span class="product-breadcrumbs__current">{{ translated_title }}</span>
   </div>
 
   <div class="product-layout">
@@ -678,7 +689,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <section class="product-details__info">
           <!-- Product Name -->
           <div class="product-details__sku">
-            {{ product.title }}
+            {{ translated_title }}
           </div>
 
           <!-- Product Availability Status -->
