@@ -36,11 +36,19 @@
     submitPromise.then(function(){
       form.style.display = 'none';
       (introEls || []).forEach(function(el){ if (el) el.style.display = 'none'; });
-      if (successEl) successEl.style.display = 'flex';
+      if (successEl) {
+        successEl.style.display = 'flex';
+        successEl.style.alignItems = 'flex-start';
+        successEl.style.textAlign = 'left';
+      }
     }).catch(function(){
       form.style.display = 'none';
       (introEls || []).forEach(function(el){ if (el) el.style.display = 'none'; });
-      if (successEl) successEl.style.display = 'flex';
+      if (successEl) {
+        successEl.style.display = 'flex';
+        successEl.style.alignItems = 'flex-start';
+        successEl.style.textAlign = 'left';
+      }
     });
   }
 
@@ -52,12 +60,16 @@
     var desc = qs(modal, '.wiertla-categories__mobile-rent-description');
     var contactP = qs(modal, '.wiertla-categories__mobile-rent-contact');
     var contactInfo = qs(modal, '.wiertla-categories__mobile-rent-contact-info');
+    var formTitle = qs(modal, '.wiertla-categories__mobile-rent-form-title');
     var successClose = qs(modal, '.wiertla-categories__mobile-rent-success-close');
 
     if (form) {
       form.addEventListener('submit', function(e){
         e.preventDefault();
-        submitContact(form, successEl, [desc, contactP, contactInfo]);
+        // Keep contact info visible; hide description and form title only
+        if (formTitle) formTitle.style.display = 'none';
+        submitContact(form, successEl, [desc, contactP]);
+        if (contactInfo) contactInfo.style.display = 'flex';
       });
     }
     if (successClose) {
