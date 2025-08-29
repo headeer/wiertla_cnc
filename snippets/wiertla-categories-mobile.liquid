@@ -322,12 +322,36 @@
       // Then set display to flex
       modal.style.display = "flex";
       
-      // Update modal content if product is provided
+      // Update modal content and populate symbol
+      const title = modal.querySelector('.wiertla-categories__mobile-rent-title');
+      if (product && title) {
+        title.textContent = product.title;
+      }
+      // Determine symbol to prefill
+      var symbolInput = modal.querySelector('input[name="contact[drill_symbol]"]');
+      var candidate = '';
       if (product) {
-        const title = modal.querySelector('.wiertla-categories__mobile-rent-title');
-        if (title) {
-          title.textContent = product.title;
+        candidate = (product.symbol || product.sku || product.kod || '').toString();
+      }
+      if (!candidate) {
+        // fallback from last captured click
+        candidate = (window.__wiertlaLastSymbol || '').toString();
+      }
+      if (!candidate) {
+        // derive from focused card/row
+        var activeEl = document.activeElement;
+        var card = activeEl && activeEl.closest ? activeEl.closest('.wiertla-categories__mobile-card') : null;
+        if (card) {
+          var symEl = card.querySelector('.wiertla-categories__mobile-symbol');
+          if (symEl) candidate = symEl.textContent.trim();
         }
+        if (!candidate) {
+          var row = activeEl && activeEl.closest ? activeEl.closest('tr.wiertla-categories__table-row') : null;
+          if (row) candidate = row.getAttribute('data-sku') || '';
+        }
+      }
+      if (symbolInput && candidate) {
+        symbolInput.value = candidate;
       }
       
       // Prevent body scrolling
@@ -362,6 +386,21 @@
 
   // Add event listeners when DOM is loaded
   document.addEventListener("DOMContentLoaded", function() {
+    // Capture last clicked symbol from product table/card
+    document.addEventListener('click', function(e){
+      var card = e.target.closest && e.target.closest('.wiertla-categories__mobile-card');
+      if (card) {
+        var symEl = card.querySelector('.wiertla-categories__mobile-symbol');
+        if (symEl) window.__wiertlaLastSymbol = symEl.textContent.trim();
+        var row = card.closest('tr.wiertla-categories__table-row');
+        if (!window.__wiertlaLastSymbol && row) window.__wiertlaLastSymbol = (row.getAttribute('data-sku') || '').toString();
+      }
+      var rowBtn = e.target.closest && e.target.closest('tr.wiertla-categories__table-row');
+      if (rowBtn && rowBtn.getAttribute) {
+        var sku = rowBtn.getAttribute('data-sku');
+        if (sku) window.__wiertlaLastSymbol = sku.toString();
+      }
+    }, true);
   
     // Handle rent button click to show form
     const rentButton = document.querySelector(".wiertla-categories__mobile-rent-button:not(.wiertla-categories__mobile-rent-success-close)");

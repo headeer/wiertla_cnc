@@ -776,17 +776,17 @@
         <div class="header__lang-links">
           <a
             href="{{ request.path }}?locale=pl"
-            class="header__link"
+            class="header__link{% if request.locale.iso_code == 'pl' %} active{% endif %}"
             data-lang="pl"
             data-translate="header.languages.polish">{{ 'header.languages.polish' | t }}</a>
           <a
             href="{{ request.path }}?locale=en"
-            class="header__link"
+            class="header__link{% if request.locale.iso_code == 'en' %} active{% endif %}"
             data-lang="en"
             data-translate="header.languages.english">{{ 'header.languages.english' | t }}</a>
           <a
             href="{{ request.path }}?locale=de"
-            class="header__link"
+            class="header__link{% if request.locale.iso_code == 'de' %} active{% endif %}"
             data-lang="de"
             data-translate="header.languages.german">{{ 'header.languages.german' | t }}</a>
         </div>
