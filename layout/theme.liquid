@@ -116,6 +116,9 @@
     <!-- Wiertla Custom Styles -->
   {{ 'custom-styles.css' | asset_url | stylesheet_tag }}
 
+    <!-- Wiertla Global Design Tokens (buttons, cards, etc.) -->
+    {% render 'wiertla-styles' %}
+
     <!-- Wiertla Categories Global Styles -->
     {{ 'wiertla-categories-global.css' | asset_url | stylesheet_tag }}
 
