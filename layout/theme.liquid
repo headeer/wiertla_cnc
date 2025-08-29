@@ -251,11 +251,8 @@
           var hasLatest = !!document.querySelector('.latest-products');
           var body = document.body;
           if (!body) return;
-          if (hasLatest) {
-            body.classList.add('has-latest-products');
-          } else {
-            body.classList.remove('has-latest-products');
-          }
+          body.classList.toggle('has-latest-products', hasLatest);
+          body.classList.toggle('no-latest-products', !hasLatest);
         }
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', toggleLatestFlag);
