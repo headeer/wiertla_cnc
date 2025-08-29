@@ -1894,19 +1894,18 @@ document.addEventListener('DOMContentLoaded', function() {
         let quantity = parseInt(quantityInput.value) || min;
         const isMultiple = (quantity % min) === 0;
         const withinStock = max <= 0 || quantity <= max;
-        // Error area
-        let note = document.querySelector('.product-details__quantity-note');
+        // Error area: render below the product-details__actions section
+        const actionsSection = document.querySelector('.product-details__actions');
         let errorEl = document.querySelector('.product-details__quantity-error');
         if (!errorEl) {
           errorEl = document.createElement('div');
           errorEl.className = 'product-details__quantity-error';
           errorEl.style.color = '#d00';
           errorEl.style.fontSize = '12px';
-          errorEl.style.marginTop = '6px';
-          if (note && note.parentNode) {
-            note.parentNode.insertBefore(errorEl, note.nextSibling);
-          } else if (quantityInput && quantityInput.parentNode) {
-            quantityInput.parentNode.appendChild(errorEl);
+          errorEl.style.marginTop = '12px';
+          errorEl.style.marginBottom = '8px';
+          if (actionsSection && actionsSection.parentNode) {
+            actionsSection.insertAdjacentElement('afterend', errorEl);
           }
         }
         errorEl.textContent = '';
@@ -1922,6 +1921,7 @@ document.addEventListener('DOMContentLoaded', function() {
           quantityInput.focus();
           return; // block submit until valid
         }
+        if (errorEl) errorEl.textContent = '';
         const formData = new FormData(addToCartForm);
         formData.set('quantity', quantity);
         
