@@ -4,6 +4,13 @@
     align-items: flex-start;
     text-align: left;
   }
+  /* Product page: control stats spacing without :has() */
+  .template-product .wiertla-stats {
+    margin-top: 80px;
+  }
+  .template-product.has-latest-products .wiertla-stats {
+    margin-top: 0 !important;
+  }
   /* Mobile Filter Modal Styles */
   .wiertla-categories__mobile-filter-modal {
     position: fixed;

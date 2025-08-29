@@ -1298,212 +1298,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 {%- endif -%}
 
-<script>
-  (function() {
-    function getIconBySkuPrefix(sku) {
-      var prefix = (sku || '').toString().slice(0,2).toUpperCase();
-      var map = {
-        VW: '{{ "image-8.png" | asset_url }}',
-        PR: '{{ "ico_plytkowe.png" | asset_url }}',
-        WW: '{{ "ico_vhm.png" | asset_url }}',
-        PS: '{{ "ico_sandvik.png" | asset_url }}',
-        WK: '{{ "ico_ksem_table.png" | asset_url }}',
-        WV: '{{ "ico_sandvik.png" | asset_url }}',
-        IS: '{{ "ico_big_koronkowe.svg" | asset_url }}',
-        WA: '{{ "ico_amec_table.png" | asset_url }}'
-      };
-      return map[prefix] || '{{ "image-8.png" | asset_url }}';
-    }
-
-    async function fetchAllProducts() {
-      var results = [];
-      try {
-        var baseUrl = '/collections/all?view=wiertla-products-json';
-        var res = await fetch(baseUrl + '&page=1', { credentials: 'same-origin' });
-        if (!res.ok) return results;
-        var data = await res.json();
-        var pages = Number(data.pagination && data.pagination.pages) || 1;
-        if (Array.isArray(data.products)) results = results.concat(data.products);
-        for (var p = 2; p <= pages; p++) {
-          var r = await fetch(baseUrl + '&page=' + p, { credentials: 'same-origin' });
-          if (!r.ok) continue;
-          var d = await r.json();
-          if (Array.isArray(d.products)) results = results.concat(d.products);
-        }
-      } catch (e) {}
-      return results;
-    }
-
-    function buildCard(prod) {
-      var icon = getIconBySkuPrefix(prod.sku);
-      var fi = prod.custom_srednica || prod.custom_srednica_display || prod.custom_fi || '';
-      var gniazdo = prod.custom_gniazdo || (prod.metafields && prod.metafields.custom && prod.metafields.custom.gniazdo) || '';
-      var xd = prod.custom_xd || prod.custom_working_length || (prod.metafields && prod.metafields.custom && prod.metafields.custom.working_length) || '';
-      var rodzaj = prod.custom_rodzaj || (prod.metafields && prod.metafields.custom && prod.metafields.custom.rodzaj) || '';
-      var symbol = prod.custom_kod_producenta || prod.custom_symbol || prod.sku || '';
-      var vendor = prod.custom_manufacturer || prod.vendor || '';
-      var price = prod.price || '';
-      var handle = prod.handle || '';
-      var skuPrefix = (prod.sku || '').toString().slice(0,2).toUpperCase();
-      return (
-        '<div class="swiper-slide">' +
-          '<a href="/products/' + handle + '" class="product-card" aria-label="' + (prod.title || '') + '">' +
-            '<div class="product-card__top">' +
-              '<div class="product-card__image-container">' +
-                '<div class="product-card__image-placeholder">' +
-                  '<img src="' + icon + '" alt="' + (prod.title || '') + '" class="product-card__image" width="34" height="34" loading="lazy" />' +
-                '</div>' +
-              '</div>' +
-              '<div class="product-card__fi"><span class="mobile-label">' + (fi ? 'Fi ⌀ ' : 'Gniazdo ') + '</span> <span class="mobile-value">' + (fi || gniazdo || '') + '</span></div>' +
-              '<div class="product-card__dimension">' + ((skuPrefix === 'PR' || skuPrefix === 'PS') ? (rodzaj ? ('Rodzaj: ' + rodzaj) : '') : (xd ? ('xD: ' + xd) : '')) + '</div>' +
-            '</div>' +
-            '<div class="product-card__symbol">' + symbol + '</div>' +
-            '<div class="product-card__bottom">' +
-              '<div class="product-card__vendor">' + vendor + '</div>' +
-              '<div class="product-card__price-container"><div class="product-card__price">' + price + '</div></div>' +
-            '</div>' +
-          '</a>' +
-        '</div>'
-      );
-    }
-
-    async function renderRelated() {
-      try {
-        var host = document.getElementById('related-by-gniazdo');
-        if (!host) return;
-        var gniazdo = host.getAttribute('data-gniazdo');
-        var currentId = Number(host.getAttribute('data-current-id'));
-        if (!gniazdo) { host.style.display = 'none'; return; }
-        var dataset = (window.WiertlaCNC && Array.isArray(window.WiertlaCNC.products) && window.WiertlaCNC.products.length)
-          ? window.WiertlaCNC.products
-          : (Array.isArray(window.WiertlaCNC && window.WiertlaCNC._inlineProducts) ? window.WiertlaCNC._inlineProducts : []);
-        if (!dataset.length) {
-          dataset = await fetchAllProducts();
-        }
-        var matches = dataset.filter(function(p){
-          var g = (p.custom_gniazdo || (p.metafields && p.metafields.custom && p.metafields.custom.gniazdo) || '').toString().trim();
-          return g && g.toLowerCase() === gniazdo.toLowerCase() && Number(p.id) !== currentId;
-        }).slice(0, 8);
-        if (!matches.length) { host.style.display = 'none'; return; }
-        var wrapper = document.getElementById('related-by-gniazdo-wrapper');
-        if (!wrapper) return;
-        wrapper.innerHTML = matches.map(buildCard).join('');
-        // Reveal the section only after we have content
-        host.style.display = '';
-      } catch (e) {}
-    }
-
-    // Initial attempt and refresh after hydration
-    document.addEventListener('DOMContentLoaded', renderRelated);
-    window.addEventListener('wiertla:productsUpdated', renderRelated);
-    window.addEventListener('wiertla:hydrateComplete', renderRelated);
-  })();
-</script>
-
-<!-- Latest Products Section -->
-{% comment %} <div class="latest-products">
-  <div class="latest-products__title" data-translate="wiertla_stats.latest_products.title">NAJNOWSZE W NASZEJ OFERCIE</div>
-  <div class="latest-products__subtitle" data-translate="wiertla_stats.latest_products.subtitle">Stale poszerzamy nasz asortyment, aktualizując ofertę o nowe modele wierteł CNC</div>
-
-  <div class="latest-products__swiper swiper">
-    <div class="swiper-wrapper">
-      {% assign all_products = collections.all.products | sort: 'created_at' | reverse %}
-      {% for product in all_products limit: 8 %}
-        {% assign sku_prefix = product.first_available_variant.sku | slice: 0, 2 %}
-        {% assign icon_url = '' %}
-        
-        {% if sku_prefix == 'VW' %}
-          {% assign icon_url = 'image-8.png' | asset_url %}
-        {% elsif sku_prefix == 'PR' %}
-          {% assign icon_url = 'image-10.png' | asset_url %}
-        {% elsif sku_prefix == 'WW' %}
-          {% assign icon_url = 'image-12.png' | asset_url %}
-        {% elsif sku_prefix == 'PS' %}
-          {% assign icon_url = 'image-9.png' | asset_url %}
-        {% elsif sku_prefix == 'WK' %}
-          {% assign icon_url = 'image-13.png' | asset_url %}
-        {% elsif sku_prefix == 'WV' %}
-          {% assign icon_url = 'image-11.png' | asset_url %}
-        {% elsif sku_prefix == 'IS' %}
-          {% assign icon_url = 'image-14.png' | asset_url %}
-        {% elsif sku_prefix == 'WA' %}
-          {% assign icon_url = 'image-15.png' | asset_url %}
-        {% else %}
-          {% assign icon_url = 'image-8.png' | asset_url %}
-        {% endif %}
-        <div class="swiper-slide">
-          <a href="{{ product.url }}" class="product-card" aria-label="{{ product.title }}">
-            <div class="product-card__top">
-              <div class="product-card__image-container">
-                <div class="product-card__image-placeholder" role="img" aria-label="{{ 'products.product.no_image' | t }}">
-                  <img
-                    src="{{ icon_url }}"
-                    alt="{{ product.title | escape }}"
-                    class="product-card__image"
-                    width="34"
-                    height="34"
-                    loading="lazy">
-                </div>
-              </div>
-              <div class="product-card__fi" aria-label="{{ 'products.product.diameter' | t }}">
-                <span class="mobile-label">Fi ⌀</span>
-                <span class="mobile-value">{{ product.metafields.custom.srednica | default: product.metafields.custom.fi | default: product.custom_srednica | default: product.custom_fi | default: '' }}</span>
-              </div>
-              <div class="product-card__dimension" aria-label="{{ 'products.product.dimension' | t }}">
-                {{ product.metafields.custom.xd | default: product.metafields.custom.custom_working_length | default: product.metafields.custom.working_length | default: '' }}
-              </div>
-            </div>
-
-            <div class="product-card__symbol" aria-label="{{ 'products.product.symbol' | t }}">
-              {{ product.metafields.custom.kod_producenta | default: product.metafields.custom.symbol | default: product.sku | default: '' }}
-            </div>
-
-            <div class="product-card__bottom">
-              <div class="product-card__vendor" aria-label="{{ 'products.product.vendor' | t }}">
-                {{ product.metafields.custom.manufacturer | default: product.vendor | default: '' }}
-              </div>
-              <div class="product-card__price-container">
-                <div class="product-card__price" aria-label="{{ 'products.product.price' | t }}">
-                  {% if product.price_varies %}
-                    {{ product.price_min | money }}
-                  {% else %}
-                    {{ product.price | money }}
-                  {% endif %}
-                </div>
-                {% if product.metafields.custom.rent_tool %}
-                  <div class="product-card__rent" aria-label="{{ 'products.product.rent_available' | t }}">
-                    {{ 'wiertla_stats.rent_tool_text' | t }}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="17"
-                      height="12"
-                      viewBox="0 0 17 12"
-                      fill="none"
-                      aria-hidden="true">
-                      <path d="M10.5 12L9.1 10.55L12.65 7H0.5V5H12.65L9.1 1.45L10.5 0L16.5 6L10.5 12Z" fill="#112832" />
-                    </svg>
-                  </div>
-                {% endif %}
-              </div>
-            </div>
-          </a>
-        </div>
-      {% endfor %}
-    </div>
-
-    <div class="swiper-navigation">
-      <div class="swiper-button-prev"></div>
-      <div class="pagination-container">
-        {% for i in (1..3) %}
-          <div class="pagination-bar {% if forloop.first %}pagination-active{% else %}pagination-inactive{% endif %}" data-index="{{ forloop.index0 }}"></div>
-        {% endfor %}
-      </div>
-      <div class="swiper-button-next"></div>
-    </div>
-  </div>
-</div> {% endcomment %}
-
-
 <!-- Wiertla Stats Module -->
 <div class="wiertla-stats">
   <div class="wiertla-stats__container">
@@ -1971,7 +1765,109 @@ document.addEventListener('DOMContentLoaded', function() {
     flex-wrap: wrap;
   }
 }
-</style><script>
+</style>
+<script>
+  (function() {
+    function getIconBySkuPrefix(sku) {
+      var prefix = (sku || '').toString().slice(0,2).toUpperCase();
+      var map = {
+        VW: '{{ "image-8.png" | asset_url }}',
+        PR: '{{ "ico_plytkowe.png" | asset_url }}',
+        WW: '{{ "ico_vhm.png" | asset_url }}',
+        PS: '{{ "ico_sandvik.png" | asset_url }}',
+        WK: '{{ "ico_ksem_table.png" | asset_url }}',
+        WV: '{{ "ico_sandvik.png" | asset_url }}',
+        IS: '{{ "ico_big_koronkowe.svg" | asset_url }}',
+        WA: '{{ "ico_amec_table.png" | asset_url }}'
+      };
+      return map[prefix] || '{{ "image-8.png" | asset_url }}';
+    }
+
+    async function fetchAllProducts() {
+      var results = [];
+      try {
+        var baseUrl = '/collections/all?view=wiertla-products-json';
+        var res = await fetch(baseUrl + '&page=1', { credentials: 'same-origin' });
+        if (!res.ok) return results;
+        var data = await res.json();
+        var pages = Number(data.pagination && data.pagination.pages) || 1;
+        if (Array.isArray(data.products)) results = results.concat(data.products);
+        for (var p = 2; p <= pages; p++) {
+          var r = await fetch(baseUrl + '&page=' + p, { credentials: 'same-origin' });
+          if (!r.ok) continue;
+          var d = await r.json();
+          if (Array.isArray(d.products)) results = results.concat(d.products);
+        }
+      } catch (e) {}
+      return results;
+    }
+
+    function buildCard(prod) {
+      var icon = getIconBySkuPrefix(prod.sku);
+      var fi = prod.custom_srednica || prod.custom_srednica_display || prod.custom_fi || '';
+      var gniazdo = prod.custom_gniazdo || (prod.metafields && prod.metafields.custom && prod.metafields.custom.gniazdo) || '';
+      var xd = prod.custom_xd || prod.custom_working_length || (prod.metafields && prod.metafields.custom && prod.metafields.custom.working_length) || '';
+      var rodzaj = prod.custom_rodzaj || (prod.metafields && prod.metafields.custom && prod.metafields.custom.rodzaj) || '';
+      var symbol = prod.custom_kod_producenta || prod.custom_symbol || prod.sku || '';
+      var vendor = prod.custom_manufacturer || prod.vendor || '';
+      var price = prod.price || '';
+      var handle = prod.handle || '';
+      var skuPrefix = (prod.sku || '').toString().slice(0,2).toUpperCase();
+      return (
+        '<div class="swiper-slide">' +
+          '<a href="/products/' + handle + '" class="product-card" aria-label="' + (prod.title || '') + '">' +
+            '<div class="product-card__top">' +
+              '<div class="product-card__image-container">' +
+                '<div class="product-card__image-placeholder">' +
+                  '<img src="' + icon + '" alt="' + (prod.title || '') + '" class="product-card__image" width="34" height="34" loading="lazy" />' +
+                '</div>' +
+              '</div>' +
+              '<div class="product-card__fi"><span class="mobile-label">' + (fi ? 'Fi ⌀ ' : 'Gniazdo ') + '</span> <span class="mobile-value">' + (fi || gniazdo || '') + '</span></div>' +
+              '<div class="product-card__dimension">' + ((skuPrefix === 'PR' || skuPrefix === 'PS') ? (rodzaj ? ('Rodzaj: ' + rodzaj) : '') : (xd ? ('xD: ' + xd) : '')) + '</div>' +
+            '</div>' +
+            '<div class="product-card__symbol">' + symbol + '</div>' +
+            '<div class="product-card__bottom">' +
+              '<div class="product-card__vendor">' + vendor + '</div>' +
+              '<div class="product-card__price-container"><div class="product-card__price">' + price + '</div></div>' +
+            '</div>' +
+          '</a>' +
+        '</div>'
+      );
+    }
+
+    async function renderRelated() {
+      try {
+        var host = document.getElementById('related-by-gniazdo');
+        if (!host) return;
+        var gniazdo = host.getAttribute('data-gniazdo');
+        var currentId = Number(host.getAttribute('data-current-id'));
+        if (!gniazdo) { host.style.display = 'none'; return; }
+        var dataset = (window.WiertlaCNC && Array.isArray(window.WiertlaCNC.products) && window.WiertlaCNC.products.length)
+          ? window.WiertlaCNC.products
+          : (Array.isArray(window.WiertlaCNC && window.WiertlaCNC._inlineProducts) ? window.WiertlaCNC._inlineProducts : []);
+        if (!dataset.length) {
+          dataset = await fetchAllProducts();
+        }
+        var matches = dataset.filter(function(p){
+          var g = (p.custom_gniazdo || (p.metafields && p.metafields.custom && p.metafields.custom.gniazdo) || '').toString().trim();
+          return g && g.toLowerCase() === gniazdo.toLowerCase() && Number(p.id) !== currentId;
+        }).slice(0, 8);
+        if (!matches.length) { host.style.display = 'none'; return; }
+        var wrapper = document.getElementById('related-by-gniazdo-wrapper');
+        if (!wrapper) return;
+        wrapper.innerHTML = matches.map(buildCard).join('');
+        // Reveal the section only after we have content
+        host.style.display = '';
+      } catch (e) {}
+    }
+
+    // Initial attempt and refresh after hydration
+    document.addEventListener('DOMContentLoaded', renderRelated);
+    window.addEventListener('wiertla:productsUpdated', renderRelated);
+    window.addEventListener('wiertla:hydrateComplete', renderRelated);
+  })();
+</script>
+<script>
   document.addEventListener('DOMContentLoaded', function() {
     const productDetails = document.querySelector('.product-details');
     if (!productDetails) return;
@@ -2550,9 +2446,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
   }
-  .wiertla-stats:not(:has(.latest-products))  {
-  margin-top: 120px;
-}
+  /* Removed :has() rule; spacing controlled via body.has-latest-products class */
+  .wiertla-stats:not(:has(.latest-products))  { margin-top: 0; }
   .rent-tools__title-line1,
   .rent-tools__title-line2 {
     font-family: 'League Spartan'

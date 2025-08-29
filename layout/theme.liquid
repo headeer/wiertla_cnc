@@ -245,6 +245,27 @@
           };
     </script>
     {% include 'uploadkit' %}
+    <script>
+      (function(){
+        function toggleLatestFlag(){
+          var hasLatest = !!document.querySelector('.latest-products');
+          var body = document.body;
+          if (!body) return;
+          if (hasLatest) {
+            body.classList.add('has-latest-products');
+          } else {
+            body.classList.remove('has-latest-products');
+          }
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', toggleLatestFlag);
+        } else {
+          toggleLatestFlag();
+        }
+        var mo = new MutationObserver(function(){ toggleLatestFlag(); });
+        mo.observe(document.documentElement, { childList: true, subtree: true });
+      })();
+    </script>
   {{ 'wiertla-fullscreen.js' | asset_url | script_tag }}
     <script src="{{ 'wiertla-modals.js' | asset_url }}" defer></script>
   </body>
