@@ -4,18 +4,15 @@
     <div class="mb-8 text-center">
       <h1 class="font-heading text-2xl lg:text-4xl mb-2" data-translate="customer.account.title">Moje konto</h1>
       {%- assign return_url = 'customer.account.return' | t -%}
-      {%- render 'link-underline',
-        section_color: 'primary',
-        text: return_url,
-        link: routes.account_url
-      -%}
+      <a href="{{ routes.account_url }}" class="w-btn w-btn--outline">{{ return_url }}</a>
     </div>
 
     <div data-address>
-      <button class="btn mb-4" type="button" id="AddressNewButton" data-address-new aria-expanded="false" data-translate="customer.addresses.add_new">Dodaj nowy adres</button>
+      <button class="w-btn w-btn--primary mb-4" type="button" id="AddressNewButton" data-address-new aria-expanded="false" data-translate="customer.addresses.add_new">Dodaj nowy adres</button>
 
-      <div data-address-form class="{% unless form.errors %}hidden{% endunless %} pb-8" id="AddressNewForm">
+      <div data-address-form class="hidden pb-8" id="AddressNewForm">
         {% form 'customer_address', customer.new_address %}
+          <div class="w-card">
           <h2 class="font-heading text-lg mb-2" data-translate="customer.addresses.add_new">Dodaj nowy adres</h2>
 
           <div class="text-scheme-accent">
@@ -76,8 +73,9 @@
           </div>
 
           <div class="mt-4">
-            <button type="submit" class="btn" data-translate="customer.addresses.add">Dodaj adres</button>
-            <button type="button" class="btn" data-address-cancel data-translate="customer.addresses.cancel">Anuluj</button>
+            <button type="submit" class="w-btn w-btn--primary" data-translate="customer.addresses.add">Dodaj adres</button>
+            <button type="button" class="w-btn w-btn--outline" data-address-cancel data-translate="customer.addresses.cancel">Anuluj</button>
+          </div>
           </div>
         {% endform %}
       </div>
@@ -88,7 +86,7 @@
     <div data-addresses>
       {% for address in customer.addresses %}
         <div data-address>
-          <div class="address-item">
+          <div class="address-item w-card">
             <h2 class="font-heading text-lg mb-2" data-translate="customer.addresses.title">Adres {{ forloop.index }}</h2>
             
             {% if address == customer.default_address %}
@@ -96,8 +94,8 @@
             {% endif %}
 
             <div class="address-actions">
-              <button type="button" class="edit-address" data-edit-address="{{ address.id }}" data-translate="customer.addresses.edit">Edytuj</button>
-              <button type="button" class="delete-address" data-delete-address="{{ address.id }}" data-confirm="Czy na pewno chcesz usunąć ten adres?" data-translate="customer.addresses.delete">Usuń</button>
+              <button type="button" class="w-btn w-btn--outline" data-edit-address="{{ address.id }}" data-translate="customer.addresses.edit">Edytuj</button>
+              <button type="button" class="w-btn w-btn--ghost" data-delete-address="{{ address.id }}" data-confirm="Czy na pewno chcesz usunąć ten adres?" data-translate="customer.addresses.delete">Usuń</button>
             </div>
 
             <div class="address-content">
@@ -106,6 +104,7 @@
           </div>
 
           <div class="edit-address-form" data-edit-address-form="{{ address.id }}">
+            <div class="w-card">
             <h3 class="font-heading text-lg" data-translate="customer.addresses.edit_address">Edytuj adres</h3>
 
             {% form 'customer_address', address %}
@@ -168,9 +167,10 @@
                 </label>
               </div>
 
-              <button type="submit" class="btn" data-translate="customer.addresses.update">Aktualizuj adres</button>
-              <button type="button" class="btn" data-address-cancel data-translate="customer.addresses.cancel">Anuluj</button>
+              <button type="submit" class="w-btn w-btn--primary" data-translate="customer.addresses.update">Aktualizuj adres</button>
+              <button type="button" class="w-btn w-btn--outline" data-address-cancel data-translate="customer.addresses.cancel">Anuluj</button>
             {% endform %}
+            </div>
           </div>
         </div>
       {% endfor %}

@@ -1,10 +1,11 @@
 <div class="section-x-padding py-theme max-w-md mx-auto" x-data="BaselineLogin()" x-init="mounted()">
+  <div class="w-card">
   <h1 class="font-heading text-2xl mb-2" data-translate="customer.register.title">Utwórz konto</h1>
 
-  {%- assign formId = 'RegisterForm' -%}
-  {% form 'create_customer', id: formId %}
+  {%- assign register_form_id = 'RegisterForm' -%}
+  {% form 'create_customer', id: register_form_id %}
     
-    {% render 'form-status', form: form, form_id: formId, section_color: 'primary' %}
+    {% render 'form-status', form: form, form_id: register_form_id, section_color: 'primary' %}
 
     <div class="form-field">
       <label for="first_name" data-translate="customer.register.first_name">Imię</label>
@@ -48,15 +49,16 @@
     </div>
 
     <div class="mt-4">
-      <input type="submit" value="Utwórz konto" class="button" data-translate="customer.register.submit">
+      <input type="submit" value="Utwórz konto" class="w-btn w-btn--primary" data-translate="customer.register.submit">
     </div>
 
     <div class="mt-8 md:flex md:justify-between">
       <div class="login-link">
-        <a href="{{ routes.account_login_url }}">
+        <a href="{{ routes.account_login_url }}" class="w-btn w-btn--outline">
           <span data-translate="customer.login.sign_in">Zaloguj się</span>
         </a>
       </div>
     </div>
   {% endform %}
+  </div>
 </div>

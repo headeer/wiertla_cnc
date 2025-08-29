@@ -1,6 +1,7 @@
 
 
 <div class="section-x-padding py-theme max-w-md mx-auto" x-data="BaselineLogin()" x-init="mounted()" data-color-scheme="primary">
+  <div class="w-card">
   <h1 class="font-heading text-2xl mb-2">{{ 'customer.activate_account.title' | t }}</h1>
   <p>{{ 'customer.activate_account.subtext' | t }}</p>
 
@@ -26,10 +27,11 @@
         class="w-full py-1 bg-transparent border-b-text border-current">
 
     <div class="mt-4">
-      <input type="submit" class="btn" value="{{ 'customer.activate_account.submit' | t }}">
+      <input type="submit" class="w-btn w-btn--primary" value="{{ 'customer.activate_account.submit' | t }}">
     </div>
     <div class="mt-4">
-      <input type="submit" class="" name="decline" value="{{ 'customer.activate_account.cancel' | t }}">
+      <input type="submit" class="w-btn w-btn--outline" name="decline" value="{{ 'customer.activate_account.cancel' | t }}">
     </div>
   {% endform %}
+  </div>
 </div>

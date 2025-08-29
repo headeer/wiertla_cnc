@@ -4,15 +4,12 @@
   <div class="mb-8 text-center">
     <h1 class="font-heading text-2xl lg:text-4xl mb-2">{{ 'customer.account.title' | t }}</h1>
     {%- assign logout = 'layout.customer.log_out' | t -%}
-    {%- render 'link-underline',
-      section_color: 'primary',
-      text: logout,
-      link: routes.account_logout_url
-    -%}
+    <a href="{{ routes.account_logout_url }}" class="w-btn w-btn--outline">{{ logout }}</a>
   </div>
 
   <div class="lg:grid lg:grid-cols-12 max-w-screen">
     <div class="lg:col-span-8">
+      <div class="w-card">
       <h2 class="font-heading text-lg mb-2">{{ 'customer.orders.title' | t }}</h2>
 
       {% paginate customer.orders by 20 %}
@@ -48,17 +45,16 @@
         {% endif %}
 
       {% endpaginate %}
+      </div>
     </div>
 
     <div class="mt-8 lg:mt-0 lg:col-span-3 lg:col-start-10 mb-2">
-      <h2 class="font-heading text-lg mb-2">{{ 'customer.account.details' | t }}</h2>
-      <div class="mb-4">{{ customer.default_address | format_address }}</div>
-      {%- capture address_link -%}{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }}){%- endcapture -%}
-      {%- render 'link-underline',
-        section_color: 'primary',
-        text: address_link,
-        link: routes.account_addresses_url
-      -%}
+      <div class="w-card">
+        <h2 class="font-heading text-lg mb-2">{{ 'customer.account.details' | t }}</h2>
+        <div class="mb-4">{{ customer.default_address | format_address }}</div>
+        {%- capture address_link -%}{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }}){%- endcapture -%}
+        <a href="{{ routes.account_addresses_url }}" class="w-btn w-btn--outline">{{ address_link }}</a>
+      </div>
     </div>
   </div>
 </div>

@@ -3,19 +3,16 @@
   helpers used for responsive-table labels
 {% endcomment %}
 
-<div class="section-x-padding py-theme max-w-screen mx-auto" data-color-scheme="{{ section_color }}">
+<div class="section-x-padding py-theme max-w-screen mx-auto" data-color-scheme="primary">
   <div class="mb-8 text-center">
     <h1 class="font-heading text-2xl lg:text-4xl mb-2">{{ 'customer.account.title' | t }}</h1>
     {%- assign return_url = 'customer.account.return' | t -%}
-    {%- render 'link-underline',
-      section_color: 'primary',
-      text: return_url,
-      link: routes.account_url
-    -%}
+    <a href="{{ routes.account_url }}" class="w-btn w-btn--outline">{{ return_url }}</a>
   </div>
 
-  <h2 class="font-heading text-lg mb-2">{{ 'customer.order.title' | t: name: order.name }}</h2>
-  <p>{{ 'customer.order.date_html' | t: date: order.created_at | date: "%B %d, %Y %I:%M%p" }}</p>
+  <div class="w-card">
+    <h2 class="font-heading text-lg mb-2">{{ 'customer.order.title' | t: name: order.name }}</h2>
+    <p>{{ 'customer.order.date_html' | t: date: order.created_at | date: "%B %d, %Y %I:%M%p" }}</p>
 
   {% if order.cancelled %}
     {%- assign cancelled_at = order.cancelled_at | date: "%B %d, %Y %I:%M%p" -%}
@@ -151,7 +148,6 @@
       {% for discount_application in order.cart_level_discount_applications %}
         <tr>
           <td colspan="4" class="table-small-hide">{{ 'customer.order.discount' | t }}&nbsp;&mdash;&nbsp;<span class="text-scheme-accent">{{- discount_application.title -}}</span></td>
-          </td>
           <td class="text-right text-scheme-accent align--bottom" data-label="{{ 'customer.order.discount' | t }}">
             <span><span class="text-xs text-scheme-accent md:hidden">{{- discount_application.title -}}</span> -{{ discount_application.total_allocated_amount | money }}</span>
           </td>
@@ -189,19 +185,16 @@
   </table>
 
   <div class="lg:grid lg:grid-cols-2">
-    <div class="mt-8">
+    <div class="mt-8 w-card">
       <h3 class="font-heading mb-2">{{ 'customer.order.billing_address' | t }}</h3>
-
       <p>{{ 'customer.order.payment_status' | t }}: {{ order.financial_status_label }}</p>
-
       {{ order.billing_address | format_address }}
     </div>
-    <div class="mt-8">
+    <div class="mt-8 w-card">
       <h3 class="font-heading mb-2">{{ 'customer.order.shipping_address' | t }}</h3>
-
       <p>{{ 'customer.order.fulfillment_status' | t }}: {{ order.fulfillment_status_label }}</p>
-
       {{ order.shipping_address | format_address }}
     </div>
+  </div>
   </div>
 </div>

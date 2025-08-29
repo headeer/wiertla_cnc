@@ -1,6 +1,7 @@
 <div class="section-x-padding py-theme max-w-lg mx-auto" x-data="BaselineLogin()" x-init="mounted()" data-color-scheme="primary">
   <div :class="{'hidden': state !== 'login'}">
     {% form 'customer_login', data-login-focus: true, tabindex: '-1' %}
+      <div class="w-card">
       <h1 class="font-heading text-2xl mb-2" data-translate="customer.login.title">Zaloguj się</h1>
 
       {% if form.errors %}
@@ -30,12 +31,12 @@
       {% endif %}
 
       <div class="mt-4">
-        <button type="submit" class="btn" data-translate="customer.login.sign_in">Zaloguj się</button>
+        <button type="submit" class="w-btn w-btn--primary" data-translate="customer.login.sign_in">Zaloguj się</button>
       </div>
 
       <div class="mt-8 md:flex md:justify-between">
         <div class="create-account">
-          <a href="{{ routes.account_register_url }}" class="btn">
+          <a href="{{ routes.account_register_url }}" class="w-btn w-btn--outline">
             <span data-translate="layout.customer.create_account">Utwórz konto</span>
           </a>
         </div>
@@ -49,11 +50,13 @@
           </div>
         {% endif %}
       </div>
+      </div>
     {% endform %}
   </div>
 
   <div :class="{'hidden': state !== 'recover'}" x-cloak>
     <div data-login-focus tabindex="-1">
+      <div class="w-card">
       <h2 class="font-heading text-2xl mb-2" data-translate="customer.recover_password.title">Resetowanie hasła</h2>
 
       {% form 'recover_customer_password' %}
@@ -76,12 +79,13 @@
                   autocapitalize="off">
           </div>
           <div class="mt-4">
-            <input type="submit" class="btn" value="Resetuj hasło" data-translate="customer.recover_password.submit">
+            <input type="submit" class="w-btn w-btn--primary" value="Resetuj hasło" data-translate="customer.recover_password.submit">
 
-            <a href="#" data-recover-cancel data-translate="customer.recover_password.cancel">Anuluj</a>
+            <a href="#" class="w-btn w-btn--outline" data-recover-cancel data-translate="customer.recover_password.cancel">Anuluj</a>
           </div>
         {% endif %}
       {% endform %}
+      </div>
     </div>
   </div>
 
@@ -91,7 +95,7 @@
 
       <form method="post" action="{{ routes.account_login_url }}">
         <input type="hidden" name="checkout_url" value="{{ routes.root_url }}checkout">
-        <input type="submit" class="btn" value="Kontynuuj jako gość" data-translate="customer.login.guest_continue">
+        <input type="submit" class="w-btn w-btn--outline" value="Kontynuuj jako gość" data-translate="customer.login.guest_continue">
       </form>
     </div>
   {% endif %}
