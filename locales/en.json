@@ -295,6 +295,41 @@
       "quantity": "Qty",
       "quantity_label": "Quantity: {{ quantity_count }}"
     }
+  },
+  "layout": {
+    "customer": {
+      "account": "Account"
+    },
+    "cart": {
+      "title": "Cart"
+    }
+  },
+  "header": {
+    "contact": {
+      "phone_icon_alt": "Phone",
+      "email_icon_alt": "Email"
+    },
+    "actions": {
+      "buy": "Buy",
+      "rent": "Rent",
+      "regenerate": "Regenerate",
+      "sharpen": "Sharpen"
+    }
+  },
+  "footer": {
+    "contact": {
+      "phone_icon_alt": "Phone",
+      "email_icon_alt": "Email"
+    },
+    "scroll_icon_alt": "Scroll to top"
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message"
+    }
   }
 }
 
