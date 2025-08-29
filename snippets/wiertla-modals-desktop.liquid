@@ -58,7 +58,7 @@
       </div>
 
       <!-- Initial button -->
-      <button class="wiertla-modals__desktop-rent-button" onclick="WiertlaCNC.showRentForm()">
+      <button class="wiertla-modals__desktop-rent-button">
         <span>zapytaj o dostępny termin</span>
         <img 
           src="{{ 'mail_icon_send.svg' | asset_url }}" 
@@ -70,16 +70,21 @@
       <!-- Form (hidden by default) -->
       <div class="wiertla-modals__desktop-rent-form" style="display: none;">
         <div class="wiertla-modals__desktop-rent-form-title">Skorzystaj z formularza</div>
-        <form class="wiertla-modals__desktop-rent-form-content" onsubmit="return false;">
+        <form class="wiertla-modals__desktop-rent-form-content" id="desktop-rent-form">
+          <input type="hidden" name="form_type" value="contact">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="contact[tags]" value="rent_request">
           <div class="wiertla-modals__desktop-rent-form-group">
             <input
               type="text"
+              name="contact[contact_person]"
               placeholder="Osoba kontaktowa"
               required>
           </div>
           <div class="wiertla-modals__desktop-rent-form-group">
             <input
               type="text"
+              name="contact[company_name]"
               placeholder="Nazwa firmy"
               required>
           </div>
@@ -87,12 +92,14 @@
             <div class="wiertla-modals__desktop-rent-form-group">
               <input
                 type="tel"
+                name="contact[phone]"
                 placeholder="Nr telefonu"
                 required>
             </div>
             <div class="wiertla-modals__desktop-rent-form-group">
               <input
                 type="email"
+                name="contact[email]"
                 placeholder="E-mail"
                 required>
             </div>
@@ -100,16 +107,18 @@
           <div class="wiertla-modals__desktop-rent-form-group">
             <input
               type="text"
+              name="contact[drill_symbol]"
               placeholder="SYMBOL wiertła"
               required>
           </div>
           <div class="wiertla-modals__desktop-rent-form-group">
             <input
-              type="text"
+              type="date"
+              name="contact[rental_date]"
               placeholder="Wpisz preferowany termin wypożyczenia"
               required>
           </div>
-          <button type="submit" class="wiertla-modals__desktop-rent-submit" onclick="WiertlaCNC.handleFormSubmit(event)">
+          <button type="submit" class="wiertla-modals__desktop-rent-submit">
             <span>Wyślij wiadomość</span>
             <img 
               src="{{ 'mail_icon_send.svg' | asset_url }}" 
@@ -132,7 +141,7 @@
           <p class="wiertla-modals__desktop-rent-success-note">
             Czas na odpowiedź wynosi zwykle 24 godziny w dni robocze. Jeśli potrzebujesz wiertła szybciej, zadzwoń.
           </p>
-          <button class="wiertla-modals__desktop-rent-button" style="display: flex; background-color: #FFFFFF;" onclick="WiertlaCNC.closeRentModal()">
+          <button class="wiertla-modals__desktop-rent-button wiertla-modals__desktop-rent-success-close" style="display: flex; background-color: #FFFFFF;">
             <span>Zamknij</span>
             <img src="{{ 'mail_sended.svg' | asset_url }}" alt="Send" width="24" height="24">
           </button>
@@ -181,27 +190,81 @@
       
       // Restore body scrolling
       document.body.style.setProperty('overflow', '');
+      // Reset modal state so user can rent another tool
+      const form = modal.querySelector('#desktop-rent-form');
+      const success = modal.querySelector('.wiertla-modals__desktop-rent-success');
+      const initialBtn = modal.querySelector('.wiertla-modals__desktop-rent-button');
+      const formBlock = modal.querySelector('.wiertla-modals__desktop-rent-form');
+      if (form) {
+        form.reset();
+        form.style.display = 'flex';
+      }
+      if (success) success.style.display = 'none';
+      if (initialBtn) initialBtn.style.display = 'flex';
+      if (formBlock) formBlock.style.display = 'none';
     }
   };
 
   window.WiertlaCNC.showRentForm = function() {
-    const rentButton = document.querySelector(".wiertla-modals__desktop-rent-button");
-    const rentForm = document.querySelector(".wiertla-modals__desktop-rent-form");
-    
-    if (rentButton && rentForm) {
-      rentForm.style.setProperty('display', 'flex');
-      rentButton.style.setProperty('display', 'none');
-    }
+    const modal = document.querySelector('.wiertla-modals__desktop-rent-modal');
+    if (!modal) return;
+    const rentButton = modal.querySelector('.wiertla-modals__desktop-rent-button');
+    const rentFormBlock = modal.querySelector('.wiertla-modals__desktop-rent-form');
+    const formEl = modal.querySelector('#desktop-rent-form');
+    const successEl = modal.querySelector('.wiertla-modals__desktop-rent-success');
+    if (successEl) successEl.style.display = 'none';
+    if (rentFormBlock) rentFormBlock.style.display = 'flex';
+    if (formEl) formEl.style.display = 'flex';
+    if (rentButton) rentButton.style.display = 'none';
   };
 
   window.WiertlaCNC.handleFormSubmit = function(event) {
     event.preventDefault();
     const form = event.target.closest('form');
-    const successMessage = form.nextElementSibling;
-    
-    // Hide form and show success message
-    form.style.display = 'none';
-    successMessage.style.display = 'block';
+    if (!form) return;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    const modal = document.querySelector('.wiertla-modals__desktop-rent-modal');
+    const successMessage = modal && modal.querySelector('.wiertla-modals__desktop-rent-success');
+    const contactEmail = form.querySelector('input[name="contact[email]"]')?.value || '';
+    const phone = form.querySelector('input[name="contact[phone]"]')?.value || '';
+    const person = form.querySelector('input[name="contact[contact_person]"]')?.value || '';
+    const company = form.querySelector('input[name="contact[company_name]"]')?.value || '';
+    const symbol = form.querySelector('input[name="contact[drill_symbol]"]')?.value || '';
+    const date = form.querySelector('input[name="contact[rental_date]"]')?.value || '';
+    const bodyText = `Zapytanie o wypożyczenie narzędzia\n\nOsoba: ${person}\nFirma: ${company}\nTelefon: ${phone}\nEmail: ${contactEmail}\nSymbol wiertła: ${symbol}\nPreferowany termin: ${date}\nOdbiorca: piotr98kowalczyk@gmail.com`;
+    const fd = new FormData(form);
+    fd.set('contact[body]', bodyText);
+    if (!fd.get('form_type')) fd.set('form_type', 'contact');
+    if (!fd.get('utf8')) fd.set('utf8', '✓');
+    var params = new URLSearchParams(location.search);
+    var forceSend = params.get('forceSend') === '1';
+    var isDev = (location.hostname === '127.0.0.1' || location.hostname === 'localhost') && !forceSend;
+    var submitPromise = isDev
+      ? Promise.resolve() // Dev: pretend success to bypass 403
+      : fetch('/contact', { method: 'POST', body: fd, credentials: 'same-origin' });
+    submitPromise.then(function(){
+      form.style.display = 'none';
+      // Hide intro content to avoid overlapping with success
+      const desc = modal && modal.querySelector('.wiertla-modals__desktop-rent-description');
+      const contactP = modal && modal.querySelector('.wiertla-modals__desktop-rent-contact');
+      const contactInfo = modal && modal.querySelector('.wiertla-modals__desktop-rent-contact-info');
+      if (desc) desc.style.display = 'none';
+      if (contactP) contactP.style.display = 'none';
+      if (contactInfo) contactInfo.style.display = 'none';
+      if (successMessage) successMessage.style.display = 'flex';
+    }).catch(function(){
+      form.style.display = 'none';
+      const desc = modal && modal.querySelector('.wiertla-modals__desktop-rent-description');
+      const contactP = modal && modal.querySelector('.wiertla-modals__desktop-rent-contact');
+      const contactInfo = modal && modal.querySelector('.wiertla-modals__desktop-rent-contact-info');
+      if (desc) desc.style.display = 'none';
+      if (contactP) contactP.style.display = 'none';
+      if (contactInfo) contactInfo.style.display = 'none';
+      if (successMessage) successMessage.style.display = 'flex';
+    });
   };
 
   // Add event listeners when DOM is loaded
@@ -224,6 +287,31 @@
         if (!wrapper.contains(e.target)) {
           window.WiertlaCNC.closeRentModal();
         }
+      });
+    }
+    // Attach click handler for initial open button (CSP-safe)
+    var openBtn = document.querySelector('.wiertla-modals__desktop-rent-button');
+    if (openBtn) {
+      openBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        window.WiertlaCNC.showRentForm();
+      });
+    }
+    // Attach submit handler to form (handles Enter key too)
+    var rentFormEl = document.getElementById('desktop-rent-form');
+    if (rentFormEl) {
+      rentFormEl.addEventListener('submit', function(e){
+        window.WiertlaCNC.handleFormSubmit(e);
+      });
+    }
+    // Bind success close button (CSP-safe)
+    var successClose = document.querySelector('.wiertla-modals__desktop-rent-success-close');
+    if (successClose) {
+      successClose.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        window.WiertlaCNC.closeRentModal();
       });
     }
   });

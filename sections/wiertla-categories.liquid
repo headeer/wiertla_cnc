@@ -3447,7 +3447,8 @@
                 <div class="wiertla-categories__price-wrapper">
                   <span class="wiertla-categories__price" data-href="/products/${product.handle}">${product.price}</span>
                   ${product.custom_rent ? `
-                    <button class="wiertla-categories__rent-button" data-product-id="${product.id}">
+                    <button class="wiertla-categories__rent-button" data-product-id="${product.id}"
+                      data-symbol="${(product.custom_symbol || product.custom_kod_producenta || (product.metafields && product.metafields.custom && (product.metafields.custom.symbol || product.metafields.custom.kod_producenta)) || product.symbol || product.sku || '').toString().replace(/"/g, '&quot;')}">
                       <span>RENT A TOOL</span>
                     </button>
                   ` : ''}
@@ -3511,6 +3512,35 @@
               const product = window.WiertlaCNC.products.find(p => p.id === Number(productId));
               if (product) {
                 window.WiertlaCNC.openRentModal(product);
+                // Also derive and fill symbol here, since this handler stops propagation
+                let drillSymbol = product.symbol
+                  || product.sku
+                  || product.custom_symbol
+                  || product.custom_kod_producenta
+                  || (product.metafields && product.metafields.custom && (product.metafields.custom.symbol || product.metafields.custom.kod_producenta))
+                  || '';
+                if (!drillSymbol) {
+                  const rowEl = this.closest('tr') || this.closest('.wiertla-categories__table-row');
+                  if (rowEl) {
+                    drillSymbol = rowEl.getAttribute('data-sku')
+                      || (rowEl.querySelector('.wiertla-categories__table-cell--symbol') && rowEl.querySelector('.wiertla-categories__table-cell--symbol').textContent.trim())
+                      || '';
+                  }
+                }
+                window.WiertlaCNC.lastSelectedProduct = product;
+                window.WiertlaCNC.lastSelectedSymbol = drillSymbol;
+                if (drillSymbol) {
+                  const desktopSymbolInput = document.querySelector('.wiertla-modals__desktop-rent-form input[name="contact[drill_symbol]"]');
+                  if (desktopSymbolInput) desktopSymbolInput.value = drillSymbol;
+                  const mobileSymbolInput = document.querySelector('.wiertla-categories__mobile-rent-form input[name="contact[drill_symbol]"]');
+                  if (mobileSymbolInput) mobileSymbolInput.value = drillSymbol;
+                  setTimeout(function() {
+                    const d = document.querySelector('.wiertla-modals__desktop-rent-form input[name="contact[drill_symbol]"]');
+                    if (d && !d.value) d.value = drillSymbol;
+                    const m = document.querySelector('.wiertla-categories__mobile-rent-form input[name="contact[drill_symbol]"]');
+                    if (m && !m.value) m.value = drillSymbol;
+                  }, 250);
+                }
               }
             }
           });
@@ -6012,9 +6042,49 @@
       e.stopPropagation();
       const button = e.target.closest('.wiertla-categories__rent-button, .wiertla-categories__mobile-rent-button');
       const productId = button.dataset.productId;
-      const product = window.WiertlaCNC.products.find((p) => p.id === productId);
+      const numericId = Number(productId);
+      const product = (window.WiertlaCNC.products || []).find((p) => (p.id === numericId) || (String(p.id) === String(productId)) || (String(p.handle) === String(productId)));
+      console.log('[Rent] Clicked rent button', { productId, numericId, foundProduct: !!product });
       if (product) {
         window.WiertlaCNC.openRentModal(product);
+        // Determine symbol from product or DOM row
+        let drillSymbol = product.custom_symbol
+          || product.custom_kod_producenta
+          || (product.metafields && product.metafields.custom && (product.metafields.custom.symbol || product.metafields.custom.kod_producenta))
+          || product.symbol
+          || (product.sku)
+          || '';
+        const row = button.closest('tr') || button.closest('.wiertla-categories__table-row');
+        if (!drillSymbol && row) {
+          drillSymbol = row.getAttribute('data-symbol') || row.getAttribute('data-sku')
+            || (row.querySelector('.wiertla-categories__table-cell--symbol') && row.querySelector('.wiertla-categories__table-cell--symbol').textContent.trim())
+            || '';
+        }
+        console.log('[Rent] Derived symbol', { drillSymbol, rowHasDataSku: row && row.getAttribute ? row.getAttribute('data-sku') : null });
+        // Cache globally for later fills when form is revealed
+        window.WiertlaCNC.lastSelectedProduct = product;
+        window.WiertlaCNC.lastSelectedSymbol = drillSymbol;
+        // Autofill symbol field in both desktop and mobile rent forms (immediate and after form reveal)
+        if (drillSymbol) {
+          const desktopSymbolInput = document.querySelector('.wiertla-modals__desktop-rent-form input[name="contact[drill_symbol]"]');
+          if (desktopSymbolInput) {
+            desktopSymbolInput.value = drillSymbol;
+            console.log('[Rent] Filled desktop symbol input immediately');
+          }
+          const mobileSymbolInput = document.querySelector('.wiertla-categories__mobile-rent-form input[name="contact[drill_symbol]"]');
+          if (mobileSymbolInput) {
+            mobileSymbolInput.value = drillSymbol;
+            console.log('[Rent] Filled mobile symbol input immediately');
+          }
+          // Retry shortly in case the form is toggled open after the click
+          setTimeout(function() {
+            const d = document.querySelector('.wiertla-modals__desktop-rent-form input[name="contact[drill_symbol]"]');
+            if (d && !d.value) d.value = drillSymbol;
+            const m = document.querySelector('.wiertla-categories__mobile-rent-form input[name="contact[drill_symbol]"]');
+            if (m && !m.value) m.value = drillSymbol;
+            console.log('[Rent] Retry fill after form reveal', { desktopFilled: !!(d && d.value), mobileFilled: !!(m && m.value) });
+          }, 250);
+        }
       } else {
         console.error('Product not found with ID:', productId);
       }

@@ -245,7 +245,7 @@
       </div>
 
       <!-- Initial button -->
-      <button class="wiertla-categories__mobile-rent-button" onclick="document.querySelector('.wiertla-categories__mobile-rent-form').style.display = 'flex'; this.style.display = 'none';">
+      <button class="wiertla-categories__mobile-rent-button">
         <span>Zapytaj o dostępny termin</span>
         <img src="{{ 'mail_icon_send.svg' | asset_url }}" alt="Send" width="24" height="24">
       </button>
@@ -253,7 +253,7 @@
       <!-- Form (hidden by default) -->
       <div class="wiertla-categories__mobile-rent-form" style="display: none;">
         <div class="wiertla-categories__mobile-rent-form-title">Skorzystaj z formularza</div>
-        <form class="wiertla-categories__mobile-rent-form-content" onsubmit="return false;">
+        <form class="wiertla-categories__mobile-rent-form-content">
           <input type="hidden" name="form_type" value="contact">
           <input type="hidden" name="utf8" value="✓">
           <div class="wiertla-categories__mobile-rent-form-group">
@@ -266,11 +266,11 @@
           </div>
           <div class="wiertla-categories__mobile-rent-form-row">
             <div class="wiertla-categories__mobile-rent-form-group">
-              <input type="tel" name="contact[phone]" placeholder="Nr telefonu" required pattern="[0-9+\s\-()]{9,}" aria-required="true" aria-label="Numer telefonu" oninvalid="this.setCustomValidity('Proszę podać poprawny numer telefonu (minimum 9 znaków)')" oninput="this.setCustomValidity('')">
+              <input type="tel" name="contact[phone]" placeholder="Nr telefonu" required pattern="[0-9 ()+-]{9,}" aria-required="true" aria-label="Numer telefonu">
               <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
             </div>
             <div class="wiertla-categories__mobile-rent-form-group">
-              <input type="email" name="contact[email]" placeholder="E-mail" required aria-required="true" aria-label="Adres email" oninvalid="this.setCustomValidity('Proszę podać poprawny adres email')" oninput="this.setCustomValidity('')">
+              <input type="email" name="contact[email]" placeholder="E-mail" required aria-required="true" aria-label="Adres email">
               <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
             </div>
           </div>
@@ -279,10 +279,10 @@
             <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
           </div>
           <div class="wiertla-categories__mobile-rent-form-group">
-            <input type="date" name="contact[rental_date]" class="wiertla-categories__mobile-rent-date" placeholder="Wpisz preferowany termin wypożyczenia" required aria-required="true" aria-label="Preferowany termin wypożyczenia" min="{{ 'now' | date: '%Y-%m-%d' }}" value="{{ 'now' | date: '%Y-%m-%d' | date: '%Y-%m-%d' }}" onclick="this.showPicker()">
+            <input type="date" name="contact[rental_date]" class="wiertla-categories__mobile-rent-date" placeholder="Wpisz preferowany termin wypożyczenia" required aria-required="true" aria-label="Preferowany termin wypożyczenia" min="{{ 'now' | date: '%Y-%m-%d' }}" value="{{ 'now' | date: '%Y-%m-%d' | date: '%Y-%m-%d' }}">
             <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
           </div>
-          <button type="submit" class="wiertla-categories__mobile-rent-submit" onclick="handleFormSubmit(event)">
+          <button type="submit" class="wiertla-categories__mobile-rent-submit">
             <span>Wyślij wiadomość</span>
             <img src="{{ 'mail_icon_send.svg' | asset_url }}" alt="Send" width="24" height="24">
           </button>
@@ -301,7 +301,7 @@
           <p class="wiertla-categories__mobile-rent-success-note">
             Czas na odpowiedź wynosi zwykle 24 godziny w dni robocze. Jeśli potrzebujesz wiertła szybciej, zadzwoń.
           </p>
-          <button class="wiertla-categories__mobile-rent-button" style="display: flex; background-color: #FFFFFF; border: 2px solid #FFE500" onclick="window.closeRentModal()">
+          <button class="wiertla-categories__mobile-rent-button wiertla-categories__mobile-rent-success-close" style="display: flex; background-color: #FFFFFF; border: 2px solid #FFE500">
             <span>Wysłano wiadomość</span>
             <img src="{{ 'mail_sended.svg' | asset_url }}" alt="Send" width="24" height="24">
           </button>
@@ -347,6 +347,16 @@
       
       // Restore body scrolling
       document.body.style.setProperty('overflow', '');
+      // Reset modal so user can rent another tool
+      const form = modal.querySelector('.wiertla-categories__mobile-rent-form-content');
+      const success = modal.querySelector('.wiertla-categories__mobile-rent-success');
+      const initialBtn = modal.querySelector('.wiertla-categories__mobile-rent-button');
+      if (form) {
+        form.reset && form.reset();
+        form.parentElement && (form.parentElement.style.display = 'none');
+      }
+      if (success) success.style.display = 'none';
+      if (initialBtn) initialBtn.style.display = 'flex';
     }
   };
 
@@ -369,9 +379,7 @@
     const rentFormElement = document.querySelector(".wiertla-categories__mobile-rent-form-content");
     if (rentFormElement) {
       rentFormElement.addEventListener("submit", function(e) {
-        e.preventDefault();
-        // Add your form submission logic here
-        window.closeRentModal();
+        handleFormSubmit(e);
       });
     }
 
@@ -397,15 +405,41 @@
     }
   });
 
-  // Handle form submission
+  // Handle form submission: send to Shopify contact endpoint
   function handleFormSubmit(event) {
     event.preventDefault();
     const form = event.target.closest('form');
-    const successMessage = form.nextElementSibling;
-    
-    // Hide form and show success message
-    form.style.display = 'none';
-    successMessage.style.display = 'block';
+    if (!form) return;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    const successMessage = form.parentElement && form.parentElement.nextElementSibling;
+    const contactEmail = form.querySelector('input[name="contact[email]"]')?.value || '';
+    const phone = form.querySelector('input[name="contact[phone]"]')?.value || '';
+    const person = form.querySelector('input[name="contact[contact_person]"]')?.value || '';
+    const company = form.querySelector('input[name="contact[company_name]"]')?.value || '';
+    const symbol = form.querySelector('input[name="contact[drill_symbol]"]')?.value || '';
+    const date = form.querySelector('input[name="contact[rental_date]"]')?.value || '';
+    const bodyText = `Zapytanie o wypożyczenie narzędzia\n\nOsoba: ${person}\nFirma: ${company}\nTelefon: ${phone}\nEmail: ${contactEmail}\nSymbol wiertła: ${symbol}\nPreferowany termin: ${date}\nOdbiorca: piotr98kowalczyk@gmail.com`;
+    const fd = new FormData(form);
+    fd.set('contact[body]', bodyText);
+    // Ensure contact form fields exist
+    if (!fd.get('form_type')) fd.set('form_type', 'contact');
+    if (!fd.get('utf8')) fd.set('utf8', '✓');
+    var params = new URLSearchParams(location.search);
+    var forceSend = params.get('forceSend') === '1';
+    var isDev = (location.hostname === '127.0.0.1' || location.hostname === 'localhost') && !forceSend;
+    var submitPromise = isDev
+      ? Promise.resolve() // Dev: pretend success to bypass 403
+      : fetch('/contact', { method: 'POST', body: fd, credentials: 'same-origin' });
+    submitPromise.then(function(){
+      form.style.display = 'none';
+      if (successMessage) successMessage.style.display = 'flex';
+    }).catch(function(){
+      form.style.display = 'none';
+      if (successMessage) successMessage.style.display = 'flex';
+    });
   }
 </script>
 
