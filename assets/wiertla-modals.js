@@ -66,10 +66,13 @@
     if (form) {
       form.addEventListener('submit', function(e){
         e.preventDefault();
-        // Keep contact info visible; hide description and form title only
+        // Keep description and contact paragraph visible above success
         if (formTitle) formTitle.style.display = 'none';
-        submitContact(form, successEl, [desc, contactP]);
+        if (desc) desc.style.display = 'block';
+        if (contactP) contactP.style.display = 'block';
         if (contactInfo) contactInfo.style.display = 'flex';
+        // Do not hide intro blocks in submitContact
+        submitContact(form, successEl, []);
       });
     }
     if (successClose) {
