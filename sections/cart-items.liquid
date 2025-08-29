@@ -1,5 +1,28 @@
 {%- assign section_color = 'primary' -%}
 <section id="main-cart-items" x-data="ThemeSection_Cart()" x-init="mounted()" data-section-id="{{ section.id }}" data-id="{{ section.id }}" data-section-type="cart" class="transition-opacity duration-200 ease-in-out" data-color-scheme="{{ section_color }}">
+  <style>
+    .cart-page { padding: 32px 24px; }
+    .cart-header { max-width: 1120px; margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: space-between; }
+    .cart-header__title { font-family: "League Spartan", sans-serif; font-weight: 700; font-size: 28px; line-height: 1; color: #112832; margin: 0; }
+    .cart-section { margin-top: 24px; }
+    .cart-empty { display: flex; justify-content: center; padding: 16px 0; }
+    .cart-empty__card { width: 100%; max-width: 760px; }
+    .cart-empty__message { margin: 0 0 22px 0; font-family: "Montserrat", sans-serif; font-size: 18px; color: #112832; text-align: center; }
+    .cart-empty__actions { display: flex; align-items: center; justify-content: center; gap: 12px; }
+
+    .w-card { background: #FFFFFF; border: 2px solid #112832; border-radius: 16px; box-shadow: 4px 4px 0 #112832; padding: 24px; }
+
+    .w-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 10px 16px; border-radius: 14px; font-family: "League Spartan", sans-serif; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border: 2px solid #112832; transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .1s ease; text-decoration: none; }
+    .w-btn:active { transform: translateY(1px); }
+    .w-btn--primary { background: #FFE500; color: #112832; }
+    .w-btn--outline { background: #FFFFFF; color: #112832; }
+    .w-btn--ghost { background: transparent; color: #112832; border-color: #112832; }
+    .w-btn--lg { padding: 14px 22px; font-size: 16px; }
+    .w-btn:hover { background-color: #FFE500; color: #112832; border-color: #112832; }
+
+    .cart-qty-btn { width: 34px; height: 34px; border-radius: 10px; border: 2px solid #112832; display: inline-flex; align-items: center; justify-content: center; }
+    .cart-qty-input { width: 44px; }
+  </style>
   <div class="js-contents">
   {% if cart.item_count > 0 %}
     <div class="relative section-x-padding pt-theme-double pb-theme md:pb-0">
@@ -36,7 +59,7 @@
                   {% if item.image != blank %}
                     <div class="w-10 md:w-20 mr-4">
                       <a href="{{ item.url | within: collections.all }}">
-                        {{ item | img_url: '240x240' | img_tag: item.title }}
+                        {{ item.image | image_url: width: 240, height: 240, crop: 'center' | image_tag: alt: item.title }}
                       </a>
                     </div>
                   {% endif %}
@@ -83,7 +106,7 @@
                       <button
                         type="submit"
                         name="minus_mobile"
-                        class="w-6 p-1 js-enabled"
+                        class="w-6 p-1 js-enabled cart-qty-btn"
                         @click.prevent="qtyAdjust($event, -1, 'quantity_{{ item.key | replace: ':', '' }}')"
                         :aria-label="'{{ 'general.accessibility.decrement_one' | t }} ' + '{{ item.title }}'">
                         {% render 'icon-minus' %}
@@ -91,7 +114,7 @@
                       <input type="text"
                         data-index="{{ item.index | plus: 1 }}"
                         value="{{ item.quantity }}"
-                        class="min-w-0 w-6 py-1 text-center text-sm border-b-text border-current bg-transparent"
+                        class="min-w-0 w-6 py-1 text-center text-sm border-b-text border-current bg-transparent cart-qty-input"
                         min="0"
                         id="Quantity-{{ item.index | plus: 1 }}"
                         aria-label="{{ 'cart.label.quantity' | t }}"
@@ -102,14 +125,14 @@
                       <button
                         type="submit"
                         name="plus_mobile"
-                        class="w-6 p-1 js-enabled"
+                        class="w-6 p-1 js-enabled cart-qty-btn"
                         @click.prevent="qtyAdjust($event, 1, 'quantity_{{ item.key | replace: ':', '' }}')"
                         :aria-label="'{{ 'general.accessibility.increment_one' | t }} ' + '{{ item.title }}'">
                       {% render 'icon-plus' %}
                       </button>
                     </div>
 
-                    <a @click.prevent="removeItem" class="hidden md:block mt-2" href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                    <a @click.prevent="removeItem" class="hidden md:block mt-2" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0">
                       <small>{{ 'cart.general.remove' | t }}</small>
                     </a>
                   </div>
@@ -135,11 +158,11 @@
                 {%- endif -%}
               </td>
               <td data-quantity data-label="{{ 'cart.label.quantity' | t }}">
-                <div class="flex  items-center hidden lg:block">
+                <div class="hidden lg:flex items-center">
                   <button
                     type="submit"
                     name="minus"
-                    class="w-6 p-1 align-middle js-enabled"
+                    class="w-6 p-1 align-middle js-enabled cart-qty-btn"
                     @click.prevent="qtyAdjust($event, -1, 'quantity_{{ item.key | replace: ':', '' }}')"
                     :aria-label="'{{ 'general.accessibility.decrement_one' | t }} ' + '{{ item.title }}'">
                     {% render 'icon-minus' %}
@@ -148,7 +171,7 @@
                     name="updates[]"
                     id="updates_{{ item.key }}"
                     value="{{ item.quantity }}"
-                    class="min-w-0 w-6 pb-1 text-center text-sm lg:text-base border-b-text border-current bg-transparent"
+                    class="min-w-0 w-6 pb-1 text-center text-sm lg:text-base border-b-text border-current bg-transparent cart-qty-input"
                     min="0"
                     aria-label="{{ 'cart.label.quantity' | t }}"
                     pattern="[0-9]*"
@@ -157,7 +180,7 @@
                   <button
                     name="plus"
                     type="submit"
-                    class="w-6 p-1 align-middle js-enabled"
+                    class="w-6 p-1 align-middle js-enabled cart-qty-btn"
                     @click.prevent="qtyAdjust($event, 1, 'quantity_{{ item.key | replace: ':', '' }}')"
                     :aria-label="'{{ 'general.accessibility.increment_one' | t }} ' + '{{ item.title }}'">
                   {% render 'icon-plus' %}
@@ -202,18 +225,22 @@
       <p class="visually-hidden" id="shopping-cart-line-item-status" aria-live="polite" aria-hidden="true" role="status">{{ 'general.accessibility.loading' | t }}</p>
     </form>
   {% else %}
-    <div class="py-theme section-x-padding">
-      <h1 class="font-heading {{ settings.base_heading_size }}">{{ 'cart.general.title' | t }}</h1>
+    <div class="cart-page">
+      <div class="cart-header">
+        <h1 class="cart-header__title">{{ 'cart.general.title' | t }}</h1>
+      </div>
       {% comment %}
       Cart empty state
       {% endcomment %}
-      <div class="mt-8">
-        <div class="supports-cookies">
-          <p class="mb-8">{{ 'cart.general.empty' | t }}</p>
-          {% assign continue_shopping = 'cart.general.continue_shopping' | t %}
-          <a href="{{ routes.root_url }}" class="inline-flex justify-center items-center text-base px-8 py-2 {% render 'button-style', section_color: section_color %}  {% render 'button-color', section_color: section_color %} ">
-            <span class="{% if settings.button_uppercase %}uppercase{% endif %}">{{ continue_shopping }}{% if settings.buttons_show_arrow %}&nbsp;&rarr;{% endif %}</span>
-          </a>
+      <div class="cart-section">
+        <div class="supports-cookies cart-empty">
+          <div class="w-card cart-empty__card">
+            <p class="cart-empty__message">{{ 'cart.general.empty' | t }}</p>
+            {% assign continue_shopping = 'cart.general.continue_shopping' | t %}
+            <div class="cart-empty__actions">
+              <a href="{{ routes.root_url }}" class="w-btn w-btn--primary w-btn--lg">{{ continue_shopping }}</a>
+            </div>
+          </div>
         </div>
 
         {% comment %}

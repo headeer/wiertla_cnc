@@ -1917,7 +1917,8 @@ document.addEventListener('DOMContentLoaded', function() {
           }
           if (snapped < min) snapped = min;
           quantityInput.value = snapped;
-          errorEl.textContent = 'Minimalne zamówienie: ' + min + ' szt. Ilość musi być wielokrotnością ' + min + '.';
+          const moqMsgTpl = {{ 'products.product.moq_error' | t: min: '__MIN__' | json }};
+          errorEl.textContent = moqMsgTpl.replace(/__MIN__/g, String(min));
           quantityInput.focus();
           return; // block submit until valid
         }

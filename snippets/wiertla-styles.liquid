@@ -11,6 +11,76 @@
   .template-product.no-latest-products .wiertla-stats {
     margin-top: 80px;
   }
+
+  /* Native pages button hover styling */
+  .btn,
+  button,
+  .shopify-challenge__button,
+  .customer button,
+  .cart__checkout-button,
+  .cart__update-button,
+  .cart__continue-button {
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .btn:hover,
+  button:hover,
+  .shopify-challenge__button:hover,
+  .customer button:hover,
+  .cart__checkout-button:hover,
+  .cart__update-button:hover,
+  .cart__continue-button:hover {
+    background-color: #FFE500 !important;
+    border-color: #112832 !important;
+    color: #112832 !important;
+  }
+
+  /* App-style buttons */
+  .w-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 14px;
+    font-family: "League Spartan", sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 2px solid #112832;
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .1s ease;
+  }
+  .w-btn:active { transform: translateY(1px); }
+  .w-btn--primary { background: #FFE500; color: #112832; }
+  .w-btn--outline { background: #FFFFFF; color: #112832; }
+  .w-btn--ghost { background: transparent; color: #112832; border-color: #112832; }
+  .w-btn:hover { background-color: #FFE500; color: #112832; border-color: #112832; }
+  .w-btn--lg { padding: 14px 22px; font-size: 16px; }
+
+  /* Card */
+  .w-card {
+    background: #FFFFFF;
+    border: 2px solid #112832;
+    border-radius: 16px;
+    box-shadow: 4px 4px 0 #112832;
+    padding: 24px;
+  }
+
+  /* Cart page polish */
+  .cart-empty__title { font-family: "League Spartan", sans-serif; font-weight: 700; color: #112832; }
+  .cart-empty__subtitle { color: #112832; opacity: .85; }
+  .cart-qty-btn { width: 34px; height: 34px; border-radius: 10px; }
+
+  /* Cart page layout (no Tailwind) */
+  .cart-page { padding: 32px 24px; }
+  .cart-header { max-width: 1120px; margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: space-between; }
+  .cart-header__title { font-family: "League Spartan", sans-serif; font-weight: 700; font-size: 28px; line-height: 1; color: #112832; margin: 0; }
+  .cart-header__action { text-decoration: none; }
+  .cart-empty { display: flex; justify-content: center; padding: 16px 0; }
+  .cart-empty__card { width: 100%; max-width: 760px; }
+  .cart-empty__message { margin: 0 0 22px 0; font-family: "Montserrat", sans-serif; font-size: 18px; color: #112832; }
+  .cart-empty__actions { display: flex; align-items: center; justify-content: center; gap: 12px; }
+
+  .cart-section { margin-top: 24px; }
   /* Mobile Filter Modal Styles */
   .wiertla-categories__mobile-filter-modal {
     position: fixed;

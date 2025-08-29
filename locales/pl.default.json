@@ -491,6 +491,7 @@
       "back_to_collection": "Wróć do {{ title }}",
       "vendor": "Producent",
       "quantity_minimum_message": "Ilość musi wynosić co najmniej 1",
+      "moq_error": "Minimalne zamówienie: {{ min }} szt. Ilość musi być wielokrotnością {{ min }}.",
       "include_taxes": "Podatek wliczony.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Dostawa</a> naliczana przy kasie.",
       "unit_price_label": "Cena jednostkowa",

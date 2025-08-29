@@ -1077,28 +1077,38 @@
     // Add scroll functionality for table links
     document.querySelectorAll('.js-scroll-to-table').forEach(link => {
       link.addEventListener('click', function(e) {
-        e.preventDefault();
         const table = document.querySelector('.wiertla-categories__table');
         if (table) {
-          // Get header height for offset
+          // Same-page scroll
+          e.preventDefault();
           const header = document.querySelector('.header');
           const headerHeight = header ? header.offsetHeight : 0;
-          
-          // Calculate scroll position
           const tableTop = table.getBoundingClientRect().top + window.pageYOffset;
-          const scrollTo = tableTop - headerHeight - 20; // 20px extra padding
-          
-          // Smooth scroll
-          window.scrollTo({
-            top: scrollTo,
-            behavior: 'smooth'
-          });
-          
-          // If on mobile, close the menu if it's open
+          const scrollTo = tableTop - headerHeight - 20;
+          window.scrollTo({ top: scrollTo, behavior: 'smooth' });
           const mobileMenuButton = document.querySelector('.header__mobile-menu-button');
           if (mobileMenuButton && mobileMenuButton.classList.contains('active')) {
             mobileMenuButton.click();
           }
+        } else {
+          // Navigate to target URL (homepage anchor) when table not present
+          // Allow default navigation
+        }
+      });
+    });
+
+    // Language links: force set ?locale= and navigate (works on cart too)
+    document.querySelectorAll('.header__lang-links a[data-lang]').forEach(function(a){
+      a.addEventListener('click', function(ev){
+        ev.preventDefault();
+        var targetLocale = a.getAttribute('data-lang');
+        try {
+          var url = new URL(window.location.href);
+          url.searchParams.set('locale', targetLocale);
+          window.location.assign(url.toString());
+        } catch(err) {
+          // Fallback
+          window.location.href = a.getAttribute('href');
         }
       });
     });
