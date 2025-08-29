@@ -1879,37 +1879,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const addToCartForm = productDetails.querySelector('form[data-type="add-to-cart-form"]');
     const headerCartCount = document.querySelector('.header__cart-count');
   
-    // Quantity controls
-    if (quantityInput && decreaseBtn && increaseBtn) {
-      const min = parseInt(quantityInput.getAttribute('min')) || 1;
-      const max = parseInt(quantityInput.getAttribute('max')) || 999;
-  
-      function updateQuantity(change) {
-        const currentValue = parseInt(quantityInput.value) || 0;
-        const newValue = currentValue + change;
-        
-        if (newValue >= min && newValue <= max) {
-          quantityInput.value = newValue;
-          quantityInput.dispatchEvent(new Event('change', { bubbles: true }));
-          
-          // Update decrease button state
-          if (newValue <= min) {
-            decreaseBtn.disabled = true;
-            decreaseBtn.classList.add('product-details__quantity-btn--disabled');
-          } else {
-            decreaseBtn.disabled = false;
-            decreaseBtn.classList.remove('product-details__quantity-btn--disabled');
-          }
-        }
-      }
-  
-      // Set initial state
-      decreaseBtn.disabled = true;
-      decreaseBtn.classList.add('product-details__quantity-btn--disabled');
-  
-      decreaseBtn.addEventListener('click', () => updateQuantity(-1));
-      increaseBtn.addEventListener('click', () => updateQuantity(1));
-    }
+    // Quantity controls handled earlier in this file to respect MOQ step.
+    // Avoid double-binding here to prevent conflicts.
 
     // Add to cart functionality
     if (addToCartForm) {
