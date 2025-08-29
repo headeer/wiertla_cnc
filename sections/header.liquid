@@ -756,13 +756,13 @@
     <div class="header__container">
       <div class="header__top-content">
         <div class="header__nav-links">
-          <a href="#wiertla-table" class="header__link js-scroll-to-table">
+          <a href="{{ routes.root_url }}?category=wszystkie&perPage=10&mainType=koronki#wiertla-table" class="header__link js-scroll-to-table" data-main-type="koronki">
             KORONKI
           </a>
-          <a href="#wiertla-table" class="header__link js-scroll-to-table">
+          <a href="{{ routes.root_url }}?category=wszystkie&perPage=10&mainType=plytki#wiertla-table" class="header__link js-scroll-to-table" data-main-type="plytki">
             PŁYTKI
           </a>
-          <a href="#wiertla-table" class="header__link js-scroll-to-table">
+          <a href="{{ routes.root_url }}?category=wszystkie&perPage=10&mainType=wiertla#wiertla-table" class="header__link js-scroll-to-table" data-main-type="wiertla">
             WIERTŁA
           </a>
           {%- for link in section.settings.menu.links -%}

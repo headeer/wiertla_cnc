@@ -19,7 +19,18 @@
         </thead>
         <tbody>
           {% for item in cart.items %}
-            <tr class="" x-data="{ 'quantity_{{ item.key | replace: ':', '' }}': {{ item.quantity }}, ...QuantityControls() }" x-init="mounted('quantity_{{ item.key | replace: ':', '' }}')" id="CartItem-{{ item.index | plus: 1 }}">
+            {%- liquid
+              assign sku_prefix = item.variant.sku | slice: 0, 2
+              assign min_quantity = item.product.metafields.custom.moq | default: 1
+              if sku_prefix == 'PW'
+                assign min_quantity = 10
+              elsif min_quantity > 1
+                assign min_quantity = min_quantity
+              else
+                assign min_quantity = 1
+              endif
+            -%}
+            <tr class="" x-data="{ 'quantity_{{ item.key | replace: ':', '' }}': {{ item.quantity }}, ...QuantityControls() }" x-init="mounted('quantity_{{ item.key | replace: ':', '' }}')" id="CartItem-{{ item.index | plus: 1 }}" data-min-quantity="{{ min_quantity }}">
               <td data-label="{{ 'customer.order.product' | t }}">
                 <div class="flex">
                   {% if item.image != blank %}
@@ -219,6 +230,8 @@
   {% endif %}
   </div>
 </section>
+
+<script src="{{ 'cart-quantity.js' | asset_url }}" defer></script>
 
 {% schema %}
   {

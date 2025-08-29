@@ -1888,8 +1888,40 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         if (!addToCartBtn || addToCartBtn.disabled) return;
-        
-        const quantity = parseInt(quantityInput.value) || 1;
+        // Enforce MOQ: quantity must be >= min and a multiple of min
+        const min = parseInt(quantityInput.getAttribute('min')) || 1;
+        const max = parseInt(quantityInput.getAttribute('max')) || 0;
+        let quantity = parseInt(quantityInput.value) || min;
+        const isMultiple = (quantity % min) === 0;
+        const withinStock = max <= 0 || quantity <= max;
+        // Error area
+        let note = document.querySelector('.product-details__quantity-note');
+        let errorEl = document.querySelector('.product-details__quantity-error');
+        if (!errorEl) {
+          errorEl = document.createElement('div');
+          errorEl.className = 'product-details__quantity-error';
+          errorEl.style.color = '#d00';
+          errorEl.style.fontSize = '12px';
+          errorEl.style.marginTop = '6px';
+          if (note && note.parentNode) {
+            note.parentNode.insertBefore(errorEl, note.nextSibling);
+          } else if (quantityInput && quantityInput.parentNode) {
+            quantityInput.parentNode.appendChild(errorEl);
+          }
+        }
+        errorEl.textContent = '';
+        if (!isMultiple || quantity < min || !withinStock) {
+          // Snap to the nearest higher multiple within stock
+          let snapped = Math.ceil(quantity / min) * min;
+          if (max > 0 && snapped > max) {
+            snapped = Math.floor(max / min) * min;
+          }
+          if (snapped < min) snapped = min;
+          quantityInput.value = snapped;
+          errorEl.textContent = 'Minimalne zamówienie: ' + min + ' szt. Ilość musi być wielokrotnością ' + min + '.';
+          quantityInput.focus();
+          return; // block submit until valid
+        }
         const formData = new FormData(addToCartForm);
         formData.set('quantity', quantity);
         
