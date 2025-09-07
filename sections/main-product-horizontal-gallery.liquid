@@ -649,13 +649,24 @@ document.addEventListener('DOMContentLoaded', function() {
     {%- liquid
       assign locale_code = request.locale.iso_code | downcase
       assign translated_title = product.title
-      if locale_code == 'de' and product.metafields.custom.nazwa_de != blank
-        assign translated_title = product.metafields.custom.nazwa_de
+      if locale_code == 'pl' and product.metafields.custom.nazwa_pl != blank
+        assign translated_title = product.metafields.custom.nazwa_pl
       elsif locale_code == 'en' and product.metafields.custom.nazwa_en != blank
         assign translated_title = product.metafields.custom.nazwa_en
+      elsif locale_code == 'de' and product.metafields.custom.nazwa_de != blank
+        assign translated_title = product.metafields.custom.nazwa_de
+      endif
+      assign manufacturer = product.metafields.custom.manufacturer
+      assign producer_code = product.metafields.custom.kod_producenta
+      assign display_name = translated_title
+      if manufacturer != blank
+        assign display_name = display_name | append: ' ' | append: manufacturer
+      endif
+      if producer_code != blank
+        assign display_name = display_name | append: ' ' | append: producer_code
       endif
     -%}
-    <span class="product-breadcrumbs__current">{{ translated_title }}</span>
+    <span class="product-breadcrumbs__current">{{ display_name }}</span>
   </div>
 
   <div class="product-layout">
@@ -681,13 +692,18 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- Product Details Section -->
-    <main class="product-details" data-product-id="{{ product.id }}">
+    <main class="product-details" data-product-id="{{ product.id }}"
+      data-nazwa-pl="{{ product.metafields.custom.nazwa_pl | escape }}"
+      data-nazwa-en="{{ product.metafields.custom.nazwa_en | escape }}"
+      data-nazwa-de="{{ product.metafields.custom.nazwa_de | escape }}"
+      data-manufacturer="{{ product.metafields.custom.manufacturer | escape }}"
+      data-kod="{{ product.metafields.custom.kod_producenta | escape }}">
       <div class="product-details__container">
         <!-- Product Details Section -->
         <section class="product-details__info">
           <!-- Product Name -->
           <div class="product-details__sku">
-            {{ translated_title }}
+            {{ display_name }}
           </div>
 
           <!-- Product Availability Status -->
@@ -800,8 +816,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
             {%- elsif is_koronki -%}
               <!-- KORONKI SPECIFICATIONS -->
-              {%- assign fi_value = product.metafields.custom._rednica | default: product.metafields.custom.srednica | default: product.metafields.custom.srednica_display | default: product.metafields.custom.fi | default: product.metafields.custom.diameter.value | default: product.metafields.custom.diameter | default: product.custom_srednica | default: product.custom_srednica_display | default: product.custom_fi | default: product.fi -%}
-              {%- if fi_value contains '-' -%}
+              {%- assign fi_value = '' -%}
+              {%- assign fi_source = '' -%}
+              {%- if product.metafields.custom.srednica_display != blank -%}
+                {%- assign fi_value = product.metafields.custom.srednica_display -%}
+                {%- assign fi_source = 'srednica_display' -%}
+              {%- elsif product.metafields.custom._rednica != blank -%}
+                {%- assign fi_value = product.metafields.custom._rednica -%}
+                {%- assign fi_source = '_rednica' -%}
+              {%- elsif product.metafields.custom.srednica != blank -%}
+                {%- assign fi_value = product.metafields.custom.srednica -%}
+                {%- assign fi_source = 'srednica' -%}
+              {%- elsif product.metafields.custom.fi != blank -%}
+                {%- assign fi_value = product.metafields.custom.fi -%}
+                {%- assign fi_source = 'fi' -%}
+              {%- elsif product.metafields.custom.diameter.value != blank -%}
+                {%- assign fi_value = product.metafields.custom.diameter.value -%}
+                {%- assign fi_source = 'diameter.value' -%}
+              {%- elsif product.metafields.custom.diameter != blank -%}
+                {%- assign fi_value = product.metafields.custom.diameter -%}
+                {%- assign fi_source = 'diameter' -%}
+              {%- elsif product.custom_srednica != blank -%}
+                {%- assign fi_value = product.custom_srednica -%}
+                {%- assign fi_source = 'custom_srednica' -%}
+              {%- elsif product.custom_srednica_display != blank -%}
+                {%- assign fi_value = product.custom_srednica_display -%}
+                {%- assign fi_source = 'custom_srednica_display' -%}
+              {%- elsif product.custom_fi != blank -%}
+                {%- assign fi_value = product.custom_fi -%}
+                {%- assign fi_source = 'custom_fi' -%}
+              {%- elsif product.fi != blank -%}
+                {%- assign fi_value = product.fi -%}
+                {%- assign fi_source = 'fi_legacy' -%}
+              {%- endif -%}
+              {%- if fi_source != 'srednica_display' and fi_value contains '-' -%}
                 {%- assign fi_value = fi_value | split: '-' | first | strip -%}
               {%- endif -%}
               {%- if fi_value == 'null' or fi_value == 'undefined' -%}
@@ -928,8 +976,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="product-details__divider"></div>
               {%- endif -%}
 
-              {%- assign fi_value = product.metafields.custom._rednica | default: product.metafields.custom.srednica | default: product.metafields.custom.srednica_display | default: product.metafields.custom.fi | default: product.metafields.custom.diameter.value | default: product.metafields.custom.diameter | default: product.custom_srednica | default: product.custom_srednica_display | default: product.custom_fi | default: product.fi -%}
-              {%- if fi_value contains '-' -%}
+              {%- assign fi_value = '' -%}
+              {%- assign fi_source = '' -%}
+              {%- if product.metafields.custom.srednica_display != blank -%}
+                {%- assign fi_value = product.metafields.custom.srednica_display -%}
+                {%- assign fi_source = 'srednica_display' -%}
+              {%- elsif product.metafields.custom._rednica != blank -%}
+                {%- assign fi_value = product.metafields.custom._rednica -%}
+                {%- assign fi_source = '_rednica' -%}
+              {%- elsif product.metafields.custom.srednica != blank -%}
+                {%- assign fi_value = product.metafields.custom.srednica -%}
+                {%- assign fi_source = 'srednica' -%}
+              {%- elsif product.metafields.custom.fi != blank -%}
+                {%- assign fi_value = product.metafields.custom.fi -%}
+                {%- assign fi_source = 'fi' -%}
+              {%- elsif product.metafields.custom.diameter.value != blank -%}
+                {%- assign fi_value = product.metafields.custom.diameter.value -%}
+                {%- assign fi_source = 'diameter.value' -%}
+              {%- elsif product.metafields.custom.diameter != blank -%}
+                {%- assign fi_value = product.metafields.custom.diameter -%}
+                {%- assign fi_source = 'diameter' -%}
+              {%- elsif product.custom_srednica != blank -%}
+                {%- assign fi_value = product.custom_srednica -%}
+                {%- assign fi_source = 'custom_srednica' -%}
+              {%- elsif product.custom_srednica_display != blank -%}
+                {%- assign fi_value = product.custom_srednica_display -%}
+                {%- assign fi_source = 'custom_srednica_display' -%}
+              {%- elsif product.custom_fi != blank -%}
+                {%- assign fi_value = product.custom_fi -%}
+                {%- assign fi_source = 'custom_fi' -%}
+              {%- elsif product.fi != blank -%}
+                {%- assign fi_value = product.fi -%}
+                {%- assign fi_source = 'fi_legacy' -%}
+              {%- endif -%}
+              {%- if fi_source != 'srednica_display' and fi_value contains '-' -%}
                 {%- assign fi_value = fi_value | split: '-' | first | strip -%}
               {%- endif -%}
               {%- if fi_value == 'null' or fi_value == 'undefined' -%}
@@ -1085,15 +1165,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   height="16">
               </button>
             </div>
-            {%- if is_pw_category -%}
-              <div class="product-details__quantity-note">
-                <small>Minimalne zamówienie: {{ min_quantity }} szt. (opakowanie)</small>
-              </div>
-            {%- elsif min_quantity > 1 -%}
-              <div class="product-details__quantity-note">
-                <small>MOQ: {{ min_quantity }} szt.</small>
-              </div>
-            {%- endif -%}
+            
             {%- form 'product'
               , product
               , id: product_form_id
@@ -1125,6 +1197,15 @@ document.addEventListener('DOMContentLoaded', function() {
               </button>
             {%- endform -%}
           </section>
+          {%- if is_pw_category -%}
+            <div class="product-details__quantity-note">
+              <small>Minimalne zamówienie: {{ min_quantity }} szt. (opakowanie)</small>
+            </div>
+          {%- elsif min_quantity > 1 -%}
+            <div class="product-details__quantity-note">
+              <small>MOQ: {{ min_quantity }} szt.</small>
+            </div>
+          {%- endif -%}
 
           <!-- Stock Availability Section -->
           <section class="product-details__stock">
@@ -1278,7 +1359,7 @@ document.addEventListener('DOMContentLoaded', function() {
 {%- if current_gniazdo != blank -%}
 <div class="latest-products" id="related-by-gniazdo" data-gniazdo="{{ current_gniazdo | escape }}" data-current-id="{{ product.id }}" style="display:none;">
   <div class="latest-products__title" data-translate="related_tools.title">NARZĘDZIA POWIĄZANE</div>
-  <div class="latest-products__subtitle" data-translate="related_tools.subtitle">Produkty o identycznym mocowaniu ({{ current_gniazdo }})</div>
+  <div class="latest-products__subtitle" data-translate="related_tools.subtitle" style="display:none;"></div>
 
   <div class="latest-products__swiper">
     <div class="swiper-wrapper" id="related-by-gniazdo-wrapper">
@@ -1802,6 +1883,27 @@ document.addEventListener('DOMContentLoaded', function() {
       return results;
     }
 
+    function resolveProdImage(prod, fallback){
+      try {
+        var cands = [];
+        if (prod) {
+          if (prod.featured_image) cands.push(prod.featured_image.src || prod.featured_image);
+          if (prod.image) cands.push(prod.image.src || prod.image);
+          if (prod.featured_media && prod.featured_media.preview_image) cands.push(prod.featured_media.preview_image.src);
+          if (Array.isArray(prod.images) && prod.images.length) cands.push(prod.images[0].src || prod.images[0]);
+          if (Array.isArray(prod.media) && prod.media.length && prod.media[0] && prod.media[0].preview_image) cands.push(prod.media[0].preview_image.src);
+          if (Array.isArray(prod.variants) && prod.variants.length && prod.variants[0] && prod.variants[0].featured_image) cands.push(prod.variants[0].featured_image.src || prod.variants[0].featured_image);
+          if (prod.preview_image) cands.push(prod.preview_image.src || prod.preview_image);
+          if (prod.thumbnail) cands.push(prod.thumbnail);
+        }
+        for (var i=0;i<cands.length;i++){
+          var u = (cands[i] || '').toString().trim();
+          if (u && u !== 'null' && u !== 'undefined') return u;
+        }
+      } catch(_) {}
+      return fallback || '';
+    }
+
     function buildCard(prod) {
       var icon = getIconBySkuPrefix(prod.sku);
       var fi = prod.custom_srednica || prod.custom_srednica_display || prod.custom_fi || '';
@@ -1813,17 +1915,22 @@ document.addEventListener('DOMContentLoaded', function() {
       var price = prod.price || '';
       var handle = prod.handle || '';
       var skuPrefix = (prod.sku || '').toString().slice(0,2).toUpperCase();
+      var imgUrl = resolveProdImage(prod, icon);
+      var isPlaceholder = imgUrl === icon && !!icon;
       return (
         '<div class="swiper-slide">' +
           '<a href="/products/' + handle + '" class="product-card" aria-label="' + (prod.title || '') + '">' +
+            '<div class="product-card__hero' + (isPlaceholder ? ' product-card__hero--placeholder' : '') + '">' +
+              '<img src="' + imgUrl + '" alt="' + (prod.title || '') + '" class="product-card__hero-image" loading="lazy" data-handle="' + handle + '" data-is-placeholder="' + (isPlaceholder ? 'true' : 'false') + '" />' +
+            '</div>' +
             '<div class="product-card__top">' +
               '<div class="product-card__image-container">' +
                 '<div class="product-card__image-placeholder">' +
-                  '<img src="' + icon + '" alt="' + (prod.title || '') + '" class="product-card__image" width="34" height="34" loading="lazy" />' +
+                  '<img src="' + imgUrl + '" alt="' + (prod.title || '') + '" class="product-card__image" loading="lazy" />' +
                 '</div>' +
               '</div>' +
               '<div class="product-card__fi"><span class="mobile-label">' + (fi ? 'Fi ⌀ ' : 'Gniazdo ') + '</span> <span class="mobile-value">' + (fi || gniazdo || '') + '</span></div>' +
-              '<div class="product-card__dimension">' + ((skuPrefix === 'PR' || skuPrefix === 'PS') ? (rodzaj ? ('Rodzaj: ' + rodzaj) : '') : (xd ? ('xD: ' + xd) : '')) + '</div>' +
+              '<div class="product-card__dimension">' + (xd ? ('xD ' + xd) : (rodzaj || '')) + '</div>' +
             '</div>' +
             '<div class="product-card__symbol">' + symbol + '</div>' +
             '<div class="product-card__bottom">' +
@@ -1856,6 +1963,32 @@ document.addEventListener('DOMContentLoaded', function() {
         var wrapper = document.getElementById('related-by-gniazdo-wrapper');
         if (!wrapper) return;
         wrapper.innerHTML = matches.map(buildCard).join('');
+
+        // Enhance images: replace placeholders with product featured media when available
+        try {
+          var imgs = wrapper.querySelectorAll('.product-card__hero-image[data-is-placeholder="true"][data-handle]');
+          imgs.forEach(function(imgEl){
+            var handle = imgEl.getAttribute('data-handle');
+            if (!handle) return;
+            fetch('/products/' + handle + '.json')
+              .then(function(r){ return r.ok ? r.json() : null; })
+              .then(function(data){
+                if (!data || !data.product) return;
+                var p = data.product;
+                var url = '';
+                if (p.featured_image && p.featured_image.src) url = p.featured_image.src;
+                else if (Array.isArray(p.images) && p.images.length) url = p.images[0].src || p.images[0];
+                if (url) {
+                  imgEl.src = url;
+                  var hero = imgEl.closest('.product-card__hero');
+                  if (hero) hero.classList.remove('product-card__hero--placeholder');
+                  imgEl.setAttribute('data-is-placeholder','false');
+                }
+              })
+              .catch(function(){});
+          });
+        } catch(_) {}
+
         // Reveal the section only after we have content
         host.style.display = '';
       } catch (e) {}
@@ -1981,8 +2114,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script>
+  // Debug: log product custom parameters to console on product page
   document.addEventListener('DOMContentLoaded', function() {
-    // Check if Swiper is available before initializing
+    try {
+      var productDebug = {
+        id: {{ product.id }},
+        handle: {{ product.handle | json }},
+        title: {{ product.title | json }},
+        vendor: {{ product.vendor | json }},
+        sku: {{ product.first_available_variant.sku | json }},
+        // Localized names
+        nazwa_pl: {{ product.metafields.custom.nazwa_pl | json }},
+        nazwa_de: {{ product.metafields.custom.nazwa_de | json }},
+        nazwa_en: {{ product.metafields.custom.nazwa_en | json }},
+        // Identification
+        symbol: {{ product.metafields.custom.symbol | json }},
+        kod_producenta: {{ product.metafields.custom.kod_producenta | json }},
+        manufacturer: {{ product.metafields.custom.manufacturer | json }},
+        // Dimensions / specs
+        srednica: {{ product.metafields.custom.srednica | json }},
+        srednica_display: {{ product.metafields.custom.srednica_display | json }},
+        fi: {{ product.metafields.custom.fi | json }},
+        diameter: {{ product.metafields.custom.diameter | json }},
+        diameter_value: {{ product.metafields.custom.diameter.value | json }},
+        xd: {{ product.metafields.custom.xd | json }},
+        working_length: {{ product.metafields.custom.working_length | json }},
+        custom_working_length: {{ product.metafields.custom.custom_working_length | json }},
+        chlodzenie: {{ product.metafields.custom.chlodzenie | json }},
+        cooling: {{ product.metafields.custom.cooling | json }},
+        mocowanie: {{ product.metafields.custom.mocowanie | json }},
+        mounting: {{ product.metafields.custom.mounting | json }},
+        gniazdo: {{ product.metafields.custom.gniazdo | json }},
+        rodzaj: {{ product.metafields.custom.rodzaj | json }},
+        // Quantities / stock / moq
+        szt: {{ product.metafields.custom.szt | json }},
+        custom_szt: {{ product.metafields.custom.custom_szt | json }},
+        ilosc: {{ product.metafields.custom.ilosc | json }},
+        stan: {{ product.metafields.custom.stan | json }},
+        moq: {{ product.metafields.custom.moq | json }},
+        // Notes
+        uwagi: {{ product.metafields.custom.uwagi | json }},
+        notes: {{ product.metafields.custom.notes | json }}
+      };
+      window.WiertlaCNC = window.WiertlaCNC || {};
+      window.WiertlaCNC.productDebug = productDebug;
+      try { console.group("Product custom parameters"); console.table(productDebug); console.groupEnd(); } catch(e) { console.log(productDebug); }
+    } catch (e) {}
+  });
+  document.addEventListener('DOMContentLoaded', function() {
     if (typeof Swiper === 'undefined') {
       console.warn('Swiper library is not loaded. Skipping swiper initialization.');
       return;
@@ -2222,6 +2401,26 @@ document.addEventListener('DOMContentLoaded', function() {
     justify-content: space-between;
     height: 34px;
     margin-bottom: 0;
+  }
+
+  .product-card__hero {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 140px;
+    overflow: hidden;
+    margin-bottom: 6px;
+    background: #fff;
+  }
+  .product-card__hero--placeholder {
+    background: #F6F7F9;
+  }
+  .product-card__hero-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
   }
 
   .product-card__image-container {

@@ -4,7 +4,7 @@
 {% endcomment %}
 <button class="wiertla-categories__fullscreen-btn">
   <img src="{{ 'zoom_in_map.svg' | asset_url }}" alt="Fullscreen" class="wiertla-categories__fullscreen-icon" width="24" height="24">
-  <span>Wyświetl tabelę na całej stronie</span>
+  <span data-translate="wiertla_categories.fullscreen_open">Wyświetl tabelę na całej stronie</span>
 </button>
 
 <div class="wiertla-categories__search" data-search-component>
@@ -16,6 +16,7 @@
         name="q"
         class="wiertla-search__input"
         placeholder="fi / nazwa / symbol / producent"
+        data-translate-placeholder="wiertla_categories.search_placeholder_short"
         autocomplete="off"
         aria-label="{{ 'general.search.category_label' | t }}"
         value="{{ search.terms | escape }}"
@@ -102,12 +103,12 @@ document.addEventListener('DOMContentLoaded', function() {
   {% render 'wiertla-categories-rental-info' %}
 </div>
 
-<div class="wiertla-categories__preview">
-  <h3 class="wiertla-categories__preview-title">ZOBACZ OBRAZ POGLĄDOWY</h3>
+<div class="wiertla-categories__preview" id="tableHoverPreview">
+  <h3 class="wiertla-categories__preview-title" data-translate="wiertla_categories.preview_title">ZOBACZ OBRAZ POGLĄDOWY</h3>
   <div class="wiertla-categories__preview-image">
-    <img src="{{ 'custom_icons.png' | asset_url }}" alt="Preview" class="wiertla-categories__preview-img" width="300" height="200">
+    <img id="tableHoverPreviewImg" src="{{ 'custom_icons.png' | asset_url }}" alt="Preview" class="wiertla-categories__preview-img" width="300" height="200" data-translate-attr="alt:wiertla_categories.preview_title">
   </div>
-  <p class="wiertla-categories__preview-text">Najedź kursorem na wiertło w tabeli, aby wyświetlić tu powiększony podgląd</p>
+  <p class="wiertla-categories__preview-text" data-translate="wiertla_categories.preview_instruction">Najedź kursorem na wiertło w tabeli, aby wyświetlić tu powiększony podgląd</p>
 </div>
 
 <style>

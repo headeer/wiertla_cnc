@@ -1,0 +1,40 @@
+(function(){
+  try {
+    window.theme = {
+      strings: {
+        loading: "{{ 'general.search.loading' | t | replace:'"','\"' }}",
+        itemCountOne: "{{ 'cart.popup.cart_count.one' | t | replace:'"','\"' }}",
+        itemCountOther: "{{ 'cart.popup.cart_count.other' | t | replace:'"','\"' }}",
+        addToCart: "{{ 'products.product.add_to_cart' | t | replace:'"','\"' }}",
+        soldOut: "{{ 'products.product.sold_out' | t | replace:'"','\"' }}",
+        unavailable: "{{ 'products.product.unavailable' | t | replace:'"','\"' }}",
+        regularPrice: "{{ 'products.product.regular_price' | t | replace:'"','\"' }}",
+        salePrice: "{{ 'products.product.sale_price' | t | replace:'"','\"' }}",
+        sale: "{{ 'products.product.on_sale' | t | replace:'"','\"' }}",
+        unitPrice: "{{ 'products.product.unit_price_label' | t | replace:'"','\"' }}",
+        unitPriceSeparator: "{{ 'general.accessibility.unit_price_separator' | t | replace:'"','\"' }}",
+        cartEmpty: "{{ 'cart.general.empty' | t | replace:'"','\"' }}",
+        cartCookies: "{{ 'cart.general.cookies_required' | t | replace:'"','\"' }}",
+        update: "{{ 'cart.label.update' | t | replace:'"','\"' }}",
+        quantity: "{{ 'cart.label.quantity' | t | replace:'"','\"' }}",
+        discountedTotal: "{{ 'cart.label.discounted_total' | t | replace:'"','\"' }}",
+        regularTotal: "{{ 'cart.label.regular_total' | t | replace:'"','\"' }}",
+        priceColumn: "{{ 'cart.label.price_column' | t | replace:'"','\"' }}",
+        addedToCart: "{{ 'cart.popup.added_to_cart' | t | append: '!' | replace:'"','\"' }}",
+        cartAddError: "{{ 'cart.general.cart_add_error' | t | replace:'"','\"' }}",
+        cartError: "{{ 'cart.general.cart_error' | t | replace:'"','\"' }}",
+        cartQuantityError: "{{ 'cart.general.cart_quantity_error_html' | t | replace:'"','\"' }}"
+      },
+      routes: {
+        cart_add_url: "{{ routes.cart_add_url }}",
+        cart_change_url: "{{ routes.cart_change_url }}",
+        cart_update_url: "{{ routes.cart_update_url }}"
+      },
+      moneyFormat: "{% if settings.currency_code_enabled == true %}{{ shop.money_with_currency_format | replace:'"','\"' }}{% else %}{{ shop.money_format | replace:'"','\"' }}{% endif %}",
+      cartItemCount: {{ cart.item_count | default: 0 }},
+      cartMethod: "{{ settings.ajax_cart_method }}"
+    };
+  } catch(e) {}
+})();
+
+

@@ -6,6 +6,13 @@
   overflow-y: auto;
 }
 
+/* Ensure rent modals are above fullscreen overlays */
+.wiertla-modals__desktop-rent-modal,
+.wiertla-categories__mobile-rent-modal {
+  position: fixed;
+  z-index: 3000;
+}
+
 /* Add conditional spacing above wiertla-stats when Latest Products is absent on product pages */
 .template-product .wiertla-stats--spacer {
   margin-top: 80px;

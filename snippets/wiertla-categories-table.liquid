@@ -53,34 +53,82 @@
 
 <div class="wiertla-categories__table-container">
   
-  <!-- Mobile Table Header for Plytki/Koronki -->
-  <div class="wiertla-categories__mobile-table-header wiertla-categories__mobile-header-plytki mobile" style="display: none;">
-    <!-- First header row -->
+  <!-- Mobile Table Headers per tab -->
+  <!-- Wiertla: preserve styles using existing header blocks (top/bottom) -->
+  <div class="wiertla-categories__mobile-table-header wiertla-categories__mobile-header-wiertla mobile" style="display: none;">
+    <!-- Top: Fi, D/mm, Price -->
     <div class="wiertla-categories__mobile-header-top">
       <div class="wiertla-categories__mobile-header-img">
         <img src="{{ 'first_th.png' | asset_url }}" alt="Header icon" width="34" height="34">
       </div>
       <div class="wiertla-categories__mobile-header-gniazdo">
-        <div>Gniazdo</div>
+        <div data-translate="wiertla_categories.diameter">⌀ Fi</div>
       </div>
       <div class="wiertla-categories__mobile-header-rodzaj">
-        <div>Rodzaj</div>
+        <div data-translate="wiertla_categories.length">D/mm</div>
       </div>
       <div class="wiertla-categories__mobile-header-price">
-        <div>Cena netto</div>
+        <div data-translate="wiertla_categories.price">Cena netto</div>
       </div>
     </div>
-    
-    <!-- Second header row -->
+    <!-- Bottom: Symbol, Vendor -->
     <div class="wiertla-categories__mobile-header-bottom">
-      <div class="wiertla-categories__mobile-header-vendor">
-        <div>PRODUCENT</div>
-      </div>
       <div class="wiertla-categories__mobile-header-kod">
-        <div>KOD P/N</div>
+        <div data-translate="wiertla_categories.symbol">Symbol</div>
+      </div>
+      <div class="wiertla-categories__mobile-header-vendor">
+        <div data-translate="wiertla_categories.vendor">Producent</div>
+      </div>
+      <div class="wiertla-categories__mobile-header-ilosc" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- Plytki: keep existing block classes; show Vendor, Kod, Ilość below; Price on top -->
+  <div class="wiertla-categories__mobile-table-header wiertla-categories__mobile-header-plytki mobile" style="display: none;">
+    <div class="wiertla-categories__mobile-header-top">
+      
+      <div class="wiertla-categories__mobile-header-gniazdo" style="display:none;"></div>
+      <div class="wiertla-categories__mobile-header-rodzaj" style="display:none;"></div>
+      <div class="wiertla-categories__mobile-header-vendor">
+        <div data-translate="wiertla_categories.vendor">PRODUCENT</div>
+      </div>
+      <div class="wiertla-categories__mobile-header-price">
+        <div data-translate="wiertla_categories.price">Cena netto</div>
+      </div>
+    </div>
+    <div class="wiertla-categories__mobile-header-bottom">
+      
+      <div class="wiertla-categories__mobile-header-kod">
+        <div data-translate="wiertla_categories.producerCode">KOD P/N</div>
       </div>
       <div class="wiertla-categories__mobile-header-ilosc">
-        <div>ILOŚĆ</div>
+        <div data-translate="wiertla_categories.quantity">ILOŚĆ</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Koronki: use Fi on top, Vendor/Kod/Ilość below, Price on top -->
+  <div class="wiertla-categories__mobile-table-header wiertla-categories__mobile-header-koronki mobile" style="display: none;">
+    <div class="wiertla-categories__mobile-header-top">
+     
+      <div class="wiertla-categories__mobile-header-gniazdo">
+        <div data-translate="wiertla_categories.diameter">⌀ Fi</div>
+      </div>
+      <div class="wiertla-categories__mobile-header-rodzaj" style="display:none;"></div>
+      <div class="wiertla-categories__mobile-header-vendor">
+        <div data-translate="wiertla_categories.vendor">PRODUCENT</div>
+      </div>
+      <div class="wiertla-categories__mobile-header-price">
+        <div data-translate="wiertla_categories.price">Cena netto</div>
+      </div>
+    </div>
+    <div class="wiertla-categories__mobile-header-bottom">
+     
+      <div class="wiertla-categories__mobile-header-kod">
+        <div data-translate="wiertla_categories.producerCode">KOD P/N</div>
+      </div>
+      <div class="wiertla-categories__mobile-header-ilosc">
+        <div data-translate="wiertla_categories.quantity">ILOŚĆ</div>
       </div>
     </div>
   </div>
@@ -89,32 +137,29 @@
     <thead>
       <!-- Wiertla table header -->
       <tr class="wiertla-categories__table-header-wiertla">
-        <th>Typ</th>
-        <th>⌀ Fi</th>
-        <th>D/mm</th>
-        <th>Symbol</th>
-        <th>Producent</th>
-        <th>Cena netto</th>
+        <th data-translate="wiertla_categories.type">Typ</th>
+        <th data-translate="wiertla_categories.diameter">⌀ Fi</th>
+        <th data-translate="wiertla_categories.length">D/mm</th>
+        <th data-translate="wiertla_categories.symbol">Symbol</th>
+        <th data-translate="wiertla_categories.vendor">Producent</th>
+        <th data-translate="wiertla_categories.price">Cena netto</th>
       </tr>
       
       <!-- Plytki table header -->
       <tr class="wiertla-categories__table-header-plytki">
-        <th>Gniazdo</th>
-        <th>Producent</th>
-        <th>Kod producenta</th>
-        <th>Rodzaj</th>
-        <th>Ilość</th>
-        <th>Cena netto</th>
+        <th data-translate="wiertla_categories.vendor">Producent</th>
+        <th data-translate="wiertla_categories.producerCode">Kod producenta</th>
+        <th data-translate="wiertla_categories.quantity">Ilość</th>
+        <th data-translate="wiertla_categories.price">Cena netto</th>
       </tr>
       
       <!-- Koronki table header -->
       <tr class="wiertla-categories__table-header-koronki">
-        <th>Gniazdo</th>
-        <th>Producent</th>
-        <th>Kod producenta</th>
-        <th>Rodzaj</th>
-        <th>Ilość</th>
-        <th>Cena netto</th>
+        <th data-translate="wiertla_categories.diameter">⌀ Fi</th>
+        <th data-translate="wiertla_categories.vendor">Producent</th>
+        <th data-translate="wiertla_categories.producerCode">Kod producenta</th>
+        <th data-translate="wiertla_categories.quantity">Ilość</th>
+        <th data-translate="wiertla_categories.price">Cena netto</th>
       </tr>
     </thead>
     <tbody id="productsTableBody">
@@ -172,8 +217,12 @@
         if (tabType === 'plytki' && headP) headP.style.display = 'table-row';
         if (tabType === 'koronki' && headK) headK.style.display = 'table-row';
       } else {
-        const plytkiHeader = container.querySelector('.wiertla-categories__mobile-header-plytki');
-        if (plytkiHeader) plytkiHeader.style.display = 'block';
+        const headerW = container.querySelector('.wiertla-categories__mobile-header-wiertla');
+        const headerP = container.querySelector('.wiertla-categories__mobile-header-plytki');
+        const headerK = container.querySelector('.wiertla-categories__mobile-header-koronki');
+        if (tabType === 'wiertla' && headerW) headerW.style.display = 'block';
+        if (tabType === 'plytki' && headerP) headerP.style.display = 'block';
+        if (tabType === 'koronki' && headerK) headerK.style.display = 'block';
       }
     });
   }

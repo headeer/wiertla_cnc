@@ -65,31 +65,10 @@
       <meta name="description" content="{{ page_description | escape }}">
     {%- endif -%}
 
-    <script>
-          document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
-    </script>
+    <script src="{{ 'wiertla-init.js' | asset_url }}" defer></script>
 
     <!-- Start IE11 compatibility -->
-    <script>
-          if (!!window.MSInputMethodContext && !!document.documentMode) {
-      // CSSVar Polyfill
-      document.write('<script src="https://cdn.jsdelivr.net/gh/nuxodin/ie11CustomProperties@4.1.0/ie11CustomProperties.min.js"><\x2fscript>');
-      
-      document.documentElement.className = document.documentElement.className.replace('js', 'no-js');
-      
-      document.addEventListener('DOMContentLoaded', function () {
-        var elsToLazyload = document.querySelectorAll('.lazyload');
-        for (var i = 0; i < elsToLazyload.length; i++) {
-          var elToLazyLoad = elsToLazyload[i];
-          elToLazyLoad.removeAttribute('src');
-          var src = elToLazyLoad.getAttribute('data-src').replace('_{width}x.', '_600x.');
-          elToLazyLoad.setAttribute('src', src);
-          elToLazyLoad.classList.remove('lazyload');
-          elToLazyLoad.classList.add('lazyloaded');
-        }
-      });
-          }
-  </script>
+    <script src="{{ 'wiertla-ie11-compat.js' | asset_url }}" defer></script>
     <!-- End IE11 compatibility -->
     {% render 'css-variables' %}
     <style>
@@ -125,6 +104,7 @@
     <!-- Wiertla Desktop Modals Styles -->
     {{ 'wiertla-modals-desktop.css' | asset_url | stylesheet_tag }}
 
+    <script src="{{ 'wiertla-theme-config.js' | asset_url }}" defer></script>
     {% if template contains 'customers' %}
       <script src="{{ "shopify_common.js" | shopify_asset_url }}" defer="defer"></script>
     {% endif %}
@@ -145,37 +125,10 @@
     {% render 'judgeme_core' %}
 
     <!-- Translation System -->
-    <script src="{{ 'translations.js' | asset_url }}"></script>
-    <script src="{{ 'translation-system.js' | asset_url }}"></script>
-    <script src="{{ 'section-translators.js' | asset_url }}"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // Ensure translations are initialized
-        if (window.WiertlaTranslator && typeof window.WiertlaTranslator.translate === 'function') {
-          window.WiertlaTranslator.translate();
-          
-          // Debug translations after a short delay to ensure everything is loaded
-          setTimeout(function() {
-            if (window.WiertlaTranslator && typeof window.WiertlaTranslator.debug === 'function') {
-              window.WiertlaTranslator.debug();
-            }
-          }, 1000);
-        }
-        
-        // Listen for language changes
-        document.addEventListener('wiertlaLanguageChanged', function() {
-          // Apply translations when language changes
-          if (window.WiertlaTranslator && typeof window.WiertlaTranslator.translate === 'function') {
-            window.WiertlaTranslator.translate();
-          }
-          
-          // Also call the section-specific translators
-          if (window.WiertlaTranslators && typeof window.WiertlaTranslators.translateMainProductHorizontalGallery === 'function') {
-            window.WiertlaTranslators.translateMainProductHorizontalGallery();
-          }
-        });
-      });
-    </script>
+    <script src="{{ 'translations.js' | asset_url }}" defer></script>
+    <script src="{{ 'translation-system.js' | asset_url }}" defer></script>
+    <script src="{{ 'section-translators.js' | asset_url }}" defer></script>
+    <script src="{{ 'wiertla-translate-init.js' | asset_url }}" defer></script>
   </head>
 
   <body id="{{ page_title | handle }}" class="template-{{ template.name | handle }} {% if settings.buttons_show_arrow %}show-button-arrows{% endif %}">
@@ -211,62 +164,11 @@
       <li id="a11y-selection-message">{{ 'general.accessibility.selection_help' | t }}</li>
     </ul>
 
-    <script>
-          window.theme = {
-      strings: {
-        loading: {{ 'general.search.loading' | t | json }},
-        itemCountOne: {{ 'cart.popup.cart_count.one' | t | json }},
-        itemCountOther: {{ 'cart.popup.cart_count.other' | t | json }},
-        addToCart: {{ 'products.product.add_to_cart' | t | json }},
-        soldOut: {{ 'products.product.sold_out' | t | json }},
-        unavailable: {{ 'products.product.unavailable' | t | json }},
-        regularPrice: {{ 'products.product.regular_price' | t | json }},
-        salePrice: {{ 'products.product.sale_price' | t | json }},
-        sale: {{ 'products.product.on_sale' | t | json }},
-        unitPrice: {{ 'products.product.unit_price_label' | t | json }},
-        unitPriceSeparator: {{ 'general.accessibility.unit_price_separator' | t | json }},
-        cartEmpty: {{ 'cart.general.empty' | t | json }},
-        cartCookies: {{ 'cart.general.cookies_required' | t | json }},
-        update: {{ 'cart.label.update' | t | json }},
-        quantity: {{ 'cart.label.quantity' | t | json }},
-        discountedTotal: {{ 'cart.label.discounted_total' | t | json }},
-        regularTotal: {{ 'cart.label.regular_total' | t | json }},
-        priceColumn: {{ 'cart.label.price_column' | t | json }},
-        addedToCart: {{ 'cart.popup.added_to_cart' | t | append: '!' | json }},
-        cartAddError: {{ 'cart.general.cart_add_error' | t | json }},
-        cartError: {{ 'cart.general.cart_error' | t | json }},
-        cartQuantityError: {{ 'cart.general.cart_quantity_error_html' | t | json }}
-      },
-      routes: {
-        cart_add_url: '{{ routes.cart_add_url }}',
-        cart_change_url: '{{ routes.cart_change_url }}',
-        cart_update_url: '{{ routes.cart_update_url }}'
-      },
-      moneyFormat: {% if settings.currency_code_enabled == true %}{{ shop.money_with_currency_format | json }}{% else %}{{ shop.money_format | json }}{% endif %},
-      cartItemCount: {{ cart.item_count | json }},
-      cartMethod: {{ settings.ajax_cart_method | json }}
-          };
-    </script>
+    <script src="{{ 'wiertla-theme-config.js' | asset_url }}" defer></script>
     {% include 'uploadkit' %}
-    <script>
-      (function(){
-        function toggleLatestFlag(){
-          var hasLatest = !!document.querySelector('.latest-products');
-          var body = document.body;
-          if (!body) return;
-          body.classList.toggle('has-latest-products', hasLatest);
-          body.classList.toggle('no-latest-products', !hasLatest);
-        }
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', toggleLatestFlag);
-        } else {
-          toggleLatestFlag();
-        }
-        var mo = new MutationObserver(function(){ toggleLatestFlag(); });
-        mo.observe(document.documentElement, { childList: true, subtree: true });
-      })();
-    </script>
-  {{ 'wiertla-fullscreen.js' | asset_url | script_tag }}
+    <script src="{{ 'wiertla-latest-flag.js' | asset_url }}" defer></script>
+    <script src="{{ 'wiertla-fullscreen.js' | asset_url }}" defer></script>
     <script src="{{ 'wiertla-modals.js' | asset_url }}" defer></script>
+    <script src="{{ 'wiertla-debug.js' | asset_url }}" defer></script>
   </body>
 </html>

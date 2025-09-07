@@ -104,11 +104,11 @@
 </div>
 <div class="wiertla-categories__filters desktop">
   <div class="wiertla-categories__filters-left">
-    <button class="wiertla-categories__filter-button active" data-filter="wszystkie">Wszystkie</button>
+    <button class="wiertla-categories__filter-button active" data-filter="wszystkie" data-translate="wiertla_categories.all">Wszystkie</button>
     
     <!-- Typ wiertła filter (only for wiertla tab) -->
     <select class="wiertla-categories__filter wiertla-filter-type" data-filter="typ" data-tab="wiertla">
-      <option value="">Typ wiertła</option>
+      <option value="" data-translate="wiertla_categories.drill_type">Typ wiertła</option>
       <option value="koronkowe">Koronkowe</option>
       <option value="plytkowe">Płytkowe</option>
       <option value="vhm">VHM</option>
@@ -119,7 +119,7 @@
     
     <!-- Rodzaj filter for plytki tab (should appear in same position as Typ wiertła) -->
     <select class="wiertla-categories__filter wiertla-filter-rodzaj" data-filter="rodzaj" data-tab="plytki" style="display:none;">
-      <option value="">Rodzaj</option>
+      <option value="" data-translate="wiertla_categories.rodzaj">Rodzaj</option>
       <option value="wcmx">WCMX</option>
       <option value="lcmx">LCMX</option>
       <option value="811">811</option>
@@ -132,7 +132,7 @@
     
     <!-- Rodzaj filter for koronki tab (should appear in same position as Typ wiertła) -->
     <select class="wiertla-categories__filter wiertla-filter-rodzaj" data-filter="rodzaj" data-tab="koronki" style="display:none;">
-      <option value="">Rodzaj</option>
+      <option value="" data-translate="wiertla_categories.rodzaj">Rodzaj</option>
       <option value="ksem">KSEM</option>
       <option value="idi">IDI</option>
       <option value="p600">P600</option>
@@ -144,22 +144,22 @@
     </select>
     
     <select class="wiertla-categories__filter" data-filter="manufacturer">
-      <option value="">Producent</option>
+      <option value="" data-translate="wiertla_categories.manufacturer">Producent</option>
     </select>
   </div>
 
   <div class="wiertla-categories__filters-right">
   <button class="wiertla-categories__filter-btn mobile-only mobile">
       <img src="{{ 'icon_filter.svg' | asset_url }}" alt="Filter" width="24" height="24">
-      <span>Filtruj</span>
+      <span data-translate="wiertla_categories.filter">Filtruj</span>
     </button>
-    <span class="wiertla-categories__per-page-label desktop">Pokaż</span>
+    <span class="wiertla-categories__per-page-label desktop" data-translate="wiertla_categories.show">Pokaż</span>
     <div class="wiertla-categories__per-page-buttons">
-      <button class="wiertla-categories__per-page-button active" data-value="20">20</button>
+      <button class="wiertla-categories__per-page-button" data-value="20">20</button>
       <button class="wiertla-categories__per-page-button" data-value="50">50</button>
       <button class="wiertla-categories__per-page-button" data-value="100">100</button>
     </div>
-    <span class="wiertla-categories__per-page-label">/ na stronę</span>
+    <span class="wiertla-categories__per-page-label" data-translate="wiertla_categories.per_page">/ na stronę</span>
     
   </div>
 </div>

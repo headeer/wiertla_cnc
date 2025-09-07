@@ -3,7 +3,7 @@
 development:
   # This should be a Theme Access password (starts with shptka_)
   # NOT your store admin password
-  password: shptka_3881ff546262162931f899984b332589
+  password: shptka_639110120edbeb3d453a555bc28ed7a7
   # Optional: If you want to work with an existing theme, add its ID here
   theme_id: "185232916854"
-  store: wiertlacnc.shop
+  store: zmyfkc-q4.myshopify.com

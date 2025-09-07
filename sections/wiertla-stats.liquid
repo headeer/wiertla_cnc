@@ -296,6 +296,25 @@
             aria-label="{{ product.title }}"
             data-condition="{{ product.metafields.custom.condition }}"
           >
+            {%- comment -%} Hero image above top row {%- endcomment -%}
+            {%- assign hero_src = nil -%}
+            {%- if product.featured_media and product.featured_media.preview_image -%}
+              {%- assign hero_src = product.featured_media.preview_image | image_url: width: 320 -%}
+            {%- elsif product.images and product.images.size > 0 -%}
+              {%- assign hero_src = product.images.first | image_url: width: 320 -%}
+            {%- else -%}
+              {%- assign hero_src = icon_url -%}
+            {%- endif -%}
+            <div class="product-card__hero{% if hero_src == icon_url %} product-card__hero--placeholder{% endif %}">
+              <img
+                src="{{ hero_src }}"
+                alt="{{ product.title | escape }}"
+                class="product-card__hero-image"
+                loading="lazy"
+                {% if hero_src == icon_url %}data-is-placeholder="true"{% endif %}
+                data-handle="{{ product.handle }}"
+              >
+            </div>
             <div class="product-card__top">
               <div class="product-card__image-container">
                 <div
@@ -952,8 +971,28 @@
 
   .product-card {
     width: 264px;
-    height: 102px;
+    height: auto;
     padding: 10px;
+  }
+
+  .product-card__hero {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 140px;
+    overflow: hidden;
+    margin-bottom: 6px;
+    background: #fff;
+  }
+  .product-card__hero--placeholder {
+    background: #F6F7F9;
+  }
+  .product-card__hero-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
   }
 
   .product-card__top {
@@ -1610,6 +1649,34 @@
         },
       },
     });
+    // Replace placeholder hero images with real featured images
+    try {
+      var container = document.querySelector('.latest-products__swiper .swiper-wrapper');
+      if (container) {
+        var imgs = container.querySelectorAll('.product-card__hero-image[data-is-placeholder="true"][data-handle]');
+        imgs.forEach(function(imgEl){
+          var handle = imgEl.getAttribute('data-handle');
+          if (!handle) return;
+          fetch('/products/' + handle + '.json')
+            .then(function(r){ return r.ok ? r.json() : null; })
+            .then(function(data){
+              if (!data || !data.product) return;
+              var p = data.product;
+              var url = '';
+              if (p.featured_image && p.featured_image.src) url = p.featured_image.src;
+              else if (Array.isArray(p.images) && p.images.length) url = p.images[0].src || p.images[0];
+              if (url) {
+                imgEl.src = url;
+                var hero = imgEl.closest('.product-card__hero');
+                if (hero) hero.classList.remove('product-card__hero--placeholder');
+                imgEl.setAttribute('data-is-placeholder','false');
+              }
+            })
+            .catch(function(){});
+        });
+      }
+    } catch(_) {}
+
 
     function updateNavigationButtons(swiper) {
       const nextButton = document.querySelector('.swiper-button-next');

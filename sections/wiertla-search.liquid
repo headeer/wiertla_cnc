@@ -6,7 +6,7 @@
 
 <div class="wiertla-search" data-search-component>
   <div class="wiertla-search__container">
-    <div class="wiertla-search__title">WYSZUKAJ WIERTŁA</div>
+    <div class="wiertla-search__title" data-translate="common.search">WYSZUKAJ WIERTŁA</div>
     <form class="wiertla-search__form" action="{{ routes.search_url }}" method="get">
       <div class="wiertla-search__input-group">
         <div class="wiertla-search__input-icon">
@@ -33,6 +33,7 @@
           id="Search"
           class="wiertla-search__input"
           placeholder="Wpisz szukaną frazę (fi / nazwa / symbol / producent)"
+          data-translate-placeholder="wiertla_categories.search_placeholder"
           autocomplete="off"
           aria-label="{{ 'general.search.label' | t }}"
           value="{{ search.terms | escape }}"
@@ -56,7 +57,7 @@
       </div>
 
       <button type="submit" class="wiertla-search__button">
-        <span>Szukaj</span>
+        <span data-translate="common.search">Szukaj</span>
         <svg
           class="wiertla-search__button-icon"
           width="20.48"
