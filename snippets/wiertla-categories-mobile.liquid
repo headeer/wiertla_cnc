@@ -1,6 +1,6 @@
-{% comment %} 
+{% comment %}
   Wiertla Categories Mobile Components
-  A reusable component to display the mobile components for the Wiertla CNC Shopify theme. 
+  A reusable component to display the mobile components for the Wiertla CNC Shopify theme.
 {% endcomment %}
 
 <!-- Mobile Category Navigation -->
@@ -13,7 +13,8 @@
           alt="Koronkowe"
           class="wiertla-categories__icon"
           width="24"
-          height="24">
+          height="24"
+        >
         <span class="wiertla-categories__icon-label">KORONKOWE</span>
       </div>
       <div class="wiertla-categories__icon-item">
@@ -22,7 +23,8 @@
           alt="Płytkowe"
           class="wiertla-categories__icon"
           width="24"
-          height="24">
+          height="24"
+        >
         <span class="wiertla-categories__icon-label">PŁYTKOWE</span>
       </div>
       <div class="wiertla-categories__icon-item">
@@ -31,7 +33,8 @@
           alt="VH"
           class="wiertla-categories__icon"
           width="24"
-          height="24">
+          height="24"
+        >
         <span class="wiertla-categories__icon-label">VHM</span>
       </div>
       <div class="wiertla-categories__icon-item">
@@ -40,7 +43,8 @@
           alt="Sandvik 880"
           class="wiertla-categories__icon"
           width="24"
-          height="24">
+          height="24"
+        >
         <span class="wiertla-categories__icon-label">SANDVIK 880</span>
       </div>
       <div class="wiertla-categories__icon-item">
@@ -49,7 +53,8 @@
           alt="AMEC"
           class="wiertla-categories__icon"
           width="24"
-          height="24">
+          height="24"
+        >
         <span class="wiertla-categories__icon-label">AMEC</span>
       </div>
       <div class="wiertla-categories__icon-item">
@@ -58,7 +63,8 @@
           alt="KSEM"
           class="wiertla-categories__icon"
           width="24"
-          height="24">
+          height="24"
+        >
         <span class="wiertla-categories__icon-label">KSEM</span>
       </div>
       <div class="wiertla-categories__icon-item">
@@ -67,7 +73,8 @@
           alt="Wszystkie"
           class="wiertla-categories__icon"
           width="24"
-          height="24">
+          height="24"
+        >
         <span class="wiertla-categories__icon-label">WSZYSTKIE</span>
       </div>
     </div>
@@ -78,7 +85,6 @@
     <span class="wiertla-categories__scroll-dot"></span>
   </div>
 </div>
-
 
 <!-- Mobile Filter Modal -->
 <div class="wiertla-categories__mobile-filter-modal" style="display: none;">
@@ -91,7 +97,8 @@
           alt="Filter"
           class="wiertla-categories__mobile-filter-icon-inner"
           width="24"
-          height="24">
+          height="24"
+        >
       </div>
       <div class="wiertla-categories__mobile-filter-title">filtruj wiertła w tabeli</div>
       <div class="wiertla-categories__mobile-filter-close-wrapper">
@@ -100,7 +107,8 @@
           alt="Close"
           class="wiertla-categories__mobile-filter-close"
           width="24"
-          height="24">
+          height="24"
+        >
       </div>
     </div>
 
@@ -108,7 +116,11 @@
     <div class="wiertla-categories__mobile-filter-options">
       <!-- Typ wiertła filter (only for wiertla tab) -->
       <div class="wiertla-categories__mobile-filter-dropdown">
-        <select class="wiertla-categories__mobile-filter-select wiertla-filter-type" data-filter="typ" data-tab="wiertla">
+        <select
+          class="wiertla-categories__mobile-filter-select wiertla-filter-type"
+          data-filter="typ"
+          data-tab="wiertla"
+        >
           <option value="">Typ wiertła</option>
           <option value="koronkowe">Koronkowe</option>
           <option value="plytkowe">Płytkowe</option>
@@ -118,10 +130,15 @@
           <option value="amec">AMEC</option>
         </select>
       </div>
-      
+
       <!-- Rodzaj filter for plytki tab -->
       <div class="wiertla-categories__mobile-filter-dropdown">
-        <select class="wiertla-categories__mobile-filter-select wiertla-filter-rodzaj" data-filter="rodzaj" data-tab="plytki" style="display:none;">
+        <select
+          class="wiertla-categories__mobile-filter-select wiertla-filter-rodzaj"
+          data-filter="rodzaj"
+          data-tab="plytki"
+          style="display:none;"
+        >
           <option value="">Rodzaj</option>
           <option value="wcmx">WCMX</option>
           <option value="lcmx">LCMX</option>
@@ -133,10 +150,15 @@
           <option value="p284">P284</option>
         </select>
       </div>
-      
+
       <!-- Rodzaj filter for koronki tab -->
       <div class="wiertla-categories__mobile-filter-dropdown">
-        <select class="wiertla-categories__mobile-filter-select wiertla-filter-rodzaj" data-filter="rodzaj" data-tab="koronki" style="display:none;">
+        <select
+          class="wiertla-categories__mobile-filter-select wiertla-filter-rodzaj"
+          data-filter="rodzaj"
+          data-tab="koronki"
+          style="display:none;"
+        >
           <option value="">Rodzaj</option>
           <option value="ksem">KSEM</option>
           <option value="idi">IDI</option>
@@ -148,7 +170,7 @@
           <option value="ktip">ktip</option>
         </select>
       </div>
-      
+
       <div class="wiertla-categories__mobile-filter-dropdown">
         <select class="wiertla-categories__mobile-filter-select" data-filter="manufacturer">
           <option value="">Producent</option>
@@ -178,16 +200,15 @@
           alt="Sort"
           class="wiertla-categories__mobile-filter-sort-icon"
           width="24"
-          height="24">
+          height="24"
+        >
       </button>
     </div>
 
-      <!-- Include Dropdown Menu -->
-      {% render 'wiertla-categories-mobile-dropdown' %}
-    </div>
-
-
+    <!-- Include Dropdown Menu -->
+    {% render 'wiertla-categories-mobile-dropdown' %}
   </div>
+</div>
 
 <!-- Mobile Rent Modal -->
 <div class="wiertla-categories__mobile-rent-modal" style="display: none;">
@@ -200,7 +221,8 @@
           alt="Calendar"
           class="wiertla-categories__mobile-rent-icon-inner"
           width="24"
-          height="24">
+          height="24"
+        >
       </div>
       <div class="wiertla-categories__mobile-rent-title">WYPOŻYCZ WIERTŁO</div>
       <div class="wiertla-categories__mobile-rent-close-wrapper">
@@ -209,7 +231,8 @@
           alt="Close"
           class="wiertla-categories__mobile-rent-close"
           width="24"
-          height="24">
+          height="24"
+        >
       </div>
     </div>
 
@@ -226,19 +249,21 @@
       <!-- Contact info -->
       <div class="wiertla-categories__mobile-rent-contact-info">
         <div class="wiertla-categories__mobile-rent-phone">
-          <img 
-            src="{{ 'Ico_phone.svg' | asset_url }}" 
+          <img
+            src="{{ 'Ico_phone.svg' | asset_url }}"
             alt="Phone"
             width="24"
-            height="24">
+            height="24"
+          >
           <a href="tel:+48600673736" class="wiertla-categories__mobile-rent-contact-link">+48 600 67 37 36</a>
         </div>
         <div class="wiertla-categories__mobile-rent-email">
-          <img 
-            src="{{ 'Ico_mail.svg' | asset_url }}" 
+          <img
+            src="{{ 'Ico_mail.svg' | asset_url }}"
             alt="Email"
             width="24"
-            height="24">
+            height="24"
+          >
           <a href="mailto:biuro@hmmetal.pl" class="wiertla-categories__mobile-rent-contact-link">biuro@hmmetal.pl</a>
         </div>
       </div>
@@ -256,29 +281,76 @@
           <input type="hidden" name="form_type" value="contact">
           <input type="hidden" name="utf8" value="✓">
           <div class="wiertla-categories__mobile-rent-form-group">
-            <input type="text" name="contact[contact_person]" placeholder="Osoba kontaktowa" required aria-required="true" aria-label="Osoba kontaktowa">
+            <input
+              type="text"
+              name="contact[contact_person]"
+              placeholder="Osoba kontaktowa"
+              required
+              aria-required="true"
+              aria-label="Osoba kontaktowa"
+            >
             <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
           </div>
           <div class="wiertla-categories__mobile-rent-form-group">
-            <input type="text" name="contact[company_name]" placeholder="Nazwa firmy" required aria-required="true" aria-label="Nazwa firmy">
+            <input
+              type="text"
+              name="contact[company_name]"
+              placeholder="Nazwa firmy"
+              required
+              aria-required="true"
+              aria-label="Nazwa firmy"
+            >
             <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
           </div>
           <div class="wiertla-categories__mobile-rent-form-row">
             <div class="wiertla-categories__mobile-rent-form-group">
-              <input type="tel" name="contact[phone]" placeholder="Nr telefonu" required pattern="[0-9 ()+-]{9,}" aria-required="true" aria-label="Numer telefonu">
+              <input
+                type="tel"
+                name="contact[phone]"
+                placeholder="Nr telefonu"
+                required
+                pattern="[0-9 ()+-]{9,}"
+                aria-required="true"
+                aria-label="Numer telefonu"
+              >
               <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
             </div>
             <div class="wiertla-categories__mobile-rent-form-group">
-              <input type="email" name="contact[email]" placeholder="E-mail" required aria-required="true" aria-label="Adres email">
+              <input
+                type="email"
+                name="contact[email]"
+                placeholder="E-mail"
+                required
+                aria-required="true"
+                aria-label="Adres email"
+              >
               <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
             </div>
           </div>
           <div class="wiertla-categories__mobile-rent-form-group">
-            <input type="text" name="contact[drill_symbol]" placeholder="SYMBOL wiertła" value="{{ product.symbol | default: '' }}" required aria-required="true" aria-label="Symbol wiertła">
+            <input
+              type="text"
+              name="contact[drill_symbol]"
+              placeholder="SYMBOL wiertła"
+              value="{{ product.symbol | default: '' }}"
+              required
+              aria-required="true"
+              aria-label="Symbol wiertła"
+            >
             <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
           </div>
           <div class="wiertla-categories__mobile-rent-form-group">
-            <input type="date" name="contact[rental_date]" class="wiertla-categories__mobile-rent-date" placeholder="Wpisz preferowany termin wypożyczenia" required aria-required="true" aria-label="Preferowany termin wypożyczenia" min="{{ 'now' | date: '%Y-%m-%d' }}" value="{{ 'now' | date: '%Y-%m-%d' | date: '%Y-%m-%d' }}">
+            <input
+              type="date"
+              name="contact[rental_date]"
+              class="wiertla-categories__mobile-rent-date"
+              placeholder="Wpisz preferowany termin wypożyczenia"
+              required
+              aria-required="true"
+              aria-label="Preferowany termin wypożyczenia"
+              min="{{ 'now' | date: '%Y-%m-%d' }}"
+              value="{{ 'now' | date: '%Y-%m-%d' | date: '%Y-%m-%d' }}"
+            >
             <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
           </div>
           <button type="submit" class="wiertla-categories__mobile-rent-submit">
@@ -293,14 +365,15 @@
             <div class="wiertla-categories__mobile-rent-success-icon">
               <img src="{{ 'mail_sended.svg' | asset_url }}" alt="Mail sent" width="24" height="24">
             </div>
-            <div class="wiertla-categories__mobile-rent-success-message">
-              Dziękujemy za wysłanie zapytania
-            </div>
+            <div class="wiertla-categories__mobile-rent-success-message">Dziękujemy za wysłanie zapytania</div>
           </div>
           <p class="wiertla-categories__mobile-rent-success-note">
             Czas na odpowiedź wynosi zwykle 24 godziny w dni robocze. Jeśli potrzebujesz wiertła szybciej, zadzwoń.
           </p>
-          <button class="wiertla-categories__mobile-rent-button wiertla-categories__mobile-rent-success-close" style="display: flex; background-color: #FFFFFF; border: 2px solid #FFE500">
+          <button
+            class="wiertla-categories__mobile-rent-button wiertla-categories__mobile-rent-success-close"
+            style="display: flex; background-color: #FFFFFF; border: 2px solid #FFE500"
+          >
             <span>Wysłano wiadomość</span>
             <img src="{{ 'mail_sended.svg' | asset_url }}" alt="Send" width="24" height="24">
           </button>
@@ -313,14 +386,14 @@
 <script>
   // Rent modal control functions
   window.openRentModal = function (product) {
-    const modal = document.querySelector(".wiertla-categories__mobile-rent-modal");
+    const modal = document.querySelector('.wiertla-categories__mobile-rent-modal');
     if (modal) {
       // Add active class first
-      modal.classList.add("active");
-      
+      modal.classList.add('active');
+
       // Then set display to flex
-      modal.style.display = "flex";
-      
+      modal.style.display = 'flex';
+
       // Update modal content and populate symbol
       const title = modal.querySelector('.wiertla-categories__mobile-rent-title');
       if (product && title) {
@@ -352,7 +425,7 @@
       if (symbolInput && candidate) {
         symbolInput.value = candidate;
       }
-      
+
       // Prevent body scrolling
       document.body.style.setProperty('overflow', 'hidden');
     }
@@ -360,14 +433,14 @@
   };
 
   window.closeRentModal = function () {
-    const modal = document.querySelector(".wiertla-categories__mobile-rent-modal");
+    const modal = document.querySelector('.wiertla-categories__mobile-rent-modal');
     if (modal) {
       // Remove active class first
-      modal.classList.remove("active");
-      
+      modal.classList.remove('active');
+
       // Then set display to none
-      modal.style.display = "none";
-      
+      modal.style.display = 'none';
+
       // Restore body scrolling
       document.body.style.setProperty('overflow', '');
       // Reset modal so user can rent another tool
@@ -384,32 +457,39 @@
   };
 
   // Add event listeners when DOM is loaded
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener('DOMContentLoaded', function () {
     // Capture last clicked symbol from product table/card
-    document.addEventListener('click', function(e){
-      var card = e.target.closest && e.target.closest('.wiertla-categories__mobile-card');
-      if (card) {
-        var symEl = card.querySelector('.wiertla-categories__mobile-symbol');
-        if (symEl) window.__wiertlaLastSymbol = symEl.textContent.trim();
-        var row = card.closest('tr.wiertla-categories__table-row');
-        if (!window.__wiertlaLastSymbol && row) window.__wiertlaLastSymbol = (row.getAttribute('data-sku') || '').toString();
-      }
-      var rowBtn = e.target.closest && e.target.closest('tr.wiertla-categories__table-row');
-      if (rowBtn && rowBtn.getAttribute) {
-        var sku = rowBtn.getAttribute('data-sku');
-        if (sku) window.__wiertlaLastSymbol = sku.toString();
-      }
-    }, true);
-  
+    document.addEventListener(
+      'click',
+      function (e) {
+        var card = e.target.closest && e.target.closest('.wiertla-categories__mobile-card');
+        if (card) {
+          var symEl = card.querySelector('.wiertla-categories__mobile-symbol');
+          if (symEl) window.__wiertlaLastSymbol = symEl.textContent.trim();
+          var row = card.closest('tr.wiertla-categories__table-row');
+          if (!window.__wiertlaLastSymbol && row)
+            window.__wiertlaLastSymbol = (row.getAttribute('data-sku') || '').toString();
+        }
+        var rowBtn = e.target.closest && e.target.closest('tr.wiertla-categories__table-row');
+        if (rowBtn && rowBtn.getAttribute) {
+          var sku = rowBtn.getAttribute('data-sku');
+          if (sku) window.__wiertlaLastSymbol = sku.toString();
+        }
+      },
+      true
+    );
+
     // Handle rent button click to show form
-    const rentButton = document.querySelector(".wiertla-categories__mobile-rent-button:not(.wiertla-categories__mobile-rent-success-close)");
-    const rentForm = document.querySelector(".wiertla-categories__mobile-rent-form");
-    const rentFormContent = document.querySelector(".wiertla-categories__mobile-rent-form-content");
-    const successEl = document.querySelector(".wiertla-categories__mobile-rent-success");
-    const formTitle = document.querySelector(".wiertla-categories__mobile-rent-form-title");
-    
+    const rentButton = document.querySelector(
+      '.wiertla-categories__mobile-rent-button:not(.wiertla-categories__mobile-rent-success-close)'
+    );
+    const rentForm = document.querySelector('.wiertla-categories__mobile-rent-form');
+    const rentFormContent = document.querySelector('.wiertla-categories__mobile-rent-form-content');
+    const successEl = document.querySelector('.wiertla-categories__mobile-rent-success');
+    const formTitle = document.querySelector('.wiertla-categories__mobile-rent-form-title');
+
     if (rentButton && rentForm) {
-      rentButton.addEventListener("click", function(e) {
+      rentButton.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         // Show form wrapper and inner form; hide success state
@@ -422,17 +502,19 @@
     }
 
     // Handle rent form submission
-    const rentFormElement = document.querySelector(".wiertla-categories__mobile-rent-form-content");
+    const rentFormElement = document.querySelector('.wiertla-categories__mobile-rent-form-content');
     if (rentFormElement) {
-      rentFormElement.addEventListener("submit", function(e) {
+      rentFormElement.addEventListener('submit', function (e) {
         handleFormSubmit(e);
       });
     }
 
     // Handle close button clicks
-    const closeButtons = document.querySelectorAll(".wiertla-categories__mobile-rent-close, .wiertla-categories__mobile-rent-close-wrapper");
-    closeButtons.forEach(function(btn) {
-      btn.addEventListener("click", function(e) {
+    const closeButtons = document.querySelectorAll(
+      '.wiertla-categories__mobile-rent-close, .wiertla-categories__mobile-rent-close-wrapper'
+    );
+    closeButtons.forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         window.closeRentModal();
@@ -440,10 +522,10 @@
     });
 
     // Handle outside click
-    const modal = document.querySelector(".wiertla-categories__mobile-rent-modal");
-    const wrapper = document.querySelector(".wiertla-categories__mobile-rent-wrapper");
+    const modal = document.querySelector('.wiertla-categories__mobile-rent-modal');
+    const wrapper = document.querySelector('.wiertla-categories__mobile-rent-wrapper');
     if (modal && wrapper) {
-      modal.addEventListener("click", function(e) {
+      modal.addEventListener('click', function (e) {
         if (!wrapper.contains(e.target)) {
           window.closeRentModal();
         }
@@ -479,18 +561,23 @@
     var submitPromise = isDev
       ? Promise.resolve() // Dev: pretend success to bypass 403
       : fetch('/contact', { method: 'POST', body: fd, credentials: 'same-origin' });
-    submitPromise.then(function(){
-      form.style.display = 'none';
-      if (successMessage) successMessage.style.display = 'flex';
-    }).catch(function(){
-      form.style.display = 'none';
-      if (successMessage) successMessage.style.display = 'flex';
-    });
+    submitPromise
+      .then(function () {
+        form.style.display = 'none';
+        if (successMessage) successMessage.style.display = 'flex';
+      })
+      .catch(function () {
+        form.style.display = 'none';
+        if (successMessage) successMessage.style.display = 'flex';
+      });
   }
 </script>
 
 <!-- Mobile Product Preview Modal -->
-<div class="wiertla-categories__mobile-preview-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 10000; align-items: center; justify-content: center;">
+<div
+  class="wiertla-categories__mobile-preview-modal"
+  style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 10000; align-items: center; justify-content: center;"
+>
   <div class="wiertla-categories__mobile-preview-wrapper">
     <!-- Preview header -->
     <div class="wiertla-categories__mobile-preview-header">
@@ -500,7 +587,8 @@
           alt="Preview"
           class="wiertla-categories__mobile-preview-icon-inner"
           width="24"
-          height="24">
+          height="24"
+        >
       </div>
       <div class="wiertla-categories__mobile-preview-title">Podgląd</div>
       <div class="wiertla-categories__mobile-preview-close-wrapper" onclick="closePreviewModal()">
@@ -509,36 +597,35 @@
           alt="Close"
           class="wiertla-categories__mobile-preview-close"
           width="24"
-          height="24">
+          height="24"
+        >
       </div>
     </div>
-    
+
     <!-- Product Card Preview (exact same structure as mobile card) -->
     <div class="wiertla-categories__mobile-preview-card">
       <div class="wiertla-categories__mobile-top">
         <div class="wiertla-categories__mobile-image">
-          <img src="" alt="Product" width="34" height="34" loading="lazy" class="wiertla-categories__mobile-preview-product-image">
+          <img
+            src=""
+            alt="Product"
+            width="34"
+            height="34"
+            loading="lazy"
+            class="wiertla-categories__mobile-preview-product-image"
+          >
         </div>
         <div class="wiertla-categories__mobile-fi">
           <span class="mobile-value wiertla-categories__mobile-preview-fi-value">-</span>
         </div>
-        <div class="wiertla-categories__mobile-dimension wiertla-categories__mobile-preview-dimension-value">
-          -
-        </div>
+        <div class="wiertla-categories__mobile-dimension wiertla-categories__mobile-preview-dimension-value">-</div>
         <div class="wiertla-categories__mobile-price-wrapper">
-          <div class="wiertla-categories__mobile-price wiertla-categories__mobile-preview-price-value">
-            -
-          </div>
+          <div class="wiertla-categories__mobile-price wiertla-categories__mobile-preview-price-value">-</div>
         </div>
       </div>
       <div class="wiertla-categories__mobile-bottom">
-        <div class="wiertla-categories__mobile-vendor wiertla-categories__mobile-preview-vendor-value">
-          -
-        </div>
-        <div class="wiertla-categories__mobile-symbol wiertla-categories__mobile-preview-symbol-value">
-          -
-        </div>
-       
+        <div class="wiertla-categories__mobile-vendor wiertla-categories__mobile-preview-vendor-value">-</div>
+        <div class="wiertla-categories__mobile-symbol wiertla-categories__mobile-preview-symbol-value">-</div>
       </div>
     </div>
 
@@ -551,7 +638,8 @@
           alt="Arrow"
           class="wiertla-categories__mobile-preview-button-icon"
           width="24"
-          height="24">
+          height="24"
+        >
       </a>
     </div>
   </div>
@@ -559,57 +647,53 @@
 
 <script>
   // Close preview modal function
-  window.closePreviewModal = function() {
-    const modal = document.querySelector(".wiertla-categories__mobile-preview-modal");
+  window.closePreviewModal = function () {
+    const modal = document.querySelector('.wiertla-categories__mobile-preview-modal');
     if (modal) {
-      modal.style.display = "none";
-      modal.classList.remove("active");
-      document.body.style.overflow = "";
+      modal.style.display = 'none';
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
     }
   };
 
   // Update mobile preview modal with product data
-  window.updateMobilePreview = function(product) {
-    
-    const modal = document.querySelector(".wiertla-categories__mobile-preview-modal");
+  window.updateMobilePreview = function (product) {
+    const modal = document.querySelector('.wiertla-categories__mobile-preview-modal');
     if (!modal) {
-      console.error("Modal not found!");
+      console.error('Modal not found!');
       return;
     }
 
     // Get all elements
-    const productImage = modal.querySelector(".wiertla-categories__mobile-preview-product-image");
-    const largeProductImage = modal.querySelector(".wiertla-categories__mobile-preview-large-image");
-    const fiValue = modal.querySelector(".wiertla-categories__mobile-preview-fi-value");
-    const dimensionValue = modal.querySelector(".wiertla-categories__mobile-preview-dimension-value");
-    const vendorValue = modal.querySelector(".wiertla-categories__mobile-preview-vendor-value");
-    const symbolValue = modal.querySelector(".wiertla-categories__mobile-preview-symbol-value");
-    const priceValue = modal.querySelector(".wiertla-categories__mobile-preview-price-value");
-    const detailsButton = modal.querySelector(".wiertla-categories__mobile-preview-button");
-
-   
+    const productImage = modal.querySelector('.wiertla-categories__mobile-preview-product-image');
+    const largeProductImage = modal.querySelector('.wiertla-categories__mobile-preview-large-image');
+    const fiValue = modal.querySelector('.wiertla-categories__mobile-preview-fi-value');
+    const dimensionValue = modal.querySelector('.wiertla-categories__mobile-preview-dimension-value');
+    const vendorValue = modal.querySelector('.wiertla-categories__mobile-preview-vendor-value');
+    const symbolValue = modal.querySelector('.wiertla-categories__mobile-preview-symbol-value');
+    const priceValue = modal.querySelector('.wiertla-categories__mobile-preview-price-value');
+    const detailsButton = modal.querySelector('.wiertla-categories__mobile-preview-button');
 
     // Set product images
     if (productImage) {
       if (product.image && product.image.trim() !== '') {
         productImage.src = product.image;
-        productImage.style.display = "block";
+        productImage.style.display = 'block';
       } else {
         // Use a default placeholder
         productImage.src = "{{ 'image-8.png' | asset_url }}";
-        productImage.style.display = "block";
+        productImage.style.display = 'block';
       }
     }
 
     // Set large product image (use the same logic as desktop preview system)
     if (largeProductImage) {
-      
-      
       // Use same fallback logic as desktop preview: image || large_image || featured_image
-      const imageUrl = product.image || product.large_image || product.featured_image || "{{ 'custom_icons.png' | asset_url }}";
-      
+      const imageUrl =
+        product.image || product.large_image || product.featured_image || "{{ 'custom_icons.png' | asset_url }}";
+
       largeProductImage.src = imageUrl;
-      largeProductImage.style.display = "block";
+      largeProductImage.style.display = 'block';
     }
 
     // Set all the product data
@@ -617,7 +701,9 @@
     if (dimensionValue) dimensionValue.textContent = product.dimension || '-';
     if (vendorValue) vendorValue.textContent = product.vendor || '-';
     if (symbolValue) {
-      var sym = (product.symbol || product.kod || product.custom_symbol || product.custom_kod_producenta || '-').toString().trim();
+      var sym = (product.symbol || product.kod || product.custom_symbol || product.custom_kod_producenta || '-')
+        .toString()
+        .trim();
       if (sym.length > 9) sym = sym.slice(0, 8) + '…';
       symbolValue.textContent = sym;
     }
@@ -635,28 +721,26 @@
           detailsButton.href = `/products/${productId}`;
           detailsButton.onclick = null;
         } else {
-          detailsButton.href = "#";
-          detailsButton.onclick = function(e) { e.preventDefault(); };
+          detailsButton.href = '#';
+          detailsButton.onclick = function (e) {
+            e.preventDefault();
+          };
         }
       }
     }
 
-
     // Show modal with proper flex display for overlay
-    modal.style.display = "flex";
-    modal.classList.add("active");
-    document.body.style.overflow = "hidden";
+    modal.style.display = 'flex';
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
   };
 
-  
-
   // Add event listeners when DOM is ready
-  document.addEventListener("DOMContentLoaded", function() {
-    
+  document.addEventListener('DOMContentLoaded', function () {
     // Handle close button clicks
-    const closeButton = document.querySelector(".wiertla-categories__mobile-preview-close-wrapper");
+    const closeButton = document.querySelector('.wiertla-categories__mobile-preview-close-wrapper');
     if (closeButton) {
-      closeButton.addEventListener("click", function(e) {
+      closeButton.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         window.closePreviewModal();
@@ -664,9 +748,9 @@
     }
 
     // Handle outside click to close modal
-    const modal = document.querySelector(".wiertla-categories__mobile-preview-modal");
+    const modal = document.querySelector('.wiertla-categories__mobile-preview-modal');
     if (modal) {
-      modal.addEventListener("click", function(e) {
+      modal.addEventListener('click', function (e) {
         if (e.target === modal) {
           window.closePreviewModal();
         }
