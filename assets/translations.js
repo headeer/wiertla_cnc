@@ -437,14 +437,10 @@ window.WiertlaTranslations = {
       preview_instruction:
         "Hover over a drill in the table to display an enlarged preview here",
       fullscreen_title: "CNC DRILLS",
-      fullscreen_open: "Wyświetl tabelę na całej stronie",
-      fullscreen_description:
-        "Choose the drill you are interested in from our store's extensive selection.",
-      close_fullscreen: "CLOSE FULLSCREEN",
       fullscreen_open: "Open table in fullscreen",
       fullscreen_description:
         "Choose the drill you are interested in from our store's extensive selection.",
-      close_fullscreen: "CLOSE FULLSCREEN",
+      close_fullscreen: "Close fullscreen",
       all: "All",
       drill_type: "Drill type",
       crown_type: "Crown type",

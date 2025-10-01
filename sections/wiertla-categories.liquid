@@ -3,6 +3,7 @@
   A component to display product categories and search functionality for the Wiertla CNC Shopify theme.
 {% endcomment %}
 {{ 'wiertla-filter-modal.css' | asset_url | stylesheet_tag }}
+{{ 'wiertla-categories-filter.js' | asset_url | script_tag }}
 
 {% assign section_id = section.id %}
 {% assign items_per_page = section.settings.items_per_page | default: 100 %}
@@ -377,7 +378,7 @@
       // Define SKU prefix mapping for each tab type
       window.WiertlaCNC.tabPrefixMapping = {
         'wiertla': ['VW', 'WV', 'PR', 'WW', 'PS', 'WK', 'WA'],
-        'plytki': ['PW'],
+        'plytki': ['PW', 'PD'],
         'koronki': ['KK', 'KW', 'KI', 'KT', 'KS', 'KA', 'KG']
       };
       // Sub-categories for the Wiertła tab mapped to SKU prefixes
@@ -387,7 +388,7 @@
         'vhm': ['WW'],
         'sandvik': ['PS'],
         'ksem': ['WK'],
-        'amec': ['WV', 'WA']
+        'amec': ['WA']
       };
 
       // Normalize UI category labels (PL/EN) to internal keys used above
@@ -1618,13 +1619,17 @@
                 matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
                 break;
               case '880':
-                // Count ALL products with "880" in any relevant field
-                matches = productTyp.includes('880') || 
-                         includesAny(productRodzaj, synonyms) ||
-                         productVendor.includes('sandvik') ||
-                         productTitle.includes('880') ||
-                         (product.custom_symbol || '').toLowerCase().includes('880') ||
-                         (product.sku || '').toLowerCase().includes('880');
+                // Strict match for Sandvik 880 plates: prefer SKU or SYMBOL starting with PD.
+                // Includes replacements like PD.A300..PD.A328 etc.
+                (function(){
+                  var skuVal = ((product.sku || '') + '').toUpperCase().trim();
+                  var symVal = ((product.custom_symbol || '') + '').toUpperCase().trim();
+                  var kodVal = ((product.custom_kod_producenta || '') + '').toUpperCase().trim();
+                  var pdSku = /^PD\./.test(skuVal);
+                  var pdSym = /^PD\./.test(symVal);
+                  // Do NOT require PD in kod_producenta; replacements often carry PD in SKU only
+                  matches = (pdSku || pdSym);
+                })();
                 break;
               case 'wogx':
                 matches = includesAny(productRodzaj, synonyms) || includesAny(productTyp, synonyms);
@@ -3358,7 +3363,7 @@
                       ${(product.metafields && product.metafields.custom && product.metafields.custom.custom_working_length) || product.custom_working_length || product.custom_xd || '-'}
                     </div>
                      <div class="wiertla-categories__mobile-price">
-                        ${product.price}${product.custom_rent ? ` <img src="{{ 'event.png' | asset_url }}" alt="Event" width="20" height="20" loading="lazy" style="margin-left: 8px; vertical-align: middle;">` : ''}
+                        ${(() => { try { const su = ((product.sku || product.custom_symbol || product.custom_kod_producenta || '') + '').toUpperCase().trim(); const pref = su.substring(0,2); return !!(product.custom_rent || (product.metafields && product.metafields.custom && product.metafields.custom.rent_tool) || product.rentable || pref === 'WA'); } catch(_) { return false; } })() ? ` <img src="{{ 'event.png' | asset_url }}" alt="Event" width="20" height="20" loading="lazy" style="margin-left: 8px; vertical-align: middle;">` : ''}
                       </div>
                   </div>
                   <div class="wiertla-categories__mobile-bottom">
@@ -3389,7 +3394,7 @@
                     <div class="wiertla-categories__mobile-top">
                       <div class="wiertla-categories__mobile-image" style="display:none;"></div>
                       <div class="wiertla-categories__mobile-vendor">${formatSymbol(product.custom_manufacturer || product.vendor || '-')}</div>
-                      <div class="wiertla-categories__mobile-price">${product.price}${product.custom_rent ? ` <img src="{{ 'event.png' | asset_url }}" alt="Event" width="20" height="20" loading="lazy" style="margin-left: 8px; vertical-align: middle;">` : ''}</div>
+                      <div class="wiertla-categories__mobile-price">${product.price}${(() => { try { const su = ((product.sku || product.custom_symbol || product.custom_kod_producenta || '') + '').toUpperCase().trim(); const pref = su.substring(0,2); return !!(product.custom_rent || (product.metafields && product.metafields.custom && product.metafields.custom.rent_tool) || product.rentable || pref === 'WA'); } catch(_) { return false; } })() ? ` <img src="{{ 'event.png' | asset_url }}" alt="Event" width="20" height="20" loading="lazy" style="margin-left: 8px; vertical-align: middle;">` : ''}</div>
                     </div>
                     <div class="wiertla-categories__mobile-bottom">
                       <div class="wiertla-categories__mobile-symbol">${(() => { const raw = (product.custom_kod_producenta || '-').toString(); return formatSymbol(raw); })()}</div>
@@ -3409,7 +3414,7 @@
                       <div class="wiertla-categories__mobile-image" style="display:none;"></div>
                       <div class="wiertla-categories__mobile-fi"><span class="mobile-value">${(() => { const fi = product.custom_fi || (product.metafields && product.metafields.custom && (product.metafields.custom.srednica || product.metafields.custom.diameter)) || product.custom_srednica || product.custom_srednica_display || ''; const v = (fi || '').toString().trim(); return v ? ('⌀ ' + v) : '-'; })()}</span></div>
                       <div class="wiertla-categories__mobile-vendor">${formatSymbol(product.custom_manufacturer || product.vendor || '-')}</div>
-                      <div class="wiertla-categories__mobile-price">${product.price}${product.custom_rent ? ` <img src="{{ 'event.png' | asset_url }}" alt="Event" width="20" height="20" loading="lazy" style="margin-left: 8px; vertical-align: middle;">` : ''}</div>
+                      <div class="wiertla-categories__mobile-price">${product.price}${(() => { try { const su = ((product.sku || product.custom_symbol || product.custom_kod_producenta || '') + '').toUpperCase().trim(); const pref = su.substring(0,2); return !!(product.custom_rent || (product.metafields && product.metafields.custom && product.metafields.custom.rent_tool) || product.rentable || pref === 'WA'); } catch(_) { return false; } })() ? ` <img src="{{ 'event.png' | asset_url }}" alt="Event" width="20" height="20" loading="lazy" style="margin-left: 8px; vertical-align: middle;">` : ''}</div>
                     </div>
                     <div class="wiertla-categories__mobile-bottom">
                       <div class="wiertla-categories__mobile-symbol">${(() => { const raw = (product.custom_kod_producenta || '-').toString(); return formatSymbol(raw); })()}</div>
@@ -3472,7 +3477,7 @@
               <td class="wiertla-categories__table-cell">
                 <div class="wiertla-categories__price-wrapper">
                   <span class="wiertla-categories__price" data-href="/products/${product.handle}">${product.price}</span>
-                  ${product.custom_rent ? `
+                  ${(() => { try { const su = ((product.sku || product.custom_symbol || product.custom_kod_producenta || '') + '').toUpperCase().trim(); const pref = su.substring(0,2); return !!(product.custom_rent || (product.metafields && product.metafields.custom && product.metafields.custom.rent_tool) || product.rentable || pref === 'WA'); } catch(_) { return false; } })() ? `
                     <button class="wiertla-categories__rent-button" data-product-id="${product.id}"
                       data-symbol="${(product.custom_symbol || product.custom_kod_producenta || (product.metafields && product.metafields.custom && (product.metafields.custom.symbol || product.metafields.custom.kod_producenta)) || product.symbol || product.sku || '').toString().replace(/"/g, '&quot;')}">
                       <span>RENT A TOOL</span>
@@ -5720,6 +5725,10 @@
           if (getNumber(product.variant_qtys[j]) > 0) return true;
         }
       }
+      // Custom stock fields
+      if (getNumber(product.custom_stan) > 0) return true;
+      if (getNumber(product.custom_szt) > 0) return true;
+      if (getNumber(product.custom_ilosc) > 0) return true;
       if (product.available === true) return true;
       return false;
     }
@@ -5730,6 +5739,11 @@
       // Require availability only by Shopify data
       var available = isShopifyAvailable(product);
       if (!available) return false;
+      // Never show items with missing SKU/symbol/producer code
+      try {
+        var skuField = (product && (product.sku || product.custom_symbol || product.custom_kod_producenta)) || '';
+        if (!String(skuField).trim()) return false;
+      } catch(_) { return false; }
       // Strict SKU-prefix gating by active tab ALWAYS
       var activeTab = (window.WiertlaCNC && window.WiertlaCNC.activeTabType) || 'wiertla';
       var prefix = getSkuPrefix(product);
@@ -5737,7 +5751,9 @@
         var koronkiSet = { KK:1, KW:1, KI:1, KT:1, KS:1, KA:1, KG:1 };
         if (!koronkiSet[prefix]) return false;
       } else if (activeTab === 'plytki') {
-        if (prefix !== 'PW') return false;
+        // Allow plate SKUs with prefixes typical for plates, including Sandvik 880 (PD.)
+        var plytkiSet = { PW:1, PD:1 };
+        if (!plytkiSet[prefix]) return false;
       } else { // wiertla
         var wiertlaSet = { VW:1, WV:1, PR:1, WW:1, PS:1, WK:1, WA:1 };
         if (!wiertlaSet[prefix]) return false;

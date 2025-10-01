@@ -316,10 +316,42 @@
         // Delivery labels
         var deliveryLbl = document.querySelector('.product-details__delivery-label');
         if (deliveryLbl) deliveryLbl.textContent = L.ui.deliveryTime;
+        // Compute delivery time by 4th character of SKU-like code (per Excel mapping)
         var deliveryVal = document.querySelector('.product-details__delivery-value');
-        if (deliveryVal && (deliveryVal.textContent || '').trim()) {
-          // If it matches the Polish default, replace with localized value
-          deliveryVal.textContent = L.ui.nextBusinessDay;
+        try {
+          // Try to extract a code: prefer SKU, then Symbol, then Producer Code
+          var codeCandidate = '';
+          // 1) Try to find a dedicated SKU value in specs
+          var specRows = Array.from(document.querySelectorAll('.product-details__spec-label'));
+          var getNextValue = function(lbl){
+            var lab = specRows.find(function(el){ return (el.textContent||'').trim().toLowerCase() === lbl.toLowerCase(); });
+            if (!lab) return '';
+            var valEl = lab.nextElementSibling;
+            return (valEl && (valEl.textContent || '').trim()) || '';
+          };
+          codeCandidate = getNextValue(L.labels.sku || 'Indeks/SKU');
+          if (!codeCandidate) codeCandidate = getNextValue(L.labels.symbol || 'Symbol');
+          if (!codeCandidate) codeCandidate = getNextValue(L.labels.producerCode || 'Kod producenta');
+          // Fallbacks from known attributes
+          if (!codeCandidate) codeCandidate = (document.querySelector('.product-details [data-sku]')||{}).getAttribute && document.querySelector('.product-details [data-sku]').getAttribute('data-sku') || '';
+          // Evaluate 4th character (1-based), i.e., index 3
+          var ch4 = (codeCandidate || '').charAt(3).toUpperCase();
+          // Map to localized strings
+          var map = {
+            'M': L.ui.nextBusinessDay || 'na następny dzień roboczy',
+            'T': L.ui.twoToThreeDays || '2-3 dni robocze',
+            'C': L.ui.twoToThreeDays || '2-3 dni robocze',
+            'E': L.ui.threeToFourDays || '3-4 dni robocze',
+            'U': L.ui.sevenDays || '7 dni roboczych',
+            'D': L.ui.toConfirm || 'dostępność do potwierdzenia',
+            'A': L.ui.sevenToTenDays || '7-10 dni roboczych'
+          };
+          var computed = map[ch4] || '';
+          if (deliveryVal && computed) deliveryVal.textContent = computed;
+        } catch(_) {
+          if (deliveryVal && (deliveryVal.textContent || '').trim()) {
+            deliveryVal.textContent = L.ui.nextBusinessDay;
+          }
         }
         // Contact block
         var contactTitle = document.querySelector('.product-details__contact-title');

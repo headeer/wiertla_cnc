@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     vhm: "WW",
     sandvik: "PS",
     ksem: "WK",
-    amec: "WV",
+    amec: "WA",
     // Additional mappings for plytki categories
     wcmx: "WCMX",
     lcmx: "LCMX",
@@ -47,10 +47,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     rows.forEach((row) => {
       const sku = row.querySelector("[data-sku]")?.dataset.sku || "";
-      const shouldShow = category === "wszystkie" || sku.startsWith(categoryCode);
+      const shouldShow = category === "wszystkie" || (categoryCode && sku.startsWith(categoryCode));
       row.style.setProperty('display', shouldShow ? "" : "none");
     });
 
+    updateResultsCount();
+  }
+
+  // Brand filtering by logo clicks
+  function filterByBrand(brand) {
+    const table = document.querySelector('.wiertla-categories__table');
+    if (!table) return;
+    const rows = table.querySelectorAll('tbody tr');
+    const b = (brand || '').toLowerCase();
+    rows.forEach((row) => {
+      const vendor = (row.getAttribute('data-vendor') || '').toLowerCase();
+      row.style.setProperty('display', (!b || vendor.includes(b)) ? '' : 'none');
+    });
     updateResultsCount();
   }
 
@@ -162,6 +175,48 @@ document.addEventListener("DOMContentLoaded", function () {
         this.classList.add("active");
       });
     });
+
+  // Click handlers for brand logos + smooth scroll to table
+  document.querySelectorAll('.wiertla-logos__brand[data-brand]').forEach((el) => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(){
+      const brand = this.getAttribute('data-brand') || '';
+      filterByBrand(brand);
+      // Sync manufacturer selects and global filters
+      try {
+        const valueMap = { sandvik: 'Sandvik', walter: 'Walter', iscar: 'ISCAR', kennametal: 'KENNAMETAL', amec: 'AMEC', seco: 'SECO' };
+        const displayVal = valueMap[brand] || '';
+        // Update visible selects
+        const selects = document.querySelectorAll('select[data-filter="manufacturer"]');
+        selects.forEach((sel) => {
+          if (!sel) return;
+          const hasOption = Array.from(sel.options).some(opt => (opt && opt.value === displayVal));
+          if (displayVal && hasOption) {
+            sel.value = displayVal;
+            sel.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+        // Update global filter if supported
+        if (window.WiertlaCNC && window.WiertlaCNC.filters) {
+          const supported = { sandvik:1, walter:1, iscar:1, kennametal:1, amec:1 };
+          if (supported[brand]) {
+            window.WiertlaCNC.filters.manufacturer = brand;
+            if (typeof window.applyFilters === 'function') window.applyFilters();
+          } else {
+            window.WiertlaCNC.filters.manufacturer = '';
+          }
+        }
+      } catch(_) {}
+      try {
+        const target = document.querySelector('.wiertla-categories__table-container');
+        if (target && typeof target.scrollIntoView === 'function') {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.location.hash = '#wiertla-table';
+        }
+      } catch(_) {}
+    });
+  });
 
   // Event listeners for crown type filters (desktop and mobile)
   document.querySelectorAll('[data-filter="crown"]').forEach((filter) => {

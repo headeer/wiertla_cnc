@@ -3,18 +3,18 @@
                                   A component to display partner or brand logos for the Wiertla CNC Shopify theme. 
 {%- endcomment -%}
 <div class="wiertla-logos">
-  <div class="wiertla-logos__grid">
+  <div class="wiertla-logos__grid" id="wiertla-logos-grid">
     <!-- First row of logos -->
     <div class="wiertla-logos__row">
-      <div class="wiertla-logos__brand sandvik">SANDVIK</div>
+      <div class="wiertla-logos__brand sandvik" data-brand="sandvik">SANDVIK</div>
       <div class="wiertla-logos__separator"></div>
-      <div class="wiertla-logos__brand seco">SECO</div>
+      <div class="wiertla-logos__brand seco" data-brand="seco">SECO</div>
       <div class="wiertla-logos__separator"></div>
-      <div class="wiertla-logos__brand walter">WALTER</div>
+      <div class="wiertla-logos__brand walter" data-brand="walter">WALTER</div>
       <div class="wiertla-logos__separator"></div>
-      <div class="wiertla-logos__brand kennametal">KENNAMETAL</div>
+      <div class="wiertla-logos__brand kennametal" data-brand="kennametal">KENNAMETAL</div>
       <div class="wiertla-logos__separator"></div>
-      <div class="wiertla-logos__brand iscar">ISCAR</div>
+      <div class="wiertla-logos__brand iscar" data-brand="iscar">ISCAR</div>
     </div>
   </div>
 </div>
@@ -82,6 +82,7 @@
     line-height: 100%;
     letter-spacing: 0.03em;
     text-transform: uppercase;
+    cursor: pointer;
   }
 
   .wiertla-logos__brand.sandvik {
