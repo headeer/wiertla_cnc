@@ -191,9 +191,9 @@
     }
 
     // Initialize observers on address selectors, defined in shopify_common.js
-    if (Shopify) {
+    if (window.Shopify && window.Shopify.CountryProvinceSelector) {
       // eslint-disable-next-line no-new
-      new Shopify.CountryProvinceSelector(
+      new window.Shopify.CountryProvinceSelector(
         'AddressCountryNew',
         'AddressProvinceNew',
         {
@@ -211,9 +211,11 @@
         var provinceSelector = 'AddressProvince_' + formId;
         var containerSelector = 'AddressProvinceContainer_' + formId;
         // eslint-disable-next-line no-new
-        new Shopify.CountryProvinceSelector(countrySelector, provinceSelector, {
+        if (window.Shopify && window.Shopify.CountryProvinceSelector) {
+          new window.Shopify.CountryProvinceSelector(countrySelector, provinceSelector, {
           hideElement: containerSelector
-        });
+          });
+        }
       });
 
     // Toggle new/edit address forms
@@ -248,14 +250,22 @@
         var confirmMessage = evt.target.dataset.confirmMessage;
 
         // eslint-disable-next-line no-alert
-        if (
-          confirm(
-            confirmMessage || 'Are you sure you wish to delete this address?'
-          )
-        ) {
-          Shopify.postLink(target, {
-            parameters: { _method: 'delete' }
-          });
+        if (confirm(confirmMessage || 'Are you sure you wish to delete this address?')) {
+          if (window.Shopify && window.Shopify.postLink) {
+            window.Shopify.postLink(target, { parameters: { _method: 'delete' } });
+          } else {
+            // Fallback: submit via a temporary form
+            var form = document.createElement('form');
+            form.method = 'post';
+            form.action = target;
+            var method = document.createElement('input');
+            method.type = 'hidden';
+            method.name = '_method';
+            method.value = 'delete';
+            form.appendChild(method);
+            document.body.appendChild(form);
+            form.submit();
+          }
         }
       });
     });
@@ -263,5 +273,17 @@
 
   window.addEventListener('DOMContentLoaded', () => {
     customerAddressForm();
+    // Fallback ensure bind
+    try {
+      var btn = document.getElementById('AddressNewButton');
+      var form = document.getElementById('AddressNewForm');
+      if (btn && form) {
+        btn.addEventListener('click', function(){
+          var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+          form.classList.toggle('hidden');
+          btn.setAttribute('aria-expanded', String(!isExpanded));
+        }, { once: false });
+      }
+    } catch(_) {}
   });
 </script>
