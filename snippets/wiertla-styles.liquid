@@ -2189,7 +2189,9 @@
       font-weight: 500;
       letter-spacing: 0.48px;
     }
-
+    .wiertla-categories__tabs.mobile {
+    background-color: #fff;
+    }
     .wiertla-categories__filters-left select:focus {
       outline: none;
       border-color: #112832;
@@ -2599,7 +2601,12 @@
     .wiertla-categories__mobile-icons {
       display: none;
     }
-
+    @media (max-width: 420px) {
+      .wiertla-categories__container .wiertla-categories__icons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
     @media (max-width: 1024px) {
       .wiertla-categories__mobile-icons {
         display: flex;
@@ -2610,15 +2617,22 @@
         padding-bottom: 10px;
       }
       .wiertla-categories__container .wiertla-categories__icons {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
       }
       .wiertla-categories__icons .wiertla-categories__icon-item {
         height: auto;
-        width: 100%;
+        width: auto;
       }
       .wiertla-categories__mobile-nav .wiertla-categories__scroll-container .wiertla-categories__icons {
         display: none !important;
+      }
+      .wiertla-stats__item {
+      align-items: center;
       }
     }
 
