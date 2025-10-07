@@ -116,6 +116,14 @@
 </section>
 {%- endif -%}
 {% paginate collection.products by product_limit %}
+  {%- if paginate.pages > 1 -%}
+    {%- if paginate.previous -%}
+      <link rel="prev" href="{{ paginate.previous.url }}" />
+    {%- endif -%}
+    {%- if paginate.next -%}
+      <link rel="next" href="{{ paginate.next.url }}" />
+    {%- endif -%}
+  {%- endif -%}
   <section id="main-collection-product-grid" data-id="{{ section.id }}" class="bg-scheme-background text-scheme-text collection border-theme-color transition-opacity duration-200 ease-in-out" data-section-type="collection" data-section-id="{{ section.id }}" x-data="ThemeSection_collection()" x-init="mounted()" data-color-scheme="{{ section_color }}">
     {%- if show_heading_container -%}
     <div class="grid grid-cols-1 lg:grid-cols-12 grid-flow-row-dense bg-border gap-gutter overflow-hidden border-b-grid border-theme-color">
@@ -435,6 +443,24 @@
         {% render 'pagination' with paginate: paginate, section_color: section_color %}
       {% endif %}
     </div>
+
+    {%- comment -%} Collection ItemList JSON-LD for current page {%- endcomment -%}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+        {%- for product in collection.products -%}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.index }},
+          "url": {{ shop.url | append: product.url | json }},
+          "name": {{ product.title | json }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    }
+    </script>
 
     {%- liquid
       assign show_description_bottom = false

@@ -1,0 +1,11 @@
+.wiertla-auth{font-family:'Montserrat',sans-serif}
+.wiertla-auth .font-heading{font-family:'League Spartan',sans-serif}
+.wiertla-auth .w-btn{display:inline-flex;align-items:center;justify-content:center;font-family:'League Spartan',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border:2px solid #112832;border-radius:40px;padding:10px 20px}
+.wiertla-auth .w-btn--primary{background:#FFE500;color:#112832}
+.wiertla-auth .w-btn--outline{background:transparent;color:#112832}
+.wiertla-auth label{font-family:'Montserrat',sans-serif;font-weight:700}
+.wiertla-auth input[type="text"],
+.wiertla-auth input[type="email"],
+.wiertla-auth input[type="password"]{font-family:'Montserrat',sans-serif}
+.wiertla-auth .w-card{border-radius:10px}
+

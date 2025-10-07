@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="{{ settings.color_accent }}">
     <link rel="canonical" href="{{ canonical_url }}">
+    {%- if shop.published_locales.size > 1 -%}
+      {%- for loc in shop.published_locales -%}
+        <link rel="alternate" hreflang="{{ loc.iso_code }}" href="{{ canonical_url | within: loc }}">
+      {%- endfor -%}
+      <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
+    {%- endif -%}
     <link
       rel="preconnect"
       href="https://fonts.shopifycdn.com"
@@ -63,6 +69,16 @@
 
     {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
+    {%- else -%}
+      {%- if request.page_type == 'product' -%}
+        <meta name="description" content="{{ product.description | strip_html | truncate: 160 | escape }}">
+      {%- elsif request.page_type == 'collection' -%}
+        <meta name="description" content="{{ collection.description | strip_html | truncate: 160 | escape }}">
+      {%- elsif request.page_type == 'article' -%}
+        <meta name="description" content="{{ article.excerpt_or_content | strip_html | truncate: 160 | escape }}">
+      {%- else -%}
+        <meta name="description" content="{{ shop.meta_description | default: shop.description | strip_html | truncate: 160 | escape }}">
+      {%- endif -%}
     {%- endif -%}
 
     <script src="{{ 'wiertla-init.js' | asset_url }}" defer></script>
@@ -85,6 +101,7 @@
     </style>
     {% render 'critical-css' %}
     {% render 'social-meta-tags' %}
+    {% render 'breadcrumbs-jsonld' %}
   {% render 'style-tags'
     , layout: 'theme' %}
 
@@ -124,6 +141,21 @@
     {{ content_for_header }}
     {% render 'judgeme_core' %}
 
+    <!-- Organization JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }},
+      "logo": {{ settings.favicon | img_url: '180x180' | prepend: 'https:' | json }},
+      "sameAs": [
+        {% if settings.social_facebook_link %}{{ settings.social_facebook_link | json }}{% endif %}{% if settings.social_instagram_link %},{% endif %}
+        {% if settings.social_instagram_link %}{{ settings.social_instagram_link | json }}{% endif %}
+      ]
+    }
+    </script>
+
     <!-- Translation System -->
     <script src="{{ 'translations.js' | asset_url }}" defer></script>
     <script src="{{ 'translation-system.js' | asset_url }}" defer></script>
@@ -132,6 +164,10 @@
   </head>
 
   <body id="{{ page_title | handle }}" class="template-{{ template.name | handle }} {% if settings.buttons_show_arrow %}show-button-arrows{% endif %}">
+    {%- comment -%} Robots: noindex for low-value/system pages {%- endcomment -%}
+    {%- if request.page_type == 'search' or request.page_type == 'cart' or request.page_type contains 'customers' or request.page_type == '404' -%}
+      <meta name="robots" content="noindex, nofollow">
+    {%- endif -%}
     <a class="in-page-link skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
     {%- liquid
       section 'sidebar'

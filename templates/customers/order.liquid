@@ -1,26 +1,58 @@
-{% comment %} {% comment %}
+{% comment %}
   The data-label attributes on <td> elements are mobile-friendly
   helpers used for responsive-table labels
 {% endcomment %}
 
-<div class="section-x-padding py-theme max-w-screen mx-auto" data-color-scheme="primary">
-  <div class="mb-8 text-center">
-    <h1 class="font-heading text-2xl lg:text-4xl mb-2">{{ 'customer.account.title' | t }}</h1>
-    {%- assign return_url = 'customer.account.return' | t -%}
-    <a href="{{ routes.account_url }}" class="w-btn w-btn--outline">{{ return_url }}</a>
+{{ 'customer-order.css' | asset_url | stylesheet_tag }}
+
+<div class="customer-order">
+  <div class="co-topbar">
+    <div class="co-topbar__inner">
+      <div class="co-welcome">
+        <span>Witaj w panelu klienta</span>
+      </div>
+      <nav class="co-lang" aria-label="Language switcher">
+        <a class="co-lang__link" href="{{ canonical_url | within: 'pl' }}">PL</a>
+        <a class="co-lang__link" href="{{ canonical_url | within: 'en' }}">EN</a>
+        <a class="co-lang__link" href="{{ canonical_url | within: 'de' }}">DE</a>
+      </nav>
+    </div>
   </div>
 
-  <div class="w-card">
-    <h2 class="font-heading text-lg mb-2">{{ 'customer.order.title' | t: name: order.name }}</h2>
-    <p>{{ 'customer.order.date_html' | t: date: order.created_at | date: "%B %d, %Y %I:%M%p" }}</p>
+  <header class="co-header">
+    <div class="co-header__menu">
+      <div class="co-menu-left">
+        <a class="co-link" href="{{ routes.account_url }}">Moje Zamówienia</a>
+        <a class="co-link co-link--underline" href="{{ routes.root_url }}">Powrót do sklepu</a>
+      </div>
+      <div class="co-menu-right">
+        <div class="co-brandmark" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="co-logo-pill">
+      <span class="co-logo-text">wiertla-cnc.com</span>
+    </div>
+    <div class="co-hero" aria-hidden="true"></div>
+  </header>
 
-  {% if order.cancelled %}
-    {%- assign cancelled_at = order.cancelled_at | date: "%B %d, %Y %I:%M%p" -%}
-    <p>{{ 'customer.order.cancelled_html' | t: date: cancelled_at }}</p>
-    <p>{{ 'customer.order.cancelled_reason' | t: reason: order.cancel_reason }}</p>
-  {% endif %}
+  <main class="co-main section-x-padding py-theme max-w-screen mx-auto" data-color-scheme="primary">
+    <div class="mb-8 text-center">
+      <h1 class="font-heading text-2xl lg:text-4xl mb-2">{{ 'customer.account.title' | t }}</h1>
+      {%- assign return_url = 'customer.account.return' | t -%}
+      <a href="{{ routes.account_url }}" class="w-btn w-btn--outline">{{ return_url }}</a>
+    </div>
 
-  <table class="mt-8 responsive-table text-sm lg:text-base">
+    <div class="w-card">
+      <h2 class="font-heading text-lg mb-2">{{ 'customer.order.title' | t: name: order.name }}</h2>
+      <p>{{ 'customer.order.date_html' | t: date: order.created_at | date: "%B %d, %Y %I:%M%p" }}</p>
+
+    {% if order.cancelled %}
+      {%- assign cancelled_at = order.cancelled_at | date: "%B %d, %Y %I:%M%p" -%}
+      <p>{{ 'customer.order.cancelled_html' | t: date: cancelled_at }}</p>
+      <p>{{ 'customer.order.cancelled_reason' | t: reason: order.cancel_reason }}</p>
+    {% endif %}
+
+    <table class="mt-8 responsive-table text-sm lg:text-base">
     <thead>
       <tr>
         <th scope="col">{{ 'customer.order.product' | t }}</th>
@@ -182,19 +214,37 @@
       {% endif %}
 
     </tfoot>
-  </table>
+    </table>
 
-  <div class="lg:grid lg:grid-cols-2">
-    <div class="mt-8 w-card">
-      <h3 class="font-heading mb-2">{{ 'customer.order.billing_address' | t }}</h3>
-      <p>{{ 'customer.order.payment_status' | t }}: {{ order.financial_status_label }}</p>
-      {{ order.billing_address | format_address }}
+    <div class="lg:grid lg:grid-cols-2">
+      <div class="mt-8 w-card">
+        <h3 class="font-heading mb-2">{{ 'customer.order.billing_address' | t }}</h3>
+        <p>{{ 'customer.order.payment_status' | t }}: {{ order.financial_status_label }}</p>
+        {{ order.billing_address | format_address }}
+      </div>
+      <div class="mt-8 w-card">
+        <h3 class="font-heading mb-2">{{ 'customer.order.shipping_address' | t }}</h3>
+        <p>{{ 'customer.order.fulfillment_status' | t }}: {{ order.fulfillment_status_label }}</p>
+        {{ order.shipping_address | format_address }}
+      </div>
     </div>
-    <div class="mt-8 w-card">
-      <h3 class="font-heading mb-2">{{ 'customer.order.shipping_address' | t }}</h3>
-      <p>{{ 'customer.order.fulfillment_status' | t }}: {{ order.fulfillment_status_label }}</p>
-      {{ order.shipping_address | format_address }}
     </div>
-  </div>
-  </div>
-</div> {% endcomment %}
+  </main>
+
+  <footer class="co-footer">
+    <div class="co-footer__inner">
+      <div class="co-footer-left">
+        <div class="co-footer-brand">
+          <span class="co-footer-site">Wiertla-CNC.com</span>
+          <span class="co-footer-copy">© {{ 'now' | date: '%Y' }}</span>
+        </div>
+        <a class="co-privacy" href="/policies/privacy-policy">Polityka prywatności</a>
+      </div>
+      <div class="co-footer-right">
+        <span class="co-design">DESIGN BY</span>
+        <span class="co-credit">KRESKY</span>
+      </div>
+    </div>
+    <a class="co-back-pill" href="{{ routes.root_url }}">Powrót na stronę sklepu</a>
+  </footer>
+</div>

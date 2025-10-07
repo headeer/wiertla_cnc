@@ -322,13 +322,18 @@
             </div>
             <div class="product-card__top">
               <div class="product-card__image-container">
-                <div
-                  class="product-card__image-placeholder"
-                  role="img"
-                  aria-label="{{ 'products.product.no_image' | t }}"
-                >
+                {%- comment -%} Use real product thumbnail if available; fallback to icon {%- endcomment -%}
+                {%- assign thumb_src = nil -%}
+                {%- if product.featured_media and product.featured_media.preview_image -%}
+                  {%- assign thumb_src = product.featured_media.preview_image | image_url: width: 34 -%}
+                {%- elsif product.images and product.images.size > 0 -%}
+                  {%- assign thumb_src = product.images.first | image_url: width: 34 -%}
+                {%- else -%}
+                  {%- assign thumb_src = icon_url -%}
+                {%- endif -%}
+                <div class="product-card__image-placeholder" role="img" aria-label="{{ 'products.product.no_image' | t }}">
                   <img
-                    src="{{ icon_url }}"
+                    src="{{ thumb_src }}"
                     alt="{{ product.title | escape }}"
                     class="product-card__image"
                     width="34"

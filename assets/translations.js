@@ -20,6 +20,43 @@ window.WiertlaTranslations = {
       close_icon: "Zamknij",
     },
 
+    // Layout (selected keys used on auth screens)
+    layout: {
+      customer: {
+        create_account: "Utwórz konto",
+      },
+    },
+
+    // Customer Auth
+    customer: {
+      login: {
+        title: "Logowanie",
+        email: "Email",
+        password: "Hasło",
+        forgot_password: "Zapomniałeś hasła?",
+        sign_in: "Zaloguj się",
+        guest_title: "Kontynuuj jako gość",
+        guest_continue: "Kontynuuj",
+      },
+      recover_password: {
+        title: "Zresetuj hasło",
+        email: "Email",
+        submit: "Wyślij",
+        cancel: "Anuluj",
+        subtext:
+          "Wyślemy Ci wiadomość e-mail z linkiem do resetu hasła.",
+        success:
+          "Wysłaliśmy e-mail z linkiem do aktualizacji hasła.",
+      },
+      register: {
+        title: "Utwórz konto",
+        first_name: "Imię",
+        last_name: "Nazwisko",
+        email: "Email",
+        password: "Hasło",
+      },
+    },
+
     // Header
     header: {
       languages: {
@@ -364,6 +401,43 @@ window.WiertlaTranslations = {
       close_icon: "Close",
     },
 
+    // Layout (selected keys used on auth screens)
+    layout: {
+      customer: {
+        create_account: "Create account",
+      },
+    },
+
+    // Customer Auth
+    customer: {
+      login: {
+        title: "Sign in",
+        email: "Email",
+        password: "Password",
+        forgot_password: "Forgot password?",
+        sign_in: "Sign in",
+        guest_title: "Continue as guest",
+        guest_continue: "Continue",
+      },
+      recover_password: {
+        title: "Reset password",
+        email: "Email",
+        submit: "Send",
+        cancel: "Cancel",
+        subtext:
+          "We'll email you a link to reset your password.",
+        success:
+          "We sent you an email with a link to update your password.",
+      },
+      register: {
+        title: "Create account",
+        first_name: "First name",
+        last_name: "Last name",
+        email: "Email",
+        password: "Password",
+      },
+    },
+
     // Header
     header: {
       languages: {
@@ -681,6 +755,43 @@ window.WiertlaTranslations = {
       search: "Suchen",
       add_to_cart: "In den Warenkorb",
       close_icon: "Schließen",
+    },
+
+    // Layout (selected keys used on auth screens)
+    layout: {
+      customer: {
+        create_account: "Konto erstellen",
+      },
+    },
+
+    // Customer Auth
+    customer: {
+      login: {
+        title: "Anmelden",
+        email: "E-Mail",
+        password: "Passwort",
+        forgot_password: "Passwort vergessen?",
+        sign_in: "Anmelden",
+        guest_title: "Als Gast fortfahren",
+        guest_continue: "Weiter",
+      },
+      recover_password: {
+        title: "Passwort zurücksetzen",
+        email: "E-Mail",
+        submit: "Senden",
+        cancel: "Abbrechen",
+        subtext:
+          "Wir senden Ihnen eine E-Mail mit einem Link zum Zurücksetzen des Passworts.",
+        success:
+          "Wir haben Ihnen eine E-Mail mit einem Link zur Aktualisierung Ihres Passworts gesendet.",
+      },
+      register: {
+        title: "Konto erstellen",
+        first_name: "Vorname",
+        last_name: "Nachname",
+        email: "E-Mail",
+        password: "Passwort",
+      },
     },
 
     // Header

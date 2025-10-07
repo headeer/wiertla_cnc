@@ -1,0 +1,31 @@
+.customer-order{--co-cyan:#112832;--co-yellow:#FFE500;color:var(--co-cyan);background:#fff}
+.customer-order .co-topbar{background:var(--co-yellow)}
+.customer-order .co-topbar__inner{max-width:1420px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px;justify-content:space-between}
+.customer-order .co-welcome span{font-family:"League Spartan",sans-serif;font-weight:700;font-size:18px;line-height:1;text-transform:uppercase;letter-spacing:1.08px}
+.customer-order .co-lang{display:flex;gap:16px}
+.customer-order .co-lang__link{font-family:"League Spartan",sans-serif;font-weight:700;font-size:18px;line-height:1;text-transform:uppercase;text-decoration:none;color:var(--co-cyan)}
+.customer-order .co-lang__link.co-active{text-decoration:underline}
+.customer-order .co-header{position:relative;max-width:1420px;margin:0 auto;padding:0 16px 10px}
+.customer-order .co-header__menu{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+.customer-order .co-link{font-family:"League Spartan",sans-serif;font-weight:700;font-size:18px;letter-spacing:1.08px;color:var(--co-cyan);text-decoration:none;text-transform:uppercase;margin-right:16px}
+.customer-order .co-link--underline{text-decoration:underline}
+.customer-order .co-brandmark{width:54px;height:42px;background-size:cover;background-position:center}
+.customer-order .co-logo-pill{position:absolute;left:50%;transform:translateX(-50%);top:-12px;background:var(--co-yellow);border:6px solid var(--co-cyan);border-radius:60px;display:flex;align-items:center;justify-content:center;height:84px;width:365px}
+.customer-order .co-logo-text{font-family:"League Spartan",sans-serif;font-weight:700;font-size:44px;line-height:40px;color:var(--co-cyan);white-space:nowrap}
+.customer-order .co-hero{height:220px;background:#f5f5f5;border-radius:8px}
+.customer-order .co-main{max-width:1420px}
+.customer-order .co-footer{background:var(--co-yellow);position:relative;margin-top:40px;padding-top:40px}
+.customer-order .co-footer__inner{max-width:1420px;margin:0 auto;padding:20px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.customer-order .co-footer-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.customer-order .co-footer-brand{display:flex;align-items:center;gap:8px}
+.customer-order .co-footer-site{font-family:"League Spartan",sans-serif;font-weight:700;font-size:18px;text-transform:uppercase}
+.customer-order .co-footer-copy{font-family:Montserrat,sans-serif;font-weight:700;font-size:12px}
+.customer-order .co-privacy{font-family:"League Spartan",sans-serif;font-weight:700;font-size:18px;text-decoration:underline;color:var(--co-cyan)}
+.customer-order .co-footer-right{display:flex;align-items:center;gap:8px}
+.customer-order .co-design{font-family:Montserrat,sans-serif;font-weight:700;font-size:12px}
+.customer-order .co-credit{font-family:"League Spartan",sans-serif;font-weight:700;font-size:18px;text-transform:uppercase}
+.customer-order .co-back-pill{position:absolute;left:50%;transform:translate(-50%,-50%);top:0;background:var(--co-yellow);border:2px solid var(--co-cyan);border-radius:40px;padding:11px 22px;color:var(--co-cyan);font-family:"League Spartan",sans-serif;font-weight:700;text-decoration:none;text-transform:uppercase}
+@media (max-width:1440px){.customer-order .co-logo-pill{width:300px}.customer-order .co-logo-text{font-size:36px}}
+@media (max-width:1024px){.customer-order .co-header__menu{flex-wrap:wrap;gap:12px}.customer-order .co-logo-pill{position:static;transform:none;margin:8px auto}.customer-order .co-hero{height:160px}}
+@media (max-width:640px){.customer-order .co-welcome span,.customer-order .co-lang__link,.customer-order .co-link{font-size:14px}.customer-order .co-logo-text{font-size:28px}.customer-order .co-hero{height:120px}.customer-order .co-footer__inner{flex-direction:column;align-items:flex-start}.customer-order .co-back-pill{position:static;transform:none;margin:12px auto;display:inline-block}}
+

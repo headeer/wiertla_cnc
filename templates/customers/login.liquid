@@ -1,4 +1,5 @@
-<div class="section-x-padding py-theme max-w-lg mx-auto" x-data="BaselineLogin()" x-init="mounted()" data-color-scheme="primary">
+{{ 'customer-auth.css' | asset_url | stylesheet_tag }}
+<div class="section-x-padding py-theme max-w-lg mx-auto wiertla-auth" x-data="BaselineLogin()" x-init="mounted()" data-color-scheme="primary">
   <div :class="{'hidden': state !== 'login'}">
     {% form 'customer_login', data-login-focus: true, tabindex: '-1' %}
       <div class="w-card">

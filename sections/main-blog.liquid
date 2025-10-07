@@ -13,6 +13,14 @@
 %}
 
 {% paginate blog.articles by section.settings.no_posts %}
+  {%- if paginate.pages > 1 -%}
+    {%- if paginate.previous -%}
+      <link rel="prev" href="{{ paginate.previous.url }}" />
+    {%- endif -%}
+    {%- if paginate.next -%}
+      <link rel="next" href="{{ paginate.next.url }}" />
+    {%- endif -%}
+  {%- endif -%}
 <section class="bg-scheme-background text-scheme-text blog" data-color-scheme="{{ section_color }}">
 
   {%- if show_title -%}
