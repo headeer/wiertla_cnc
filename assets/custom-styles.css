@@ -170,6 +170,22 @@ a:hover {
   border: none;
   outline: none;
 }
+
+/* Hide native browser clear (X) on search inputs; we use a custom clear button */
+.wiertla-search__input::-webkit-search-cancel-button,
+.wiertla-search__input::-webkit-search-decoration,
+.wiertla-search__input::-webkit-search-results-button,
+.wiertla-search__input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+.wiertla-search__input::-ms-clear,
+.wiertla-search__input::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
 .wiertla-search__button {
   background-color: #ffe500;
   color: black;
