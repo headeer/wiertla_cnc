@@ -29,6 +29,32 @@ window.WiertlaTranslations = {
 
     // Customer Auth
     customer: {
+      account: {
+        title: "Moje konto",
+        return: "Powrót do szczegółów konta",
+      },
+      addresses: {
+        title: "Twoje adresy",
+        add_new: "Dodaj nowy adres",
+        first_name: "Imię",
+        last_name: "Nazwisko",
+        company: "Firma",
+        address1: "Adres",
+        address2: "Adres (kontynuacja)",
+        city: "Miasto",
+        country: "Kraj",
+        province: "Województwo",
+        zip: "Kod pocztowy",
+        phone: "Telefon",
+        set_default: "Ustaw jako domyślny adres",
+        add: "Dodaj adres",
+        cancel: "Anuluj",
+        edit: "Edytuj",
+        delete: "Usuń",
+        edit_address: "Edytuj adres",
+        update: "Aktualizuj adres",
+        default: "Domyślny adres",
+      },
       login: {
         title: "Logowanie",
         email: "Email",
@@ -410,6 +436,32 @@ window.WiertlaTranslations = {
 
     // Customer Auth
     customer: {
+      account: {
+        title: "My account",
+        return: "Back to account details",
+      },
+      addresses: {
+        title: "Your addresses",
+        add_new: "Add new address",
+        first_name: "First name",
+        last_name: "Last name",
+        company: "Company",
+        address1: "Address",
+        address2: "Address (line 2)",
+        city: "City",
+        country: "Country",
+        province: "State/Province",
+        zip: "Postal code",
+        phone: "Phone",
+        set_default: "Set as default address",
+        add: "Add address",
+        cancel: "Cancel",
+        edit: "Edit",
+        delete: "Delete",
+        edit_address: "Edit address",
+        update: "Update address",
+        default: "Default address",
+      },
       login: {
         title: "Sign in",
         email: "Email",
@@ -766,6 +818,32 @@ window.WiertlaTranslations = {
 
     // Customer Auth
     customer: {
+      account: {
+        title: "Mein Konto",
+        return: "Zurück zu Kontodetails",
+      },
+      addresses: {
+        title: "Ihre Adressen",
+        add_new: "Neue Adresse hinzufügen",
+        first_name: "Vorname",
+        last_name: "Nachname",
+        company: "Firma",
+        address1: "Adresse",
+        address2: "Adresse (Zeile 2)",
+        city: "Stadt",
+        country: "Land",
+        province: "Bundesland/Region",
+        zip: "Postleitzahl",
+        phone: "Telefon",
+        set_default: "Als Standardadresse festlegen",
+        add: "Adresse hinzufügen",
+        cancel: "Abbrechen",
+        edit: "Bearbeiten",
+        delete: "Löschen",
+        edit_address: "Adresse bearbeiten",
+        update: "Adresse aktualisieren",
+        default: "Standardadresse",
+      },
       login: {
         title: "Anmelden",
         email: "E-Mail",
