@@ -258,7 +258,8 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // Enhanced search functionality that works with the sync system
-  const searchComponents = document.querySelectorAll('.wiertla-search [data-search-component]');
+  // Select both the element itself if it has the attribute and any descendants
+  const searchComponents = document.querySelectorAll('.wiertla-search[data-search-component], .wiertla-search [data-search-component]');
   
   searchComponents.forEach(component => {
     const form = component.querySelector('.wiertla-search__form');

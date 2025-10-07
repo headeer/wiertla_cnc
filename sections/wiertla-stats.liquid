@@ -266,7 +266,14 @@
   <div class="latest-products__swiper swiper">
     <div class="swiper-wrapper">
       {% assign all_products = collections.all.products | sort: 'created_at' | reverse %}
-      {% for product in all_products limit: 8 %}
+      {% assign latest_with_images_shown = 0 %}
+      {% for product in all_products limit: 50 %}
+        {%- comment -%}
+          Show only products that have a real image. Skip items without any media/images.
+        {%- endcomment -%}
+        {% unless product.featured_media or product.featured_image or product.images.size > 0 %}
+          {% continue %}
+        {% endunless %}
         {% assign sku_prefix = product.first_available_variant.sku | slice: 0, 2 %}
         {% assign icon_url = '' %}
 
@@ -302,8 +309,6 @@
               {%- assign hero_src = product.featured_media.preview_image | image_url: width: 320 -%}
             {%- elsif product.images and product.images.size > 0 -%}
               {%- assign hero_src = product.images.first | image_url: width: 320 -%}
-            {%- else -%}
-              {%- assign hero_src = icon_url -%}
             {%- endif -%}
             <div class="product-card__hero{% if hero_src == icon_url %} product-card__hero--placeholder{% endif %}">
               <img
@@ -399,6 +404,10 @@
             </div>
           </a>
         </div>
+        {% assign latest_with_images_shown = latest_with_images_shown | plus: 1 %}
+        {% if latest_with_images_shown >= 8 %}
+          {% break %}
+        {% endif %}
       {% endfor %}
     </div>
 

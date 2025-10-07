@@ -171,6 +171,11 @@ a:hover {
   outline: none;
 }
 
+/* Hide clear button when input is empty (CSS fallback in case JS didn't run) */
+.wiertla-search__input:placeholder-shown ~ .wiertla-search__clear {
+  display: none !important;
+}
+
 /* Hide native browser clear (X) on search inputs; we use a custom clear button */
 .wiertla-search__input::-webkit-search-cancel-button,
 .wiertla-search__input::-webkit-search-decoration,
