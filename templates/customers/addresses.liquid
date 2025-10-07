@@ -3,12 +3,11 @@
   <div class="section-x-padding py-theme max-w-xl mx-auto" data-color-scheme="primary">
     <div class="mb-8 text-center">
       <h1 class="font-heading text-2xl lg:text-4xl mb-2" data-translate="customer.account.title">Moje konto</h1>
-      {%- assign return_url = 'customer.account.return' | t -%}
-      <a href="{{ routes.account_url }}" class="w-btn w-btn--outline">{{ return_url }}</a>
+      <a href="{{ routes.account_url }}" class="w-btn w-btn--outline"><span data-translate="customer.account.return">Powrót do szczegółów konta</span></a>
     </div>
 
     <div data-address>
-      <button class="w-btn w-btn--primary mb-4" type="button" id="AddressNewButton" data-address-new aria-expanded="false" data-translate="customer.addresses.add_new">Dodaj nowy adres</button>
+      <button class="w-btn w-btn--primary mb-4" type="button" id="AddressNewButton" data-address-new="true" aria-expanded="false" data-translate="customer.addresses.add_new">Dodaj nowy adres</button>
 
       <div data-address-form class="hidden pb-8" id="AddressNewForm">
         {% form 'customer_address', customer.new_address %}
@@ -74,14 +73,14 @@
 
           <div class="mt-4">
             <button type="submit" class="w-btn w-btn--primary" data-translate="customer.addresses.add">Dodaj adres</button>
-            <button type="button" class="w-btn w-btn--outline" data-address-cancel data-translate="customer.addresses.cancel">Anuluj</button>
+            <button type="button" class="w-btn w-btn--outline" data-address-cancel="true" data-translate="customer.addresses.cancel">Anuluj</button>
           </div>
           </div>
         {% endform %}
       </div>
     </div>
 
-    <h2 class="font-heading text-lg mb-2">{{ 'customer.addresses.title' | t }}</h2>
+    <h2 class="font-heading text-lg mb-2" data-translate="customer.addresses.title">Twoje adresy</h2>
 
     <div data-addresses>
       {% for address in customer.addresses %}
@@ -220,12 +219,12 @@
     // Toggle new/edit address forms
     document.querySelectorAll('[data-address-new]').forEach(function(button) {
       button.addEventListener('click', function() {
-        var isExpanded =
-          newAddressFormButton.getAttribute('aria-expanded') === 'true';
-
-        newAddressForm.classList.toggle('hidden');
-        newAddressFormButton.setAttribute('aria-expanded', !isExpanded);
-        newAddressFormButton.focus();
+        var isExpanded = newAddressFormButton.getAttribute('aria-expanded') === 'true';
+        if (newAddressForm) {
+          newAddressForm.classList.toggle('hidden');
+        }
+        newAddressFormButton.setAttribute('aria-expanded', String(!isExpanded));
+        try { newAddressFormButton.focus(); } catch(_) {}
       });
     });
 
