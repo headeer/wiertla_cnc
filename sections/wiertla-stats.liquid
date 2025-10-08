@@ -1661,11 +1661,11 @@
 
       on: {
         init: function () {
-          updatePaginationBars(this.realIndex);
+          updatePaginationBars(this);
           updateNavigationButtons(this);
         },
         slideChange: function () {
-          updatePaginationBars(this.realIndex);
+          updatePaginationBars(this);
           updateNavigationButtons(this);
         },
       },
@@ -1703,8 +1703,13 @@
       const nextButton = document.querySelector('.swiper-button-next');
       const prevButton = document.querySelector('.swiper-button-prev');
 
-      // Disable next button if we're at the last slide
-      if (swiper.realIndex >= 2) {
+      // Calculate the maximum slide index based on total slides and slides per view
+      const totalSlides = swiper.slides.length;
+      const slidesPerView = swiper.params.slidesPerView;
+      const maxSlideIndex = Math.max(0, totalSlides - slidesPerView);
+
+      // Disable next button if we're at the last possible slide
+      if (swiper.activeIndex >= maxSlideIndex) {
         nextButton.style.opacity = '0.35';
         nextButton.style.pointerEvents = 'none';
       } else {
@@ -1713,7 +1718,7 @@
       }
 
       // Disable prev button if we're at the first slide
-      if (swiper.realIndex === 0) {
+      if (swiper.activeIndex === 0) {
         prevButton.style.opacity = '0.35';
         prevButton.style.pointerEvents = 'none';
       } else {
@@ -1722,10 +1727,17 @@
       }
     }
 
-    function updatePaginationBars(activeIndex) {
+    function updatePaginationBars(swiper) {
       const paginationBars = document.querySelectorAll('.pagination-bar');
+      const totalSlides = swiper.slides.length;
+      const slidesPerView = swiper.params.slidesPerView;
+      const currentSlide = swiper.activeIndex;
+      
+      // Calculate which pagination bar should be active
+      const currentPage = Math.floor(currentSlide / slidesPerView);
+      
       paginationBars.forEach((bar, index) => {
-        if (index === activeIndex) {
+        if (index === currentPage) {
           bar.classList.add('pagination-active');
           bar.classList.remove('pagination-inactive');
         } else {
@@ -1739,7 +1751,9 @@
     const paginationBars = document.querySelectorAll('.pagination-bar');
     paginationBars.forEach((bar, index) => {
       bar.addEventListener('click', () => {
-        swiper.slideTo(index);
+        const slidesPerView = swiper.params.slidesPerView;
+        const targetSlide = index * slidesPerView;
+        swiper.slideTo(targetSlide);
       });
     });
   });
