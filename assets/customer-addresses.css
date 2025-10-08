@@ -1,0 +1,46 @@
+.wiertla-addresses{font-family:'Montserrat',sans-serif}
+.wiertla-addresses .font-heading{font-family:'League Spartan',sans-serif}
+.wiertla-addresses .address-form{display:grid;grid-template-columns:1fr 1fr;gap:30px;padding:30px;background:#f9f9f9;border-radius:8px;margin-top:20px;max-width:100%}
+.wiertla-addresses .address-form .form-field{display:flex;flex-direction:column;gap:12px}
+.wiertla-addresses .address-form .form-field:has(input[type="checkbox"]){margin-top:20px;padding-top:20px;border-top:1px solid #e0e0e0}
+.wiertla-addresses label{font-weight:700;margin-bottom:8px;color:#112832}
+.wiertla-addresses input[type="text"],
+.wiertla-addresses input[type="email"],
+.wiertla-addresses input[type="tel"],
+.wiertla-addresses select{border:2px solid #112832;border-radius:6px;padding:14px 16px;background:#fff;color:#112832;font-family:'Montserrat',sans-serif;width:100%}
+.wiertla-addresses select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23112832' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:34px}
+.wiertla-addresses .w-card{border-radius:10px;padding:16px}
+.wiertla-addresses .address-item.w-card{margin-bottom:16px}
+.wiertla-addresses .address-actions{display:flex;gap:12px;margin:16px 0}
+.wiertla-addresses .form-actions{display:flex;gap:16px;margin-top:30px}
+.wiertla-addresses .w-btn{display:inline-flex;align-items:center;justify-content:center;font-family:'League Spartan',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border:2px solid #112832;border-radius:40px;padding:12px 24px}
+.wiertla-addresses .w-btn--primary{background:#FFE500;color:#112832}
+.wiertla-addresses .w-btn--outline{background:transparent;color:#112832}
+.wiertla-addresses .w-btn--ghost{background:transparent;border-color:transparent;color:#112832}
+.wiertla-addresses .mb-4{margin-bottom:16px}
+.wiertla-addresses .mt-4{margin-top:16px}
+@media (max-width: 768px){
+  .wiertla-addresses .address-form{grid-template-columns:1fr}
+}
+
+/* Custom checkbox styling (default address) */
+.wiertla-addresses .form-field label{display:flex;align-items:center;gap:10px;cursor:pointer}
+.wiertla-addresses .form-field label input[type="checkbox"]{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.wiertla-addresses .form-field label span{position:relative;padding-left:34px;line-height:22px}
+.wiertla-addresses .form-field label span::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:22px;height:22px;border:2px solid #112832;border-radius:6px;background:#fff;transition:border-color .15s ease,background-color .15s ease}
+.wiertla-addresses .form-field label span::after{content:"";position:absolute;left:4px;top:50%;transform:translateY(-50%) scale(0);width:14px;height:14px;background:#112832;-webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 10"><path fill="%23000" d="M4.5 7.5L1.5 4.5L0 6l4.5 4L12 2.5 10.5 1z"/></svg>') no-repeat center/contain;mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 10"><path fill="%23000" d="M4.5 7.5L1.5 4.5L0 6l4.5 4L12 2.5 10.5 1z"/></svg>') no-repeat center/contain;transition:transform .15s ease}
+.wiertla-addresses .form-field label:hover span::before{border-color:#0c1d25}
+.wiertla-addresses .form-field label input[type="checkbox"]:focus-visible + span::before{outline:2px solid #112832;outline-offset:2px}
+.wiertla-addresses .form-field label input[type="checkbox"]:checked + span::before{background:#FFE500;border-color:#112832}
+.wiertla-addresses .form-field label input[type="checkbox"]:checked + span::after{transform:translateY(-50%) scale(1)}
+
+/* Delete confirmation modal */
+.delete-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;visibility:hidden;transition:opacity 0.3s ease,visibility 0.3s ease}
+.delete-modal.show{opacity:1;visibility:visible}
+.delete-modal-content{background:#fff;border-radius:12px;padding:30px;max-width:400px;width:90%;text-align:center;transform:scale(0.9);transition:transform 0.3s ease}
+.delete-modal.show .delete-modal-content{transform:scale(1)}
+.delete-modal h3{font-family:'League Spartan',sans-serif;font-size:20px;font-weight:700;color:#112832;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.06em}
+.delete-modal p{color:#666;margin-bottom:24px;line-height:1.5}
+.delete-modal-actions{display:flex;gap:12px;justify-content:center}
+.delete-modal .w-btn{padding:12px 24px;min-width:100px}
+

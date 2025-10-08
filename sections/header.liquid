@@ -782,13 +782,13 @@
     <div class="header__container">
       <div class="header__top-content">
         <div class="header__nav-links">
-          <a href="{{ routes.root_url }}?category=wszystkie&perPage=100&mainType=koronki#wiertla-table" class="header__link js-scroll-to-table" data-main-type="koronki" data-translate="wiertla_categories.icons.crown">
+          <a href="{{ routes.root_url }}?category=wszystkie&perPage=100&mainType=koronki#wiertla-table" class="header__link js-scroll-to-table" data-main-type="koronki" data-tab-type="koronki" data-translate="wiertla_categories.icons.crown">
             KORONKI
           </a>
-          <a href="{{ routes.root_url }}?category=wszystkie&perPage=100&mainType=plytki#wiertla-table" class="header__link js-scroll-to-table" data-main-type="plytki" data-translate="wiertla_categories.icons.plate">
+          <a href="{{ routes.root_url }}?category=wszystkie&perPage=100&mainType=plytki#wiertla-table" class="header__link js-scroll-to-table" data-main-type="plytki" data-tab-type="plytki" data-translate="wiertla_categories.icons.plate">
             PŁYTKI
           </a>
-          <a href="{{ routes.root_url }}?category=wszystkie&perPage=100&mainType=wiertla#wiertla-table" class="header__link js-scroll-to-table" data-main-type="wiertla" data-translate="header.nav.drills">
+          <a href="{{ routes.root_url }}?category=wszystkie&perPage=100&mainType=wiertla#wiertla-table" class="header__link js-scroll-to-table" data-main-type="wiertla" data-tab-type="wiertla" data-translate="header.nav.drills">
             WIERTŁA
           </a>
           {%- for link in section.settings.menu.links -%}
@@ -932,6 +932,43 @@
     <a href="/pages/regeneruj" class="header__mobile-menu-link" data-translate="header.actions.regenerate">{{ 'header.actions.regenerate' | t }}</a>
   </div>
 </header>
+
+<script>
+// Header navigation tab switching functionality
+document.addEventListener('DOMContentLoaded', function() {
+  // Handle header navigation clicks
+  document.querySelectorAll('.header__nav-links .header__link[data-tab-type]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      const tabType = this.getAttribute('data-tab-type');
+      if (!tabType) return;
+      
+      // Wait for the page to load if we're navigating to a new page
+      if (window.location.pathname !== this.pathname) {
+        // If navigating to a different page, let the URL handle it
+        window.location.href = this.href;
+        return;
+      }
+      
+      // If we're on the same page, trigger tab switching
+      setTimeout(function() {
+        // Find and click the corresponding tab
+        const tabButton = document.querySelector('.wiertla-categories__tab[data-tab-type="' + tabType + '"]');
+        if (tabButton) {
+          tabButton.click();
+        }
+        
+        // Scroll to table
+        const tableContainer = document.querySelector('.wiertla-categories__table-container');
+        if (tableContainer) {
+          tableContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    });
+  });
+});
+</script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {

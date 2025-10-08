@@ -1,6 +1,7 @@
 {% paginate customer.addresses by 5 %}
+{{ 'customer-addresses.css' | asset_url | stylesheet_tag }}
 
-  <div class="section-x-padding py-theme max-w-xl mx-auto" data-color-scheme="primary">
+  <div class="section-x-padding py-theme max-w-xl mx-auto wiertla-addresses" data-color-scheme="primary">
     <div class="mb-8 text-center">
       <h1 class="font-heading text-2xl lg:text-4xl mb-2" data-translate="customer.account.title">Moje konto</h1>
       <a href="{{ routes.account_url }}" class="w-btn w-btn--outline"><span data-translate="customer.account.return">Powrót do szczegółów konta</span></a>
@@ -180,110 +181,4 @@
     {% endif %}
   </div>
 {% endpaginate %}
-
-<script>
-  function customerAddressForm() {
-    var newAddressForm = document.getElementById('AddressNewForm');
-    var newAddressFormButton = document.getElementById('AddressNewButton');
-
-    if (!newAddressForm) {
-      return;
-    }
-
-    // Initialize observers on address selectors, defined in shopify_common.js
-    if (window.Shopify && window.Shopify.CountryProvinceSelector) {
-      // eslint-disable-next-line no-new
-      new window.Shopify.CountryProvinceSelector(
-        'AddressCountryNew',
-        'AddressProvinceNew',
-        {
-          hideElement: 'AddressProvinceContainerNew'
-        }
-      );
-    }
-
-    // Initialize each edit form's country/province selector
-    document
-      .querySelectorAll('.address-country-option')
-      .forEach(function(option) {
-        var formId = option.dataset.formId;
-        var countrySelector = 'AddressCountry_' + formId;
-        var provinceSelector = 'AddressProvince_' + formId;
-        var containerSelector = 'AddressProvinceContainer_' + formId;
-        // eslint-disable-next-line no-new
-        if (window.Shopify && window.Shopify.CountryProvinceSelector) {
-          new window.Shopify.CountryProvinceSelector(countrySelector, provinceSelector, {
-          hideElement: containerSelector
-          });
-        }
-      });
-
-    // Toggle new/edit address forms
-    document.querySelectorAll('[data-address-new]').forEach(function(button) {
-      button.addEventListener('click', function() {
-        var isExpanded = newAddressFormButton.getAttribute('aria-expanded') === 'true';
-        if (newAddressForm) {
-          newAddressForm.classList.toggle('hidden');
-        }
-        newAddressFormButton.setAttribute('aria-expanded', String(!isExpanded));
-        try { newAddressFormButton.focus(); } catch(_) {}
-      });
-    });
-
-    document.querySelectorAll('[data-address-edit]').forEach(function(button) {
-      button.addEventListener('click', function(evt) {
-        var formId = evt.target.dataset.addressEdit;
-        var editButton = document.getElementById('EditFormButton_' + formId);
-        var editAddress = document.getElementById('EditAddress_' + formId);
-        var isExpanded = editButton.getAttribute('aria-expanded') === 'true';
-
-        editAddress.classList.toggle('hidden');
-        editButton.setAttribute('aria-expanded', !isExpanded);
-        editButton.focus();
-      });
-    });
-
-    document.querySelectorAll('[data-address-delete-form]').forEach(function(button) {
-      button.addEventListener('click', function(evt) {
-        evt.preventDefault();
-        var target = evt.target.dataset.target;
-        var confirmMessage = evt.target.dataset.confirmMessage;
-
-        // eslint-disable-next-line no-alert
-        if (confirm(confirmMessage || 'Are you sure you wish to delete this address?')) {
-          if (window.Shopify && window.Shopify.postLink) {
-            window.Shopify.postLink(target, { parameters: { _method: 'delete' } });
-          } else {
-            // Fallback: submit via a temporary form
-            var form = document.createElement('form');
-            form.method = 'post';
-            form.action = target;
-            var method = document.createElement('input');
-            method.type = 'hidden';
-            method.name = '_method';
-            method.value = 'delete';
-            form.appendChild(method);
-            document.body.appendChild(form);
-            form.submit();
-          }
-        }
-      });
-    });
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    customerAddressForm();
-    // Fallback ensure bind
-    try {
-      var btn = document.getElementById('AddressNewButton');
-      var form = document.getElementById('AddressNewForm');
-      if (btn && form) {
-        btn.addEventListener('click', function(){
-          var isExpanded = btn.getAttribute('aria-expanded') === 'true';
-          form.classList.toggle('hidden');
-          btn.setAttribute('aria-expanded', String(!isExpanded));
-        }, { once: false });
-      }
-    } catch(_) {}
-  });
-</script>
+<script src="{{ 'customer-addresses.js' | asset_url }}" defer></script>

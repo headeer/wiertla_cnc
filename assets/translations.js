@@ -54,6 +54,8 @@ window.WiertlaTranslations = {
         edit_address: "Edytuj adres",
         update: "Aktualizuj adres",
         default: "Domyślny adres",
+        delete_confirm_title: "Usuń adres",
+        delete_confirm_message: "Czy na pewno chcesz usunąć ten adres? Ta operacja nie może zostać cofnięta.",
       },
       login: {
         title: "Logowanie",
@@ -155,8 +157,8 @@ window.WiertlaTranslations = {
       },
       icons: {
         all: "WSZYSTKIE",
-        crown: "KORONKOWE",
-        plate: "PŁYTKOWE",
+        crown: "KORONKI",
+        plate: "PŁYTKI",
         vhm: "VHM",
         sandvik: "SANDVIK 880",
         amec: "AMEC",
@@ -461,6 +463,8 @@ window.WiertlaTranslations = {
         edit_address: "Edit address",
         update: "Update address",
         default: "Default address",
+        delete_confirm_title: "Delete address",
+        delete_confirm_message: "Are you sure you want to delete this address? This action cannot be undone.",
       },
       login: {
         title: "Sign in",
@@ -843,6 +847,8 @@ window.WiertlaTranslations = {
         edit_address: "Adresse bearbeiten",
         update: "Adresse aktualisieren",
         default: "Standardadresse",
+        delete_confirm_title: "Adresse löschen",
+        delete_confirm_message: "Sind Sie sicher, dass Sie diese Adresse löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
       },
       login: {
         title: "Anmelden",

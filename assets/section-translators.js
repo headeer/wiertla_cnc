@@ -157,6 +157,33 @@
     }
 
     const translations = window.WiertlaTranslations[language].header.actions;
+    const navTranslations = window.WiertlaTranslations[language].header.nav;
+
+    // Update header navigation links
+    const navLinks = {
+      koronki: document.querySelector(
+        ".header__link[data-translate='wiertla_categories.icons.crown']"
+      ),
+      plytki: document.querySelector(
+        ".header__link[data-translate='wiertla_categories.icons.plate']"
+      ),
+      wiertla: document.querySelector(
+        ".header__link[data-translate='header.nav.drills']"
+      ),
+    };
+
+    // Update navigation link text with short names
+    const shortTranslations = window.WiertlaTranslations[language].wiertla_categories.icons;
+    
+    if (navLinks.koronki && shortTranslations.crown) {
+      navLinks.koronki.textContent = shortTranslations.crown;
+    }
+    if (navLinks.plytki && shortTranslations.plate) {
+      navLinks.plytki.textContent = shortTranslations.plate;
+    }
+    if (navLinks.wiertla && navTranslations.drills) {
+      navLinks.wiertla.textContent = navTranslations.drills;
+    }
 
     // Update header links
     const headerLinks = {
