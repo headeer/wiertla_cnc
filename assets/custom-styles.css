@@ -495,10 +495,6 @@ a:hover {
     justify-content: flex-start;
   }
 
-  .latest-products__swiper .swiper-slide {
-    width: 264px !important;
-    margin-right: 0 !important;
-  }
 }
 
 /* Update black color to #112832 */

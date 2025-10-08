@@ -269,9 +269,14 @@
       {% assign latest_with_images_shown = 0 %}
       {% for product in all_products limit: 50 %}
         {%- comment -%}
-          Show only products that have a real image. Skip items without any media/images.
+          Show only products that have a real image AND are available. Skip items without any media/images or out of stock.
         {%- endcomment -%}
         {% unless product.featured_media or product.featured_image or product.images.size > 0 %}
+          {% continue %}
+        {% endunless %}
+        
+        {%- comment -%} Skip products that are not available {%- endcomment -%}
+        {% unless product.available %}
           {% continue %}
         {% endunless %}
         {% assign sku_prefix = product.first_available_variant.sku | slice: 0, 2 %}

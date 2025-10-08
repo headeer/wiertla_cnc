@@ -1978,7 +1978,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         var matches = dataset.filter(function(p){
           var g = (p.custom_gniazdo || (p.metafields && p.metafields.custom && p.metafields.custom.gniazdo) || '').toString().trim();
-          return g && g.toLowerCase() === gniazdo.toLowerCase() && Number(p.id) !== currentId;
+          // Only show available products
+          return g && g.toLowerCase() === gniazdo.toLowerCase() && Number(p.id) !== currentId && p.available;
         }).slice(0, 8);
         if (!matches.length) { host.style.display = 'none'; host.removeAttribute('data-loading'); return; }
         var wrapper = document.getElementById('related-by-gniazdo-wrapper');

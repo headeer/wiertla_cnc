@@ -17,6 +17,9 @@
 <div class="swiper-container max-w-full 2xl:max-w-[1440px] overflow-hidden mx-auto">
   <div class="swiper-wrapper" id="swiper-wrapper">
     {% for product in collections[section.settings.collection].products limit: section.settings.products_limit %}
+      {% unless product.available %}
+        {% continue %}
+      {% endunless %}
       <div class="swiper-slide">
         <div class="product-card">
           <img src="{{ product.featured_image | img_url: '300x300', crop: 'center' }}" alt="{{ product.title }}" class="product-image">
