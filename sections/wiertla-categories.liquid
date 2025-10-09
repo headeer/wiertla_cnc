@@ -3362,7 +3362,7 @@
                     <div class="wiertla-categories__mobile-dimension">
                       ${(product.metafields && product.metafields.custom && product.metafields.custom.custom_working_length) || product.custom_working_length || product.custom_xd || '-'}
                     </div>
-                     <div class="wiertla-categories__mobile-price">
+                    <div class="wiertla-categories__mobile-price">${product.price}
                         ${(() => { try { const su = ((product.sku || product.custom_symbol || product.custom_kod_producenta || '') + '').toUpperCase().trim(); const pref = su.substring(0,2); return !!(product.custom_rent || (product.metafields && product.metafields.custom && product.metafields.custom.rent_tool) || product.rentable || pref === 'WA'); } catch(_) { return false; } })() ? ` <img src="{{ 'event.png' | asset_url }}" alt="Event" width="20" height="20" loading="lazy" style="margin-left: 8px; vertical-align: middle;">` : ''}
                       </div>
                   </div>
