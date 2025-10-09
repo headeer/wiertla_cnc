@@ -1757,13 +1757,22 @@
         });
       }
 
-      // Apply manufacturer filter - standardized
-      if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all' && window.WiertlaCNC.filters.manufacturer !== '') {
-        const selectedManufacturer = window.WiertlaCNC.filters.manufacturer;
-        filteredProducts = filteredProducts.filter(product => {
-          const productVendor = (product.vendor || '').toString().trim();
-          return productVendor.toLowerCase() === selectedManufacturer.toLowerCase();
-        });
+      // Apply manufacturer filter
+      if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all') {
+        const manufacturerMapping = {
+          'sandvik': 'Sandvik',
+          'iscar': 'ISCAR',
+          'walter': 'Walter',
+          'kennametal': 'KENNAMETAL',
+          'dsk': 'DSK',
+          'amec': 'AMEC'
+        };
+        const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer.toLowerCase()];
+        if (expectedManufacturer) {
+          filteredProducts = filteredProducts.filter(product => {
+            return product.vendor === expectedManufacturer;
+          });
+        }
       }
 
       // Tab-specific sorting
@@ -4492,10 +4501,18 @@
               show = show && crown === tempFilters.crown;
             }
 
-            // Apply manufacturer filter - standardized
-            if (tempFilters.manufacturer && tempFilters.manufacturer !== '') {
-              const vendorText = (vendor || (cells[4] ? cells[4].textContent.trim() : '')).toString().trim();
-              show = show && vendorText.toLowerCase() === tempFilters.manufacturer.toLowerCase();
+            // Apply manufacturer filter
+            if (tempFilters.manufacturer) {
+              const vendorText = vendor || (cells[4] ? cells[4].textContent.trim() : '');
+
+              // Try direct match first
+              if (vendorText === tempFilters.manufacturer) {
+                // Direct match
+                show = true;
+              } else {
+                // Check with manufacturer mapping
+                show = show && vendorText.toLowerCase() === tempFilters.manufacturer.toLowerCase();
+              }
             }
 
             // Apply search
@@ -5248,13 +5265,25 @@
       });
     }
     
-    // Apply manufacturer filter - standardized
-    if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all' && window.WiertlaCNC.filters.manufacturer !== '') {
-      const selectedManufacturer = window.WiertlaCNC.filters.manufacturer;
-      filteredProducts = filteredProducts.filter(product => {
-        const productVendor = (product.vendor || '').toString().trim();
-        return productVendor.toLowerCase() === selectedManufacturer.toLowerCase();
-      });
+    // Apply manufacturer filter
+    if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all') {
+      const manufacturerMapping = {
+        'sandvik': 'Sandvik',
+        'iscar': 'ISCAR',
+        'walter': 'Walter',
+        'kennametal': 'KENNAMETAL',
+        'amec': 'AMEC',
+        'guhring': 'GÜHRING',
+        'wnt': 'WNT',
+        'mikrontool': 'MIKRONTOOL',
+        'taegutec': 'TaeguTec'
+      };
+      const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer.toLowerCase()];
+      if (expectedManufacturer) {
+        filteredProducts = filteredProducts.filter(product => {
+          return product.vendor === expectedManufacturer;
+        });
+      }
     }
     
     // Update table with filtered products
@@ -5740,13 +5769,22 @@
         }
       }
 
-      // Manufacturer filter - standardized mapping
-      if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== '') {
-        const selectedManufacturer = window.WiertlaCNC.filters.manufacturer;
-        const productVendor = (product.vendor || '').toString().trim();
-        
-        // Direct match (case-insensitive)
-        if (productVendor.toLowerCase() !== selectedManufacturer.toLowerCase()) {
+      // Manufacturer filter
+      if (window.WiertlaCNC.filters.manufacturer) {
+        const manufacturerMapping = {
+          sandvik: 'Sandvik',
+          iscar: 'ISCAR',
+          walter: 'Walter',
+          kennametal: 'KENNAMETAL',
+          amec: 'AMEC',
+          guhring: 'GÜHRING',
+          wnt: 'WNT',
+          mikrontool: 'MIKRONTOOL',
+          taegutec: 'TaeguTec',
+        };
+        const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer];
+        if (!expectedManufacturer) return false;
+        if (!product.vendor || !product.vendor.toLowerCase().includes(expectedManufacturer.toLowerCase())) {
           return false;
         }
       }
