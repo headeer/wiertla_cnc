@@ -4492,18 +4492,10 @@
               show = show && crown === tempFilters.crown;
             }
 
-            // Apply manufacturer filter
-            if (tempFilters.manufacturer) {
-              const vendorText = vendor || (cells[4] ? cells[4].textContent.trim() : '');
-
-              // Try direct match first
-              if (vendorText === tempFilters.manufacturer) {
-                // Direct match
-                show = true;
-              } else {
-                // Check with manufacturer mapping
-                show = show && vendorText.toLowerCase() === tempFilters.manufacturer.toLowerCase();
-              }
+            // Apply manufacturer filter - standardized
+            if (tempFilters.manufacturer && tempFilters.manufacturer !== '') {
+              const vendorText = (vendor || (cells[4] ? cells[4].textContent.trim() : '')).toString().trim();
+              show = show && vendorText.toLowerCase() === tempFilters.manufacturer.toLowerCase();
             }
 
             // Apply search
@@ -5256,25 +5248,13 @@
       });
     }
     
-    // Apply manufacturer filter
-    if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all') {
-      const manufacturerMapping = {
-        'sandvik': 'Sandvik',
-        'iscar': 'ISCAR',
-        'walter': 'Walter',
-        'kennametal': 'KENNAMETAL',
-        'amec': 'AMEC',
-        'guhring': 'GÜHRING',
-        'wnt': 'WNT',
-        'mikrontool': 'MIKRONTOOL',
-        'taegutec': 'TaeguTec'
-      };
-      const expectedManufacturer = manufacturerMapping[window.WiertlaCNC.filters.manufacturer.toLowerCase()];
-      if (expectedManufacturer) {
-        filteredProducts = filteredProducts.filter(product => {
-          return product.vendor === expectedManufacturer;
-        });
-      }
+    // Apply manufacturer filter - standardized
+    if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all' && window.WiertlaCNC.filters.manufacturer !== '') {
+      const selectedManufacturer = window.WiertlaCNC.filters.manufacturer;
+      filteredProducts = filteredProducts.filter(product => {
+        const productVendor = (product.vendor || '').toString().trim();
+        return productVendor.toLowerCase() === selectedManufacturer.toLowerCase();
+      });
     }
     
     // Update table with filtered products
