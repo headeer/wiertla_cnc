@@ -1379,6 +1379,31 @@
         return [];
       }
       
+      // Helper function to check Shopify availability
+      function getNumber(val){
+        var n = Number((val || '').toString().replace(',', '.'));
+        return isNaN(n) ? 0 : n;
+      }
+      function isShopifyAvailable(product){
+        if (product == null) return false;
+        // Only check Shopify's native availability
+        if (getNumber(product.inventory_quantity) > 0) return true;
+        if (Array.isArray(product.variants)){
+          for (var i=0;i<product.variants.length;i++){
+            var v = product.variants[i] || {};
+            if (getNumber(v.inventory_quantity) > 0) return true;
+          }
+        }
+        // Only use Shopify's available flag, not custom fields
+        if (product.available === true) return true;
+        return false;
+      }
+      
+      // FIRST: Filter by availability - only show products that are available
+      filteredProducts = filteredProducts.filter(product => {
+        return isShopifyAvailable(product);
+      });
+      
       // Safety: ensure helpers exist even if defined later in other scopes
       if (typeof rodzajSynonyms === 'undefined') {
         var rodzajSynonyms = {
@@ -5242,9 +5267,35 @@
   function applyFilters() {
     // Delegate to strict global filter if available
     try { if (window && window.applyFilters && window.applyFilters !== applyFilters) return window.applyFilters(); } catch(_) {}
+    
+    // Helper function to check Shopify availability
+    function getNumber(val){
+      var n = Number((val || '').toString().replace(',', '.'));
+      return isNaN(n) ? 0 : n;
+    }
+    function isShopifyAvailable(product){
+      if (product == null) return false;
+      // Only check Shopify's native availability
+      if (getNumber(product.inventory_quantity) > 0) return true;
+      if (Array.isArray(product.variants)){
+        for (var i=0;i<product.variants.length;i++){
+          var v = product.variants[i] || {};
+          if (getNumber(v.inventory_quantity) > 0) return true;
+        }
+      }
+      // Only use Shopify's available flag, not custom fields
+      if (product.available === true) return true;
+      return false;
+    }
+    
     const selectedCategory = document.querySelector('.wiertla-categories__icon-item.active')?.getAttribute('data-category');
     const selectedStatus = document.querySelector('.wiertla-categories__status-item.active')?.getAttribute('data-status');
     let filteredProducts = window.WiertlaCNC.products;
+    
+    // FIRST: Filter by availability - only show products that are available
+    filteredProducts = filteredProducts.filter(product => {
+      return isShopifyAvailable(product);
+    });
     
     // Apply category filter
     if (selectedCategory && selectedCategory !== 'wszystkie') {

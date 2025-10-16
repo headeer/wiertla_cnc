@@ -22,6 +22,7 @@
       "vendor": {{ product.vendor | json }},
       "published_at": {{ product.published_at | json }},
       "available": {{ product.available | json }},
+      "inventory_quantity": {{ product.first_available_variant.inventory_quantity | json }},
       "quantity": {{ product.first_available_variant.inventory_quantity | json }},
       "price": {{ product.price | money_without_trailing_zeros | json }},
       "price_min": {{ product.price_min | money_without_trailing_zeros | json }},
