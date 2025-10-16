@@ -137,8 +137,19 @@ export const mockWiertlaTranslations = (overrides = {}) => {
       },
       header: {
         nav: {
+          home: 'Strona Główna',
           drills: 'WIERTŁA'
         }
+      },
+      footer: {
+        copyright: '© 2024 All rights reserved'
+      },
+      product: {
+        price: 'Cena: {price}',
+        price_with_currency: 'Cena: {price} {currency}'
+      },
+      order: {
+        summary: 'Zamówienie: {items} sztuk za {total} {currency}'
       }
     },
     en: {
@@ -153,8 +164,19 @@ export const mockWiertlaTranslations = (overrides = {}) => {
       },
       header: {
         nav: {
+          home: 'Homepage',
           drills: 'DRILLS'
         }
+      },
+      footer: {
+        copyright: '© 2024 All rights reserved'
+      },
+      product: {
+        price: 'Price: {price}',
+        price_with_currency: 'Price: {price} {currency}'
+      },
+      order: {
+        summary: 'Order: {items} items for {total} {currency}'
       }
     },
     de: {
@@ -169,8 +191,19 @@ export const mockWiertlaTranslations = (overrides = {}) => {
       },
       header: {
         nav: {
+          home: 'Startseite',
           drills: 'BOHRER'
         }
+      },
+      footer: {
+        copyright: '© 2024 Alle Rechte vorbehalten'
+      },
+      product: {
+        price: 'Preis: {price}',
+        price_with_currency: 'Preis: {price} {currency}'
+      },
+      order: {
+        summary: 'Bestellung: {items} Artikel für {total} {currency}'
       }
     },
     ...overrides

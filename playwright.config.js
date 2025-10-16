@@ -109,3 +109,4 @@ export default defineConfig({
   globalSetup: require.resolve('./tests/config/global-setup.js'),
   globalTeardown: require.resolve('./tests/config/global-teardown.js'),
 });
+

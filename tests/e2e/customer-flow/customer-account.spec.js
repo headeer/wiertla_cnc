@@ -360,3 +360,4 @@ test.describe('Customer Account Management', () => {
     await expect(page).toHaveURL('/account');
   });
 });
+

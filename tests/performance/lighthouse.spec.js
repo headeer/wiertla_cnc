@@ -262,3 +262,4 @@ test.describe('Performance Tests', () => {
     expect(loadTime).toBeLessThan(5000);
   });
 });
+

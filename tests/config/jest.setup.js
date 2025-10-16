@@ -43,12 +43,12 @@ global.Shopify = {
   }
 };
 
-// Mock console methods to reduce noise in tests
+// Mock console methods to reduce noise in tests (but allow real console for translation system)
 global.console = {
   ...console,
   log: jest.fn(),
-  warn: jest.fn(),
-  error: jest.fn()
+  warn: console.warn, // Keep real console.warn for translation system
+  error: console.error // Keep real console.error for translation system
 };
 
 // Mock fetch for API calls

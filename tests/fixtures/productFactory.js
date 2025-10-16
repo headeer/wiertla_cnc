@@ -1,77 +1,85 @@
 // Product factory for creating test data
 
+// Counter for unique IDs
+let productIdCounter = 1;
+
 /**
  * Creates a mock product with default values
  * @param {Object} overrides - Override default values
  * @returns {Object} Mock product object
  */
-export const createMockProduct = (overrides = {}) => ({
-  id: Math.floor(Math.random() * 10000),
-  sku: 'VW.123',
-  title: 'Test Product',
-  vendor: 'Sandvik',
-  inventory_quantity: 5,
-  available: true,
-  price: 10000, // Price in cents
-  compare_at_price: null,
-  handle: 'test-product',
-  url: '/products/test-product',
-  featured_image: {
-    url: 'https://example.com/image.jpg',
-    alt: 'Test Product Image'
-  },
-  images: [
-    {
-      url: 'https://example.com/image1.jpg',
-      alt: 'Test Product Image 1'
-    }
-  ],
-  variants: [
-    {
-      id: 1,
-      sku: 'VW.123',
-      price: 10000,
-      compare_at_price: null,
-      inventory_quantity: 5,
-      available: true
-    }
-  ],
-  // Custom metafields
-  custom_category: 'koronkowe',
-  custom_fi: '12.5',
-  custom_srednica: '12.5',
-  custom_rodzaj: 'VHM',
-  custom_typ: 'Koronka',
-  custom_manufacturer: 'Sandvik',
-  custom_symbol: 'VW.123',
-  custom_kod_producenta: 'VW.123',
-  custom_gniazdo: 'C',
-  custom_rent: false,
-  custom_rent_value: null,
-  custom_stan: 'nowa',
-  custom_szt: 1,
-  custom_ilosc: 1,
-  // Metafields structure
-  metafields: {
-    custom: {
-      category: 'koronkowe',
-      fi: '12.5',
-      srednica: '12.5',
-      rodzaj: 'VHM',
-      typ: 'Koronka',
-      manufacturer: 'Sandvik',
-      symbol: 'VW.123',
-      kod_producenta: 'VW.123',
-      gniazdo: 'C',
-      rent_tool: false,
-      rent_price: null,
-      stan: 'nowa',
-      szt: 1,
-      ilosc: 1
-    }
-  },
-  ...overrides
-});
+export const createMockProduct = (overrides = {}) => {
+  const uniqueId = productIdCounter++;
+  const baseSku = overrides.sku || `VW.${String(uniqueId).padStart(3, '0')}`;
+  
+  return {
+    id: uniqueId,
+    sku: baseSku,
+    title: `Test Product ${uniqueId}`,
+    vendor: 'Sandvik',
+    inventory_quantity: 5,
+    available: true,
+    price: 10000, // Price in cents
+    compare_at_price: null,
+    handle: `test-product-${uniqueId}`,
+    url: `/products/test-product-${uniqueId}`,
+    featured_image: {
+      url: `https://example.com/image${uniqueId}.jpg`,
+      alt: `Test Product Image ${uniqueId}`
+    },
+    images: [
+      {
+        url: `https://example.com/image${uniqueId}.jpg`,
+        alt: `Test Product Image ${uniqueId}`
+      }
+    ],
+    variants: [
+      {
+        id: uniqueId,
+        sku: baseSku,
+        price: 10000,
+        compare_at_price: null,
+        inventory_quantity: 5,
+        available: true
+      }
+    ],
+    // Custom metafields
+    custom_category: 'koronkowe',
+    custom_fi: '12.5',
+    custom_srednica: '12.5',
+    custom_rodzaj: 'VHM',
+    custom_typ: 'Koronka',
+    custom_manufacturer: 'Sandvik',
+    custom_symbol: baseSku,
+    custom_kod_producenta: baseSku,
+    custom_gniazdo: 'C',
+    custom_rent: false,
+    custom_rent_value: null,
+    custom_stan: 'nowa',
+    custom_szt: 1,
+    custom_ilosc: 1,
+    // Metafields structure
+    metafields: {
+      custom: {
+        category: 'koronkowe',
+        fi: '12.5',
+        srednica: '12.5',
+        rodzaj: 'VHM',
+        typ: 'Koronka',
+        manufacturer: 'Sandvik',
+        symbol: baseSku,
+        kod_producenta: baseSku,
+        gniazdo: 'C',
+        rent_tool: false,
+        rent_price: null,
+        stan: 'nowa',
+        szt: 1,
+        ilosc: 1
+      }
+    },
+    ...overrides
+  };
+};
 
 /**
  * Creates multiple mock products
