@@ -504,6 +504,7 @@
           
           // Apply filters to update the product list
           window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
           applyFilters();
         });
       });
@@ -539,6 +540,7 @@
           
           // Reset pagination
           window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
           
           // Reset any active category selection when switching tabs
           document.querySelectorAll('.wiertla-categories__icon-item').forEach(icon => {
@@ -1034,6 +1036,7 @@
     
     // Initialize variables
     window.currentPage = 1;
+    window.WiertlaCNC.filters.page = 1;
     window.itemsPerPage = {{ section.settings.items_per_page | default: 100 }};
     window.totalPages = 1;
     window.selectedCategory = 'wszystkie';
@@ -1980,8 +1983,8 @@
     
     if (prevButton) {
       prevButton.addEventListener('click', function() {
-        if (window.currentPage > 1) {
-          window.currentPage--;
+        if (window.WiertlaCNC.filters.page > 1) {
+          window.WiertlaCNC.filters.page--;
           applyFilters();
           
           // Scroll to top of table on mobile after pagination
@@ -2004,8 +2007,8 @@
     
     if (nextButton) {
       nextButton.addEventListener('click', function() {
-        if (window.currentPage < window.totalPages) {
-          window.currentPage++;
+        if (window.WiertlaCNC.filters.page < window.totalPages) {
+          window.WiertlaCNC.filters.page++;
           applyFilters();
           
           // Scroll to top of table on mobile after pagination
@@ -2031,6 +2034,7 @@
       searchInput.addEventListener('input', function() {
         window.currentFilters.search = this.value.trim();
         window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
         applyFilters();
       });
     }
@@ -2166,6 +2170,7 @@
             window.history.replaceState({}, '', url.toString());
             // Reset pagination and enforce 250 per page in fullscreen
             window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
             window.itemsPerPage = 250;
             // Update headers and rerender
             try { updateTableHeaders(tabType); } catch (e) {}
@@ -2200,6 +2205,7 @@
 
         // Set items per page to 250 in fullscreen context
         window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
         window.itemsPerPage = 250;
 
         // Activate initial tab button
@@ -2228,6 +2234,7 @@
           window.history.replaceState({}, '', url.toString());
           // Reset pagination for fullscreen and re-render
           window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
           window.itemsPerPage = 250;
           try { updateTableHeaders(tabType); } catch (e) {}
           applyFullscreenFilters();
@@ -2449,6 +2456,7 @@
           const filterType = this.getAttribute('data-filter');
           currentFilters[filterType] = this.value;
           window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
           applyFilters(); // Update main view
           applyFullscreenFilters(); // Update fullscreen view
         });
@@ -2467,6 +2475,7 @@
           // Update items per page
           window.itemsPerPage = value;
           window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
           
           applyFilters(); // Update main view
           applyFullscreenFilters(); // Update fullscreen view
@@ -2486,6 +2495,7 @@
           // Update selected category
           window.selectedCategory = filterType;
           window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
           
           // If "Wszystkie" is clicked, reset all filters
           if (filterType === 'wszystkie') {
@@ -2534,6 +2544,7 @@
           // Update selected category
           window.selectedCategory = category;
           window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
           // If "Wszystkie" is clicked, reset all filters
           if (category === 'wszystkie') {
             currentFilters = {
@@ -2636,6 +2647,7 @@
         // Update selected category and apply filters
         window.selectedCategory = category;
         window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
         
         
         applyFilters();
@@ -2653,6 +2665,7 @@
         
         window.selectedCategory = filterButton.getAttribute('data-filter');
         window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
         
         // If clicking on "Wszystkie" button, reset all filters
         if (window.selectedCategory === 'wszystkie') {
@@ -2687,6 +2700,7 @@
         
         window.itemsPerPage = parseInt(perPageButton.getAttribute('data-value'));
         window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
         applyFilters();
       }
     });
@@ -2722,6 +2736,7 @@
             }
             
             window.currentPage = 1;
+        window.WiertlaCNC.filters.page = 1;
             
             // Remove active class from "Wszystkie" button when a filter is selected
             if (filterSelect.value !== '') {
@@ -5551,6 +5566,7 @@
     
     // SIXTH: Reset page to 1
     window.currentPage = 1;
+    window.WiertlaCNC.filters.page = 1;
     
     
     // SEVENTH: Double-check and force clear any lingering filter values
@@ -5693,6 +5709,7 @@
       url.searchParams.set('mainType', tabType);
       window.history.replaceState({}, '', url.toString());
       window.currentPage = 1;
+      window.WiertlaCNC.filters.page = 1;
       window.itemsPerPage = 100;
       setFilterVisibility(tabType);
       try { updateTableHeaders(tabType); } catch (e) {}
@@ -5742,6 +5759,10 @@
       page: parseInt(params.get('page')) || 1,
       perPage: parseInt(params.get('perPage')) || 100,
     };
+    
+    // Synchronize pagination variables
+    window.currentPage = window.WiertlaCNC.filters.page;
+    
     // Debug flag via URL: ?debugStock=1
     try {
       window.WiertlaCNC = window.WiertlaCNC || {};
@@ -5863,6 +5884,9 @@
     if (window.WiertlaCNC.filters.page > window.totalPages) {
       window.WiertlaCNC.filters.page = 1;
     }
+
+    // Synchronize pagination variables
+    window.currentPage = window.WiertlaCNC.filters.page;
 
     // Update URL parameters
     updateUrlParams();
