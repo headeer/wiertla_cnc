@@ -615,7 +615,7 @@
           newProducts = newProducts.filter(function(p){
             try {
               var sku = String(p && (p.sku || p.custom_symbol || p.custom_kod_producenta) || '').trim();
-              if (!sku) return false;
+              if (!sku || sku === '-') return false;
               // Only accept products with Shopify availability
               if (getNum(p && p.inventory_quantity) > 0) return true;
               if (Array.isArray(p && p.variants)){
@@ -2293,7 +2293,7 @@
         if (p.available === true) return true;
         return false;
       }
-      function __fsHasSku(p){ try { return !!(p && p.sku && String(p.sku).trim()); } catch(_) { return false; } }
+      function __fsHasSku(p){ try { return !!(p && p.sku && String(p.sku).trim() && String(p.sku).trim() !== '-'); } catch(_) { return false; } }
       const productsToRender = productsToShow.filter(function(p){ return __fsAvail(p) && __fsHasSku(p); });
       productsToRender.forEach(product => {
         const row = document.createElement('tr');
@@ -3221,7 +3221,7 @@
         return false;
       }
       function __hasSkuStrict(p){
-        try { return !!(p && p.sku && String(p.sku).trim()); } catch(_) { return false; }
+        try { return !!(p && p.sku && String(p.sku).trim() && String(p.sku).trim() !== '-'); } catch(_) { return false; }
       }
       const __safeProducts = products.filter(function(p){
         // Only show products that have availability AND have a SKU
@@ -4194,8 +4194,8 @@
               }
               return false;
             }
-            function __fbHasSku(p){ try { return !!(p && p.sku && String(p.sku).trim()); } catch(_) { return false; } }
-            (window.products || []).filter(function(p){ return __fbAvail(p) || __fbHasSku(p); }).forEach((product) => {
+            function __fbHasSku(p){ try { return !!(p && p.sku && String(p.sku).trim() && String(p.sku).trim() !== '-'); } catch(_) { return false; } }
+            (window.products || []).filter(function(p){ return __fbAvail(p) && __fbHasSku(p); }).forEach((product) => {
               const row = document.createElement('tr');
               row.className = 'wiertla-categories__table-row';
               const productUrl = (product.url && product.url !== '#') ? product.url : (product.handle ? ('/products/' + product.handle) : '');
