@@ -1757,4 +1757,115 @@
       });
     });
   });
+
+  // Handle navigation link clicks for wiertla stats
+  document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('.nav-link[data-category]');
+    
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Remove active class from all links
+        navLinks.forEach(l => l.classList.remove('active'));
+        
+        // Add active class to clicked link
+        this.classList.add('active');
+        
+        const category = this.getAttribute('data-category');
+        
+        // Activate wiertla main type and set category in main system
+        activateWiertlaMainTypeAndCategory(category);
+      });
+    });
+  });
+
+  function activateWiertlaMainTypeAndCategory(category) {
+    try {
+      // Ensure WiertlaCNC object exists
+      if (!window.WiertlaCNC) {
+        window.WiertlaCNC = {};
+      }
+      
+      // Set active tab type to 'wiertla'
+      window.WiertlaCNC.activeTabType = 'wiertla';
+      
+      // Update URL parameter for main type
+      const url = new URL(window.location.href);
+      url.searchParams.set('mainType', 'wiertla');
+      window.history.replaceState({}, '', url.toString());
+      
+      // Set the category in the main filter system
+      if (!window.WiertlaCNC.filters) {
+        window.WiertlaCNC.filters = {
+          category: 'wszystkie',
+          status: 'all',
+          type: 'all',
+          crown: 'all',
+          manufacturer: 'all',
+          page: 1,
+          perPage: 100,
+        };
+      }
+      
+      // Map wiertla stats categories to wiertla categories
+      const categoryMapping = {
+        'koronkowe': 'koronkowe',
+        'plytkowe': 'plytkowe',
+        'vhm': 'vhm',
+        'sandvik': 'sandvik',
+        'amec': 'amec',
+        'ksem': 'ksem'
+      };
+      
+      const mappedCategory = categoryMapping[category] || 'wszystkie';
+      window.WiertlaCNC.filters.category = mappedCategory;
+      window.selectedCategory = mappedCategory;
+      
+      // Reset pagination
+      window.WiertlaCNC.filters.page = 1;
+      window.currentPage = 1;
+      
+      // Update URL parameters
+      if (typeof updateUrlParams === 'function') {
+        updateUrlParams();
+      }
+      
+      // Apply filters if the function exists
+      if (typeof applyFilters === 'function') {
+        applyFilters();
+      }
+      
+      // Update active states in main navigation
+      updateMainNavigationActiveStates(mappedCategory);
+      
+    } catch (error) {
+      console.error('Error activating wiertla main type and category:', error);
+    }
+  }
+
+  function updateMainNavigationActiveStates(category) {
+    try {
+      // Remove active class from all category items in main navigation
+      const mainCategoryItems = document.querySelectorAll('.wiertla-categories__icon-item');
+      mainCategoryItems.forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Add active class to the selected category
+      const activeCategoryItem = document.querySelector(`.wiertla-categories__icon-item[data-category="${category}"]`);
+      if (activeCategoryItem) {
+        activeCategoryItem.classList.add('active');
+      }
+      
+      // Update main type selector if it exists
+      const mainTypeSelect = document.querySelector('select[name="mainType"]');
+      if (mainTypeSelect) {
+        mainTypeSelect.value = 'wiertla';
+      }
+      
+    } catch (error) {
+      console.error('Error updating main navigation active states:', error);
+    }
+  }
 </script>
