@@ -527,7 +527,7 @@ window.WiertlaTranslations = {
     // Wiertla Categories
     wiertla_categories: {
       tabs: {
-        plates_for_drills: "PLATES FOR DRILLS",
+        plates_for_drills: "INSERTS FOR DRILLS",
         crowns_for_drills: "CROWNS FOR DRILLS",
         crown_regeneration: "KSEM CROWN REGENERATION",
         plates_short: "PLATES",
@@ -897,7 +897,7 @@ window.WiertlaTranslations = {
       actions: {
         buy: "PLATTEN",
         rent: "MIETEN",
-        regenerate: "REGENERIEREN/SCHÄRFEN",
+        regenerate: "REGENERIEREN",
         sharpen: "SCHÄRFEN",
       },
     },
