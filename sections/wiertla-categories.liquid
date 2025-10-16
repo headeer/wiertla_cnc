@@ -5980,6 +5980,18 @@
 
   // Initialize filters from URL on page load
   document.addEventListener('DOMContentLoaded', function () {
+    initializeFromUrl();
+  });
+
+  // Handle page navigation (back/forward buttons)
+  window.addEventListener('pageshow', function(event) {
+    // Only reinitialize if the page was loaded from cache (back/forward navigation)
+    if (event.persisted) {
+      initializeFromUrl();
+    }
+  });
+
+  function initializeFromUrl() {
     // Initialize active tab type from URL parameter
     const urlParams = new URLSearchParams(window.location.search);
     const mainTypeFromUrl = urlParams.get('mainType');
@@ -6047,7 +6059,7 @@
 
     // Call updateDropdowns to populate manufacturer dropdown
     updateDropdowns();
-  });
+  }
 
   // Function to initialize tab functionality
   function initializeTabs() {

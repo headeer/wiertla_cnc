@@ -11,15 +11,15 @@
             width="24"
             height="24">
         </div>
-        <div class="wiertla-categories__mobile-rent-title">REGENERUJ WIERTŁO</div>
+        <div class="wiertla-categories__mobile-rent-title" data-translate="regeneruj.title">REGENERUJ WIERTŁO</div>
       </div>
 
       <!-- Rent content -->
       <div class="wiertla-categories__mobile-rent-content">
-        <p class="wiertla-categories__mobile-rent-description">
+        <p class="wiertla-categories__mobile-rent-description" data-translate="regeneruj.description">
           Oferujemy naszym partnerom, możliwość regeneracji wybranego wiertła na wybrany termin i czas.
         </p>
-        <p class="wiertla-categories__mobile-rent-contact">
+        <p class="wiertla-categories__mobile-rent-contact" data-translate="regeneruj.contact">
           Skontaktuj się z nami, aby ustalić szczegóły<br>
           lub wyślij zapytanie o preferowany termin.
         </p>
@@ -46,45 +46,45 @@
 
         <!-- Initial button -->
         <button class="wiertla-categories__mobile-rent-button" onclick="showRegenerujForm()">
-          <span>Zapytaj o dostępny termin</span>
+          <span data-translate="regeneruj.ask_available_term">Zapytaj o dostępny termin</span>
           <img src="{{ 'mail_icon_send.svg' | asset_url }}" alt="Send" width="24" height="24">
         </button>
 
         <!-- Form (hidden by default) -->
         <div class="wiertla-categories__mobile-rent-form" style="display: none;">
-          <div class="wiertla-categories__mobile-rent-form-title">Skorzystaj z formularza</div>
+          <div class="wiertla-categories__mobile-rent-form-title" data-translate="regeneruj.use_form">Skorzystaj z formularza</div>
           <form class="wiertla-categories__mobile-rent-form-content">
             <input type="hidden" name="form_type" value="contact">
             <input type="hidden" name="utf8" value="✓">
             <div class="wiertla-categories__mobile-rent-form-group">
               <img src="{{ 'person.svg' | asset_url }}" alt="Person" class="wiertla-categories__mobile-rent-form-icon" width="20" height="20">
-              <input type="text" name="contact[contact_person]" placeholder="Osoba kontaktowa" required aria-required="true" aria-label="Osoba kontaktowa" class="wiertla-categories__mobile-rent-form-input-with-icon">
+              <input type="text" name="contact[contact_person]" placeholder="{{ 'regeneruj.contact_person' | t }}" required aria-required="true" aria-label="{{ 'regeneruj.contact_person' | t }}" class="wiertla-categories__mobile-rent-form-input-with-icon">
               <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
             </div>
             <div class="wiertla-categories__mobile-rent-form-group">
-              <input type="text" name="contact[company_name]" placeholder="Nazwa firmy" required aria-required="true" aria-label="Nazwa firmy">
+              <input type="text" name="contact[company_name]" placeholder="{{ 'regeneruj.company_name' | t }}" required aria-required="true" aria-label="{{ 'regeneruj.company_name' | t }}">
               <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
             </div>
             <div class="wiertla-categories__mobile-rent-form-row">
               <div class="wiertla-categories__mobile-rent-form-group">
-                <input type="tel" name="contact[phone]" placeholder="Nr telefonu" required pattern="[0-9+\s\(\)\-]{9,}" aria-required="true" aria-label="Numer telefonu">
+                <input type="tel" name="contact[phone]" placeholder="{{ 'regeneruj.phone_number' | t }}" required pattern="[0-9+\s\(\)\-]{9,}" aria-required="true" aria-label="{{ 'regeneruj.phone_number' | t }}">
                 <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
               </div>
               <div class="wiertla-categories__mobile-rent-form-group">
-                <input type="email" name="contact[email]" placeholder="E-mail" required aria-required="true" aria-label="Adres email">
+                <input type="email" name="contact[email]" placeholder="{{ 'regeneruj.email' | t }}" required aria-required="true" aria-label="{{ 'regeneruj.email' | t }}">
                 <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
               </div>
             </div>
             <div class="wiertla-categories__mobile-rent-form-group">
-              <input type="text" name="contact[drill_symbol]" placeholder="SYMBOL wiertła" required aria-required="true" aria-label="Symbol wiertła">
+              <input type="text" name="contact[drill_symbol]" placeholder="{{ 'regeneruj.drill_symbol' | t }}" required aria-required="true" aria-label="{{ 'regeneruj.drill_symbol' | t }}">
               <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
             </div>
             <div class="wiertla-categories__mobile-rent-form-group">
-              <input type="date" name="contact[rental_date]" class="wiertla-categories__mobile-rent-date" placeholder="Wpisz preferowany termin regeneracji" required aria-required="true" aria-label="Preferowany termin regeneracji">
+              <input type="date" name="contact[rental_date]" class="wiertla-categories__mobile-rent-date" placeholder="{{ 'regeneruj.preferred_date' | t }}" required aria-required="true" aria-label="{{ 'regeneruj.preferred_date' | t }}">
               <div class="wiertla-categories__mobile-rent-form-error" role="alert"></div>
             </div>
             <button type="submit" class="wiertla-categories__mobile-rent-submit">
-              <span>Wyślij wiadomość</span>
+              <span data-translate="regeneruj.send_message">Wyślij wiadomość</span>
               <img src="{{ 'mail_icon_send.svg' | asset_url }}" alt="Send" width="24" height="24">
             </button>
           </form>
@@ -95,15 +95,15 @@
               <div class="wiertla-categories__mobile-rent-success-icon">
                 <img src="{{ 'mail_sended.svg' | asset_url }}" alt="Mail sent" width="24" height="24">
               </div>
-              <div class="wiertla-categories__mobile-rent-success-message">
+              <div class="wiertla-categories__mobile-rent-success-message" data-translate="regeneruj.thank_you">
                 Dziękujemy za wysłanie zapytania
               </div>
             </div>
-            <p class="wiertla-categories__mobile-rent-success-note">
+            <p class="wiertla-categories__mobile-rent-success-note" data-translate="regeneruj.response_time">
               Czas na odpowiedź wynosi zwykle 24 godziny w dni robocze. Jeśli potrzebujesz wiertła szybciej, zadzwoń.
             </p>
             <button class="wiertla-categories__mobile-rent-button" style="display: flex; background-color: #FFFFFF; border: 2px solid #FFE500">
-              <span>Wysłano wiadomość</span>
+              <span data-translate="regeneruj.message_sent">Wysłano wiadomość</span>
               <img src="{{ 'mail_sended.svg' | asset_url }}" alt="Send" width="24" height="24">
             </button>
           </div>

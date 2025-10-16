@@ -639,6 +639,23 @@
       "rent": "WYPOŻYCZ",
       "regenerate": "regeneruj",
       "sharpen": "naostrz"
+    },
+    "regeneruj": {
+      "title": "REGENERUJ WIERTŁO",
+      "description": "Oferujemy naszym partnerom, możliwość regeneracji wybranego wiertła na wybrany termin i czas.",
+      "contact": "Skontaktuj się z nami, aby ustalić szczegóły<br>lub wyślij zapytanie o preferowany termin.",
+      "ask_available_term": "Zapytaj o dostępny termin",
+      "use_form": "Skorzystaj z formularza",
+      "contact_person": "Osoba kontaktowa",
+      "company_name": "Nazwa firmy",
+      "phone_number": "Nr telefonu",
+      "email": "E-mail",
+      "drill_symbol": "SYMBOL wiertła",
+      "preferred_date": "Wpisz preferowany termin regeneracji",
+      "send_message": "Wyślij wiadomość",
+      "thank_you": "Dziękujemy za wysłanie zapytania",
+      "response_time": "Czas na odpowiedź wynosi zwykle 24 godziny w dni robocze. Jeśli potrzebujesz wiertła szybciej, zadzwoń.",
+      "message_sent": "Wysłano wiadomość"
     }
   }
 }
