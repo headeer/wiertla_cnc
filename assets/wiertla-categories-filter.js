@@ -177,46 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
   // Click handlers for brand logos + smooth scroll to table
-  document.querySelectorAll('.wiertla-logos__brand[data-brand]').forEach((el) => {
-    el.style.cursor = 'pointer';
-    el.addEventListener('click', function(){
-      const brand = this.getAttribute('data-brand') || '';
-      filterByBrand(brand);
-      // Sync manufacturer selects and global filters
-      try {
-        const valueMap = { sandvik: 'Sandvik', walter: 'Walter', iscar: 'ISCAR', kennametal: 'KENNAMETAL', amec: 'AMEC', seco: 'SECO' };
-        const displayVal = valueMap[brand] || '';
-        // Update visible selects
-        const selects = document.querySelectorAll('select[data-filter="manufacturer"]');
-        selects.forEach((sel) => {
-          if (!sel) return;
-          const hasOption = Array.from(sel.options).some(opt => (opt && opt.value === displayVal));
-          if (displayVal && hasOption) {
-            sel.value = displayVal;
-            sel.dispatchEvent(new Event('change', { bubbles: true }));
-          }
-        });
-        // Update global filter if supported
-        if (window.WiertlaCNC && window.WiertlaCNC.filters) {
-          const supported = { sandvik:1, walter:1, iscar:1, kennametal:1, amec:1 };
-          if (supported[brand]) {
-            window.WiertlaCNC.filters.manufacturer = brand;
-            if (typeof window.applyFilters === 'function') window.applyFilters();
-          } else {
-            window.WiertlaCNC.filters.manufacturer = '';
-          }
-        }
-      } catch(_) {}
-      try {
-        const target = document.querySelector('.wiertla-categories__table-container');
-        if (target && typeof target.scrollIntoView === 'function') {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          window.location.hash = '#wiertla-table';
-        }
-      } catch(_) {}
-    });
-  });
+ 
 
   // Event listeners for crown type filters (desktop and mobile)
   document.querySelectorAll('[data-filter="crown"]').forEach((filter) => {
