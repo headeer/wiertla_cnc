@@ -230,8 +230,6 @@
   }
 
   .product-details__stock-container {
-    background: #F5F5F8;
-    border: 3px solid #112832;
     border-radius: 0;
     padding: 16px 20px;
     display: flex;
@@ -239,15 +237,10 @@
     gap: 12px;
     width: 100%;
     max-width: 600px;
-    box-shadow: 4px 4px 0px #112832;
     transition: all 0.3s ease;
     animation: slideInUp 0.6s ease-out;
   }
 
-  .product-details__stock-container:hover {
-    transform: translateY(-2px);
-    box-shadow: 6px 6px 0px #112832;
-  }
 
   @keyframes slideInUp {
     from {
@@ -339,7 +332,6 @@
     color: #112832;
     font-weight: 800;
     font-size: 18px;
-    background: #FFE500;
     padding: 4px 12px;
     border-radius: 0;
     border: 2px solid #112832;
@@ -349,10 +341,6 @@
     animation: stockSlideInRight 0.6s ease-out 0.4s both;
   }
 
-  .product-details__stock-count:hover {
-    transform: scale(1.1);
-    box-shadow: 2px 2px 0px #112832;
-  }
 
   @keyframes stockSlideInRight {
     from {
@@ -370,13 +358,9 @@
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    background: #FFE500;
-    border: 3px solid #112832;
     border-radius: 0;
     padding: 12px 16px;
     margin-top: 8px;
-    box-shadow: 2px 2px 0px #112832;
-    animation: stockAlertBounce 0.8s ease-out, stockPulseAlert 2s infinite 1s;
   }
 
   @keyframes stockAlertBounce {
@@ -1214,12 +1198,6 @@ document.addEventListener('DOMContentLoaded', function() {
               <!-- Stock Status with Icon -->
               <div class="product-details__stock-status">
                 {% if stock_quantity > 0 %}
-                  <div class="product-details__stock-icon product-details__stock-icon--in-stock">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="8" cy="8" r="8" fill="#22C55E"/>
-                      <path d="M5 8L7 10L11 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </div>
                   <div class="product-details__stock-text">
                     <span class="product-details__stock-label">W magazynie:</span>
                     <strong class="product-details__stock-count">{{ stock_quantity }} szt.</strong>
@@ -1240,13 +1218,6 @@ document.addEventListener('DOMContentLoaded', function() {
               <!-- Low Stock Warning -->
               {% if stock_quantity > 0 and stock_quantity <= 5 %}
                 <div class="product-details__stock-alert">
-                  <div class="product-details__stock-alert-icon">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M7 1L13 12H1L7 1Z" fill="#F59E0B" stroke="#F59E0B" stroke-width="2" stroke-linejoin="round"/>
-                      <path d="M7 5V8" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-                      <circle cx="7" cy="10" r="0.5" fill="white"/>
-                    </svg>
-                  </div>
                   <div class="product-details__stock-alert-text">
                     {% if stock_quantity == 1 %}
                       <strong>Ostatnia sztuka!</strong> Pospiesz się z zamówieniem
