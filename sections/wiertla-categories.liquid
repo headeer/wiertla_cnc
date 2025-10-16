@@ -3563,17 +3563,10 @@
                 <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
                   ${(() => {
                     var q = 0;
-                    var pq = Number(product && product.product_qty);
-                    var qy = Number(product && product.quantity);
-                    if (!Number.isNaN(pq) && pq > 0) {
-                      q = pq;
-                    } else if (!Number.isNaN(qy) && qy > 0) {
-                      q = qy;
-                    } else {
-                      if (typeof product.inventory_quantity === 'number') q += product.inventory_quantity;
-                      if (Array.isArray(product.variants)) {
-                        product.variants.forEach(function(v){ if (v && typeof v.inventory_quantity === 'number') q += v.inventory_quantity; });
-                      }
+                    // Only use Shopify's native inventory_quantity
+                    if (typeof product.inventory_quantity === 'number') q += product.inventory_quantity;
+                    if (Array.isArray(product.variants)) {
+                      product.variants.forEach(function(v){ if (v && typeof v.inventory_quantity === 'number') q += v.inventory_quantity; });
                     }
                     return q > 0 ? String(q) : '-';
                   })()}
@@ -4036,8 +4029,28 @@
             // Clear the table first
             tempTableBody.innerHTML = '';
 
+            // Safety filter: ONLY show items that have stock/availability AND valid SKU
+            function __fallbackNum(v){ var n = Number((v||'').toString().replace(',', '.')); return isNaN(n)?0:n; }
+            function __fallbackAvail(p){
+              if (!p) return false;
+              // Only check Shopify's native availability - require actual inventory
+              if (__fallbackNum(p.inventory_quantity) > 0) return true;
+              if (Array.isArray(p.variants)){
+                for (var i=0;i<p.variants.length;i++){
+                  var vv = p.variants[i] || {};
+                  if (__fallbackNum(vv.inventory_quantity) > 0) return true;
+                }
+              }
+              // Don't trust product.available flag alone - require inventory
+              return false;
+            }
+            function __fallbackHasSku(p){ try { return !!(p && p.sku && String(p.sku).trim() && String(p.sku).trim() !== '-'); } catch(_) { return false; } }
+            
+            // Filter products before rendering
+            const filteredSourceProducts = sourceProducts.filter(function(p){ return __fallbackAvail(p) && __fallbackHasSku(p); });
+            
             // For each product, create a table row with all data
-            sourceProducts.forEach((product) => {
+            filteredSourceProducts.forEach((product) => {
               const row = document.createElement('tr');
               row.className = 'wiertla-categories__table-row';
               const productUrl = (product.url && product.url !== '#') ? product.url : (product.handle ? ('/products/' + product.handle) : '');
