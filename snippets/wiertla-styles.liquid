@@ -319,6 +319,12 @@
       color: #555;
     }
 
+    /* Make D/mm and Symbol columns uppercase */
+    .wiertla-categories__table-cell--length,
+    .wiertla-categories__table-cell--symbol {
+      text-transform: uppercase;
+    }
+
     .wiertla-categories__table-cell:last-child {
       border-right: none;
     }
@@ -3870,6 +3876,12 @@
       .wiertla-categories__table-cell-vendor,
       .wiertla-categories__table-cell-symbol {
         color: #445d68;
+      }
+
+      /* Make D/mm and Symbol columns uppercase on mobile */
+      .wiertla-categories__table-cell-length,
+      .wiertla-categories__table-cell-symbol {
+        text-transform: uppercase;
       }
 
       /* Border fixes to prevent doubling */
