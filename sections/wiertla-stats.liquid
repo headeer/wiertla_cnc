@@ -1710,7 +1710,7 @@
       const maxSlideIndex = Math.max(0, totalSlides - slidesPerView);
 
       // Disable next button if we're at the last possible slide
-      if (swiper.activeIndex >= maxSlideIndex) {
+      if (swiper.realIndex >= maxSlideIndex) {
         nextButton.style.opacity = '0.35';
         nextButton.style.pointerEvents = 'none';
       } else {
@@ -1719,7 +1719,7 @@
       }
 
       // Disable prev button if we're at the first slide
-      if (swiper.activeIndex === 0) {
+      if (swiper.realIndex === 0) {
         prevButton.style.opacity = '0.35';
         prevButton.style.pointerEvents = 'none';
       } else {
@@ -1732,10 +1732,19 @@
       const paginationBars = document.querySelectorAll('.pagination-bar');
       const totalSlides = swiper.slides.length;
       const slidesPerView = swiper.params.slidesPerView;
-      const currentSlide = swiper.activeIndex;
+      const currentSlide = swiper.realIndex;
       
       // Calculate which pagination bar should be active
       const currentPage = Math.floor(currentSlide / slidesPerView);
+      
+      // Debug logging
+      console.log('Pagination Update:', {
+        totalSlides,
+        slidesPerView,
+        currentSlide,
+        currentPage,
+        paginationBarsCount: paginationBars.length
+      });
       
       paginationBars.forEach((bar, index) => {
         if (index === currentPage) {
