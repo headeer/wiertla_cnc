@@ -616,7 +616,7 @@
             try {
               var sku = String(p && (p.sku || p.custom_symbol || p.custom_kod_producenta) || '').trim();
               if (!sku || sku === '-') return false;
-              // Only accept products with Shopify availability
+              // Only accept products with Shopify availability - require actual inventory
               if (getNum(p && p.inventory_quantity) > 0) return true;
               if (Array.isArray(p && p.variants)){
                 for (var i=0;i<p.variants.length;i++){
@@ -624,7 +624,7 @@
                   if (getNum(v && v.inventory_quantity) > 0) return true;
                 }
               }
-              if (p && p.available === true) return true;
+              // Don't trust product.available flag alone - require inventory
               return false;
             } catch(_) { return false; }
           });
@@ -1386,7 +1386,7 @@
       }
       function isShopifyAvailable(product){
         if (product == null) return false;
-        // Only check Shopify's native availability
+        // Only check Shopify's native availability - require actual inventory
         if (getNumber(product.inventory_quantity) > 0) return true;
         if (Array.isArray(product.variants)){
           for (var i=0;i<product.variants.length;i++){
@@ -1394,8 +1394,7 @@
             if (getNumber(v.inventory_quantity) > 0) return true;
           }
         }
-        // Only use Shopify's available flag, not custom fields
-        if (product.available === true) return true;
+        // Don't trust product.available flag alone - require inventory
         return false;
       }
       
@@ -2281,7 +2280,7 @@
       function __fsNum(v){ var n = Number((v||'').toString().replace(',', '.')); return isNaN(n)?0:n; }
       function __fsAvail(p){
         if (!p) return false;
-        // Only check Shopify's native availability
+        // Only check Shopify's native availability - require actual inventory
         if (__fsNum(p.inventory_quantity) > 0) return true;
         if (Array.isArray(p.variants)){
           for (var i=0;i<p.variants.length;i++){
@@ -2289,8 +2288,7 @@
             if (__fsNum(vv.inventory_quantity) > 0) return true;
           }
         }
-        // Only use Shopify's available flag, not custom fields
-        if (p.available === true) return true;
+        // Don't trust product.available flag alone - require inventory
         return false;
       }
       function __fsHasSku(p){ try { return !!(p && p.sku && String(p.sku).trim() && String(p.sku).trim() !== '-'); } catch(_) { return false; } }
@@ -3208,7 +3206,7 @@
       }
       function __hasAvailabilityStrict(p){
         if (!p) return false;
-        // Only check Shopify's native availability
+        // Only check Shopify's native availability - require actual inventory
         if (__getNumberStrict(p.inventory_quantity) > 0) return true;
         if (Array.isArray(p.variants)){
           for (var i=0;i<p.variants.length;i++){
@@ -3216,8 +3214,7 @@
             if (__getNumberStrict(vv.inventory_quantity) > 0) return true;
           }
         }
-        // Only use Shopify's available flag, not custom fields
-        if (p.available === true) return true;
+        // Don't trust product.available flag alone - require inventory
         return false;
       }
       function __hasSkuStrict(p){
@@ -4185,6 +4182,7 @@
             function __fbNum(v){ var n = Number((v||'').toString().replace(',', '.')); return isNaN(n)?0:n; }
             function __fbAvail(p){
               if (!p) return false;
+              // Only check Shopify's native availability - require actual inventory
               if (__fbNum(p.inventory_quantity) > 0) return true;
               if (Array.isArray(p.variants)){
                 for (var i=0;i<p.variants.length;i++){
@@ -4192,6 +4190,7 @@
                   if (__fbNum(vv.inventory_quantity) > 0) return true;
                 }
               }
+              // Don't trust product.available flag alone - require inventory
               return false;
             }
             function __fbHasSku(p){ try { return !!(p && p.sku && String(p.sku).trim() && String(p.sku).trim() !== '-'); } catch(_) { return false; } }
@@ -5275,7 +5274,7 @@
     }
     function isShopifyAvailable(product){
       if (product == null) return false;
-      // Only check Shopify's native availability
+      // Only check Shopify's native availability - require actual inventory
       if (getNumber(product.inventory_quantity) > 0) return true;
       if (Array.isArray(product.variants)){
         for (var i=0;i<product.variants.length;i++){
@@ -5283,8 +5282,7 @@
           if (getNumber(v.inventory_quantity) > 0) return true;
         }
       }
-      // Only use Shopify's available flag, not custom fields
-      if (product.available === true) return true;
+      // Don't trust product.available flag alone - require inventory
       return false;
     }
     
