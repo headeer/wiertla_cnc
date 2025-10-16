@@ -616,18 +616,12 @@
             try {
               var sku = String(p && (p.sku || p.custom_symbol || p.custom_kod_producenta) || '').trim();
               if (!sku) return false;
-              // Accept if any positive quantity from Shopify or custom fields
+              // Only accept products with Shopify availability
               if (getNum(p && p.inventory_quantity) > 0) return true;
               if (Array.isArray(p && p.variants)){
                 for (var i=0;i<p.variants.length;i++){
                   var v = p.variants[i] || {};
                   if (getNum(v && v.inventory_quantity) > 0) return true;
-                }
-              }
-              if (getNum(p && p.product_qty) > 0) return true;
-              if (Array.isArray(p && p.variant_qtys)){
-                for (var k=0;k<p.variant_qtys.length;k++){
-                  if (getNum(p.variant_qtys[k]) > 0) return true;
                 }
               }
               if (p && p.available === true) return true;
@@ -2258,10 +2252,11 @@
       }
       
       try { console.log('[Fullscreen] render rows', productsToShow.length); } catch (e) {}
-      // Safety filter for fullscreen: skip items with no stock across product and variants AND empty SKU
+      // Safety filter for fullscreen: ONLY show items with stock/availability AND valid SKU
       function __fsNum(v){ var n = Number((v||'').toString().replace(',', '.')); return isNaN(n)?0:n; }
       function __fsAvail(p){
         if (!p) return false;
+        // Only check Shopify's native availability
         if (__fsNum(p.inventory_quantity) > 0) return true;
         if (Array.isArray(p.variants)){
           for (var i=0;i<p.variants.length;i++){
@@ -2269,10 +2264,12 @@
             if (__fsNum(vv.inventory_quantity) > 0) return true;
           }
         }
+        // Only use Shopify's available flag, not custom fields
+        if (p.available === true) return true;
         return false;
       }
       function __fsHasSku(p){ try { return !!(p && p.sku && String(p.sku).trim()); } catch(_) { return false; } }
-      const productsToRender = productsToShow.filter(function(p){ return __fsAvail(p) || __fsHasSku(p); });
+      const productsToRender = productsToShow.filter(function(p){ return __fsAvail(p) && __fsHasSku(p); });
       productsToRender.forEach(product => {
         const row = document.createElement('tr');
         row.className = 'wiertla-categories__table-row';
@@ -3178,14 +3175,15 @@
         return;
       }
 
-      // Safety filter: hide items that have no stock (product and all variants)
-      // AND also have an empty SKU. If either stock exists or SKU exists, keep it.
+      // Safety filter: ONLY show items that have stock/availability
+      // Products should already be filtered by applyFilters, but double-check here
       function __getNumberStrict(val){
         var n = Number((val || '').toString().replace(',', '.'));
         return isNaN(n) ? 0 : n;
       }
       function __hasAvailabilityStrict(p){
         if (!p) return false;
+        // Only check Shopify's native availability
         if (__getNumberStrict(p.inventory_quantity) > 0) return true;
         if (Array.isArray(p.variants)){
           for (var i=0;i<p.variants.length;i++){
@@ -3193,13 +3191,16 @@
             if (__getNumberStrict(vv.inventory_quantity) > 0) return true;
           }
         }
+        // Only use Shopify's available flag, not custom fields
+        if (p.available === true) return true;
         return false;
       }
       function __hasSkuStrict(p){
         try { return !!(p && p.sku && String(p.sku).trim()); } catch(_) { return false; }
       }
       const __safeProducts = products.filter(function(p){
-        return __hasAvailabilityStrict(p) || __hasSkuStrict(p);
+        // Only show products that have availability AND have a SKU
+        return __hasAvailabilityStrict(p) && __hasSkuStrict(p);
       });
 
       if (__safeProducts.length === 0) {
@@ -5711,7 +5712,7 @@
     }
     function isShopifyAvailable(product){
       if (product == null) return false;
-      // Expanded stock rule: check Shopify inventory, custom totals, and explicit availability
+      // Only check Shopify's native availability
       if (getNumber(product.inventory_quantity) > 0) return true;
       if (Array.isArray(product.variants)){
         for (var i=0;i<product.variants.length;i++){
@@ -5719,16 +5720,7 @@
           if (getNumber(v.inventory_quantity) > 0) return true;
         }
       }
-      if (getNumber(product.product_qty) > 0) return true;
-      if (Array.isArray(product.variant_qtys)){
-        for (var j=0;j<product.variant_qtys.length;j++){
-          if (getNumber(product.variant_qtys[j]) > 0) return true;
-        }
-      }
-      // Custom stock fields
-      if (getNumber(product.custom_stan) > 0) return true;
-      if (getNumber(product.custom_szt) > 0) return true;
-      if (getNumber(product.custom_ilosc) > 0) return true;
+      // Only use Shopify's available flag, not custom fields
       if (product.available === true) return true;
       return false;
     }
