@@ -1669,6 +1669,10 @@
           updatePaginationBars(this);
           updateNavigationButtons(this);
         },
+        resize: function () {
+          updatePaginationBars(this);
+          updateNavigationButtons(this);
+        },
       },
     });
     // Replace placeholder hero images with real featured images
@@ -1734,6 +1738,9 @@
       const slidesPerView = swiper.params.slidesPerView;
       const currentSlide = swiper.realIndex;
       
+      // Calculate total pages needed
+      const totalPages = Math.ceil(totalSlides / slidesPerView);
+      
       // Calculate which pagination bar should be active
       const currentPage = Math.floor(currentSlide / slidesPerView);
       
@@ -1743,16 +1750,23 @@
         slidesPerView,
         currentSlide,
         currentPage,
+        totalPages,
         paginationBarsCount: paginationBars.length
       });
       
+      // Hide pagination bars that aren't needed
       paginationBars.forEach((bar, index) => {
-        if (index === currentPage) {
-          bar.classList.add('pagination-active');
-          bar.classList.remove('pagination-inactive');
+        if (index < totalPages) {
+          bar.style.display = 'block';
+          if (index === currentPage) {
+            bar.classList.add('pagination-active');
+            bar.classList.remove('pagination-inactive');
+          } else {
+            bar.classList.remove('pagination-active');
+            bar.classList.add('pagination-inactive');
+          }
         } else {
-          bar.classList.remove('pagination-active');
-          bar.classList.add('pagination-inactive');
+          bar.style.display = 'none';
         }
       });
     }
