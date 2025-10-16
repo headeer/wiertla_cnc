@@ -50,7 +50,11 @@
     {%- endif -%}
 
     {%- capture seo_title -%}
-    {{ page_title }}
+    {%- if template == 'index' -%}
+      wiertła cnc
+    {%- else -%}
+      {{ page_title }}
+    {%- endif -%}
     {%- if current_tags -%}
       {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
     {%- endif -%}
@@ -59,9 +63,9 @@
     {%- endif -%}
     {%- if template == 'password' -%}
       {{ shop.name }}
-    {%- else -%}
-      {%- unless page_title contains 'wiertla-cnc.com' -%}
-        &ndash; wiertla-cnc.com
+    {%- elsif template != 'index' -%}
+      {%- unless page_title contains 'wiertła cnc' -%}
+        &ndash; wiertła cnc
       {%- endunless -%}
     {%- endif -%}
   {%- endcapture -%}
