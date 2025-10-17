@@ -2302,13 +2302,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const nextButton = document.querySelector('.swiper-button-next');
       const prevButton = document.querySelector('.swiper-button-prev');
       
-      // Calculate the maximum slide index based on total slides and slides per view
+      // Calculate the maximum slide index based on total slides and current slides per view
       const totalSlides = swiper.slides.length;
-      const slidesPerView = swiper.params.slidesPerView;
-      const maxSlideIndex = Math.max(0, totalSlides - slidesPerView);
+      const currentSlidesPerView = swiper.params.slidesPerView;
+      const maxSlideIndex = Math.max(0, totalSlides - currentSlidesPerView);
       
-      // If there are fewer slides than can fit in view, hide navigation buttons
-      if (totalSlides <= slidesPerView) {
+      // If there are fewer slides than can fit in current view, hide navigation buttons
+      if (totalSlides <= currentSlidesPerView) {
         if (nextButton) nextButton.style.display = 'none';
         if (prevButton) prevButton.style.display = 'none';
         return;
@@ -2342,10 +2342,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!paginationContainer) return;
       
       const totalSlides = swiper.slides.length;
-      const slidesPerView = swiper.params.slidesPerView;
+      // Get the current active slidesPerView based on breakpoints
+      const currentSlidesPerView = swiper.params.slidesPerView;
       
-      // If there are fewer slides than can fit in view, hide pagination
-      if (totalSlides <= slidesPerView) {
+      // If there are fewer slides than can fit in current view, hide pagination
+      if (totalSlides <= currentSlidesPerView) {
         paginationContainer.style.display = 'none';
         return;
       }
@@ -2355,7 +2356,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Calculate how many times we can click right arrow
       // This is the number of pagination bars we need
-      const maxSlideIndex = Math.max(0, totalSlides - slidesPerView);
+      const maxSlideIndex = Math.max(0, totalSlides - currentSlidesPerView);
       const totalPaginationBars = maxSlideIndex + 1; // +1 because we start from 0
       
       // Clear existing pagination bars
