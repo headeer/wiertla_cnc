@@ -2637,12 +2637,12 @@
         window.selectedCategory = category;
         window.currentPage = 1;
         
-        // Scroll to top of filters container on desktop with +20px offset
-        const filtersContainer = document.querySelector('.wiertla-categories__filters.desktop');
-        if (filtersContainer) {
-          const containerTop = filtersContainer.offsetTop;
+        // Scroll to top of table on desktop with +20px offset
+        const table = document.querySelector('.wiertla-categories__table');
+        if (table) {
+          const tableTop = table.offsetTop;
           window.scrollTo({
-            top: containerTop - 20,
+            top: tableTop - 20,
             behavior: 'smooth'
           });
         }

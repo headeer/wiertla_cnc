@@ -173,6 +173,18 @@ document.addEventListener("DOMContentLoaded", function () {
             item.classList.remove("active");
           });
         this.classList.add("active");
+
+        // Scroll to top of filters container on desktop with +20px offset
+        if (window.innerWidth >= 1025) { // Desktop only
+          const filtersContainer = document.querySelector('.wiertla-categories__filters.desktop');
+          if (filtersContainer) {
+            const containerTop = filtersContainer.offsetTop;
+            window.scrollTo({
+              top: containerTop - 20,
+              behavior: 'smooth'
+            });
+          }
+        }
       });
     });
 
