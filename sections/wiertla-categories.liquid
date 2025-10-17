@@ -2349,7 +2349,24 @@
             ${product.vendor || product.custom_manufacturer || '-'}
           </td>
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--price">
-            ${product.price ? `${product.price} zł` : '-'}
+            ${(() => {
+              const price = product.price || '';
+              if (price && typeof price === 'string') {
+                // If price is a raw number (like "1100.0"), add "zł"
+                if (price.match(/^\d+\.?\d*$/)) {
+                  return price + ' zł';
+                }
+                // If price already has "zł", use as is
+                if (price.includes('zł')) {
+                  return price;
+                }
+                // If price is empty or invalid, show "-"
+                if (price === '' || price === '0' || price === '0.0') {
+                  return '-';
+                }
+              }
+              return price || '-';
+            })()}
           </td>
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--name">
             ${product.name || '-'}
@@ -3393,7 +3410,24 @@
                     <div class="wiertla-categories__mobile-dimension">
                       ${(product.metafields && product.metafields.custom && product.metafields.custom.custom_working_length) || product.custom_working_length || product.custom_xd || '-'}
                     </div>
-                    <div class="wiertla-categories__mobile-price">${product.price}
+                    <div class="wiertla-categories__mobile-price">${(() => {
+                      const price = product.price || '';
+                      if (price && typeof price === 'string') {
+                        // If price is a raw number (like "1100.0"), add "zł"
+                        if (price.match(/^\d+\.?\d*$/)) {
+                          return price + ' zł';
+                        }
+                        // If price already has "zł", use as is
+                        if (price.includes('zł')) {
+                          return price;
+                        }
+                        // If price is empty or invalid, show "-"
+                        if (price === '' || price === '0' || price === '0.0') {
+                          return '-';
+                        }
+                      }
+                      return price || '-';
+                    })()}
                         ${(() => { try { 
   // Check if Rent field has valid value (not null, not "-", not undefined)
   const hasValidRent = (product.rent || product.custom_rent) && (product.rent || product.custom_rent) !== '' && (product.rent || product.custom_rent) !== '-' && (product.rent || product.custom_rent) !== null && (product.rent || product.custom_rent) !== 'undefined';
@@ -3436,7 +3470,24 @@
                     <div class="wiertla-categories__mobile-top">
                       <div class="wiertla-categories__mobile-image" style="display:none;"></div>
                       <div class="wiertla-categories__mobile-vendor">${formatSymbol(product.custom_manufacturer || product.vendor || '-')}</div>
-                      <div class="wiertla-categories__mobile-price">${product.price}${(() => { try { 
+                      <div class="wiertla-categories__mobile-price">${(() => {
+                      const price = product.price || '';
+                      if (price && typeof price === 'string') {
+                        // If price is a raw number (like "1100.0"), add "zł"
+                        if (price.match(/^\d+\.?\d*$/)) {
+                          return price + ' zł';
+                        }
+                        // If price already has "zł", use as is
+                        if (price.includes('zł')) {
+                          return price;
+                        }
+                        // If price is empty or invalid, show "-"
+                        if (price === '' || price === '0' || price === '0.0') {
+                          return '-';
+                        }
+                      }
+                      return price || '-';
+                    })()}${(() => { try { 
   // Check if Rent field has valid value (not null, not "-", not undefined)
   const hasValidRent = (product.rent || product.custom_rent) && (product.rent || product.custom_rent) !== '' && (product.rent || product.custom_rent) !== '-' && (product.rent || product.custom_rent) !== null && (product.rent || product.custom_rent) !== 'undefined';
   
@@ -3467,7 +3518,24 @@
                       <div class="wiertla-categories__mobile-image" style="display:none;"></div>
                       <div class="wiertla-categories__mobile-fi"><span class="mobile-value">${(() => { const fi = product.custom_fi || (product.metafields && product.metafields.custom && (product.metafields.custom.srednica || product.metafields.custom.diameter)) || product.custom_srednica || product.custom_srednica_display || ''; const v = (fi || '').toString().trim(); return v ? ('⌀ ' + v) : '-'; })()}</span></div>
                       <div class="wiertla-categories__mobile-vendor">${formatSymbol(product.custom_manufacturer || product.vendor || '-')}</div>
-                      <div class="wiertla-categories__mobile-price">${product.price}${(() => { try { 
+                      <div class="wiertla-categories__mobile-price">${(() => {
+                      const price = product.price || '';
+                      if (price && typeof price === 'string') {
+                        // If price is a raw number (like "1100.0"), add "zł"
+                        if (price.match(/^\d+\.?\d*$/)) {
+                          return price + ' zł';
+                        }
+                        // If price already has "zł", use as is
+                        if (price.includes('zł')) {
+                          return price;
+                        }
+                        // If price is empty or invalid, show "-"
+                        if (price === '' || price === '0' || price === '0.0') {
+                          return '-';
+                        }
+                      }
+                      return price || '-';
+                    })()}${(() => { try { 
   // Check if Rent field has valid value (not null, not "-", not undefined)
   const hasValidRent = (product.rent || product.custom_rent) && (product.rent || product.custom_rent) !== '' && (product.rent || product.custom_rent) !== '-' && (product.rent || product.custom_rent) !== null && (product.rent || product.custom_rent) !== 'undefined';
   
@@ -3541,7 +3609,6 @@
               <td class="wiertla-categories__table-cell">
                 <div class="wiertla-categories__price-wrapper">
                   <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
-                    console.log('Price formatting - product.price:', product.price, 'type:', typeof product.price);
                     const price = product.price || '';
                     if (price && typeof price === 'string') {
                       // If price is a raw number (like "1100.0"), add "zł"
@@ -4236,15 +4303,33 @@
               let formattedPrice = '';
               const price = product.price || product.price_numeric || product.compare_at_price || '';
               if (price !== undefined && price !== null && price !== '') {
-                // Check if price is a number or can be converted to one
-                const priceNum = typeof price === 'number' ? price : parseFloat(price);
-
-                if (!isNaN(priceNum)) {
-                  formattedPrice = priceNum.toFixed(2) + ' zł';
+                if (typeof price === 'string') {
+                  // If price is a raw number (like "1100.0"), add "zł"
+                  if (price.match(/^\d+\.?\d*$/)) {
+                    formattedPrice = price + ' zł';
+                  }
+                  // If price already has "zł", use as is
+                  else if (price.includes('zł')) {
+                    formattedPrice = price;
+                  }
+                  // If price is empty or invalid, show "-"
+                  else if (price === '' || price === '0' || price === '0.0') {
+                    formattedPrice = '-';
+                  }
+                  else {
+                    formattedPrice = price;
+                  }
                 } else {
-                  // If it's not a number, just use as is
-                  formattedPrice = price + (String(price).includes('zł') ? '' : ' zł');
+                  // For numeric prices, format properly
+                  const priceNum = typeof price === 'number' ? price : parseFloat(price);
+                  if (!isNaN(priceNum) && priceNum > 0) {
+                    formattedPrice = priceNum.toFixed(2) + ' zł';
+                  } else {
+                    formattedPrice = '-';
+                  }
                 }
+              } else {
+                formattedPrice = '-';
               }
 
               // Determine the icon URL based on product type
@@ -4389,15 +4474,33 @@
               let formattedPrice = '';
               const price = product.price || product.price_numeric || product.compare_at_price || '';
               if (price !== undefined && price !== null && price !== '') {
-                // Check if price is a number or can be converted to one
-                const priceNum = typeof price === 'number' ? price : parseFloat(price);
-
-                if (!isNaN(priceNum)) {
-                  formattedPrice = priceNum.toFixed(2) + ' zł';
+                if (typeof price === 'string') {
+                  // If price is a raw number (like "1100.0"), add "zł"
+                  if (price.match(/^\d+\.?\d*$/)) {
+                    formattedPrice = price + ' zł';
+                  }
+                  // If price already has "zł", use as is
+                  else if (price.includes('zł')) {
+                    formattedPrice = price;
+                  }
+                  // If price is empty or invalid, show "-"
+                  else if (price === '' || price === '0' || price === '0.0') {
+                    formattedPrice = '-';
+                  }
+                  else {
+                    formattedPrice = price;
+                  }
                 } else {
-                  // If it's not a number, just use as is
-                  formattedPrice = price + (String(price).includes('zł') ? '' : ' zł');
+                  // For numeric prices, format properly
+                  const priceNum = typeof price === 'number' ? price : parseFloat(price);
+                  if (!isNaN(priceNum) && priceNum > 0) {
+                    formattedPrice = priceNum.toFixed(2) + ' zł';
+                  } else {
+                    formattedPrice = '-';
+                  }
                 }
+              } else {
+                formattedPrice = '-';
               }
 
               // Determine the icon URL based on product type
