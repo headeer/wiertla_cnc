@@ -168,6 +168,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // If "wszystkie" is clicked, reset all filters (except mainType)
         if (category === "wszystkie") {
+          console.log('Wszystkie clicked - resetting filters');
+          
           // Reset all dropdown filters to default values (except mainType)
           document.querySelectorAll('.wiertla-categories__filter:not(.wiertla-filter-mainType)').forEach(filter => {
             filter.value = '';
@@ -189,6 +191,14 @@ document.addEventListener("DOMContentLoaded", function () {
           if (wszystkieBtn) {
             wszystkieBtn.classList.add('active');
           }
+          
+          // Also reset any other active states that might interfere
+          document.querySelectorAll('.wiertla-categories__icon-item').forEach(icon => {
+            icon.classList.remove('active');
+          });
+          
+          // Make sure the clicked "wszystkie" icon is active
+          this.classList.add('active');
         }
 
         // Update active state
