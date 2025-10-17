@@ -2282,10 +2282,16 @@ document.addEventListener('DOMContentLoaded', function() {
       
       on: {
         init: function() {
+          createPaginationBars(this);
           updatePaginationBars(this.realIndex);
           updateNavigationButtons(this);
         },
         slideChange: function() {
+          updatePaginationBars(this.realIndex);
+          updateNavigationButtons(this);
+        },
+        resize: function() {
+          createPaginationBars(this);
           updatePaginationBars(this.realIndex);
           updateNavigationButtons(this);
         }
@@ -2296,8 +2302,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const nextButton = document.querySelector('.swiper-button-next');
       const prevButton = document.querySelector('.swiper-button-prev');
       
-      // Disable next button if we're at the last slide
-      if (swiper.realIndex >= 2) {
+      // Calculate the maximum slide index based on total slides and slides per view
+      const totalSlides = swiper.slides.length;
+      const slidesPerView = swiper.params.slidesPerView;
+      const maxSlideIndex = Math.max(0, totalSlides - slidesPerView);
+      
+      // Disable next button if we're at the last possible slide
+      if (swiper.realIndex >= maxSlideIndex) {
         nextButton.style.opacity = '0.35';
         nextButton.style.pointerEvents = 'none';
       } else {
@@ -2315,10 +2326,42 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   
+    function createPaginationBars(swiper) {
+      const paginationContainer = document.getElementById('related-pagination');
+      if (!paginationContainer) return;
+      
+      const totalSlides = swiper.slides.length;
+      const slidesPerView = swiper.params.slidesPerView;
+      const totalPages = Math.ceil(totalSlides / slidesPerView);
+      
+      // Clear existing pagination bars
+      paginationContainer.innerHTML = '';
+      
+      // Create pagination bars
+      for (let i = 0; i < totalPages; i++) {
+        const bar = document.createElement('div');
+        bar.className = `pagination-bar ${i === 0 ? 'pagination-active' : 'pagination-inactive'}`;
+        bar.setAttribute('data-index', i);
+        paginationContainer.appendChild(bar);
+      }
+      
+      // Add click handlers for pagination bars
+      const paginationBars = paginationContainer.querySelectorAll('.pagination-bar');
+      paginationBars.forEach((bar, index) => {
+        bar.addEventListener('click', () => {
+          const targetSlide = index * slidesPerView;
+          swiper.slideTo(targetSlide);
+        });
+      });
+    }
+  
     function updatePaginationBars(activeIndex) {
       const paginationBars = document.querySelectorAll('.pagination-bar');
+      const slidesPerView = swiper.params.slidesPerView;
+      const currentPage = Math.floor(activeIndex / slidesPerView);
+      
       paginationBars.forEach((bar, index) => {
-        if (index === activeIndex) {
+        if (index === currentPage) {
           bar.classList.add('pagination-active');
           bar.classList.remove('pagination-inactive');
         } else {
@@ -2328,13 +2371,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   
-    // Add click handlers for pagination bars
-    const paginationBars = document.querySelectorAll('.pagination-bar');
-    paginationBars.forEach((bar, index) => {
-      bar.addEventListener('click', () => {
-        swiper.slideTo(index);
-      });
-    });
   });
 </script>
 {% stylesheet %}
