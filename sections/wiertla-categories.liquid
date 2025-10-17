@@ -2350,22 +2350,25 @@
           </td>
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--price">
             ${(() => {
-              const price = product.price || '';
-              if (price && typeof price === 'string') {
-                // If price is a raw number (like "1100.0"), add "zł"
-                if (price.match(/^\d+\.?\d*$/)) {
-                  return price + ' zł';
-                }
-                // If price already has "zł", use as is
-                if (price.includes('zł')) {
-                  return price;
-                }
-                // If price is empty or invalid, show "-"
-                if (price === '' || price === '0' || price === '0.0') {
-                  return '-';
-                }
-              }
-              return price || '-';
+                      const price = product.price || '';
+                      if (price !== undefined && price !== null && price !== '') {
+                        // Convert to string for consistent handling
+                        const priceStr = String(price);
+                        
+                        // If price is a raw number (like "1100.0" or "890"), add "zł"
+                        if (priceStr.match(/^\d+\.?\d*$/)) {
+                          return priceStr + ' zł';
+                        }
+                        // If price already has "zł", use as is
+                        if (priceStr.includes('zł')) {
+                          return priceStr;
+                        }
+                        // If price is empty or invalid, show "-"
+                        if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00') {
+                          return '-';
+                        }
+                      }
+                      return '-';
             })()}
           </td>
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--name">
@@ -3610,21 +3613,24 @@
                 <div class="wiertla-categories__price-wrapper">
                   <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
                     const price = product.price || '';
-                    if (price && typeof price === 'string') {
-                      // If price is a raw number (like "1100.0"), add "zł"
-                      if (price.match(/^\d+\.?\d*$/)) {
-                        return price + ' zł';
+                    if (price !== undefined && price !== null && price !== '') {
+                      // Convert to string for consistent handling
+                      const priceStr = String(price);
+                      
+                      // If price is a raw number (like "1100.0" or "890"), add "zł"
+                      if (priceStr.match(/^\d+\.?\d*$/)) {
+                        return priceStr + ' zł';
                       }
                       // If price already has "zł", use as is
-                      if (price.includes('zł')) {
-                        return price;
+                      if (priceStr.includes('zł')) {
+                        return priceStr;
                       }
                       // If price is empty or invalid, show "-"
-                      if (price === '' || price === '0' || price === '0.0') {
+                      if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00') {
                         return '-';
                       }
                     }
-                    return price || '-';
+                    return '-';
                   })()}</span>
                   ${(() => { try { 
   // Check if Rent field has valid value (not null, not "-", not undefined)
@@ -3686,21 +3692,24 @@
                   <div class="wiertla-categories__price-wrapper">
                     <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
                     const price = product.price || '';
-                    if (price && typeof price === 'string') {
-                      // If price is a raw number (like "1100.0"), add "zł"
-                      if (price.match(/^\d+\.?\d*$/)) {
-                        return price + ' zł';
+                    if (price !== undefined && price !== null && price !== '') {
+                      // Convert to string for consistent handling
+                      const priceStr = String(price);
+                      
+                      // If price is a raw number (like "1100.0" or "890"), add "zł"
+                      if (priceStr.match(/^\d+\.?\d*$/)) {
+                        return priceStr + ' zł';
                       }
                       // If price already has "zł", use as is
-                      if (price.includes('zł')) {
-                        return price;
+                      if (priceStr.includes('zł')) {
+                        return priceStr;
                       }
                       // If price is empty or invalid, show "-"
-                      if (price === '' || price === '0' || price === '0.0') {
+                      if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00') {
                         return '-';
                       }
                     }
-                    return price || '-';
+                    return '-';
                   })()}</span>
                   </div>
                 </td>
@@ -3729,21 +3738,24 @@
                   <div class="wiertla-categories__price-wrapper">
                     <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
                     const price = product.price || '';
-                    if (price && typeof price === 'string') {
-                      // If price is a raw number (like "1100.0"), add "zł"
-                      if (price.match(/^\d+\.?\d*$/)) {
-                        return price + ' zł';
+                    if (price !== undefined && price !== null && price !== '') {
+                      // Convert to string for consistent handling
+                      const priceStr = String(price);
+                      
+                      // If price is a raw number (like "1100.0" or "890"), add "zł"
+                      if (priceStr.match(/^\d+\.?\d*$/)) {
+                        return priceStr + ' zł';
                       }
                       // If price already has "zł", use as is
-                      if (price.includes('zł')) {
-                        return price;
+                      if (priceStr.includes('zł')) {
+                        return priceStr;
                       }
                       // If price is empty or invalid, show "-"
-                      if (price === '' || price === '0' || price === '0.0') {
+                      if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00') {
                         return '-';
                       }
                     }
-                    return price || '-';
+                    return '-';
                   })()}</span>
                   </div>
                 </td>
@@ -4313,7 +4325,7 @@
                     formattedPrice = price;
                   }
                   // If price is empty or invalid, show "-"
-                  else if (price === '' || price === '0' || price === '0.0') {
+                  else if (price === '' || price === '0' || price === '0.0' || price === 0 || price === '0.00') {
                     formattedPrice = '-';
                   }
                   else {
@@ -4484,7 +4496,7 @@
                     formattedPrice = price;
                   }
                   // If price is empty or invalid, show "-"
-                  else if (price === '' || price === '0' || price === '0.0') {
+                  else if (price === '' || price === '0' || price === '0.0' || price === 0 || price === '0.00') {
                     formattedPrice = '-';
                   }
                   else {
