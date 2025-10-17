@@ -1916,7 +1916,9 @@
       
       
       // Generate table with filtered and paginated products
+      console.log('🔍 [APPLY FILTERS] About to call generateTable with', productsToShow.length, 'products');
       generateTable(productsToShow);
+      console.log('🔍 [APPLY FILTERS] generateTable call completed');
       updatePaginationButtons();
       
       // Update results count
