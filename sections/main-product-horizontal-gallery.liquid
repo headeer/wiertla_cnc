@@ -2332,13 +2332,17 @@ document.addEventListener('DOMContentLoaded', function() {
       
       const totalSlides = swiper.slides.length;
       const slidesPerView = swiper.params.slidesPerView;
-      const totalPages = Math.ceil(totalSlides / slidesPerView);
+      
+      // Calculate how many times we can click right arrow
+      // This is the number of pagination bars we need
+      const maxSlideIndex = Math.max(0, totalSlides - slidesPerView);
+      const totalPaginationBars = maxSlideIndex + 1; // +1 because we start from 0
       
       // Clear existing pagination bars
       paginationContainer.innerHTML = '';
       
       // Create pagination bars
-      for (let i = 0; i < totalPages; i++) {
+      for (let i = 0; i < totalPaginationBars; i++) {
         const bar = document.createElement('div');
         bar.className = `pagination-bar ${i === 0 ? 'pagination-active' : 'pagination-inactive'}`;
         bar.setAttribute('data-index', i);
@@ -2349,19 +2353,16 @@ document.addEventListener('DOMContentLoaded', function() {
       const paginationBars = paginationContainer.querySelectorAll('.pagination-bar');
       paginationBars.forEach((bar, index) => {
         bar.addEventListener('click', () => {
-          const targetSlide = index * slidesPerView;
-          swiper.slideTo(targetSlide);
+          swiper.slideTo(index);
         });
       });
     }
   
     function updatePaginationBars(activeIndex) {
       const paginationBars = document.querySelectorAll('.pagination-bar');
-      const slidesPerView = swiper.params.slidesPerView;
-      const currentPage = Math.floor(activeIndex / slidesPerView);
       
       paginationBars.forEach((bar, index) => {
-        if (index === currentPage) {
+        if (index === activeIndex) {
           bar.classList.add('pagination-active');
           bar.classList.remove('pagination-inactive');
         } else {
