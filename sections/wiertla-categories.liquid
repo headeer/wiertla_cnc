@@ -1895,6 +1895,7 @@
     
     // Apply filters and pagination
     function applyFilters() {
+      console.log('🔍 [APPLY FILTERS] Function called');
       
       // Get filtered products using filterProducts function
       const filteredProducts = filterProducts();
@@ -3178,6 +3179,7 @@
   
     // Only have ONE generateTable function
     function generateTable(products) {
+      console.log('🔍 [GENERATE TABLE] Function called with', products ? products.length : 0, 'products');
       const tableBody = document.querySelector('.wiertla-categories__table tbody');
       if (!tableBody) {
         console.error('Table body element not found');
