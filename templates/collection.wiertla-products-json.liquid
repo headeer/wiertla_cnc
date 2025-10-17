@@ -40,7 +40,13 @@
       "custom_ilosc": {{ product.metafields.custom.ilosc | json }},
       "custom_srednica": {{ product.metafields.custom.srednica | default: product.metafields.custom._rednica | json }},
       "custom_srednica_display": {{ product.metafields.custom.srednica_display | json }},
-      "custom_rodzaj": {{ product.metafields.custom.rodzaj | json }}
+      "custom_rodzaj": {{ product.metafields.custom.rodzaj | json }},
+
+      "custom_rent": {{ product.metafields.custom.rent | json }},
+      "custom_rent_value": {{ product.metafields.custom.rent_value | json }},
+      "rent_price": {{ product.metafields.custom.rent_price | json }},
+      "rent_value": {{ product.metafields.custom.rent_value | json }},
+      "rentable": {{ product.metafields.custom.rentable | json }}
     }{%- if forloop.last == false -%},{%- endif -%}
     {%- endfor -%}
   ]

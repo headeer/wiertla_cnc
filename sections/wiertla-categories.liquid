@@ -3388,11 +3388,11 @@
                     <div class="wiertla-categories__mobile-price">${product.price}
                         ${(() => { try { 
   // Check if Rent field has valid value (not null, not "-", not undefined)
-  const hasValidRent = product.rent && product.rent !== '' && product.rent !== '-' && product.rent !== null && product.rent !== 'undefined';
+  const hasValidRent = (product.rent || product.custom_rent) && (product.rent || product.custom_rent) !== '' && (product.rent || product.custom_rent) !== '-' && (product.rent || product.custom_rent) !== null && (product.rent || product.custom_rent) !== 'undefined';
   
   // Check if at least one of rent_price OR rent_value has valid value
-  const hasValidRentPrice = product.rent_price && product.rent_price !== '' && product.rent_price !== '-' && product.rent_price !== null && product.rent_price !== 'undefined';
-  const hasValidRentValue = product.rent_value && product.rent_value !== '' && product.rent_value !== '-' && product.rent_value !== null && product.rent_value !== 'undefined';
+  const hasValidRentPrice = (product.rent_price || product.custom_rent_value) && (product.rent_price || product.custom_rent_value) !== '' && (product.rent_price || product.custom_rent_value) !== '-' && (product.rent_price || product.custom_rent_value) !== null && (product.rent_price || product.custom_rent_value) !== 'undefined';
+  const hasValidRentValue = (product.rent_value || product.custom_rent_value) && (product.rent_value || product.custom_rent_value) !== '' && (product.rent_value || product.custom_rent_value) !== '-' && (product.rent_value || product.custom_rent_value) !== null && (product.rent_value || product.custom_rent_value) !== 'undefined';
   const hasValidRentPriceOrValue = hasValidRentPrice || hasValidRentValue;
   
   // Show rent tool button when Rent field is valid AND at least one price/value is valid
@@ -3430,11 +3430,11 @@
                       <div class="wiertla-categories__mobile-vendor">${formatSymbol(product.custom_manufacturer || product.vendor || '-')}</div>
                       <div class="wiertla-categories__mobile-price">${product.price}${(() => { try { 
   // Check if Rent field has valid value (not null, not "-", not undefined)
-  const hasValidRent = product.rent && product.rent !== '' && product.rent !== '-' && product.rent !== null && product.rent !== 'undefined';
+  const hasValidRent = (product.rent || product.custom_rent) && (product.rent || product.custom_rent) !== '' && (product.rent || product.custom_rent) !== '-' && (product.rent || product.custom_rent) !== null && (product.rent || product.custom_rent) !== 'undefined';
   
   // Check if at least one of rent_price OR rent_value has valid value
-  const hasValidRentPrice = product.rent_price && product.rent_price !== '' && product.rent_price !== '-' && product.rent_price !== null && product.rent_price !== 'undefined';
-  const hasValidRentValue = product.rent_value && product.rent_value !== '' && product.rent_value !== '-' && product.rent_value !== null && product.rent_value !== 'undefined';
+  const hasValidRentPrice = (product.rent_price || product.custom_rent_value) && (product.rent_price || product.custom_rent_value) !== '' && (product.rent_price || product.custom_rent_value) !== '-' && (product.rent_price || product.custom_rent_value) !== null && (product.rent_price || product.custom_rent_value) !== 'undefined';
+  const hasValidRentValue = (product.rent_value || product.custom_rent_value) && (product.rent_value || product.custom_rent_value) !== '' && (product.rent_value || product.custom_rent_value) !== '-' && (product.rent_value || product.custom_rent_value) !== null && (product.rent_value || product.custom_rent_value) !== 'undefined';
   const hasValidRentPriceOrValue = hasValidRentPrice || hasValidRentValue;
   
   // Show rent tool button when Rent field is valid AND at least one price/value is valid
@@ -3461,11 +3461,11 @@
                       <div class="wiertla-categories__mobile-vendor">${formatSymbol(product.custom_manufacturer || product.vendor || '-')}</div>
                       <div class="wiertla-categories__mobile-price">${product.price}${(() => { try { 
   // Check if Rent field has valid value (not null, not "-", not undefined)
-  const hasValidRent = product.rent && product.rent !== '' && product.rent !== '-' && product.rent !== null && product.rent !== 'undefined';
+  const hasValidRent = (product.rent || product.custom_rent) && (product.rent || product.custom_rent) !== '' && (product.rent || product.custom_rent) !== '-' && (product.rent || product.custom_rent) !== null && (product.rent || product.custom_rent) !== 'undefined';
   
   // Check if at least one of rent_price OR rent_value has valid value
-  const hasValidRentPrice = product.rent_price && product.rent_price !== '' && product.rent_price !== '-' && product.rent_price !== null && product.rent_price !== 'undefined';
-  const hasValidRentValue = product.rent_value && product.rent_value !== '' && product.rent_value !== '-' && product.rent_value !== null && product.rent_value !== 'undefined';
+  const hasValidRentPrice = (product.rent_price || product.custom_rent_value) && (product.rent_price || product.custom_rent_value) !== '' && (product.rent_price || product.custom_rent_value) !== '-' && (product.rent_price || product.custom_rent_value) !== null && (product.rent_price || product.custom_rent_value) !== 'undefined';
+  const hasValidRentValue = (product.rent_value || product.custom_rent_value) && (product.rent_value || product.custom_rent_value) !== '' && (product.rent_value || product.custom_rent_value) !== '-' && (product.rent_value || product.custom_rent_value) !== null && (product.rent_value || product.custom_rent_value) !== 'undefined';
   const hasValidRentPriceOrValue = hasValidRentPrice || hasValidRentValue;
   
   // Show rent tool button when Rent field is valid AND at least one price/value is valid
@@ -3535,11 +3535,11 @@
                   <span class="wiertla-categories__price" data-href="/products/${product.handle}">${product.price}</span>
                   ${(() => { try { 
   // Check if Rent field has valid value (not null, not "-", not undefined)
-  const hasValidRent = product.rent && product.rent !== '' && product.rent !== '-' && product.rent !== null && product.rent !== 'undefined';
+  const hasValidRent = (product.rent || product.custom_rent) && (product.rent || product.custom_rent) !== '' && (product.rent || product.custom_rent) !== '-' && (product.rent || product.custom_rent) !== null && (product.rent || product.custom_rent) !== 'undefined';
   
   // Check if at least one of rent_price OR rent_value has valid value
-  const hasValidRentPrice = product.rent_price && product.rent_price !== '' && product.rent_price !== '-' && product.rent_price !== null && product.rent_price !== 'undefined';
-  const hasValidRentValue = product.rent_value && product.rent_value !== '' && product.rent_value !== '-' && product.rent_value !== null && product.rent_value !== 'undefined';
+  const hasValidRentPrice = (product.rent_price || product.custom_rent_value) && (product.rent_price || product.custom_rent_value) !== '' && (product.rent_price || product.custom_rent_value) !== '-' && (product.rent_price || product.custom_rent_value) !== null && (product.rent_price || product.custom_rent_value) !== 'undefined';
+  const hasValidRentValue = (product.rent_value || product.custom_rent_value) && (product.rent_value || product.custom_rent_value) !== '' && (product.rent_value || product.custom_rent_value) !== '-' && (product.rent_value || product.custom_rent_value) !== null && (product.rent_value || product.custom_rent_value) !== 'undefined';
   const hasValidRentPriceOrValue = hasValidRentPrice || hasValidRentValue;
   
   // Show rent tool button when Rent field is valid AND at least one price/value is valid
