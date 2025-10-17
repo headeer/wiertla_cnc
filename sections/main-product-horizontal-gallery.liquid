@@ -2307,6 +2307,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const slidesPerView = swiper.params.slidesPerView;
       const maxSlideIndex = Math.max(0, totalSlides - slidesPerView);
       
+      // If there are fewer slides than can fit in view, hide navigation buttons
+      if (totalSlides <= slidesPerView) {
+        if (nextButton) nextButton.style.display = 'none';
+        if (prevButton) prevButton.style.display = 'none';
+        return;
+      }
+      
+      // Show navigation buttons
+      if (nextButton) nextButton.style.display = 'flex';
+      if (prevButton) prevButton.style.display = 'flex';
+      
       // Disable next button if we're at the last possible slide
       if (swiper.realIndex >= maxSlideIndex) {
         nextButton.style.opacity = '0.35';
@@ -2332,6 +2343,15 @@ document.addEventListener('DOMContentLoaded', function() {
       
       const totalSlides = swiper.slides.length;
       const slidesPerView = swiper.params.slidesPerView;
+      
+      // If there are fewer slides than can fit in view, hide pagination
+      if (totalSlides <= slidesPerView) {
+        paginationContainer.style.display = 'none';
+        return;
+      }
+      
+      // Show pagination container
+      paginationContainer.style.display = 'flex';
       
       // Calculate how many times we can click right arrow
       // This is the number of pagination bars we need
