@@ -2637,15 +2637,6 @@
         window.selectedCategory = category;
         window.currentPage = 1;
         
-        // Scroll to top of table on desktop with +20px offset
-        const table = document.querySelector('.wiertla-categories__table');
-        if (table) {
-          const tableTop = table.offsetTop;
-          window.scrollTo({
-            top: tableTop - 20,
-            behavior: 'smooth'
-          });
-        }
         
         applyFilters();
     
@@ -2663,10 +2654,9 @@
         window.selectedCategory = filterButton.getAttribute('data-filter');
         window.currentPage = 1;
         
-        // If clicking on "Wszystkie" button, reset all filters (except mainType)
+        // If clicking on "Wszystkie" button, reset all filters
         if (window.selectedCategory === 'wszystkie') {
-          // Reset filter state (keep mainType)
-          const currentMainType = window.WiertlaCNC?.activeTabType || 'wiertla';
+          // Reset filter state
           currentFilters = {
             type: '',
             crown: '',
@@ -2674,8 +2664,8 @@
             search: ''
           };
           
-          // Reset all dropdown filters to default values (except mainType)
-          document.querySelectorAll('.wiertla-categories__filter:not(.wiertla-filter-mainType)').forEach(filter => {
+          // Reset all dropdown filters to default values
+          document.querySelectorAll('.wiertla-categories__filter').forEach(filter => {
             filter.value = '';
           });
           
@@ -2683,17 +2673,6 @@
           const searchInput = document.querySelector('.wiertla-search__input');
           if (searchInput) {
             searchInput.value = '';
-          }
-          
-          // Reset all icon items to inactive
-          document.querySelectorAll('.wiertla-categories__icon-item').forEach(icon => {
-            icon.classList.remove('active');
-          });
-          
-          // Set "Wszystkie" icon to active
-          const wszystkieIcon = document.querySelector('.wiertla-categories__icon-item[data-category="wszystkie"]');
-          if (wszystkieIcon) {
-            wszystkieIcon.classList.add('active');
           }
         }
         
@@ -3553,15 +3532,7 @@
               ${product.custom_rent_value ? `<td class="wiertla-categories__table-cell" title="Wynajem">${product.custom_rent_value}</td>` : ''}
               <td class="wiertla-categories__table-cell">
                 <div class="wiertla-categories__price-wrapper">
-                  <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
-                    const price = product.price || product.price_numeric || product.compare_at_price || '';
-                    if (price !== undefined && price !== null && price !== '' && price !== '0' && price !== 0) {
-                      const priceStr = String(price);
-                      // If price doesn't already contain 'zł', add it
-                      return priceStr.includes('zł') ? priceStr : priceStr + ' zł';
-                    }
-                    return '-';
-                  })()}</span>
+                  <span class="wiertla-categories__price" data-href="/products/${product.handle}">${product.price}</span>
                   ${(() => { try { 
   // Check if Rent field has valid value (not null, not "-", not undefined)
   const hasValidRent = (product.rent || product.custom_rent) && (product.rent || product.custom_rent) !== '' && (product.rent || product.custom_rent) !== '-' && (product.rent || product.custom_rent) !== null && (product.rent || product.custom_rent) !== 'undefined';
@@ -3620,18 +3591,7 @@
                 </td>
                  <td class="wiertla-categories__table-cell">
                   <div class="wiertla-categories__price-wrapper">
-                    <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
-                      const price = product.price || product.price_numeric || product.compare_at_price || '';
-                      if (price !== undefined && price !== null && price !== '') {
-                        const priceNum = typeof price === 'number' ? price : parseFloat(price);
-                        if (!isNaN(priceNum)) {
-                          return priceNum.toFixed(2) + ' zł';
-                        } else {
-                          return price + (String(price).includes('zł') ? '' : ' zł');
-                        }
-                      }
-                      return '-';
-                    })()}</span>
+                    <span class="wiertla-categories__price" data-href="/products/${product.handle}">${product.price}</span>
                   </div>
                 </td>
               `;
@@ -3657,18 +3617,7 @@
                 </td>
                  <td class="wiertla-categories__table-cell">
                   <div class="wiertla-categories__price-wrapper">
-                    <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
-                      const price = product.price || product.price_numeric || product.compare_at_price || '';
-                      if (price !== undefined && price !== null && price !== '') {
-                        const priceNum = typeof price === 'number' ? price : parseFloat(price);
-                        if (!isNaN(priceNum)) {
-                          return priceNum.toFixed(2) + ' zł';
-                        } else {
-                          return price + (String(price).includes('zł') ? '' : ' zł');
-                        }
-                      }
-                      return '-';
-                    })()}</span>
+                    <span class="wiertla-categories__price" data-href="/products/${product.handle}">${product.price}</span>
                   </div>
                 </td>
               `;

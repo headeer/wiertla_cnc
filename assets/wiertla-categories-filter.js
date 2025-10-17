@@ -37,6 +37,43 @@ document.addEventListener("DOMContentLoaded", function () {
     U: "UK",
   };
 
+  // Function to check if any filters are active
+  function hasActiveFilters() {
+    // Check dropdown filters (except mainType)
+    const dropdowns = document.querySelectorAll('.wiertla-categories__filter:not(.wiertla-filter-mainType)');
+    for (let dropdown of dropdowns) {
+      if (dropdown.value && dropdown.value !== '') {
+        return true;
+      }
+    }
+    
+    // Check search input
+    const searchInput = document.querySelector('.wiertla-search__input');
+    if (searchInput && searchInput.value.trim() !== '') {
+      return true;
+    }
+    
+    // Check if any category icon other than "wszystkie" is active
+    const activeIcon = document.querySelector('.wiertla-categories__icon-item.active');
+    if (activeIcon && activeIcon.dataset.category !== 'wszystkie') {
+      return true;
+    }
+    
+    return false;
+  }
+
+  // Function to update reset button state
+  function updateResetButtonState() {
+    const resetBtn = document.querySelector('.wiertla-categories__filter-button[data-filter="reset"]');
+    if (!resetBtn) return;
+    
+    if (hasActiveFilters()) {
+      resetBtn.classList.remove('active');
+    } else {
+      resetBtn.classList.add('active');
+    }
+  }
+
   // Function to filter products based on category
   function filterByCategory(category) {
     const table = document.querySelector(".wiertla-categories__table");
@@ -52,6 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     updateResultsCount();
+    updateResetButtonState(); // Update reset button state after filtering
   }
 
   // Brand filtering by logo clicks
@@ -185,23 +223,11 @@ document.addEventListener("DOMContentLoaded", function () {
             btn.classList.remove('active');
           });
           
-          // Set "Wszystkie" button to active
-          const wszystkieBtn = document.querySelector('.wiertla-categories__filter-button[data-filter="wszystkie"]');
-          if (wszystkieBtn) {
-            wszystkieBtn.classList.add('active');
+          // Set "Reset Filters" button to active
+          const resetBtn = document.querySelector('.wiertla-categories__filter-button[data-filter="reset"]');
+          if (resetBtn) {
+            resetBtn.classList.add('active');
           }
-          
-          // Reset window.currentFilters object
-          if (window.currentFilters) {
-            window.currentFilters.typ = '';
-            window.currentFilters.crown = '';
-            window.currentFilters.manufacturer = '';
-            window.currentFilters.search = '';
-            window.currentFilters.category = '';
-          }
-          
-          // Reset window.selectedCategory
-          window.selectedCategory = 'wszystkie';
         }
         
         // Filter the table (this works for all categories including "wszystkie")
@@ -236,6 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll('[data-filter="crown"]').forEach((filter) => {
     filter.addEventListener("change", function () {
       filterByCrownType(this.value);
+      updateResetButtonState(); // Update reset button state
     });
   });
 
@@ -243,8 +270,76 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll('[data-filter="warehouse"]').forEach((filter) => {
     filter.addEventListener("change", function () {
       filterByWarehouse(this.value);
+      updateResetButtonState(); // Update reset button state
     });
   });
+
+  // Event listeners for all other filters to update reset button state
+  document.querySelectorAll('.wiertla-categories__filter:not(.wiertla-filter-mainType)').forEach((filter) => {
+    filter.addEventListener("change", function () {
+      updateResetButtonState();
+    });
+  });
+
+  // Event listener for search input to update reset button state
+  const searchInput = document.querySelector('.wiertla-search__input');
+  if (searchInput) {
+    searchInput.addEventListener("input", function () {
+      updateResetButtonState();
+    });
+  }
+
+  // Event listener for Reset Filters button
+  const resetBtn = document.querySelector('.wiertla-categories__filter-button[data-filter="reset"]');
+  if (resetBtn) {
+    resetBtn.addEventListener("click", function () {
+      console.log('Reset Filters button clicked');
+      
+      // Reset all dropdown filters to default values (except mainType)
+      document.querySelectorAll('.wiertla-categories__filter:not(.wiertla-filter-mainType)').forEach(filter => {
+        filter.value = '';
+      });
+      
+      // Clear search input
+      if (searchInput) {
+        searchInput.value = '';
+      }
+      
+      // Reset all filter buttons to inactive
+      document.querySelectorAll('.wiertla-categories__filter-button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Set "Reset Filters" button to active
+      this.classList.add('active');
+      
+      // Reset window.currentFilters object
+      if (window.currentFilters) {
+        window.currentFilters.typ = '';
+        window.currentFilters.crown = '';
+        window.currentFilters.manufacturer = '';
+        window.currentFilters.search = '';
+        window.currentFilters.category = '';
+      }
+      
+      // Reset window.selectedCategory
+      window.selectedCategory = 'wszystkie';
+      
+      // Reset all icon items to inactive
+      document.querySelectorAll('.wiertla-categories__icon-item').forEach(icon => {
+        icon.classList.remove('active');
+      });
+      
+      // Set "wszystkie" icon to active
+      const wszystkieIcon = document.querySelector('.wiertla-categories__icon-item[data-category="wszystkie"]');
+      if (wszystkieIcon) {
+        wszystkieIcon.classList.add('active');
+      }
+      
+      // Filter the table to show all products
+      filterByCategory('wszystkie');
+    });
+  }
 
   // Mobile-specific event listeners
   const mobileFilterButton = document.querySelector(
@@ -333,4 +428,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Initialize with "Wszystkie" category
   filterByCategory("wszystkie");
+  
+  // Initialize reset button state
+  updateResetButtonState();
 });
+
