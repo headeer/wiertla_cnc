@@ -3541,6 +3541,7 @@
               <td class="wiertla-categories__table-cell">
                 <div class="wiertla-categories__price-wrapper">
                   <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
+                    coonsole.log(price);
                     const price = product.price || '';
                     if (price && typeof price === 'string') {
                       // If price is a raw number (like "1100.0"), add "zł"
