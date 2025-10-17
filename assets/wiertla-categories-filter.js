@@ -162,12 +162,8 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .querySelectorAll(".wiertla-categories__icon-item")
     .forEach((icon) => {
-      icon.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent other click handlers from interfering
-        event.preventDefault(); // Prevent default behavior
-        
+      icon.addEventListener("click", function () {
         const category = this.dataset.category;
-        console.log('Icon clicked:', category, 'from filter.js');
         
         // If "wszystkie" is clicked, reset all filters (except mainType) FIRST
         if (category === "wszystkie") {
@@ -194,21 +190,10 @@ document.addEventListener("DOMContentLoaded", function () {
           if (wszystkieBtn) {
             wszystkieBtn.classList.add('active');
           }
-          
-          // Also reset any other active states that might interfere
-          document.querySelectorAll('.wiertla-categories__icon-item').forEach(icon => {
-            icon.classList.remove('active');
-          });
-          
-          // Make sure the clicked "wszystkie" icon is active
-          this.classList.add('active');
-          
-          // Now filter the table to show all products
-          filterByCategory(category);
-        } else {
-          // For other categories, filter normally
-          filterByCategory(category);
         }
+        
+        // Filter the table (this works for all categories including "wszystkie")
+        filterByCategory(category);
 
         // Update active state
         document
