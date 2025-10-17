@@ -191,6 +191,14 @@
   gap: 22px;
   transition: all 0.3s ease;
 }
+@media screen and (max-width: 1024px) {
+  .product-details__quantity-btn {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    gap: 8px;
+  }
+}
 
 .product-details__quantity-btn:hover:not(
     .product-details__quantity-btn--disabled
