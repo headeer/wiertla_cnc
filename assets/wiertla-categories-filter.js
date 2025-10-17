@@ -166,6 +166,31 @@ document.addEventListener("DOMContentLoaded", function () {
         const category = this.dataset.category;
         filterByCategory(category);
 
+        // If "wszystkie" is clicked, reset all filters (except mainType)
+        if (category === "wszystkie") {
+          // Reset all dropdown filters to default values (except mainType)
+          document.querySelectorAll('.wiertla-categories__filter:not(.wiertla-filter-mainType)').forEach(filter => {
+            filter.value = '';
+          });
+          
+          // Clear search input
+          const searchInput = document.querySelector('.wiertla-search__input');
+          if (searchInput) {
+            searchInput.value = '';
+          }
+          
+          // Reset all filter buttons to inactive
+          document.querySelectorAll('.wiertla-categories__filter-button').forEach(btn => {
+            btn.classList.remove('active');
+          });
+          
+          // Set "Wszystkie" button to active
+          const wszystkieBtn = document.querySelector('.wiertla-categories__filter-button[data-filter="wszystkie"]');
+          if (wszystkieBtn) {
+            wszystkieBtn.classList.add('active');
+          }
+        }
+
         // Update active state
         document
           .querySelectorAll(".wiertla-categories__icon-item")
