@@ -190,6 +190,18 @@ document.addEventListener("DOMContentLoaded", function () {
           if (wszystkieBtn) {
             wszystkieBtn.classList.add('active');
           }
+          
+          // Reset window.currentFilters object
+          if (window.currentFilters) {
+            window.currentFilters.typ = '';
+            window.currentFilters.crown = '';
+            window.currentFilters.manufacturer = '';
+            window.currentFilters.search = '';
+            window.currentFilters.category = '';
+          }
+          
+          // Reset window.selectedCategory
+          window.selectedCategory = 'wszystkie';
         }
         
         // Filter the table (this works for all categories including "wszystkie")
