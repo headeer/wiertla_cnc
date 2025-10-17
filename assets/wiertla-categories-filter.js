@@ -162,8 +162,12 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .querySelectorAll(".wiertla-categories__icon-item")
     .forEach((icon) => {
-      icon.addEventListener("click", function () {
+      icon.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent other click handlers from interfering
+        event.preventDefault(); // Prevent default behavior
+        
         const category = this.dataset.category;
+        console.log('Icon clicked:', category, 'from filter.js');
         
         // If "wszystkie" is clicked, reset all filters (except mainType) FIRST
         if (category === "wszystkie") {
