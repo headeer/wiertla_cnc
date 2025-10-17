@@ -164,9 +164,8 @@ document.addEventListener("DOMContentLoaded", function () {
     .forEach((icon) => {
       icon.addEventListener("click", function () {
         const category = this.dataset.category;
-        filterByCategory(category);
-
-        // If "wszystkie" is clicked, reset all filters (except mainType)
+        
+        // If "wszystkie" is clicked, reset all filters (except mainType) FIRST
         if (category === "wszystkie") {
           console.log('Wszystkie clicked - resetting filters');
           
@@ -199,6 +198,12 @@ document.addEventListener("DOMContentLoaded", function () {
           
           // Make sure the clicked "wszystkie" icon is active
           this.classList.add('active');
+          
+          // Now filter the table to show all products
+          filterByCategory(category);
+        } else {
+          // For other categories, filter normally
+          filterByCategory(category);
         }
 
         // Update active state
