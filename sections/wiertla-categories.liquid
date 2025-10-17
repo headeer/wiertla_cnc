@@ -3387,12 +3387,19 @@
                     </div>
                     <div class="wiertla-categories__mobile-price">${product.price}
                         ${(() => { try { 
-  const hasCustomRent = product.custom_rent && product.custom_rent !== '' && product.custom_rent !== '-' && product.custom_rent !== null && product.custom_rent !== 'undefined';
-  const hasRentPrice = product.rent_price && product.rent_price !== '' && product.rent_price !== '-' && product.rent_price !== null && product.rent_price !== 'undefined';
-  const hasRentValue = product.rent_value && product.rent_value !== '' && product.rent_value !== '-' && product.rent_value !== null && product.rent_value !== 'undefined';
-  const hasRentToolMetafield = product.metafields && product.metafields.custom && product.metafields.custom.rent_tool === true;
-  const hasRentable = product.rentable === true;
-  return !!(hasCustomRent || hasRentPrice || hasRentValue || hasRentToolMetafield || hasRentable);
+  // Check if rentable is true
+  const isRentable = product.rentable === true;
+  
+  // Check if rent field has valid value (not null, not "-", not undefined)
+  const hasValidRent = product.rent && product.rent !== '' && product.rent !== '-' && product.rent !== null && product.rent !== 'undefined';
+  
+  // Check if at least one of rent_price OR rent_value has valid value
+  const hasValidRentPrice = product.rent_price && product.rent_price !== '' && product.rent_price !== '-' && product.rent_price !== null && product.rent_price !== 'undefined';
+  const hasValidRentValue = product.rent_value && product.rent_value !== '' && product.rent_value !== '-' && product.rent_value !== null && product.rent_value !== 'undefined';
+  const hasValidRentPriceOrValue = hasValidRentPrice || hasValidRentValue;
+  
+  // Show rent tool button only when ALL conditions are met
+  return !!(isRentable && hasValidRent && hasValidRentPriceOrValue);
 } catch(_) { return false; } })() ? ` <img src="{{ 'event.png' | asset_url }}" alt="Event" width="20" height="20" loading="lazy" style="margin-left: 8px; vertical-align: middle;">` : ''}
                       </div>
                   </div>
@@ -3425,12 +3432,19 @@
                       <div class="wiertla-categories__mobile-image" style="display:none;"></div>
                       <div class="wiertla-categories__mobile-vendor">${formatSymbol(product.custom_manufacturer || product.vendor || '-')}</div>
                       <div class="wiertla-categories__mobile-price">${product.price}${(() => { try { 
-  const hasCustomRent = product.custom_rent && product.custom_rent !== '' && product.custom_rent !== '-' && product.custom_rent !== null && product.custom_rent !== 'undefined';
-  const hasRentPrice = product.rent_price && product.rent_price !== '' && product.rent_price !== '-' && product.rent_price !== null && product.rent_price !== 'undefined';
-  const hasRentValue = product.rent_value && product.rent_value !== '' && product.rent_value !== '-' && product.rent_value !== null && product.rent_value !== 'undefined';
-  const hasRentToolMetafield = product.metafields && product.metafields.custom && product.metafields.custom.rent_tool === true;
-  const hasRentable = product.rentable === true;
-  return !!(hasCustomRent || hasRentPrice || hasRentValue || hasRentToolMetafield || hasRentable);
+  // Check if rentable is true
+  const isRentable = product.rentable === true;
+  
+  // Check if rent field has valid value (not null, not "-", not undefined)
+  const hasValidRent = product.rent && product.rent !== '' && product.rent !== '-' && product.rent !== null && product.rent !== 'undefined';
+  
+  // Check if at least one of rent_price OR rent_value has valid value
+  const hasValidRentPrice = product.rent_price && product.rent_price !== '' && product.rent_price !== '-' && product.rent_price !== null && product.rent_price !== 'undefined';
+  const hasValidRentValue = product.rent_value && product.rent_value !== '' && product.rent_value !== '-' && product.rent_value !== null && product.rent_value !== 'undefined';
+  const hasValidRentPriceOrValue = hasValidRentPrice || hasValidRentValue;
+  
+  // Show rent tool button only when ALL conditions are met
+  return !!(isRentable && hasValidRent && hasValidRentPriceOrValue);
 } catch(_) { return false; } })() ? ` <img src="{{ 'event.png' | asset_url }}" alt="Event" width="20" height="20" loading="lazy" style="margin-left: 8px; vertical-align: middle;">` : ''}</div>
                     </div>
                     <div class="wiertla-categories__mobile-bottom">
@@ -3452,12 +3466,19 @@
                       <div class="wiertla-categories__mobile-fi"><span class="mobile-value">${(() => { const fi = product.custom_fi || (product.metafields && product.metafields.custom && (product.metafields.custom.srednica || product.metafields.custom.diameter)) || product.custom_srednica || product.custom_srednica_display || ''; const v = (fi || '').toString().trim(); return v ? ('⌀ ' + v) : '-'; })()}</span></div>
                       <div class="wiertla-categories__mobile-vendor">${formatSymbol(product.custom_manufacturer || product.vendor || '-')}</div>
                       <div class="wiertla-categories__mobile-price">${product.price}${(() => { try { 
-  const hasCustomRent = product.custom_rent && product.custom_rent !== '' && product.custom_rent !== '-' && product.custom_rent !== null && product.custom_rent !== 'undefined';
-  const hasRentPrice = product.rent_price && product.rent_price !== '' && product.rent_price !== '-' && product.rent_price !== null && product.rent_price !== 'undefined';
-  const hasRentValue = product.rent_value && product.rent_value !== '' && product.rent_value !== '-' && product.rent_value !== null && product.rent_value !== 'undefined';
-  const hasRentToolMetafield = product.metafields && product.metafields.custom && product.metafields.custom.rent_tool === true;
-  const hasRentable = product.rentable === true;
-  return !!(hasCustomRent || hasRentPrice || hasRentValue || hasRentToolMetafield || hasRentable);
+  // Check if rentable is true
+  const isRentable = product.rentable === true;
+  
+  // Check if rent field has valid value (not null, not "-", not undefined)
+  const hasValidRent = product.rent && product.rent !== '' && product.rent !== '-' && product.rent !== null && product.rent !== 'undefined';
+  
+  // Check if at least one of rent_price OR rent_value has valid value
+  const hasValidRentPrice = product.rent_price && product.rent_price !== '' && product.rent_price !== '-' && product.rent_price !== null && product.rent_price !== 'undefined';
+  const hasValidRentValue = product.rent_value && product.rent_value !== '' && product.rent_value !== '-' && product.rent_value !== null && product.rent_value !== 'undefined';
+  const hasValidRentPriceOrValue = hasValidRentPrice || hasValidRentValue;
+  
+  // Show rent tool button only when ALL conditions are met
+  return !!(isRentable && hasValidRent && hasValidRentPriceOrValue);
 } catch(_) { return false; } })() ? ` <img src="{{ 'event.png' | asset_url }}" alt="Event" width="20" height="20" loading="lazy" style="margin-left: 8px; vertical-align: middle;">` : ''}</div>
                     </div>
                     <div class="wiertla-categories__mobile-bottom">
@@ -3522,12 +3543,19 @@
                 <div class="wiertla-categories__price-wrapper">
                   <span class="wiertla-categories__price" data-href="/products/${product.handle}">${product.price}</span>
                   ${(() => { try { 
-  const hasCustomRent = product.custom_rent && product.custom_rent !== '' && product.custom_rent !== '-' && product.custom_rent !== null && product.custom_rent !== 'undefined';
-  const hasRentPrice = product.rent_price && product.rent_price !== '' && product.rent_price !== '-' && product.rent_price !== null && product.rent_price !== 'undefined';
-  const hasRentValue = product.rent_value && product.rent_value !== '' && product.rent_value !== '-' && product.rent_value !== null && product.rent_value !== 'undefined';
-  const hasRentToolMetafield = product.metafields && product.metafields.custom && product.metafields.custom.rent_tool === true;
-  const hasRentable = product.rentable === true;
-  return !!(hasCustomRent || hasRentPrice || hasRentValue || hasRentToolMetafield || hasRentable);
+  // Check if rentable is true
+  const isRentable = product.rentable === true;
+  
+  // Check if rent field has valid value (not null, not "-", not undefined)
+  const hasValidRent = product.rent && product.rent !== '' && product.rent !== '-' && product.rent !== null && product.rent !== 'undefined';
+  
+  // Check if at least one of rent_price OR rent_value has valid value
+  const hasValidRentPrice = product.rent_price && product.rent_price !== '' && product.rent_price !== '-' && product.rent_price !== null && product.rent_price !== 'undefined';
+  const hasValidRentValue = product.rent_value && product.rent_value !== '' && product.rent_value !== '-' && product.rent_value !== null && product.rent_value !== 'undefined';
+  const hasValidRentPriceOrValue = hasValidRentPrice || hasValidRentValue;
+  
+  // Show rent tool button only when ALL conditions are met
+  return !!(isRentable && hasValidRent && hasValidRentPriceOrValue);
 } catch(_) { return false; } })() ? `
                     <button class="wiertla-categories__rent-button" data-product-id="${product.id}"
                       data-symbol="${(product.custom_symbol || product.custom_kod_producenta || (product.metafields && product.metafields.custom && (product.metafields.custom.symbol || product.metafields.custom.kod_producenta)) || product.symbol || product.sku || '').toString().replace(/"/g, '&quot;')}">
