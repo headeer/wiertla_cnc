@@ -2351,23 +2351,31 @@
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--price">
             ${(() => {
                       const price = product.price || '';
+                      console.log(`🔍 [OLD TABLE] Product: ${product.sku || product.custom_symbol || 'Unknown'}, Original price: "${price}" (${typeof price})`);
+                      
                       if (price !== undefined && price !== null && price !== '') {
                         // Convert to string for consistent handling
                         const priceStr = String(price);
+                        console.log(`🔍 [OLD TABLE] Converted to string: "${priceStr}"`);
                         
                         // If price is a raw number (like "1100.0" or "890"), add "zł"
                         if (priceStr.match(/^\d+\.?\d*$/)) {
-                          return priceStr + ' zł';
+                          const result = priceStr + ' zł';
+                          console.log(`🔍 [OLD TABLE] Raw number detected, adding zł: "${result}"`);
+                          return result;
                         }
                         // If price already has "zł", use as is
                         if (priceStr.includes('zł')) {
+                          console.log(`🔍 [OLD TABLE] Already has zł, using as is: "${priceStr}"`);
                           return priceStr;
                         }
                         // If price is empty or invalid, show "-"
                         if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00') {
+                          console.log(`🔍 [OLD TABLE] Zero/empty price detected, showing "-"`);
                           return '-';
                         }
                       }
+                      console.log(`🔍 [OLD TABLE] Fallback to "-"`);
                       return '-';
             })()}
           </td>
@@ -3613,23 +3621,31 @@
                 <div class="wiertla-categories__price-wrapper">
                   <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
                     const price = product.price || '';
+                    console.log(`🔍 [MAIN TABLE] Product: ${product.sku || product.custom_symbol || 'Unknown'}, Original price: "${price}" (${typeof price})`);
+                    
                     if (price !== undefined && price !== null && price !== '') {
                       // Convert to string for consistent handling
                       const priceStr = String(price);
+                      console.log(`🔍 [MAIN TABLE] Converted to string: "${priceStr}"`);
                       
                       // If price is a raw number (like "1100.0" or "890"), add "zł"
                       if (priceStr.match(/^\d+\.?\d*$/)) {
-                        return priceStr + ' zł';
+                        const result = priceStr + ' zł';
+                        console.log(`🔍 [MAIN TABLE] Raw number detected, adding zł: "${result}"`);
+                        return result;
                       }
                       // If price already has "zł", use as is
                       if (priceStr.includes('zł')) {
+                        console.log(`🔍 [MAIN TABLE] Already has zł, using as is: "${priceStr}"`);
                         return priceStr;
                       }
                       // If price is empty or invalid, show "-"
                       if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00') {
+                        console.log(`🔍 [MAIN TABLE] Zero/empty price detected, showing "-"`);
                         return '-';
                       }
                     }
+                    console.log(`🔍 [MAIN TABLE] Fallback to "-"`);
                     return '-';
                   })()}</span>
                   ${(() => { try { 
@@ -3692,23 +3708,31 @@
                   <div class="wiertla-categories__price-wrapper">
                     <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
                     const price = product.price || '';
+                    console.log(`🔍 [MAIN TABLE] Product: ${product.sku || product.custom_symbol || 'Unknown'}, Original price: "${price}" (${typeof price})`);
+                    
                     if (price !== undefined && price !== null && price !== '') {
                       // Convert to string for consistent handling
                       const priceStr = String(price);
+                      console.log(`🔍 [MAIN TABLE] Converted to string: "${priceStr}"`);
                       
                       // If price is a raw number (like "1100.0" or "890"), add "zł"
                       if (priceStr.match(/^\d+\.?\d*$/)) {
-                        return priceStr + ' zł';
+                        const result = priceStr + ' zł';
+                        console.log(`🔍 [MAIN TABLE] Raw number detected, adding zł: "${result}"`);
+                        return result;
                       }
                       // If price already has "zł", use as is
                       if (priceStr.includes('zł')) {
+                        console.log(`🔍 [MAIN TABLE] Already has zł, using as is: "${priceStr}"`);
                         return priceStr;
                       }
                       // If price is empty or invalid, show "-"
                       if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00') {
+                        console.log(`🔍 [MAIN TABLE] Zero/empty price detected, showing "-"`);
                         return '-';
                       }
                     }
+                    console.log(`🔍 [MAIN TABLE] Fallback to "-"`);
                     return '-';
                   })()}</span>
                   </div>
@@ -3738,23 +3762,31 @@
                   <div class="wiertla-categories__price-wrapper">
                     <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
                     const price = product.price || '';
+                    console.log(`🔍 [MAIN TABLE] Product: ${product.sku || product.custom_symbol || 'Unknown'}, Original price: "${price}" (${typeof price})`);
+                    
                     if (price !== undefined && price !== null && price !== '') {
                       // Convert to string for consistent handling
                       const priceStr = String(price);
+                      console.log(`🔍 [MAIN TABLE] Converted to string: "${priceStr}"`);
                       
                       // If price is a raw number (like "1100.0" or "890"), add "zł"
                       if (priceStr.match(/^\d+\.?\d*$/)) {
-                        return priceStr + ' zł';
+                        const result = priceStr + ' zł';
+                        console.log(`🔍 [MAIN TABLE] Raw number detected, adding zł: "${result}"`);
+                        return result;
                       }
                       // If price already has "zł", use as is
                       if (priceStr.includes('zł')) {
+                        console.log(`🔍 [MAIN TABLE] Already has zł, using as is: "${priceStr}"`);
                         return priceStr;
                       }
                       // If price is empty or invalid, show "-"
                       if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00') {
+                        console.log(`🔍 [MAIN TABLE] Zero/empty price detected, showing "-"`);
                         return '-';
                       }
                     }
+                    console.log(`🔍 [MAIN TABLE] Fallback to "-"`);
                     return '-';
                   })()}</span>
                   </div>
@@ -4314,34 +4346,45 @@
               // Format price safely
               let formattedPrice = '';
               const price = product.price || product.price_numeric || product.compare_at_price || '';
+              console.log(`🔍 [ALT FORMAT] Product: ${product.sku || product.custom_symbol || 'Unknown'}, Original price: "${price}" (${typeof price})`);
+              
               if (price !== undefined && price !== null && price !== '') {
                 if (typeof price === 'string') {
+                  console.log(`🔍 [ALT FORMAT] Processing string price: "${price}"`);
                   // If price is a raw number (like "1100.0"), add "zł"
                   if (price.match(/^\d+\.?\d*$/)) {
                     formattedPrice = price + ' zł';
+                    console.log(`🔍 [ALT FORMAT] Raw number detected, adding zł: "${formattedPrice}"`);
                   }
                   // If price already has "zł", use as is
                   else if (price.includes('zł')) {
                     formattedPrice = price;
+                    console.log(`🔍 [ALT FORMAT] Already has zł, using as is: "${formattedPrice}"`);
                   }
                   // If price is empty or invalid, show "-"
                   else if (price === '' || price === '0' || price === '0.0' || price === 0 || price === '0.00') {
                     formattedPrice = '-';
+                    console.log(`🔍 [ALT FORMAT] Zero/empty price detected, showing "-"`);
                   }
                   else {
                     formattedPrice = price;
+                    console.log(`🔍 [ALT FORMAT] Other string price, using as is: "${formattedPrice}"`);
                   }
                 } else {
+                  console.log(`🔍 [ALT FORMAT] Processing numeric price: ${price}`);
                   // For numeric prices, format properly
                   const priceNum = typeof price === 'number' ? price : parseFloat(price);
                   if (!isNaN(priceNum) && priceNum > 0) {
                     formattedPrice = priceNum.toFixed(2) + ' zł';
+                    console.log(`🔍 [ALT FORMAT] Numeric price formatted: "${formattedPrice}"`);
                   } else {
                     formattedPrice = '-';
+                    console.log(`🔍 [ALT FORMAT] Zero/invalid numeric price, showing "-"`);
                   }
                 }
               } else {
                 formattedPrice = '-';
+                console.log(`🔍 [ALT FORMAT] No price data, showing "-"`);
               }
 
               // Determine the icon URL based on product type
@@ -4485,34 +4528,45 @@
               // Format price safely
               let formattedPrice = '';
               const price = product.price || product.price_numeric || product.compare_at_price || '';
+              console.log(`🔍 [ALT FORMAT] Product: ${product.sku || product.custom_symbol || 'Unknown'}, Original price: "${price}" (${typeof price})`);
+              
               if (price !== undefined && price !== null && price !== '') {
                 if (typeof price === 'string') {
+                  console.log(`🔍 [ALT FORMAT] Processing string price: "${price}"`);
                   // If price is a raw number (like "1100.0"), add "zł"
                   if (price.match(/^\d+\.?\d*$/)) {
                     formattedPrice = price + ' zł';
+                    console.log(`🔍 [ALT FORMAT] Raw number detected, adding zł: "${formattedPrice}"`);
                   }
                   // If price already has "zł", use as is
                   else if (price.includes('zł')) {
                     formattedPrice = price;
+                    console.log(`🔍 [ALT FORMAT] Already has zł, using as is: "${formattedPrice}"`);
                   }
                   // If price is empty or invalid, show "-"
                   else if (price === '' || price === '0' || price === '0.0' || price === 0 || price === '0.00') {
                     formattedPrice = '-';
+                    console.log(`🔍 [ALT FORMAT] Zero/empty price detected, showing "-"`);
                   }
                   else {
                     formattedPrice = price;
+                    console.log(`🔍 [ALT FORMAT] Other string price, using as is: "${formattedPrice}"`);
                   }
                 } else {
+                  console.log(`🔍 [ALT FORMAT] Processing numeric price: ${price}`);
                   // For numeric prices, format properly
                   const priceNum = typeof price === 'number' ? price : parseFloat(price);
                   if (!isNaN(priceNum) && priceNum > 0) {
                     formattedPrice = priceNum.toFixed(2) + ' zł';
+                    console.log(`🔍 [ALT FORMAT] Numeric price formatted: "${formattedPrice}"`);
                   } else {
                     formattedPrice = '-';
+                    console.log(`🔍 [ALT FORMAT] Zero/invalid numeric price, showing "-"`);
                   }
                 }
               } else {
                 formattedPrice = '-';
+                console.log(`🔍 [ALT FORMAT] No price data, showing "-"`);
               }
 
               // Determine the icon URL based on product type
