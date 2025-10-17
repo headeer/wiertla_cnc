@@ -2637,6 +2637,15 @@
         window.selectedCategory = category;
         window.currentPage = 1;
         
+        // Scroll to top of filters container on desktop with +20px offset
+        const filtersContainer = document.querySelector('.wiertla-categories__filters.desktop');
+        if (filtersContainer) {
+          const containerTop = filtersContainer.offsetTop;
+          window.scrollTo({
+            top: containerTop - 20,
+            behavior: 'smooth'
+          });
+        }
         
         applyFilters();
     
@@ -2654,9 +2663,10 @@
         window.selectedCategory = filterButton.getAttribute('data-filter');
         window.currentPage = 1;
         
-        // If clicking on "Wszystkie" button, reset all filters
+        // If clicking on "Wszystkie" button, reset all filters (except mainType)
         if (window.selectedCategory === 'wszystkie') {
-          // Reset filter state
+          // Reset filter state (keep mainType)
+          const currentMainType = window.WiertlaCNC?.activeTabType || 'wiertla';
           currentFilters = {
             type: '',
             crown: '',
@@ -2664,8 +2674,8 @@
             search: ''
           };
           
-          // Reset all dropdown filters to default values
-          document.querySelectorAll('.wiertla-categories__filter').forEach(filter => {
+          // Reset all dropdown filters to default values (except mainType)
+          document.querySelectorAll('.wiertla-categories__filter:not(.wiertla-filter-mainType)').forEach(filter => {
             filter.value = '';
           });
           
@@ -2673,6 +2683,17 @@
           const searchInput = document.querySelector('.wiertla-search__input');
           if (searchInput) {
             searchInput.value = '';
+          }
+          
+          // Reset all icon items to inactive
+          document.querySelectorAll('.wiertla-categories__icon-item').forEach(icon => {
+            icon.classList.remove('active');
+          });
+          
+          // Set "Wszystkie" icon to active
+          const wszystkieIcon = document.querySelector('.wiertla-categories__icon-item[data-category="wszystkie"]');
+          if (wszystkieIcon) {
+            wszystkieIcon.classList.add('active');
           }
         }
         
