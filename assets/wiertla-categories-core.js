@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Load products from the original working endpoint
 async function loadProducts() {
   try {
-    console.log('[Wiertla] Loading products from original endpoint...');
+    console.log('[Wiertla] Loading products from original endpoint... (v20250116-001)');
     const url = '/collections/all?view=wiertla-products-json&limit=2500';
     const response = await fetch(url, { credentials: 'same-origin' });
     
