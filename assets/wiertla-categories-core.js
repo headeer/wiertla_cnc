@@ -6,6 +6,55 @@
 // Define isMobileView at the very start so it's available throughout the codebase
 let isMobileView = window.innerWidth <= 1024;
 
+// Update category icons based on active tab
+function updateCategoryIcons() {
+  const tabType = window.WiertlaCNC.activeTabType;
+  const allIcons = document.querySelectorAll('.wiertla-categories__icon-item');
+  
+  // Define categories per tab exactly as specified
+  const wiertlaCategories = ['koronkowe', 'plytkowe', 'vhm', 'sandvik', 'ksem', 'amec'];
+  const plytkiCategories = ['wcmx', 'lcmx', '811', 'dft', '880', 'wogx', 'spgx', 'p284'];
+  const koronkiCategories = ['ksem', 'idi', 'p600', 'icm', 'icp', '870', 'amec', 'ktip'];
+  
+  let visibleIcons = [];
+  let currentTabCategories = [];
+  let currentTabClass = '';
+  
+  // Determine which categories and tab class to show for current tab
+  if (tabType === 'wiertla') {
+    currentTabCategories = wiertlaCategories;
+    currentTabClass = 'wiertla-tab-wiertla';
+  } else if (tabType === 'plytki') {
+    currentTabCategories = plytkiCategories;
+    currentTabClass = 'wiertla-tab-plytki';
+  } else if (tabType === 'koronki') {
+    currentTabCategories = koronkiCategories;
+    currentTabClass = 'wiertla-tab-koronki';
+  }
+  
+  allIcons.forEach(icon => {
+    const category = icon.getAttribute('data-category');
+    
+    // Always show "wszystkie" (all) category regardless of tab
+    if (category === 'wszystkie') {
+      icon.style.display = '';
+      visibleIcons.push(category);
+      return;
+    }
+    
+    // Check if icon belongs to current tab AND has correct category
+    const belongsToCurrentTab = icon.classList.contains(currentTabClass);
+    const hasCorrectCategory = currentTabCategories.includes(category);
+    
+    if (belongsToCurrentTab && hasCorrectCategory) {
+      icon.style.display = '';
+      visibleIcons.push(category);
+    } else {
+      icon.style.display = 'none';
+    }
+  });
+}
+
 // Initialize core functionality when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
   // Force check mobile view
@@ -36,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!window.WiertlaCNC) window.WiertlaCNC = {};
     window.WiertlaCNC.applyFullscreenFilters = function() {
       try { console.log('[Wiertla] manual call → applyFullscreenFilters'); } catch (e) {}
-      try { applyFullscreenFilters(); } catch (e) { console.error(e); }
+        try { if (window.applyFullscreenFilters) window.applyFullscreenFilters(); } catch (e) { console.error(e); }
     };
     window.WiertlaCNC.debugState = function() {
       const state = {
@@ -76,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const isActive = fs.classList.contains('active');
           try { console.log('[Wiertla] fullscreen active:', isActive); } catch (e) {}
           if (isActive) {
-            try { applyFullscreenFilters(); } catch (e) { console.error(e); }
+            try { if (window.applyFullscreenFilters) window.applyFullscreenFilters(); } catch (e) { console.error(e); }
           }
         }
       });
@@ -115,7 +164,9 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Apply filters to update the product list
       window.currentPage = 1;
-      applyFilters();
+      if (window.applyFilters) {
+        window.applyFilters();
+      }
     });
   });
 
@@ -165,7 +216,9 @@ document.addEventListener('DOMContentLoaded', function() {
       updateCategoryIcons();
       
       // Apply filters with the new tab type
-      applyFilters();
+      if (window.applyFilters) {
+        window.applyFilters();
+      }
     });
   });
 
@@ -174,7 +227,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update category icons based on the active tab
     updateCategoryIcons();
     
-    applyFilters();
+    if (window.applyFilters) {
+      window.applyFilters();
+    }
     
     // Background: fetch full catalog lazily (incremental pages)
     try {
@@ -195,6 +250,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Define openRentModal function
+if (!window.WiertlaCNC) {
+  window.WiertlaCNC = {};
+}
 window.WiertlaCNC.openRentModal = function(product) {
   const modal = document.querySelector('.wiertla-categories__mobile-rent-modal');
   if (!modal) {
@@ -265,8 +323,10 @@ document.addEventListener('DOMContentLoaded', function() {
         window.itemsPerPage = newItemsPerPage;
         window.currentPage = 1;
         
-        // Apply filters to update the table
-        applyFilters();
+  // Apply filters to update the table
+  if (window.applyFilters) {
+    window.applyFilters();
+  }
       });
     });
   }
@@ -286,8 +346,10 @@ document.addEventListener('DOMContentLoaded', function() {
       window.itemsPerPage = newItemsPerPage;
       window.currentPage = 1;
       
-      // Apply filters to update the table
-      applyFilters();
+  // Apply filters to update the table
+  if (window.applyFilters) {
+    window.applyFilters();
+  }
     });
   });
   
@@ -476,11 +538,29 @@ document.addEventListener('click', function(e) {
   }
 });
 
+// Function to update UI text based on current language
+function updateUILanguage() {
+  // Simplified version - just update the results text
+  const resultsText = document.querySelector('.wiertla-categories__results-text');
+  if (resultsText) {
+    resultsText.textContent = 'Wyświetlono wyniki ';
+  }
+  
+  // Re-apply filters to update any text in the table
+  if (window.applyFilters) {
+    window.applyFilters();
+  }
+}
+
 // Make necessary functions globally available
+window.updateCategoryIcons = updateCategoryIcons;
+window.updateUILanguage = updateUILanguage;
 window.handleCategoryChange = function(category) {
   window.selectedCategory = category;
   window.currentPage = 1;
-  applyFilters();
+  if (window.applyFilters) {
+    window.applyFilters();
+  }
 };
 
 window.handleItemsPerPageChange = function(newItemsPerPage) {

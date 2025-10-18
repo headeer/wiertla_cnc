@@ -6,7 +6,7 @@
 // Apply filters to fullscreen mode
 function applyFullscreenFilters() {
   try { console.log('[Fullscreen] applyFullscreenFilters start', { activeTabType: window.WiertlaCNC && window.WiertlaCNC.activeTabType, itemsPerPage: window.itemsPerPage, currentPage: window.currentPage }); } catch (e) {}
-  const filteredProducts = window.filterProducts();
+  const filteredProducts = window.filterProducts ? window.filterProducts() : [];
   try { console.log('[Fullscreen] filtered count', filteredProducts && filteredProducts.length); } catch (e) {}
   const startIndex = (window.currentPage - 1) * window.itemsPerPage;
   const endIndex = startIndex + window.itemsPerPage;

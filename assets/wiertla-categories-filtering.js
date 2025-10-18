@@ -430,12 +430,15 @@ function applyFilters() {
   // Update fullscreen mode if active
   const fullscreenMode = document.querySelector('.wiertla-categories__fullscreen-mode');
   if (fullscreenMode && fullscreenMode.classList.contains('active')) {
-    applyFullscreenFilters();
+    if (window.applyFullscreenFilters) {
+      window.applyFullscreenFilters();
+    }
   }
   
   // Update URL parameters
   window.WiertlaCNC.updateUrlParams();
 }
 
-// Make it globally available
+// Make functions globally available
 window.applyFilters = applyFilters;
+window.filterProducts = filterProducts;

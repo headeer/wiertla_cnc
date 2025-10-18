@@ -343,12 +343,12 @@
 <!-- Include Fullscreen Component -->
 {% render 'wiertla-categories-fullscreen' %}
 
-<!-- Load modular JavaScript files -->
-<script src="{{ 'wiertla-categories-utils.js' | asset_url }}" async></script>
-<script src="{{ 'wiertla-categories-core.js' | asset_url }}" async></script>
-<script src="{{ 'wiertla-categories-filtering.js' | asset_url }}" async></script>
-<script src="{{ 'wiertla-categories-table.js' | asset_url }}" async></script>
-<script src="{{ 'wiertla-categories-fullscreen.js' | asset_url }}" async></script>
+<!-- Load modular JavaScript files in correct order -->
+<script src="{{ 'wiertla-categories-utils.js' | asset_url }}"></script>
+<script src="{{ 'wiertla-categories-core.js' | asset_url }}"></script>
+<script src="{{ 'wiertla-categories-filtering.js' | asset_url }}"></script>
+<script src="{{ 'wiertla-categories-table.js' | asset_url }}"></script>
+<script src="{{ 'wiertla-categories-fullscreen.js' | asset_url }}"></script>
 
 <!-- Product data hydration script -->
 <script type="application/json" data-disabled="fullscreen-inline">
@@ -359,13 +359,15 @@
 <script>
   // Initialize the modular Wiertla CNC system
   document.addEventListener('DOMContentLoaded', function() {
-    // The modular system is now loaded and ready
-    console.log('[Wiertla] Modular system initialized');
-    
-    // Apply initial filters
-    if (window.applyFilters) {
-      window.applyFilters();
-    }
+    // Wait for all modules to be loaded
+    setTimeout(function() {
+      console.log('[Wiertla] Modular system initialized');
+      
+      // Apply initial filters
+      if (window.applyFilters) {
+        window.applyFilters();
+      }
+    }, 100);
   });
 </script>
 
