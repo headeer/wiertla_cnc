@@ -51,7 +51,7 @@
 
     {%- capture seo_title -%}
     {%- if template == 'index' -%}
-      wiertla cnc - Markowe wiertła CNC w super cenie
+      Wiertła CNC - Markowe wiertła CNC w super cenie
     {%- else -%}
       {{ page_title }}
     {%- endif -%}
@@ -64,8 +64,8 @@
     {%- if template == 'password' -%}
       {{ shop.name }}
     {%- elsif template != 'index' -%}
-      {%- unless page_title contains 'wiertła cnc' -%}
-        &ndash; wiertła cnc
+      {%- unless page_title contains 'Wiertła CNC' -%}
+        &ndash; Wiertła CNC
       {%- endunless -%}
     {%- endif -%}
   {%- endcapture -%}

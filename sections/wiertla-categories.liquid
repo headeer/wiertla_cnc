@@ -1361,6 +1361,12 @@
       }
       
       // Apply category filter if not "wszystkie"
+      console.log('🔍 [Filter Debug] Checking category filter:', {
+        selectedCategory: window.selectedCategory,
+        willApplyCategoryFilter: window.selectedCategory && window.selectedCategory !== 'wszystkie',
+        currentProductCount: filteredProducts.length
+      });
+      
       if (window.selectedCategory && window.selectedCategory !== 'wszystkie') {
         if (typeof window.normalizeCategory === 'function') {
           window.selectedCategory = window.normalizeCategory(window.selectedCategory);
@@ -1663,6 +1669,7 @@
 
 
 
+      console.log('✅ [Filter Debug] Final filtered products count:', filteredProducts.length);
       return filteredProducts;
     }
     
@@ -2474,6 +2481,9 @@
         if (window.selectedCategory === 'reset' || window.selectedCategory === 'wszystkie') {
           console.log('🔄 [Reset Debug] "Wszystkie" button clicked, resetting all filters...');
           
+          // IMPORTANT: Set selectedCategory to 'wszystkie' for proper filtering
+          window.selectedCategory = 'wszystkie';
+          
           // Reset filter state
           currentFilters = {
             type: '',
@@ -2494,6 +2504,7 @@
           }
           
           console.log('✅ [Reset Debug] All filters reset, currentFilters:', currentFilters);
+          console.log('✅ [Reset Debug] selectedCategory set to:', window.selectedCategory);
         }
         
         applyFilters();
