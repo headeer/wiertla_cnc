@@ -1043,8 +1043,18 @@
     // Set the HTML lang attribute to match the selected language
     document.documentElement.lang = currentLanguage;
     
-    // Language switching now handled by subdirectory URLs for SEO
-    // No JavaScript intervention needed - let browser handle natural navigation
+    // Watch for language changes in the Shopify language selector
+    document.addEventListener('click', function(e) {
+      // Look for Shopify language selector links
+      const langLink = e.target.closest('.header__lang-links a, [data-disclosure-locale]');
+      if (langLink) {
+        e.preventDefault(); // Prevent default to avoid page reload
+        const lang = langLink.getAttribute('data-lang');
+        if (lang && translations[lang]) {
+          window.changeLanguage(lang);
+        }
+      }
+    });
     
     // Make necessary functions globally available
     window.handleCategoryChange = function(category) {

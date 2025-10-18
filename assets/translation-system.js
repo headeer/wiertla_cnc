@@ -78,24 +78,14 @@
       return;
     }
 
-    // Get current path without language prefix
-    let currentPath = window.location.pathname;
-    
-    // Remove existing language prefix if present
-    currentPath = currentPath.replace(/^\/(pl|en|de)/, '');
-    
-    // If path is empty, set to root
-    if (currentPath === '') {
-      currentPath = '/';
-    }
-    
-    // Build new URL with language prefix
-    const newUrl = `/${lang}${currentPath}`;
+    // Get current path and build new URL with locale parameter
+    const currentPath = window.location.pathname;
+    const newUrl = `${currentPath}?locale=${lang}`;
     
     // Save language preference
     localStorage.setItem("wiertla_language", lang);
     
-    // Redirect to new URL for proper SEO indexing
+    // Redirect to new URL with locale parameter
     window.location.href = newUrl;
   }
 
