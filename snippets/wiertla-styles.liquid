@@ -1547,6 +1547,62 @@
       margin: 0 auto;
     }
 
+    /* Pagination styles to match standard Shopify pagination */
+    .wiertla-categories__pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      padding: 20px 0;
+      border-top: 1px solid #e5e5e5;
+    }
+
+    .wiertla-categories__pagination ul {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 8px;
+    }
+
+    .wiertla-categories__pagination li {
+      display: inline-block;
+    }
+
+    .wiertla-categories__pagination a,
+    .wiertla-categories__pagination span {
+      display: inline-block;
+      padding: 8px 12px;
+      text-decoration: none;
+      color: #333;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .wiertla-categories__pagination a:hover {
+      background-color: #f5f5f5;
+      border-color: #ddd;
+    }
+
+    .wiertla-categories__pagination .active {
+      background-color: #333;
+      color: white;
+      border-color: #333;
+    }
+
+    .wiertla-categories__pagination .disabled {
+      color: #ccc;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .wiertla-categories__pagination .prev,
+    .wiertla-categories__pagination .next {
+      font-weight: 500;
+    }
+
     /* Center the dash when no image is present */
     .wiertla-categories__table-cell:first-child {
       text-align: center;

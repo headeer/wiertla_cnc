@@ -1110,22 +1110,7 @@
     
     // Function to update UI text based on current language
     function updateUILanguage() {
-      // Update pagination buttons
-      document.querySelectorAll('#prevPage, #fullscreenPrevPage').forEach(btn => {
-        const span = btn.querySelector('span');
-        if (span) {
-          span.textContent = translations[currentLanguage].show_previous;
-          span.setAttribute('data-mobile-text', translations[currentLanguage].show_previous_mobile);
-        }
-      });
-      
-      document.querySelectorAll('#nextPage, #fullscreenNextPage').forEach(btn => {
-        const span = btn.querySelector('span');
-        if (span) {
-          span.textContent = translations[currentLanguage].show_next;
-          span.setAttribute('data-mobile-text', translations[currentLanguage].show_next_mobile);
-        }
-      });
+      // Pagination is now handled by the new pagination system
       
       // Update table headers
       const tableHeaders = document.querySelectorAll('.wiertla-categories__table th');
@@ -1788,32 +1773,111 @@
     // Make it globally available
     window.applyFilters = applyFilters;
     
-    // Update pagination button states
+    // Update pagination to match standard Shopify pagination
     function updatePaginationButtons() {
-      const prevButton = document.getElementById('prevPage');
-      const nextButton = document.getElementById('nextPage');
+      const paginationContainer = document.getElementById('wiertlaPagination');
       
-      if (prevButton) {
-        prevButton.disabled = window.currentPage <= 1;
-      } else {
-        console.error('Previous button not found');
+      if (!paginationContainer || window.totalPages <= 1) {
+        if (paginationContainer) {
+          paginationContainer.style.display = 'none';
+        }
+        return;
       }
       
-      if (nextButton) {
-        nextButton.disabled = window.currentPage >= window.totalPages;
+      paginationContainer.style.display = 'flex';
+      
+      let paginationHTML = '<ul>';
+      
+      // Previous button
+      if (window.currentPage > 1) {
+        paginationHTML += `
+          <li class="prev">
+            <a href="#" data-page="${window.currentPage - 1}" class="pagination-link">
+              ← Poprzednia
+            </a>
+          </li>
+        `;
       } else {
-        console.error('Next button not found');
+        paginationHTML += `
+          <li class="prev disabled">
+            <span>← Poprzednia</span>
+          </li>
+        `;
       }
+      
+      // Page numbers
+      const startPage = Math.max(1, window.currentPage - 2);
+      const endPage = Math.min(window.totalPages, window.currentPage + 2);
+      
+      // Show first page if not in range
+      if (startPage > 1) {
+        paginationHTML += `
+          <li>
+            <a href="#" data-page="1" class="pagination-link">1</a>
+          </li>
+        `;
+        if (startPage > 2) {
+          paginationHTML += '<li><span>...</span></li>';
+        }
+      }
+      
+      // Show page numbers in range
+      for (let i = startPage; i <= endPage; i++) {
+        if (i === window.currentPage) {
+          paginationHTML += `
+            <li>
+              <span class="active">${i}</span>
+            </li>
+          `;
+        } else {
+          paginationHTML += `
+            <li>
+              <a href="#" data-page="${i}" class="pagination-link">${i}</a>
+            </li>
+          `;
+        }
+      }
+      
+      // Show last page if not in range
+      if (endPage < window.totalPages) {
+        if (endPage < window.totalPages - 1) {
+          paginationHTML += '<li><span>...</span></li>';
+        }
+        paginationHTML += `
+          <li>
+            <a href="#" data-page="${window.totalPages}" class="pagination-link">${window.totalPages}</a>
+          </li>
+        `;
+      }
+      
+      // Next button
+      if (window.currentPage < window.totalPages) {
+        paginationHTML += `
+          <li class="next">
+            <a href="#" data-page="${window.currentPage + 1}" class="pagination-link">
+              Następna →
+            </a>
+          </li>
+        `;
+      } else {
+        paginationHTML += `
+          <li class="next disabled">
+            <span>Następna →</span>
+          </li>
+        `;
+      }
+      
+      paginationHTML += '</ul>';
+      paginationContainer.innerHTML = paginationHTML;
     }
     
-    // Handle pagination button clicks
-    const prevButton = document.getElementById('prevPage');
-    const nextButton = document.getElementById('nextPage');
-    
-    if (prevButton) {
-      prevButton.addEventListener('click', function() {
-        if (window.currentPage > 1) {
-          window.currentPage--;
+    // Handle pagination clicks using event delegation
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('pagination-link')) {
+        e.preventDefault();
+        const page = parseInt(e.target.getAttribute('data-page'));
+        if (page && page !== window.currentPage) {
+          window.currentPage = page;
           applyFilters();
           
           // Scroll to top of table on mobile after pagination
@@ -1831,32 +1895,8 @@
             }
           }
         }
-      });
-    }
-    
-    if (nextButton) {
-      nextButton.addEventListener('click', function() {
-        if (window.currentPage < window.totalPages) {
-          window.currentPage++;
-          applyFilters();
-          
-          // Scroll to top of table on mobile after pagination
-          if (window.innerWidth <= 1024) {
-            const tableContainer = document.querySelector('.wiertla-categories__table-container') || 
-                                 document.querySelector('.wiertla-categories__mobile-view') ||
-                                 document.querySelector('#productsTableBody');
-            
-            if (tableContainer) {
-              const offsetTop = tableContainer.getBoundingClientRect().top + window.pageYOffset - 20;
-              window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-              });
-            }
-          }
-        }
-      });
-    }
+      }
+    });
     
     // Handle search input
     if (searchInput) {
@@ -1915,18 +1955,10 @@
           newResultsCount.id = 'fullscreenResultsCount';
         }
     
-        const newPrevButton = resultsContainer.querySelector('#prevPage');
-        if (newPrevButton) {
-          newPrevButton.id = 'fullscreenPrevPage';
-          // Set translation text
-          newPrevButton.setAttribute('data-text', translations[currentLanguage].show_previous);
-        }
-    
-        const newNextButton = resultsContainer.querySelector('#nextPage');
-        if (newNextButton) {
-          newNextButton.id = 'fullscreenNextPage';
-          // Set translation text
-          newNextButton.setAttribute('data-text', translations[currentLanguage].show_next);
+        // Update fullscreen pagination container ID
+        const newPaginationContainer = resultsContainer.querySelector('#wiertlaPagination');
+        if (newPaginationContainer) {
+          newPaginationContainer.id = 'fullscreenWiertlaPagination';
         }
     
         // Create fullscreen layout
@@ -2254,16 +2286,14 @@
         resultsCount.textContent = format.replace('{0}', startIndex).replace('{1}', endIndex).replace('{2}', filteredProducts.length);
       }
       
-      // Update pagination buttons
-      const prevButton = document.getElementById('fullscreenPrevPage') || document.querySelector('.wiertla-categories__fullscreen-right #prevPage');
-      const nextButton = document.getElementById('fullscreenNextPage') || document.querySelector('.wiertla-categories__fullscreen-right #nextPage');
-      
-      if (prevButton) {
-        prevButton.disabled = window.currentPage <= 1;
-      }
-      
-      if (nextButton) {
-        nextButton.disabled = window.currentPage >= window.totalPages;
+      // Update fullscreen pagination (same as main pagination)
+      const fullscreenPagination = document.getElementById('fullscreenWiertlaPagination');
+      if (fullscreenPagination) {
+        // Copy the pagination HTML from main pagination
+        const mainPagination = document.getElementById('wiertlaPagination');
+        if (mainPagination) {
+          fullscreenPagination.innerHTML = mainPagination.innerHTML;
+        }
       }
       
       // Synchronize active states for category icons in fullscreen view
@@ -2288,29 +2318,7 @@
     }
     
     function addFullscreenEventListeners() {
-      // Handle fullscreen pagination
-      const prevButton = document.getElementById('fullscreenPrevPage');
-      const nextButton = document.getElementById('fullscreenNextPage');
-      
-      if (prevButton) {
-        prevButton.addEventListener('click', function() {
-          if (window.currentPage > 1) {
-            window.currentPage--;
-            applyFilters(); // Update main view
-            applyFullscreenFilters(); // Update fullscreen view
-          }
-        });
-      }
-      
-      if (nextButton) {
-        nextButton.addEventListener('click', function() {
-          if (window.currentPage < window.totalPages) {
-            window.currentPage++;
-            applyFilters(); // Update main view
-            applyFullscreenFilters(); // Update fullscreen view
-          }
-        });
-      }
+      // Fullscreen pagination is now handled by the same event delegation as main pagination
       
       // Handle fullscreen filters
       const filterSelects = document.querySelectorAll('.wiertla-categories__fullscreen-content .wiertla-categories__filter');
@@ -3896,8 +3904,6 @@
     const fullscreenResultsCount = document.querySelector(
       '.wiertla-categories__fullscreen-right .wiertla-categories__results-numbers'
     );
-    const fullscreenPrevPage = document.querySelector('.wiertla-categories__fullscreen-right #prevPage');
-    const fullscreenNextPage = document.querySelector('.wiertla-categories__fullscreen-right #nextPage');
 
     // Fullscreen search and filters
     const fullscreenSearch = document.querySelector('.wiertla-categories__fullscreen-left #CategorySearch');
