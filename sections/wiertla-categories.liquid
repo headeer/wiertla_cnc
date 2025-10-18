@@ -1545,6 +1545,12 @@
       }
 
       // Apply type filter - BUT skip if we already applied a category filter that found products
+      console.log('🔍 [Filter Debug] Type filter check:', {
+        hasTypFilter: !!(window.WiertlaCNC.filters.typ),
+        typValue: window.WiertlaCNC.filters.typ,
+        willApplyTypFilter: !!(window.WiertlaCNC.filters.typ && window.WiertlaCNC.filters.typ !== 'all' && window.WiertlaCNC.filters.typ !== '')
+      });
+      
       if (window.WiertlaCNC.filters.typ && window.WiertlaCNC.filters.typ !== 'all' && window.WiertlaCNC.filters.typ !== '') {
         let beforeTypeCount = filteredProducts.length;
         
@@ -2492,6 +2498,14 @@
             search: ''
           };
           
+          // Also reset WiertlaCNC filters
+          if (window.WiertlaCNC && window.WiertlaCNC.filters) {
+            window.WiertlaCNC.filters.typ = '';
+            window.WiertlaCNC.filters.category = '';
+            window.WiertlaCNC.filters.crown = '';
+            window.WiertlaCNC.filters.manufacturer = '';
+          }
+          
           // Reset all dropdown filters to default values
           document.querySelectorAll('.wiertla-categories__filter').forEach(filter => {
             filter.value = '';
@@ -2829,6 +2843,37 @@
             }
             if (imageUrl && imageUrl !== 'undefined' && imageUrl !== 'null' && !isFallbackImage(imageUrl)) {
               updatePreviewImage(imageUrl, true);
+              
+              // Position hover preview to avoid jumping
+              const hoverPreview = document.querySelector('.wiertla-categories__hover-preview');
+              if (hoverPreview) {
+                const rect = r.getBoundingClientRect();
+                const previewHeight = 303.5714; // Height from CSS
+                const previewWidth = 425; // Width from CSS
+                const viewportHeight = window.innerHeight;
+                const viewportWidth = window.innerWidth;
+                
+                // Calculate position
+                let top = rect.bottom + 10; // Default: below the row
+                let left = rect.left + (rect.width / 2) - (previewWidth / 2); // Center horizontally
+                
+                // Check if there's enough space below
+                if (top + previewHeight > viewportHeight) {
+                  // Position above the row instead
+                  top = rect.top - previewHeight - 10;
+                }
+                
+                // Ensure preview stays within viewport horizontally
+                if (left < 10) left = 10;
+                if (left + previewWidth > viewportWidth - 10) {
+                  left = viewportWidth - previewWidth - 10;
+                }
+                
+                // Apply position
+                hoverPreview.style.left = left + 'px';
+                hoverPreview.style.top = top + 'px';
+              }
+              
               return;
             }
           }

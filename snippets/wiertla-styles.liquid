@@ -927,6 +927,8 @@
       overflow-y: auto;
       margin-bottom: 20px;
       width: 100%;
+      /* Add bottom padding to prevent hover preview from causing layout shifts */
+      padding-bottom: 20px;
     }
 
     /* Mobile table scrolling */
@@ -2956,6 +2958,9 @@
       transition: opacity 0.3s ease;
       z-index: 9999;
       background-color: transparent;
+      /* Prevent layout shifts */
+      transform: translateZ(0);
+      will-change: opacity, transform;
     }
 
     .wiertla-categories__hover-preview.active {
