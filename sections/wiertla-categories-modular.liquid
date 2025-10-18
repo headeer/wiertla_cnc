@@ -5,9 +5,18 @@
 {% endcomment %}
 
 {{ 'wiertla-filter-modal.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'wiertla-categories-filter.js' | asset_url }}" async></script>
+{{ 'wiertla-categories-filter.js' | asset_url | script_tag }}
 
-{% comment %} Variables are handled by JavaScript modules {% endcomment %}
+{% assign section_id = section.id %}
+{% assign items_per_page = section.settings.items_per_page | default: 100 %}
+
+{% if section.settings.selected_collection != blank %}
+  {% assign selected_collection = collections[section.settings.selected_collection] %}
+{% else %}
+  {% assign selected_collection = collections.all %}
+{% endif %}
+
+{% assign current_language = request.locale.iso_code | default: 'pl' %}
 
 {% comment %} pagination removed: hydrating via JS {% endcomment %}
 <div class="wiertla-categories__container">
@@ -344,11 +353,11 @@
 {% render 'wiertla-categories-fullscreen' %}
 
 <!-- Load modular JavaScript files -->
-<script src="{{ 'wiertla-categories-utils.js' | asset_url }}" async></script>
-<script src="{{ 'wiertla-categories-core.js' | asset_url }}" async></script>
-<script src="{{ 'wiertla-categories-filtering.js' | asset_url }}" async></script>
-<script src="{{ 'wiertla-categories-table.js' | asset_url }}" async></script>
-<script src="{{ 'wiertla-categories-fullscreen.js' | asset_url }}" async></script>
+{{ 'wiertla-categories-utils.js' | asset_url | script_tag }}
+{{ 'wiertla-categories-core.js' | asset_url | script_tag }}
+{{ 'wiertla-categories-filtering.js' | asset_url | script_tag }}
+{{ 'wiertla-categories-table.js' | asset_url | script_tag }}
+{{ 'wiertla-categories-fullscreen.js' | asset_url | script_tag }}
 
 <!-- Product data hydration script -->
 <script type="application/json" data-disabled="fullscreen-inline">
