@@ -1620,18 +1620,28 @@
   }
 {% endstylesheet %}
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js" defer></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+<!-- Swiper CSS and JS are loaded in theme.liquid -->
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  // Wait for both DOM and Swiper library to be ready
+  function initializeSwiper() {
     // Check if Swiper is available before initializing
     if (typeof Swiper === 'undefined') {
-      console.warn('Swiper library is not loaded. Skipping swiper initialization.');
+      console.warn('Swiper library is not loaded. Retrying in 100ms...');
+      setTimeout(initializeSwiper, 100);
       return;
     }
 
+    // Check if the swiper container exists
+    const swiperContainer = document.querySelector('.latest-products__swiper');
+    if (!swiperContainer) {
+      console.warn('Swiper container not found. Retrying in 100ms...');
+      setTimeout(initializeSwiper, 100);
+      return;
+    }
+
+    console.log('Initializing Swiper...');
     const swiper = new Swiper('.latest-products__swiper', {
       loop: false,
       slidesPerView: 1,
@@ -1675,6 +1685,9 @@
         },
       },
     });
+    
+    console.log('Swiper initialized successfully!');
+    
     // Replace placeholder hero images with real featured images
     try {
       var container = document.querySelector('.latest-products__swiper .swiper-wrapper');
@@ -1891,5 +1904,15 @@
     } catch (error) {
       console.error('Error updating main navigation active states:', error);
     }
+  }
+  
+  // Close the initializeSwiper function
+  }
+  
+  // Initialize swiper when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeSwiper);
+  } else {
+    initializeSwiper();
   }
 </script>
