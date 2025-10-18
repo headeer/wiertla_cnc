@@ -379,11 +379,17 @@
       // Initialize the active tab type (wiertla, plytki, koronki)
       window.WiertlaCNC.activeTabType = 'wiertla';
       
-      // Set initial data-tab attribute on table container
-      const tableContainer = document.querySelector('.wiertla-categories__table-container');
-      if (tableContainer) {
-        tableContainer.setAttribute('data-tab', 'wiertla');
-      }
+        // Set initial data-tab attribute on table container
+        const tableContainer = document.querySelector('.wiertla-categories__table-container');
+        if (tableContainer) {
+          tableContainer.setAttribute('data-tab', 'wiertla');
+          // Add table class for column width styling
+          const table = tableContainer.querySelector('.wiertla-categories__table');
+          if (table) {
+            table.classList.remove('table-wiertla', 'table-plytki', 'table-koronki');
+            table.classList.add('table-wiertla');
+          }
+        }
       
       // Define SKU prefix mapping for each tab type
       window.WiertlaCNC.tabPrefixMapping = {
@@ -546,6 +552,12 @@
           const tableContainer = document.querySelector('.wiertla-categories__table-container');
           if (tableContainer) {
             tableContainer.setAttribute('data-tab', tabType);
+            // Add table class for column width styling
+            const table = tableContainer.querySelector('.wiertla-categories__table');
+            if (table) {
+              table.classList.remove('table-wiertla', 'table-plytki', 'table-koronki');
+              table.classList.add(`table-${tabType}`);
+            }
           }
           
           // Update URL with mainType parameter
@@ -1979,6 +1991,12 @@
           const tableContainer = document.querySelector('.wiertla-categories__table-container');
           if (tableContainer) {
             tableContainer.setAttribute('data-tab', initialTabType);
+            // Add table class for column width styling
+            const table = tableContainer.querySelector('.wiertla-categories__table');
+            if (table) {
+              table.classList.remove('table-wiertla', 'table-plytki', 'table-koronki');
+              table.classList.add(`table-${initialTabType}`);
+            }
           }
           
           setFilterVisibility(initialTabType);
@@ -1992,6 +2010,12 @@
             const tableContainer = document.querySelector('.wiertla-categories__table-container');
             if (tableContainer) {
               tableContainer.setAttribute('data-tab', tabType);
+            // Add table class for column width styling
+            const table = tableContainer.querySelector('.wiertla-categories__table');
+            if (table) {
+              table.classList.remove('table-wiertla', 'table-plytki', 'table-koronki');
+              table.classList.add(`table-${tabType}`);
+            }
             }
             
             // Update URL param
@@ -2062,6 +2086,12 @@
           const tableContainer = document.querySelector('.wiertla-categories__table-container');
           if (tableContainer) {
             tableContainer.setAttribute('data-tab', tabType);
+            // Add table class for column width styling
+            const table = tableContainer.querySelector('.wiertla-categories__table');
+            if (table) {
+              table.classList.remove('table-wiertla', 'table-plytki', 'table-koronki');
+              table.classList.add(`table-${tabType}`);
+            }
           }
           
           const url = new URL(window.location.href);

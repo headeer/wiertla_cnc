@@ -199,6 +199,13 @@
       container.classList.remove('tab-active-wiertla', 'tab-active-plytki', 'tab-active-koronki');
       container.classList.add(`tab-active-${tabType}`);
 
+      // Add/remove table class for column width styling
+      const table = container.querySelector('.wiertla-categories__table');
+      if (table) {
+        table.classList.remove('table-wiertla', 'table-plytki', 'table-koronki');
+        table.classList.add(`table-${tabType}`);
+      }
+
       // Hide mobile header blocks within this container
       container.querySelectorAll('.wiertla-categories__mobile-table-header').forEach(function(header) {
         header.style.display = 'none';
