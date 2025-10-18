@@ -358,7 +358,9 @@ window.tempFilterByTitle = function(searchTerm) {
   });
   
   // Apply filters to update the table
-  applyFilters();
+  if (window.applyFilters) {
+    window.applyFilters();
+  }
   
   // Log the number of filtered products
 };
@@ -367,7 +369,9 @@ window.tempFilterByTitle = function(searchTerm) {
 window.resetTempFilter = function() {
   if (window._originalProducts) {
     allProducts = [...window._originalProducts];
-    applyFilters();
+    if (window.applyFilters) {
+    window.applyFilters();
+  }
   }
 };
 

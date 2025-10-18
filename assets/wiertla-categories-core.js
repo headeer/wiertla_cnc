@@ -585,7 +585,9 @@ window.handleItemsPerPageChange = function(newItemsPerPage) {
     }
   });
   
-  applyFilters();
+  if (window.applyFilters) {
+    window.applyFilters();
+  }
 };
 
 // Function to change language - Remove this in favor of our new translation system
@@ -724,7 +726,9 @@ function updateUILanguage() {
   }
   
   // Re-apply filters to update any text in the table
-  applyFilters();
+  if (window.applyFilters) {
+    window.applyFilters();
+  }
 }
 
 // Calculate initial totalPages
@@ -805,7 +809,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Force a redraw after DOM is fully loaded
   setTimeout(function() {
-    applyFilters();
+    if (window.applyFilters) {
+    window.applyFilters();
+  }
   }, 100);
 });
 
@@ -817,7 +823,9 @@ window.addEventListener('resize', function() {
     const newIsMobileView = window.innerWidth <= 1024;
     if (newIsMobileView !== isMobileView) {
       isMobileView = newIsMobileView;
-      applyFilters();
+      if (window.applyFilters) {
+    window.applyFilters();
+  }
     }
   }, 250);
 });
