@@ -593,13 +593,8 @@
      // Initialize window.products for compatibility
      window.products = [];
      
-     // Shared price formatting function - WITH HYDRATION DEBUG
+     // Shared price formatting function
      window.WiertlaCNC.formatPrice = function(price, productSku = 'Unknown') {
-       // Debug for hydration issues
-       if (typeof price === 'number' || (typeof price === 'string' && price.match(/^\d+\.?\d*$/))) {
-         console.log(`[Hydration Debug] Raw number detected: "${price}" (type: ${typeof price}) for SKU: ${productSku}`);
-       }
-       
        if (price !== undefined && price !== null && price !== '') {
          // Convert to string for consistent handling
          const priceStr = String(price).trim();
@@ -617,17 +612,13 @@
          // If price is a raw number (like "1100.0" or "890"), add "zł"
          // More robust regex to catch various number formats
          if (priceStr.match(/^\d+\.?\d*$/) || priceStr.match(/^\d+$/) || priceStr.match(/^\d+\.0+$/)) {
-           const result = priceStr + ' zł';
-           console.log(`[Hydration Debug] Formatted raw number: "${priceStr}" → "${result}"`);
-           return result;
+           return priceStr + ' zł';
          }
          
          // If it's a valid number but in string format, try to format it
          const numValue = parseFloat(priceStr);
          if (!isNaN(numValue) && numValue > 0) {
-           const result = numValue.toString() + ' zł';
-           console.log(`[Hydration Debug] Parsed and formatted: ${numValue} → "${result}"`);
-           return result;
+           return numValue.toString() + ' zł';
          }
        }
        return '-';
@@ -656,15 +647,6 @@
           return;
         }
         
-        // Debug: Check for raw number prices in new products
-        console.log(`[Hydration Debug] Merging ${newProducts.length} new products...`);
-        const rawPriceProducts = newProducts.filter(p => {
-          const price = p.price;
-          return (typeof price === 'number' || (typeof price === 'string' && price.match(/^\d+\.?\d*$/))) && !String(price).includes('zł');
-        });
-        if (rawPriceProducts.length > 0) {
-          console.log(`[Hydration Debug] Found ${rawPriceProducts.length} products with raw number prices:`, rawPriceProducts.slice(0, 3).map(p => ({ sku: p.sku, price: p.price, type: typeof p.price })));
-        }
         
         // Strictly drop items without SKU or without any available quantity before merging
         try {
@@ -3408,7 +3390,6 @@
               <td class="wiertla-categories__table-cell" data-href="/products/${product.handle || ''}">
                 ${formatSymbol(product.vendor || product.custom_manufacturer || '-')}
               </td>
-              ${product.custom_rent_value ? `<td class="wiertla-categories__table-cell" title="Wynajem">${product.custom_rent_value}</td>` : ''}
               <td class="wiertla-categories__table-cell">
                 <div class="wiertla-categories__price-wrapper">
                   <span class="wiertla-categories__price" data-href="/products/${product.handle}">${window.WiertlaCNC.formatPrice(product.price, product.sku || product.custom_symbol || 'Unknown')}</span>
