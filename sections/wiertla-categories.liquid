@@ -593,34 +593,44 @@
      // Initialize window.products for compatibility
      window.products = [];
      
-     // Shared price formatting function
+     // Shared price formatting function - FIXED VERSION
      window.WiertlaCNC.formatPrice = function(price, productSku = 'Unknown') {
+       console.log(`[Price Debug] formatPrice called with: "${price}" (type: ${typeof price})`);
+       
        if (price !== undefined && price !== null && price !== '') {
          // Convert to string for consistent handling
          const priceStr = String(price).trim();
+         console.log(`[Price Debug] Converted to string: "${priceStr}"`);
          
          // Check if price is zero or empty
          if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00' || priceStr === 'null' || priceStr === 'undefined') {
+           console.log(`[Price Debug] Zero/empty price detected, returning "-"`);
            return '-';
          }
          
          // If price already has "zł", use as is
          if (priceStr.includes('zł')) {
+           console.log(`[Price Debug] Price already has "zł", returning as is: "${priceStr}"`);
            return priceStr;
          }
          
          // If price is a raw number (like "1100.0" or "890"), add "zł"
          // More robust regex to catch various number formats
          if (priceStr.match(/^\d+\.?\d*$/) || priceStr.match(/^\d+$/) || priceStr.match(/^\d+\.0+$/)) {
-           return priceStr + ' zł';
+           const result = priceStr + ' zł';
+           console.log(`[Price Debug] Raw number detected, adding "zł": "${priceStr}" → "${result}"`);
+           return result;
          }
          
          // If it's a valid number but in string format, try to format it
          const numValue = parseFloat(priceStr);
          if (!isNaN(numValue) && numValue > 0) {
-           return numValue.toString() + ' zł';
+           const result = numValue.toString() + ' zł';
+           console.log(`[Price Debug] Parsed number, adding "zł": ${numValue} → "${result}"`);
+           return result;
          }
        }
+       console.log(`[Price Debug] No valid price found, returning "-"`);
        return '-';
      };
 
