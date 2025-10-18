@@ -379,6 +379,12 @@
       // Initialize the active tab type (wiertla, plytki, koronki)
       window.WiertlaCNC.activeTabType = 'wiertla';
       
+      // Set initial data-tab attribute on table container
+      const tableContainer = document.querySelector('.wiertla-categories__table-container');
+      if (tableContainer) {
+        tableContainer.setAttribute('data-tab', 'wiertla');
+      }
+      
       // Define SKU prefix mapping for each tab type
       window.WiertlaCNC.tabPrefixMapping = {
         'wiertla': ['VW', 'WV', 'PR', 'WW', 'PS', 'WK', 'WA'],
@@ -535,6 +541,12 @@
           
           // Update active tab type
           window.WiertlaCNC.activeTabType = tabType;
+          
+          // Update table container data-tab attribute for CSS styling
+          const tableContainer = document.querySelector('.wiertla-categories__table-container');
+          if (tableContainer) {
+            tableContainer.setAttribute('data-tab', tabType);
+          }
           
           // Update URL with mainType parameter
           const url = new URL(window.location);
@@ -1962,12 +1974,26 @@
           select.value = initialTabType;
           if (!window.WiertlaCNC) window.WiertlaCNC = {};
           window.WiertlaCNC.activeTabType = initialTabType;
+          
+          // Set initial data-tab attribute on table container
+          const tableContainer = document.querySelector('.wiertla-categories__table-container');
+          if (tableContainer) {
+            tableContainer.setAttribute('data-tab', initialTabType);
+          }
+          
           setFilterVisibility(initialTabType);
 
           // Handle changes
           select.addEventListener('change', function() {
             const tabType = this.value;
             window.WiertlaCNC.activeTabType = tabType;
+            
+            // Update table container data-tab attribute for CSS styling
+            const tableContainer = document.querySelector('.wiertla-categories__table-container');
+            if (tableContainer) {
+              tableContainer.setAttribute('data-tab', tabType);
+            }
+            
             // Update URL param
             const url = new URL(window.location.href);
             url.searchParams.set('mainType', tabType);
@@ -2031,6 +2057,13 @@
           tabBtn.classList.add('active');
           // Update global active tab and URL
           window.WiertlaCNC.activeTabType = tabType;
+          
+          // Update table container data-tab attribute for CSS styling
+          const tableContainer = document.querySelector('.wiertla-categories__table-container');
+          if (tableContainer) {
+            tableContainer.setAttribute('data-tab', tabType);
+          }
+          
           const url = new URL(window.location.href);
           url.searchParams.set('mainType', tabType);
           window.history.replaceState({}, '', url.toString());
@@ -5615,12 +5648,26 @@
     if (!window.WiertlaCNC) window.WiertlaCNC = {};
     window.WiertlaCNC.activeTabType = initialTabType;
     select.value = initialTabType;
+    
+    // Set initial data-tab attribute on table container
+    const tableContainer = document.querySelector('.wiertla-categories__table-container');
+    if (tableContainer) {
+      tableContainer.setAttribute('data-tab', initialTabType);
+    }
+    
     setFilterVisibility(initialTabType);
     try { updateTableHeaders(initialTabType); } catch (e) {}
 
     select.addEventListener('change', function() {
       const tabType = this.value;
       window.WiertlaCNC.activeTabType = tabType;
+      
+      // Update table container data-tab attribute for CSS styling
+      const tableContainer = document.querySelector('.wiertla-categories__table-container');
+      if (tableContainer) {
+        tableContainer.setAttribute('data-tab', tabType);
+      }
+      
       const url = new URL(window.location.href);
       url.searchParams.set('mainType', tabType);
       window.history.replaceState({}, '', url.toString());
