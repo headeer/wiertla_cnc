@@ -364,48 +364,32 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Load products from various sources
+// Load products from the original working endpoint
 async function loadProducts() {
-  // Try different collection handles
-  const possibleHandles = ['wiertla-products', 'wiertla', 'all', 'frontpage'];
-  
-  for (const handle of possibleHandles) {
-    try {
-      console.log(`[Wiertla] Trying collection handle: ${handle}`);
-      const response = await fetch(`/collections/${handle}.json`);
-      if (response.ok) {
-        const data = await response.json();
-        
-        if (data && data.products && Array.isArray(data.products)) {
-          window.WiertlaCNC.products = data.products;
-          console.log(`[Wiertla] Loaded ${data.products.length} products from /collections/${handle}.json`);
-          return data.products;
-        }
-      }
-    } catch (error) {
-      console.log(`[Wiertla] Failed to load from /collections/${handle}.json:`, error.message);
+  try {
+    console.log('[Wiertla] Loading products from original endpoint...');
+    const url = '/collections/all?view=wiertla-products-json&limit=2500';
+    const response = await fetch(url, { credentials: 'same-origin' });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+    
+    const data = await response.json();
+    const products = Array.isArray(data.products) ? data.products : [];
+    
+    if (products.length > 0) {
+      window.WiertlaCNC.products = products;
+      console.log(`[Wiertla] Loaded ${products.length} products from original endpoint`);
+      return products;
+    } else {
+      console.error('[Wiertla] No products found in response');
+      return [];
+    }
+  } catch (error) {
+    console.error('[Wiertla] Error loading products:', error);
+    return [];
   }
-  
-  // If no collection works, try to get products from existing data
-  console.log('[Wiertla] No collection endpoint found, checking existing data...');
-  
-  // Check if products are already loaded somewhere
-  if (window.products && Array.isArray(window.products) && window.products.length > 0) {
-    window.WiertlaCNC.products = window.products;
-    console.log(`[Wiertla] Using existing window.products: ${window.products.length} products`);
-    return window.products;
-  }
-  
-  // Check if there are any products in the DOM
-  const productElements = document.querySelectorAll('[data-product-id]');
-  if (productElements.length > 0) {
-    console.log(`[Wiertla] Found ${productElements.length} product elements in DOM`);
-    // This would require extracting product data from DOM elements
-  }
-  
-  console.error('[Wiertla] No products found from any source');
-  return [];
 }
 
 // Initialize product table data
