@@ -364,11 +364,109 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Load products from the original working endpoint
+// Merge and refresh products with filtering
+function mergeAndRefresh(newProducts) {
+  if (!Array.isArray(newProducts) || newProducts.length === 0) {
+    return;
+  }
+  
+  // Filter products: only accept products with SKU and inventory
+  function getNum(val) { 
+    var n = Number((val || '').toString().replace(',', '.')); 
+    return isNaN(n) ? 0 : n; 
+  }
+  
+  newProducts = newProducts.filter(function(p) {
+    try {
+      var sku = String(p && (p.sku || p.custom_symbol || p.custom_kod_producenta) || '').trim();
+      if (!sku || sku === '-') return false;
+      
+      // Only accept products with Shopify availability - require actual inventory
+      if (getNum(p && p.inventory_quantity) > 0) return true;
+      if (Array.isArray(p && p.variants)) {
+        for (var i = 0; i < p.variants.length; i++) {
+          var v = p.variants[i] || {};
+          if (getNum(v && v.inventory_quantity) > 0) return true;
+        }
+      }
+      return false;
+    } catch(_) { 
+      return false; 
+    }
+  });
+  
+  const before = (window.WiertlaCNC.products || []).length;
+  window.WiertlaCNC.products = [...(window.WiertlaCNC.products || []), ...newProducts];
+  const after = window.WiertlaCNC.products.length;
+  console.log(`[Wiertla] Merged ${newProducts.length} products (${before} -> ${after} total)`);
+}
+
+// Incremental hydration to load all products across all pages
+async function hydrateAllShopProductsIncremental() {
+  const baseUrl = '/collections/all?view=wiertla-products-json';
+  try {
+    console.log('[Wiertla] Starting incremental hydration...');
+    
+    // Fetch page 1
+    let res = await fetch(baseUrl + '&page=1', { credentials: 'same-origin' });
+    if (!res.ok) {
+      console.warn('[Wiertla] Hydration: page 1 not OK', res.status);
+      return;
+    }
+    
+    let data = await res.json();
+    let products = Array.isArray(data.products) ? data.products : [];
+    const totalPages = Number(data.pagination && data.pagination.pages) || 1;
+    
+    console.log(`[Wiertla] Found ${totalPages} pages, ${products.length} products on page 1`);
+    
+    if (products.length) {
+      mergeAndRefresh(products);
+    }
+    
+    // Load remaining pages
+    for (let p = 2; p <= totalPages; p++) {
+      console.time(`[Wiertla] Hydration page ${p}`);
+      res = await fetch(baseUrl + '&page=' + p, { credentials: 'same-origin' });
+      console.timeEnd(`[Wiertla] Hydration page ${p}`);
+      
+      if (!res.ok) {
+        console.warn('[Wiertla] Hydration: page', p, 'not OK', res.status);
+        continue;
+      }
+      
+      data = await res.json();
+      products = Array.isArray(data.products) ? data.products : [];
+      
+      if (products.length) {
+        mergeAndRefresh(products);
+      }
+      
+      // Small delay to avoid overwhelming the server
+      await new Promise(r => setTimeout(r, 50));
+    }
+    
+    console.log(`[Wiertla] Hydration complete! Total products: ${(window.WiertlaCNC.products || []).length}`);
+    
+    // Dispatch completion event
+    try {
+      window.dispatchEvent(new CustomEvent('wiertla:hydrateComplete', { 
+        detail: { total: (window.WiertlaCNC.products || []).length } 
+      }));
+    } catch (_) {}
+    
+  } catch (e) {
+    console.error('[Wiertla] Hydration: incremental fetch failed', e);
+  }
+}
+
+// Load products with full hydration
 async function loadProducts() {
   try {
-    console.log('[Wiertla] Loading products from original endpoint... (v20250116-001)');
-    const url = '/collections/all?view=wiertla-products-json&limit=2500';
+    console.log('[Wiertla] Starting product hydration...');
+    
+    // Start with first page for immediate display
+    const url = '/collections/all?view=wiertla-products-json&page=1';
     const response = await fetch(url, { credentials: 'same-origin' });
     
     if (!response.ok) {
@@ -379,9 +477,15 @@ async function loadProducts() {
     const products = Array.isArray(data.products) ? data.products : [];
     
     if (products.length > 0) {
-      window.WiertlaCNC.products = products;
-      console.log(`[Wiertla] Loaded ${products.length} products from original endpoint`);
-      return products;
+      // Initialize with first page
+      window.WiertlaCNC.products = [];
+      mergeAndRefresh(products);
+      console.log(`[Wiertla] Loaded initial ${products.length} products, starting full hydration...`);
+      
+      // Start full hydration in background
+      hydrateAllShopProductsIncremental();
+      
+      return window.WiertlaCNC.products;
     } else {
       console.error('[Wiertla] No products found in response');
       return [];
@@ -860,5 +964,7 @@ window.addEventListener('resize', function() {
 
 // Make functions globally available
 window.loadProducts = loadProducts;
+window.hydrateAllShopProductsIncremental = hydrateAllShopProductsIncremental;
+window.mergeAndRefresh = mergeAndRefresh;
 window.updateCategoryIcons = updateCategoryIcons;
 window.updateUILanguage = updateUILanguage;
