@@ -1441,27 +1441,27 @@
 
     .wiertla-categories__table th:nth-child(4),
     .wiertla-categories__table td:nth-child(4) {
-      width: 290px !important; /* Symbol column - fixed width (largest) */
-      min-width: 290px !important;
-      max-width: 290px !important;
+      width: 275px !important; /* Symbol column - fixed width (largest) */
+      min-width: 275px !important;
+      max-width: 275px !important;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .wiertla-categories__table th:nth-child(5),
     .wiertla-categories__table td:nth-child(5) {
-      width: 165px !important; /* Manufacturer column - fixed width */
-      min-width: 165px !important;
-      max-width: 165px !important;
+      width: 180px !important; /* Manufacturer column - base width (adjusted by tabs) */
+      min-width: 180px !important;
+      max-width: 180px !important;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .wiertla-categories__table th:nth-child(6),
     .wiertla-categories__table td:nth-child(6) {
-      width: 215px !important; /* Price column - fixed width (same for all tabs) */
-      min-width: 215px !important;
-      max-width: 215px !important;
+      width: 200px !important; /* Price column - base width (adjusted by tabs) */
+      min-width: 200px !important;
+      max-width: 200px !important;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -1477,9 +1477,17 @@
 
     .wiertla-categories__table-container[data-tab="koronki"] .wiertla-categories__table th:nth-child(3),
     .wiertla-categories__table-container[data-tab="koronki"] .wiertla-categories__table td:nth-child(3) {
-      width: 60px !important; /* Ilosc column narrower for koronki */
-      min-width: 60px !important;
-      max-width: 60px !important;
+      width: 50px !important; /* Ilosc column narrower for koronki */
+      min-width: 50px !important;
+      max-width: 50px !important;
+    }
+
+    /* For Koronki tab - adjust Manufacturer column */
+    .wiertla-categories__table-container[data-tab="koronki"] .wiertla-categories__table th:nth-child(5),
+    .wiertla-categories__table-container[data-tab="koronki"] .wiertla-categories__table td:nth-child(5) {
+      width: 200px !important; /* Kod producenta wider for koronki */
+      min-width: 200px !important;
+      max-width: 200px !important;
     }
 
     /* For Plytki tab - adjust Fi and Ilosc columns */
@@ -1495,6 +1503,21 @@
       width: 60px !important; /* Ilosc column narrower for plytki */
       min-width: 60px !important;
       max-width: 60px !important;
+    }
+
+    /* For Plytki tab - adjust Manufacturer and Price columns */
+    .wiertla-categories__table-container[data-tab="plytki"] .wiertla-categories__table th:nth-child(5),
+    .wiertla-categories__table-container[data-tab="plytki"] .wiertla-categories__table td:nth-child(5) {
+      width: 200px !important; /* Kod producenta wider for plytki */
+      min-width: 200px !important;
+      max-width: 200px !important;
+    }
+
+    .wiertla-categories__table-container[data-tab="plytki"] .wiertla-categories__table th:nth-child(6),
+    .wiertla-categories__table-container[data-tab="plytki"] .wiertla-categories__table td:nth-child(6) {
+      width: 180px !important; /* Cena netto narrower for plytki */
+      min-width: 180px !important;
+      max-width: 180px !important;
     }
 
     /* Ensure type column content is properly sized and centered */
