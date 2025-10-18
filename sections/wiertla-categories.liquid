@@ -587,11 +587,42 @@
     }, 100);
       });
     
-      // Initialize global products array; data will be hydrated from JSON views
-      window.WiertlaCNC = window.WiertlaCNC || {};
-      window.WiertlaCNC.products = [];
-      // Initialize window.products for compatibility
-      window.products = [];
+     // Initialize global products array; data will be hydrated from JSON views
+     window.WiertlaCNC = window.WiertlaCNC || {};
+     window.WiertlaCNC.products = [];
+     // Initialize window.products for compatibility
+     window.products = [];
+     
+     // Shared price formatting function
+     window.WiertlaCNC.formatPrice = function(price, productSku = 'Unknown') {
+       if (price !== undefined && price !== null && price !== '') {
+         // Convert to string for consistent handling
+         const priceStr = String(price).trim();
+         
+         // Check if price is zero or empty
+         if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00' || priceStr === 'null' || priceStr === 'undefined') {
+           return '-';
+         }
+         
+         // If price already has "zł", use as is
+         if (priceStr.includes('zł')) {
+           return priceStr;
+         }
+         
+         // If price is a raw number (like "1100.0" or "890"), add "zł"
+         // More robust regex to catch various number formats
+         if (priceStr.match(/^\d+\.?\d*$/) || priceStr.match(/^\d+$/) || priceStr.match(/^\d+\.0+$/)) {
+           return priceStr + ' zł';
+         }
+         
+         // If it's a valid number but in string format, try to format it
+         const numValue = parseFloat(priceStr);
+         if (!isNaN(numValue) && numValue > 0) {
+           return numValue.toString() + ' zł';
+         }
+       }
+       return '-';
+     };
 
       // Background: lazy fetch all products from JSON view and merge
       window.WiertlaCNC.fetchAllShopProducts = async function() {
@@ -695,33 +726,6 @@
         } catch (e) {
           console.error('[Wiertla] Hydration: incremental fetch failed', e);
         }
-      };
-      // Helper function to list all TYP field values]
-
-      window.listAllTypValues = function() {
-        const typValues = new Set();
-        const productsWithTyp = [];
-        
-        (Array.isArray(allProducts) ? allProducts : []).forEach((product, index) => {
-          if (product.custom_typ && product.custom_typ.trim() !== '') {
-            typValues.add(product.custom_typ.toLowerCase());
-            productsWithTyp.push({
-              index: index + 1,
-              title: product.title,
-              sku: product.sku,
-              custom_typ: product.custom_typ,
-              vendor: product.vendor
-            });
-          }
-        });
-        
-        
-        return {
-          totalProducts: (Array.isArray(allProducts) ? allProducts.length : 0),
-          productsWithTyp: productsWithTyp.length,
-          uniqueTypValues: Array.from(typValues).sort(),
-          sampleProducts: productsWithTyp.slice(0, 10)
-        };
       };
       
       // Define openRentModal function
@@ -841,173 +845,9 @@
     // Initialize product table data
     let allProducts = Array.isArray(window.WiertlaCNC?.products) ? window.WiertlaCNC.products : [];
     
-    // Debug function to display initial products
-    window.showInitialProducts = function(limit = 20) {
-      allProducts.slice(0, limit).forEach((product, index) => {
-        
-        
-        // Show all custom fields
-        const customFields = {};
-        Object.keys(product).forEach(key => {
-          if (key.startsWith('custom_')) {
-            customFields[key] = product[key];
-          }
-        });
-      });
-      
-      // Show summary statistics
-      const withTyp = allProducts.filter(p => p.custom_typ && p.custom_typ !== null && p.custom_typ !== 'N/A').length;
-      const withRodzaj = allProducts.filter(p => p.rodzaj && p.rodzaj !== null && p.rodzaj !== 'N/A').length;
-      const withVendor = allProducts.filter(p => p.vendor && p.vendor !== null).length;
-      const withSku = allProducts.filter(p => p.sku && p.sku !== null).length;
-      
-      
-      // Show unique values for key fields
-      const uniqueTyps = [...new Set(allProducts.map(p => p.custom_typ).filter(Boolean))];
-      const uniqueRodzaj = [...new Set(allProducts.map(p => p.rodzaj).filter(Boolean))];
-      const uniqueVendors = [...new Set(allProducts.map(p => p.vendor).filter(Boolean))];
-      
-      return {
-        totalProducts: allProducts.length,
-        withTyp,
-        withRodzaj,
-        withVendor,
-        withSku,
-        uniqueTyps,
-        uniqueRodzaj,
-        uniqueVendors,
-        sampleProducts: allProducts.slice(0, limit)
-      };
-    };
 
-    // Debug: log 20 płytki products with quantity-related fields
-    window.logPlytkiSamples = function(limit = 20) {
-      try {
-        const products = (window.WiertlaCNC && Array.isArray(window.WiertlaCNC.products) && window.WiertlaCNC.products.length)
-          ? window.WiertlaCNC.products
-          : (Array.isArray(allProducts) ? allProducts : []);
-        const toLower = (v) => (v || '').toString().toLowerCase();
-        const isPlytki = (p) => {
-          const typ = toLower(p.custom_typ || p.rodzaj || '');
-          const sku = (p.sku || '').toString();
-          return typ.includes('płytkowe') || typ.includes('plytkowe') || typ.includes('plate') || sku.startsWith('PR');
-        };
-        const plytki = products.filter(isPlytki);
-       
-        return plytki.slice(0, limit);
-      } catch (e) {
-        try { console.error('[DEBUG] logPlytkiSamples failed', e); } catch (_) {}
-        return [];
-      }
-    };
 
-    // Auto-log on initial load and after hydration completes
-    try { window.logPlytkiSamples(20); } catch (_) {}
-    try {
-      window.addEventListener('wiertla:hydrateComplete', function() {
-        try { window.logPlytkiSamples(20); } catch (_) {}
-      });
-    } catch (_) {}
-
-    // Render a table with counts of products by custom_typ
-    window.renderTypStats = function() {
-      try {
-        const products = window.WiertlaCNC?.products || allProducts || [];
-        const counts = {};
-        products.forEach(p => {
-          const key = (p.custom_typ || '').toString().trim() || '—';
-          counts[key] = (counts[key] || 0) + 1;
-        });
-
-        // Create or find container below the main table
-        let container = document.getElementById('typStatsContainer');
-        if (!container) {
-          container = document.createElement('div');
-          container.id = 'typStatsContainer';
-          container.style.marginTop = '20px';
-          const host = document.querySelector('.wiertla-categories');
-          if (host) host.appendChild(container);
-        }
-
-        // Build table
-        const rows = Object.entries(counts)
-          .sort((a,b) => b[1]-a[1])
-          .map(([typ, count]) => `<tr><td class="wiertla-categories__table-cell">${typ}</td><td class="wiertla-categories__table-cell" style="text-align:right;">${count}</td></tr>`) 
-          .join('');
-
-        container.innerHTML = `
-          <h3 style="margin:16px 0 8px;">Statystyki TYP</h3>
-          <table class="wiertla-categories__table" style="margin-bottom:24px;">
-            <thead>
-              <tr>
-                <th class="wiertla-categories__table-header">TYP</th>
-                <th class="wiertla-categories__table-header" style="text-align:right;">Ilość</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${rows}
-            </tbody>
-          </table>
-        `;
-      } catch (_) {}
-    };
     
-    // Simple RODZAJ stats (debug): outputs lines like "icm: 20" across ALL products
-    window.renderRodzajStatsSimple = function() {
-       try {
-         const products = window.WiertlaCNC?.products || allProducts || [];
-         const counts = {};
-         const labels = {};
-         products.forEach(p => {
-           const raw = (p.custom_rodzaj || p?.metafields?.custom?.rodzaj || '').toString().trim();
-           if (!raw || raw === '-' || raw === 'N/A') return;
-           const key = raw.toLowerCase();
-           labels[key] = labels[key] || raw;
-           counts[key] = (counts[key] || 0) + 1;
-         });
- 
-         let container = document.getElementById('rodzajStatsSimple');
-         if (!container) {
-           container = document.createElement('div');
-           container.id = 'rodzajStatsSimple';
-           container.style.marginTop = '12px';
-           const host = document.querySelector('.wiertla-categories');
-           if (host) host.appendChild(container);
-         }
- 
-         const entries = Object.entries(counts).sort((a,b) => b[1]-a[1]);
-         const lines = entries.length
-           ? entries.map(([k,v]) => `${labels[k]}: ${v}`).join('<br>')
-           : 'brak danych';
- 
-         container.innerHTML = `
-           <h3 style=\"margin:16px 0 8px; display:none;\">Rodzaj (custom_rodzaj)</h3>
-           <div style=\"font-family:monospace; white-space:pre-line; display:none;\">${lines}</div>
-         `;
-       } catch (_) {}
-     };
-
-    // Initial simple rodzaj stats render
-    try { window.renderRodzajStatsSimple(); } catch (_) {}
-
-    // Update when switching to PŁYTKI tab
-    try {
-      document.querySelectorAll('.wiertla-categories__tab').forEach(function(tab) {
-        tab.addEventListener('click', function() {
-          var tabType = this.getAttribute('data-tab-type');
-          if (tabType === 'plytki') {
-            window.renderRodzajStatsSimple();
-          }
-        });
-      });
-    } catch (_) {}
-    
-    // Also update after hydration completes (when products array becomes available)
-    try {
-      window.addEventListener('wiertla:hydrateComplete', function() {
-        try { window.renderRodzajStatsSimple(); } catch (_) {}
-      });
-    } catch (_) {}
     
     // Create hover preview element
     const hoverPreview = document.createElement('div');
@@ -1526,44 +1366,7 @@
         let beforeCategoryCount = filteredProducts.length;
         const activeTabType = window.WiertlaCNC.activeTabType || 'wiertla';
         
-        // 🐛 DEBUG: Log category filter details
         
-        // Special debug for Sandvik 880 issues
-        if (window.selectedCategory === 'sandvik' && activeTabType === 'wiertla') {
-          let sandvikCount = 0;
-          filteredProducts.forEach((product, index) => {
-            if (index < 10) { // Check first 10 products for debug
-              const has880Anywhere = 
-                (product.custom_typ || '').toLowerCase().includes('880') ||
-                (product.rodzaj || '').toLowerCase().includes('880') ||
-                (product.title || '').toLowerCase().includes('880') ||
-                (product.sku || '').toLowerCase().includes('880') ||
-                (product.custom_symbol || '').toLowerCase().includes('880');
-              
-              const hasSandvikAnywhere = 
-                (product.vendor || '').toLowerCase().includes('sandvik') ||
-                (product.title || '').toLowerCase().includes('sandvik') ||
-                (product.custom_typ || '').toLowerCase().includes('sandvik');
-                
-              if (has880Anywhere || hasSandvikAnywhere) {
-                sandvikCount++;
-                
-              }
-            }
-          });
-           
-           // Look specifically for the mentioned products
-           const targetProducts = ['880 PS.T111', '880 PS.M008', '880 PS.M101'];
-           targetProducts.forEach(targetName => {
-             const foundProduct = filteredProducts.find(p => 
-               (p.title || '').includes(targetName) ||
-               (p.sku || '').includes(targetName) ||
-               (p.custom_symbol || '').includes(targetName)
-             );
-             
-            
-           });
-         }
         
         filteredProducts = filteredProducts.filter(product => {
           // For Wiertła tab, prefixes already narrowed the dataset; keep all
@@ -1893,32 +1696,26 @@
       }
     };
     
-    // Apply filters and pagination
-    function applyFilters() {
-      console.log('🔍 [APPLY FILTERS] Function called');
-      
-      // Get filtered products using filterProducts function
-      const filteredProducts = filterProducts();
-      
-      
-      // Update pagination
-      window.totalPages = Math.ceil(filteredProducts.length / window.itemsPerPage);
-      
-      // Reset page if needed
-      if (window.currentPage > window.totalPages) {
-        window.currentPage = window.totalPages > 0 ? window.totalPages : 1;
-      }
-      
-      // Calculate slice indexes for pagination
-      const startIndex = (window.currentPage - 1) * window.itemsPerPage;
-      const endIndex = startIndex + window.itemsPerPage;
-      const productsToShow = filteredProducts.slice(startIndex, endIndex);
-      
-      
-      // Generate table with filtered and paginated products
-      console.log('🔍 [APPLY FILTERS] About to call generateTable with', productsToShow.length, 'products');
-      generateTable(productsToShow);
-      console.log('🔍 [APPLY FILTERS] generateTable call completed');
+     // Apply filters and pagination
+     function applyFilters() {
+       // Get filtered products using filterProducts function
+       const filteredProducts = filterProducts();
+       
+       // Update pagination
+       window.totalPages = Math.ceil(filteredProducts.length / window.itemsPerPage);
+       
+       // Reset page if needed
+       if (window.currentPage > window.totalPages) {
+         window.currentPage = window.totalPages > 0 ? window.totalPages : 1;
+       }
+       
+       // Calculate slice indexes for pagination
+       const startIndex = (window.currentPage - 1) * window.itemsPerPage;
+       const endIndex = startIndex + window.itemsPerPage;
+       const productsToShow = filteredProducts.slice(startIndex, endIndex);
+       
+       // Generate table with filtered and paginated products
+       generateTable(productsToShow);
       updatePaginationButtons();
       
       // Update results count
@@ -2351,37 +2148,9 @@
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--vendor" data-href="/products/${product.handle || ''}">
             ${product.vendor || product.custom_manufacturer || '-'}
           </td>
-          <td class="wiertla-categories__table-cell wiertla-categories__table-cell--price">
-            ${(() => {
-                      const price = product.price || '';
-                      console.log(`🔍 [OLD TABLE] Product: ${product.sku || product.custom_symbol || 'Unknown'}, Original price: "${price}" (${typeof price})`);
-                      
-                      if (price !== undefined && price !== null && price !== '') {
-                        // Convert to string for consistent handling
-                        const priceStr = String(price);
-                        console.log(`🔍 [OLD TABLE] Converted to string: "${priceStr}"`);
-                        
-                        // If price is a raw number (like "1100.0" or "890"), add "zł"
-                        if (priceStr.match(/^\d+\.?\d*$/)) {
-                          const result = priceStr + ' zł';
-                          console.log(`🔍 [OLD TABLE] Raw number detected, adding zł: "${result}"`);
-                          return result;
-                        }
-                        // If price already has "zł", use as is
-                        if (priceStr.includes('zł')) {
-                          console.log(`🔍 [OLD TABLE] Already has zł, using as is: "${priceStr}"`);
-                          return priceStr;
-                        }
-                        // If price is empty or invalid, show "-"
-                        if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00') {
-                          console.log(`🔍 [OLD TABLE] Zero/empty price detected, showing "-"`);
-                          return '-';
-                        }
-                      }
-                      console.log(`🔍 [OLD TABLE] Fallback to "-"`);
-                      return '-';
-            })()}
-          </td>
+            <td class="wiertla-categories__table-cell wiertla-categories__table-cell--price">
+             ${window.WiertlaCNC.formatPrice(product.price, product.sku || product.custom_symbol || 'Unknown')}
+            </td>
           <td class="wiertla-categories__table-cell wiertla-categories__table-cell--name">
             ${product.name || '-'}
           </td>
@@ -3179,9 +2948,8 @@
       return symbol;
     }
   
-    // Only have ONE generateTable function
-    function generateTable(products) {
-      console.log('🔍 [GENERATE TABLE] Function called with', products ? products.length : 0, 'products');
+     // Only have ONE generateTable function
+     function generateTable(products) {
       const tableBody = document.querySelector('.wiertla-categories__table tbody');
       if (!tableBody) {
         console.error('Table body element not found');
@@ -3623,35 +3391,7 @@
               ${product.custom_rent_value ? `<td class="wiertla-categories__table-cell" title="Wynajem">${product.custom_rent_value}</td>` : ''}
               <td class="wiertla-categories__table-cell">
                 <div class="wiertla-categories__price-wrapper">
-                  <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
-                    const price = product.price || '';
-                    console.log(`🔍 [MAIN TABLE] Product: ${product.sku || product.custom_symbol || 'Unknown'}, Original price: "${price}" (${typeof price})`);
-                    
-                    if (price !== undefined && price !== null && price !== '') {
-                      // Convert to string for consistent handling
-                      const priceStr = String(price);
-                      console.log(`🔍 [MAIN TABLE] Converted to string: "${priceStr}"`);
-                      
-                      // If price is a raw number (like "1100.0" or "890"), add "zł"
-                      if (priceStr.match(/^\d+\.?\d*$/)) {
-                        const result = priceStr + ' zł';
-                        console.log(`🔍 [MAIN TABLE] Raw number detected, adding zł: "${result}"`);
-                        return result;
-                      }
-                      // If price already has "zł", use as is
-                      if (priceStr.includes('zł')) {
-                        console.log(`🔍 [MAIN TABLE] Already has zł, using as is: "${priceStr}"`);
-                        return priceStr;
-                      }
-                      // If price is empty or invalid, show "-"
-                      if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00') {
-                        console.log(`🔍 [MAIN TABLE] Zero/empty price detected, showing "-"`);
-                        return '-';
-                      }
-                    }
-                    console.log(`🔍 [MAIN TABLE] Fallback to "-"`);
-                    return '-';
-                  })()}</span>
+                  <span class="wiertla-categories__price" data-href="/products/${product.handle}">${window.WiertlaCNC.formatPrice(product.price, product.sku || product.custom_symbol || 'Unknown')}</span>
                   ${(() => { try { 
   // Check if Rent field has valid value (not null, not "-", not undefined)
   const hasValidRent = (product.rent || product.custom_rent) && (product.rent || product.custom_rent) !== '' && (product.rent || product.custom_rent) !== '-' && (product.rent || product.custom_rent) !== null && (product.rent || product.custom_rent) !== 'undefined';
@@ -3710,35 +3450,7 @@
                 </td>
                  <td class="wiertla-categories__table-cell">
                   <div class="wiertla-categories__price-wrapper">
-                    <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
-                    const price = product.price || '';
-                    console.log(`🔍 [MAIN TABLE] Product: ${product.sku || product.custom_symbol || 'Unknown'}, Original price: "${price}" (${typeof price})`);
-                    
-                    if (price !== undefined && price !== null && price !== '') {
-                      // Convert to string for consistent handling
-                      const priceStr = String(price);
-                      console.log(`🔍 [MAIN TABLE] Converted to string: "${priceStr}"`);
-                      
-                      // If price is a raw number (like "1100.0" or "890"), add "zł"
-                      if (priceStr.match(/^\d+\.?\d*$/)) {
-                        const result = priceStr + ' zł';
-                        console.log(`🔍 [MAIN TABLE] Raw number detected, adding zł: "${result}"`);
-                        return result;
-                      }
-                      // If price already has "zł", use as is
-                      if (priceStr.includes('zł')) {
-                        console.log(`🔍 [MAIN TABLE] Already has zł, using as is: "${priceStr}"`);
-                        return priceStr;
-                      }
-                      // If price is empty or invalid, show "-"
-                      if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00') {
-                        console.log(`🔍 [MAIN TABLE] Zero/empty price detected, showing "-"`);
-                        return '-';
-                      }
-                    }
-                    console.log(`🔍 [MAIN TABLE] Fallback to "-"`);
-                    return '-';
-                  })()}</span>
+                    <span class="wiertla-categories__price" data-href="/products/${product.handle}">${window.WiertlaCNC.formatPrice(product.price, product.sku || product.custom_symbol || 'Unknown')}</span>
                   </div>
                 </td>
               `;
@@ -3764,35 +3476,7 @@
                 </td>
                  <td class="wiertla-categories__table-cell">
                   <div class="wiertla-categories__price-wrapper">
-                    <span class="wiertla-categories__price" data-href="/products/${product.handle}">${(() => {
-                    const price = product.price || '';
-                    console.log(`🔍 [MAIN TABLE] Product: ${product.sku || product.custom_symbol || 'Unknown'}, Original price: "${price}" (${typeof price})`);
-                    
-                    if (price !== undefined && price !== null && price !== '') {
-                      // Convert to string for consistent handling
-                      const priceStr = String(price);
-                      console.log(`🔍 [MAIN TABLE] Converted to string: "${priceStr}"`);
-                      
-                      // If price is a raw number (like "1100.0" or "890"), add "zł"
-                      if (priceStr.match(/^\d+\.?\d*$/)) {
-                        const result = priceStr + ' zł';
-                        console.log(`🔍 [MAIN TABLE] Raw number detected, adding zł: "${result}"`);
-                        return result;
-                      }
-                      // If price already has "zł", use as is
-                      if (priceStr.includes('zł')) {
-                        console.log(`🔍 [MAIN TABLE] Already has zł, using as is: "${priceStr}"`);
-                        return priceStr;
-                      }
-                      // If price is empty or invalid, show "-"
-                      if (priceStr === '' || priceStr === '0' || priceStr === '0.0' || price === 0 || priceStr === '0.00') {
-                        console.log(`🔍 [MAIN TABLE] Zero/empty price detected, showing "-"`);
-                        return '-';
-                      }
-                    }
-                    console.log(`🔍 [MAIN TABLE] Fallback to "-"`);
-                    return '-';
-                  })()}</span>
+                    <span class="wiertla-categories__price" data-href="/products/${product.handle}">${window.WiertlaCNC.formatPrice(product.price, product.sku || product.custom_symbol || 'Unknown')}</span>
                   </div>
                 </td>
               `;
@@ -4347,49 +4031,9 @@
               row.setAttribute('data-vendor', vendor);
               row.setAttribute('data-type', type);
 
-              // Format price safely
-              let formattedPrice = '';
-              const price = product.price || product.price_numeric || product.compare_at_price || '';
-              console.log(`🔍 [ALT FORMAT] Product: ${product.sku || product.custom_symbol || 'Unknown'}, Original price: "${price}" (${typeof price})`);
-              
-              if (price !== undefined && price !== null && price !== '') {
-                if (typeof price === 'string') {
-                  console.log(`🔍 [ALT FORMAT] Processing string price: "${price}"`);
-                  // If price is a raw number (like "1100.0"), add "zł"
-                  if (price.match(/^\d+\.?\d*$/)) {
-                    formattedPrice = price + ' zł';
-                    console.log(`🔍 [ALT FORMAT] Raw number detected, adding zł: "${formattedPrice}"`);
-                  }
-                  // If price already has "zł", use as is
-                  else if (price.includes('zł')) {
-                    formattedPrice = price;
-                    console.log(`🔍 [ALT FORMAT] Already has zł, using as is: "${formattedPrice}"`);
-                  }
-                  // If price is empty or invalid, show "-"
-                  else if (price === '' || price === '0' || price === '0.0' || price === 0 || price === '0.00') {
-                    formattedPrice = '-';
-                    console.log(`🔍 [ALT FORMAT] Zero/empty price detected, showing "-"`);
-                  }
-                  else {
-                    formattedPrice = price;
-                    console.log(`🔍 [ALT FORMAT] Other string price, using as is: "${formattedPrice}"`);
-                  }
-                } else {
-                  console.log(`🔍 [ALT FORMAT] Processing numeric price: ${price}`);
-                  // For numeric prices, format properly
-                  const priceNum = typeof price === 'number' ? price : parseFloat(price);
-                  if (!isNaN(priceNum) && priceNum > 0) {
-                    formattedPrice = priceNum.toFixed(2) + ' zł';
-                    console.log(`🔍 [ALT FORMAT] Numeric price formatted: "${formattedPrice}"`);
-                  } else {
-                    formattedPrice = '-';
-                    console.log(`🔍 [ALT FORMAT] Zero/invalid numeric price, showing "-"`);
-                  }
-                }
-              } else {
-                formattedPrice = '-';
-                console.log(`🔍 [ALT FORMAT] No price data, showing "-"`);
-              }
+                // Format price safely using shared function
+                const price = product.price || product.price_numeric || product.compare_at_price || '';
+                const formattedPrice = window.WiertlaCNC.formatPrice(price, product.sku || product.custom_symbol || 'Unknown');
 
               // Determine the icon URL based on product type
               // Get the first two characters of the symbol to determine the type icon
@@ -4529,49 +4173,9 @@
               row.setAttribute('data-vendor', vendor);
               row.setAttribute('data-type', type);
 
-              // Format price safely
-              let formattedPrice = '';
-              const price = product.price || product.price_numeric || product.compare_at_price || '';
-              console.log(`🔍 [ALT FORMAT] Product: ${product.sku || product.custom_symbol || 'Unknown'}, Original price: "${price}" (${typeof price})`);
-              
-              if (price !== undefined && price !== null && price !== '') {
-                if (typeof price === 'string') {
-                  console.log(`🔍 [ALT FORMAT] Processing string price: "${price}"`);
-                  // If price is a raw number (like "1100.0"), add "zł"
-                  if (price.match(/^\d+\.?\d*$/)) {
-                    formattedPrice = price + ' zł';
-                    console.log(`🔍 [ALT FORMAT] Raw number detected, adding zł: "${formattedPrice}"`);
-                  }
-                  // If price already has "zł", use as is
-                  else if (price.includes('zł')) {
-                    formattedPrice = price;
-                    console.log(`🔍 [ALT FORMAT] Already has zł, using as is: "${formattedPrice}"`);
-                  }
-                  // If price is empty or invalid, show "-"
-                  else if (price === '' || price === '0' || price === '0.0' || price === 0 || price === '0.00') {
-                    formattedPrice = '-';
-                    console.log(`🔍 [ALT FORMAT] Zero/empty price detected, showing "-"`);
-                  }
-                  else {
-                    formattedPrice = price;
-                    console.log(`🔍 [ALT FORMAT] Other string price, using as is: "${formattedPrice}"`);
-                  }
-                } else {
-                  console.log(`🔍 [ALT FORMAT] Processing numeric price: ${price}`);
-                  // For numeric prices, format properly
-                  const priceNum = typeof price === 'number' ? price : parseFloat(price);
-                  if (!isNaN(priceNum) && priceNum > 0) {
-                    formattedPrice = priceNum.toFixed(2) + ' zł';
-                    console.log(`🔍 [ALT FORMAT] Numeric price formatted: "${formattedPrice}"`);
-                  } else {
-                    formattedPrice = '-';
-                    console.log(`🔍 [ALT FORMAT] Zero/invalid numeric price, showing "-"`);
-                  }
-                }
-              } else {
-                formattedPrice = '-';
-                console.log(`🔍 [ALT FORMAT] No price data, showing "-"`);
-              }
+                // Format price safely using shared function
+                const price = product.price || product.price_numeric || product.compare_at_price || '';
+                const formattedPrice = window.WiertlaCNC.formatPrice(price, product.sku || product.custom_symbol || 'Unknown');
 
               // Determine the icon URL based on product type
               // Get the first two characters of the symbol to determine the type icon
