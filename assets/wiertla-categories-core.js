@@ -364,6 +364,29 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+// Load products from JSON endpoint
+async function loadProducts() {
+  try {
+    const response = await fetch('/collections/wiertla-products.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    
+    if (data && data.products && Array.isArray(data.products)) {
+      window.WiertlaCNC.products = data.products;
+      console.log(`[Wiertla] Loaded ${data.products.length} products from JSON endpoint`);
+      return data.products;
+    } else {
+      console.error('[Wiertla] Invalid product data structure:', data);
+      return [];
+    }
+  } catch (error) {
+    console.error('[Wiertla] Error loading products:', error);
+    return [];
+  }
+}
+
 // Initialize product table data
 let allProducts = Array.isArray(window.WiertlaCNC?.products) ? window.WiertlaCNC.products : [];
 
@@ -829,3 +852,8 @@ window.addEventListener('resize', function() {
     }
   }, 250);
 });
+
+// Make functions globally available
+window.loadProducts = loadProducts;
+window.updateCategoryIcons = updateCategoryIcons;
+window.updateUILanguage = updateUILanguage;

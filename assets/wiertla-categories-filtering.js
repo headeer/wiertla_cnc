@@ -5,7 +5,7 @@
 
 // Filter products based on current filters
 function filterProducts() {
-  let filteredProducts = window.WiertlaCNC?.products || [];
+  let filteredProducts = window.WiertlaCNC?.products || window.allProducts || [];
 
   if (!Array.isArray(filteredProducts) || filteredProducts.length === 0) {
     return [];
