@@ -1341,14 +1341,7 @@
 
       // Apply search filter if exists
       const searchTerm = window.currentFilters?.search?.toLowerCase();
-      console.log('🔍 [Filter Debug] Search filter check:', {
-        hasSearchTerm: !!(searchTerm),
-        searchTerm: searchTerm,
-        willApplySearchFilter: !!(searchTerm)
-      });
-      
       if (searchTerm) {
-        let beforeSearchCount = filteredProducts.length;
         filteredProducts = filteredProducts.filter(product => {
           const searchableFields = [
             product.custom_symbol,
@@ -1364,21 +1357,13 @@
 
           return searchableFields.some(field => field.includes(searchTerm));
         });
-        console.log('🔍 [Filter Debug] Search filter result:', { before: beforeSearchCount, after: filteredProducts.length });
       }
       
       // Apply category filter if not "wszystkie"
-      console.log('🔍 [Filter Debug] Checking category filter:', {
-        selectedCategory: window.selectedCategory,
-        willApplyCategoryFilter: window.selectedCategory && window.selectedCategory !== 'wszystkie',
-        currentProductCount: filteredProducts.length
-      });
-      
       if (window.selectedCategory && window.selectedCategory !== 'wszystkie') {
         if (typeof window.normalizeCategory === 'function') {
           window.selectedCategory = window.normalizeCategory(window.selectedCategory);
         }
-        let beforeCategoryCount = filteredProducts.length;
         const activeTabType = window.WiertlaCNC.activeTabType || 'wiertla';
         
         
@@ -1552,14 +1537,8 @@
       }
 
       // Apply type filter - BUT skip if we already applied a category filter that found products
-      console.log('🔍 [Filter Debug] Type filter check:', {
-        hasTypFilter: !!(window.WiertlaCNC.filters.typ),
-        typValue: window.WiertlaCNC.filters.typ,
-        willApplyTypFilter: !!(window.WiertlaCNC.filters.typ && window.WiertlaCNC.filters.typ !== 'all' && window.WiertlaCNC.filters.typ !== '')
-      });
       
       if (window.WiertlaCNC.filters.typ && window.WiertlaCNC.filters.typ !== 'all' && window.WiertlaCNC.filters.typ !== '') {
-        let beforeTypeCount = filteredProducts.length;
         
         const expectedTypeValue = window.WiertlaCNC.filters.typ;
         
@@ -1608,14 +1587,7 @@
       }
 
       // Apply manufacturer filter
-      console.log('🔍 [Filter Debug] Manufacturer filter check:', {
-        hasManufacturerFilter: !!(window.WiertlaCNC.filters.manufacturer),
-        manufacturerValue: window.WiertlaCNC.filters.manufacturer,
-        willApplyManufacturerFilter: !!(window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all')
-      });
-      
       if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all') {
-        const beforeManufacturerCount = filteredProducts.length;
         const manufacturerMapping = {
           'sandvik': 'Sandvik',
           'iscar': 'ISCAR',
@@ -1630,7 +1602,6 @@
             return product.vendor === expectedManufacturer;
           });
         }
-        console.log('🔍 [Filter Debug] Manufacturer filter result:', { before: beforeManufacturerCount, after: filteredProducts.length });
       }
 
       // Tab-specific sorting
@@ -1690,7 +1661,6 @@
 
 
 
-      console.log('✅ [Filter Debug] Final filtered products count:', filteredProducts.length);
       return filteredProducts;
     }
     
@@ -2500,7 +2470,6 @@
         
         // If clicking on "Wszystkie" button, reset all filters
         if (window.selectedCategory === 'reset' || window.selectedCategory === 'wszystkie') {
-          console.log('🔄 [Reset Debug] "Wszystkie" button clicked, resetting all filters...');
           
           // IMPORTANT: Set selectedCategory to 'wszystkie' for proper filtering
           window.selectedCategory = 'wszystkie';
@@ -2532,9 +2501,6 @@
             searchInput.value = '';
           }
           
-          console.log('✅ [Reset Debug] All filters reset, currentFilters:', currentFilters);
-          console.log('✅ [Reset Debug] selectedCategory set to:', window.selectedCategory);
-          console.log('✅ [Reset Debug] WiertlaCNC.filters after reset:', window.WiertlaCNC?.filters);
         }
         
         applyFilters();
