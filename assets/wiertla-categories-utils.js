@@ -24,16 +24,20 @@ window.WiertlaCNC.formatPrice = function(price, productSku = 'Unknown') {
       return priceStr;
     }
     
-    // If price is a raw number (like "1100.0" or "890"), add "zł"
-    // More robust regex to catch various number formats
-    if (priceStr.match(/^\d+\.?\d*$/) || priceStr.match(/^\d+$/) || priceStr.match(/^\d+\.0+$/)) {
-      return priceStr + ' zł';
-    }
-    
-    // If it's a valid number but in string format, try to format it
+    // Try to parse as number first
     const numValue = parseFloat(priceStr);
     if (!isNaN(numValue) && numValue > 0) {
-      return numValue.toString() + ' zł';
+      // If it's a whole number, remove decimal places
+      if (numValue % 1 === 0) {
+        return numValue.toString() + ' zł';
+      } else {
+        return numValue.toString() + ' zł';
+      }
+    }
+    
+    // If it's a string that looks like a number, add "zł"
+    if (priceStr.match(/^\d+\.?\d*$/)) {
+      return priceStr + ' zł';
     }
   }
   return '-';
