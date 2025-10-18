@@ -5,9 +5,14 @@
 
 // Filter products based on current filters
 function filterProducts() {
+  console.log('[Wiertla] filterProducts called');
   let filteredProducts = window.WiertlaCNC?.products || window.allProducts || [];
+  console.log('[Wiertla] Initial products count:', filteredProducts.length);
+  console.log('[Wiertla] WiertlaCNC.products:', window.WiertlaCNC?.products?.length);
+  console.log('[Wiertla] allProducts:', window.allProducts?.length);
 
   if (!Array.isArray(filteredProducts) || filteredProducts.length === 0) {
+    console.log('[Wiertla] No products to filter');
     return [];
   }
   
@@ -31,9 +36,11 @@ function filterProducts() {
   }
   
   // FIRST: Filter by availability - only show products that are available
+  const beforeAvailability = filteredProducts.length;
   filteredProducts = filteredProducts.filter(product => {
     return isShopifyAvailable(product);
   });
+  console.log('[Wiertla] After availability filter:', filteredProducts.length, 'products (was', beforeAvailability, ')');
   
   // Safety: ensure helpers exist even if defined later in other scopes
   if (typeof rodzajSynonyms === 'undefined') {
