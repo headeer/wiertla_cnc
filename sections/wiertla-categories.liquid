@@ -1140,7 +1140,7 @@
       });
       
       // Update "Wszystkie" button text
-      document.querySelectorAll('.wiertla-categories__filter-button[data-filter="wszystkie"]').forEach(btn => {
+      document.querySelectorAll('.wiertla-categories__filter-button[data-filter="reset"], .wiertla-categories__filter-button[data-filter="wszystkie"]').forEach(btn => {
         btn.textContent = translations[currentLanguage].all;
       });
       
@@ -1933,7 +1933,7 @@
         (function addMainTypeDropdown() {
           const filtersLeft = filters.querySelector('.wiertla-categories__filters-left');
           if (!filtersLeft) return;
-          const wszBtn = filtersLeft.querySelector('.wiertla-categories__filter-button[data-filter="wszystkie"]');
+          const wszBtn = filtersLeft.querySelector('.wiertla-categories__filter-button[data-filter="reset"], .wiertla-categories__filter-button[data-filter="wszystkie"]');
           const select = document.createElement('select');
           select.className = 'wiertla-categories__filter wiertla-filter-mainType';
           select.setAttribute('data-filter', 'mainType');
@@ -2366,7 +2366,7 @@
             // Reset filter buttons in fullscreen view
             document.querySelectorAll('.wiertla-categories__fullscreen-content .wiertla-categories__filter-button').forEach(btn => {
               btn.classList.remove('active');
-              if (btn.getAttribute('data-filter') === 'wszystkie') {
+              if (btn.getAttribute('data-filter') === 'reset' || btn.getAttribute('data-filter') === 'wszystkie') {
                 btn.classList.add('active');
               }
             });
@@ -2374,7 +2374,7 @@
             // Reset filter buttons in main view
             document.querySelectorAll('.wiertla-categories__filters .wiertla-categories__filter-button').forEach(btn => {
               btn.classList.remove('active');
-              if (btn.getAttribute('data-filter') === 'wszystkie') {
+              if (btn.getAttribute('data-filter') === 'reset' || btn.getAttribute('data-filter') === 'wszystkie') {
                 btn.classList.add('active');
               }
             });
@@ -2428,7 +2428,7 @@
           });
           
           // Set "Wszystkie" button to active
-          const wszystkieBtn = document.querySelector('.wiertla-categories__filter-button[data-filter="wszystkie"]');
+          const wszystkieBtn = document.querySelector('.wiertla-categories__filter-button[data-filter="reset"], .wiertla-categories__filter-button[data-filter="wszystkie"]');
           if (wszystkieBtn) {
             wszystkieBtn.classList.add('active');
           }
@@ -2464,8 +2464,16 @@
         window.selectedCategory = filterButton.getAttribute('data-filter');
         window.currentPage = 1;
         
+        console.log('🔍 [Reset Debug] Filter button clicked:', {
+          button: filterButton,
+          dataFilter: window.selectedCategory,
+          textContent: filterButton.textContent.trim()
+        });
+        
         // If clicking on "Wszystkie" button, reset all filters
-        if (window.selectedCategory === 'wszystkie') {
+        if (window.selectedCategory === 'reset' || window.selectedCategory === 'wszystkie') {
+          console.log('🔄 [Reset Debug] "Wszystkie" button clicked, resetting all filters...');
+          
           // Reset filter state
           currentFilters = {
             type: '',
@@ -2484,6 +2492,8 @@
           if (searchInput) {
             searchInput.value = '';
           }
+          
+          console.log('✅ [Reset Debug] All filters reset, currentFilters:', currentFilters);
         }
         
         applyFilters();
@@ -2535,7 +2545,7 @@
             
             // Remove active class from "Wszystkie" button when a filter is selected
             if (filterSelect.value !== '') {
-              const wszystkieBtn = document.querySelector('.wiertla-categories__filter-button[data-filter="wszystkie"]');
+              const wszystkieBtn = document.querySelector('.wiertla-categories__filter-button[data-filter="reset"], .wiertla-categories__filter-button[data-filter="wszystkie"]');
               if (wszystkieBtn) {
                 wszystkieBtn.classList.remove('active');
               }
@@ -2848,7 +2858,7 @@
     });
     
     // Also set the "Wszystkie" filter button to active
-    const wszystkieBtn = document.querySelector('.wiertla-categories__filter-button[data-filter="wszystkie"]');
+    const wszystkieBtn = document.querySelector('.wiertla-categories__filter-button[data-filter="reset"], .wiertla-categories__filter-button[data-filter="wszystkie"]');
     if (wszystkieBtn) {
       wszystkieBtn.classList.add('active');
     }
