@@ -215,15 +215,8 @@
   
   document.addEventListener('DOMContentLoaded', function() {
     
-    // Add event listeners to language buttons
-    document.querySelectorAll('.wiertla-categories__language-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const lang = this.getAttribute('data-lang');
-        if (window.WiertlaCNC && window.WiertlaCNC.changeLanguage) {
-          window.WiertlaCNC.changeLanguage(lang);
-        }
-      });
-    });
+    // Language switching now handled by subdirectory URLs for SEO
+    // Language buttons will navigate naturally to /pl/, /en/, /de/ URLs
 
     // Modal functionality
     const modal = document.getElementById('filterModal');

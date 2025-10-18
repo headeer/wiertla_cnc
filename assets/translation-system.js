@@ -78,31 +78,25 @@
       return;
     }
 
-    // Set language
-    currentLanguage = lang;
-    document.documentElement.lang = lang;
-
+    // Get current path without language prefix
+    let currentPath = window.location.pathname;
+    
+    // Remove existing language prefix if present
+    currentPath = currentPath.replace(/^\/(pl|en|de)/, '');
+    
+    // If path is empty, set to root
+    if (currentPath === '') {
+      currentPath = '/';
+    }
+    
+    // Build new URL with language prefix
+    const newUrl = `/${lang}${currentPath}`;
+    
     // Save language preference
     localStorage.setItem("wiertla_language", lang);
-
-    // Update active state of language links
-    const languageLinks = document.querySelectorAll("[data-lang]");
-    languageLinks.forEach((link) => {
-      if (link.getAttribute("data-lang") === lang) {
-        link.classList.add("active");
-      } else {
-        link.classList.remove("active");
-      }
-    });
-
-    // Translate all marked elements
-    translateElements();
-
-    // Trigger a custom event for other scripts to respond to language change
-    const event = new CustomEvent("wiertlaLanguageChanged", {
-      detail: { language: lang },
-    });
-    document.dispatchEvent(event);
+    
+    // Redirect to new URL for proper SEO indexing
+    window.location.href = newUrl;
   }
 
   /**

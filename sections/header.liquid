@@ -809,17 +809,17 @@
         </div>
         <div class="header__lang-links">
           <a
-            href="{{ request.path }}?locale=pl"
+            href="/pl{{ request.path }}"
             class="header__link{% if request.locale.iso_code == 'pl' %} active{% endif %}"
             data-lang="pl"
             data-translate="header.languages.polish">{{ 'header.languages.polish' | t }}</a>
           <a
-            href="{{ request.path }}?locale=en"
+            href="/en{{ request.path }}"
             class="header__link{% if request.locale.iso_code == 'en' %} active{% endif %}"
             data-lang="en"
             data-translate="header.languages.english">{{ 'header.languages.english' | t }}</a>
           <a
-            href="{{ request.path }}?locale=de"
+            href="/de{{ request.path }}"
             class="header__link{% if request.locale.iso_code == 'de' %} active{% endif %}"
             data-lang="de"
             data-translate="header.languages.german">{{ 'header.languages.german' | t }}</a>
@@ -1168,20 +1168,9 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    // Language links: force set ?locale= and navigate (works on cart too)
-    document.querySelectorAll('.header__lang-links a[data-lang]').forEach(function(a){
-      a.addEventListener('click', function(ev){
-        ev.preventDefault();
-        var targetLocale = a.getAttribute('data-lang');
-        try {
-          var url = new URL(window.location.href);
-          url.searchParams.set('locale', targetLocale);
-          window.location.assign(url.toString());
-        } catch(err) {
-          // Fallback
-          window.location.href = a.getAttribute('href');
-        }
-      });
+    // Language links: navigate to proper subdirectory URLs for SEO
+    // No JavaScript needed - let the browser handle natural navigation
+    // The href attributes already contain the correct subdirectory URLs
     });
   });
 

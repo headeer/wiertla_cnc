@@ -1043,18 +1043,8 @@
     // Set the HTML lang attribute to match the selected language
     document.documentElement.lang = currentLanguage;
     
-    // Watch for language changes in the Shopify language selector
-    document.addEventListener('click', function(e) {
-      // Look for Shopify language selector links
-      const langLink = e.target.closest('.header__lang-links a, [data-disclosure-locale]');
-      if (langLink) {
-        e.preventDefault(); // Prevent default to avoid page reload
-        const lang = langLink.getAttribute('data-lang');
-        if (lang && translations[lang]) {
-          window.changeLanguage(lang);
-        }
-      }
-    });
+    // Language switching now handled by subdirectory URLs for SEO
+    // No JavaScript intervention needed - let browser handle natural navigation
     
     // Make necessary functions globally available
     window.handleCategoryChange = function(category) {
@@ -2944,59 +2934,11 @@
       }
     });
     
-    // Connect header language switcher to our translation system
-    document.addEventListener('DOMContentLoaded', function() {
-      // Add event listeners to header language links
-      document.querySelectorAll('.header__lang-links a').forEach(link => {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          const lang = this.getAttribute('data-lang');
-          if (lang && translations[lang]) {
-            window.changeLanguage(lang);
-            
-            // Update active state in the header language links
-            document.querySelectorAll('.header__lang-links a').forEach(l => {
-              if (l.getAttribute('data-lang') === lang) {
-                l.classList.add('active');
-              } else {
-                l.classList.remove('active');
-              }
-            });
-          }
-        });
-      });
-      
-      // Set initial active state for the header language links
-      document.querySelectorAll('.header__lang-links a').forEach(link => {
-        if (link.getAttribute('data-lang') === currentLanguage) {
-          link.classList.add('active');
-        } else {
-          link.classList.remove('active');
-        }
-      });
-    });
+    // Language switching now handled by subdirectory URLs for SEO
+    // Header language links will navigate naturally to /pl/, /en/, /de/ URLs
     
-    // Watch for language changes in the header
-    document.addEventListener('click', function(e) {
-      // Look for header language links
-      const langLink = e.target.closest('.header__lang-links a');
-      if (langLink) {
-        e.preventDefault(); // Prevent default to avoid page reload
-        const lang = langLink.getAttribute('data-lang');
-        if (lang && translations[lang]) {
-          window.changeLanguage(lang);
-          
-          // Update active state in the header language links
-          document.querySelectorAll('.header__lang-links a').forEach(l => {
-            if (l.getAttribute('data-lang') === lang) {
-              l.classList.add('active');
-            } else {
-              l.classList.remove('active');
-            }
-          });
-        }
-      }
-    });
+    // Language switching now handled by subdirectory URLs for SEO
+    // No JavaScript intervention needed for header language links
     
     // After DOM is fully loaded, force a redraw based on current size
     document.addEventListener('DOMContentLoaded', function() {
