@@ -1341,6 +1341,12 @@
 
       // Apply search filter if exists
       const searchTerm = window.currentFilters?.search?.toLowerCase();
+      console.log('🔍 [Filter Debug] Search filter check:', {
+        hasSearchTerm: !!(searchTerm),
+        searchTerm: searchTerm,
+        willApplySearchFilter: !!(searchTerm)
+      });
+      
       if (searchTerm) {
         let beforeSearchCount = filteredProducts.length;
         filteredProducts = filteredProducts.filter(product => {
@@ -1358,6 +1364,7 @@
 
           return searchableFields.some(field => field.includes(searchTerm));
         });
+        console.log('🔍 [Filter Debug] Search filter result:', { before: beforeSearchCount, after: filteredProducts.length });
       }
       
       // Apply category filter if not "wszystkie"
@@ -1601,7 +1608,14 @@
       }
 
       // Apply manufacturer filter
+      console.log('🔍 [Filter Debug] Manufacturer filter check:', {
+        hasManufacturerFilter: !!(window.WiertlaCNC.filters.manufacturer),
+        manufacturerValue: window.WiertlaCNC.filters.manufacturer,
+        willApplyManufacturerFilter: !!(window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all')
+      });
+      
       if (window.WiertlaCNC.filters.manufacturer && window.WiertlaCNC.filters.manufacturer !== 'all') {
+        const beforeManufacturerCount = filteredProducts.length;
         const manufacturerMapping = {
           'sandvik': 'Sandvik',
           'iscar': 'ISCAR',
@@ -1616,6 +1630,7 @@
             return product.vendor === expectedManufacturer;
           });
         }
+        console.log('🔍 [Filter Debug] Manufacturer filter result:', { before: beforeManufacturerCount, after: filteredProducts.length });
       }
 
       // Tab-specific sorting
@@ -2519,6 +2534,7 @@
           
           console.log('✅ [Reset Debug] All filters reset, currentFilters:', currentFilters);
           console.log('✅ [Reset Debug] selectedCategory set to:', window.selectedCategory);
+          console.log('✅ [Reset Debug] WiertlaCNC.filters after reset:', window.WiertlaCNC?.filters);
         }
         
         applyFilters();
