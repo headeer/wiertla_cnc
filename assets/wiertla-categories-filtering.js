@@ -377,8 +377,10 @@ window.resetTempFilter = function() {
 
 // Apply filters and pagination
 function applyFilters() {
+  console.log('[Wiertla] applyFilters called');
   // Get filtered products using filterProducts function
   const filteredProducts = filterProducts();
+  console.log('[Wiertla] Filtered products:', filteredProducts.length);
   
   // Update pagination
   window.totalPages = Math.ceil(filteredProducts.length / window.itemsPerPage);
@@ -394,7 +396,9 @@ function applyFilters() {
   const productsToShow = filteredProducts.slice(startIndex, endIndex);
   
   // Generate table with filtered and paginated products
+  console.log('[Wiertla] About to call generateTable with', productsToShow.length, 'products');
   generateTable(productsToShow);
+  console.log('[Wiertla] generateTable call completed');
   updatePaginationButtons();
   
   // Update results count

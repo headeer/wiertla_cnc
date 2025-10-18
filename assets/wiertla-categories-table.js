@@ -5,6 +5,7 @@
 
 // Generate table with products
 function generateTable(products) {
+  console.log('[Wiertla] generateTable called with', products.length, 'products');
   const tableBody = document.querySelector('.wiertla-categories__table tbody');
   if (!tableBody) {
     console.error('Table body element not found');
