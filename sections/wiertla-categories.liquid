@@ -344,11 +344,11 @@
 {% render 'wiertla-categories-fullscreen' %}
 
 <!-- Load modular JavaScript files in correct order -->
-<script src="{{ 'wiertla-categories-utils.js' | asset_url }}?v=20250116-003"></script>
-<script src="{{ 'wiertla-categories-core.js' | asset_url }}?v=20250116-003"></script>
-<script src="{{ 'wiertla-categories-filtering.js' | asset_url }}?v=20250116-003"></script>
-<script src="{{ 'wiertla-categories-table.js' | asset_url }}?v=20250116-003"></script>
-<script src="{{ 'wiertla-categories-fullscreen.js' | asset_url }}?v=20250116-003"></script>
+<script src="{{ 'wiertla-categories-utils.js' | asset_url }}?v=20250116-004"></script>
+<script src="{{ 'wiertla-categories-core.js' | asset_url }}?v=20250116-004"></script>
+<script src="{{ 'wiertla-categories-filtering.js' | asset_url }}?v=20250116-004"></script>
+<script src="{{ 'wiertla-categories-table.js' | asset_url }}?v=20250116-004"></script>
+<script src="{{ 'wiertla-categories-fullscreen.js' | asset_url }}?v=20250116-004"></script>
 
 <!-- Product data hydration script -->
 <script type="application/json" data-disabled="fullscreen-inline">
@@ -384,6 +384,34 @@
             } catch (error) {
               console.error('[Wiertla] Error in applyFilters:', error);
             }
+            
+            // Test: Try to manually populate table with first few products
+            console.log('[Wiertla] Testing manual table population...');
+            const tableBody = document.querySelector('.wiertla-categories__table tbody');
+            if (tableBody && products.length > 0) {
+              console.log('[Wiertla] Table body found, adding test products...');
+              tableBody.innerHTML = '';
+              
+              // Add first 5 products as a test
+              const testProducts = products.slice(0, 5);
+              testProducts.forEach((product, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                  <td class="wiertla-categories__table-cell">${product.custom_typ || product.typ || '-'}</td>
+                  <td class="wiertla-categories__table-cell">${product.custom_fi || product.fi || '-'}</td>
+                  <td class="wiertla-categories__table-cell">${product.custom_symbol || product.symbol || '-'}</td>
+                  <td class="wiertla-categories__table-cell">${product.vendor || '-'}</td>
+                  <td class="wiertla-categories__table-cell">${product.price || '-'}</td>
+                  <td class="wiertla-categories__table-cell">${product.sku || '-'}</td>
+                  <td class="wiertla-categories__table-cell">Test Product ${index + 1}</td>
+                `;
+                tableBody.appendChild(row);
+              });
+              console.log('[Wiertla] Added', testProducts.length, 'test products to table');
+            } else {
+              console.log('[Wiertla] Table body not found or no products');
+            }
+            
             console.log('[Wiertla] applyFilters called, checking table...');
           } else {
             console.error('[Wiertla] No products loaded');
