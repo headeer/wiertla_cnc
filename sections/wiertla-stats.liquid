@@ -1150,10 +1150,6 @@
     background: none;
     border: none;
   }
-  .swiper-navigation .swiper-button-next,
-  .swiper-navigation .swiper-button-prev {
-    top: 100%;
-  }
   .swiper-navigation .swiper-button-next:after,
   .swiper-navigation .swiper-button-prev:after {
     font-size: 14.33px;
@@ -1173,13 +1169,6 @@
     }
   }
 
-  .swiper-button-next {
-    right: calc(50% - 80px);
-  }
-
-  .swiper-button-prev {
-    left: calc(50% - 80px);
-  }
 
   .swiper-button-disabled {
     opacity: 0.35;
@@ -1747,6 +1736,8 @@
 
     function updatePaginationBars(swiper) {
       const paginationBars = document.querySelectorAll('.pagination-bar');
+      if (paginationBars.length === 0) return;
+      
       const totalSlides = swiper.slides.length;
       const slidesPerView = swiper.params.slidesPerView;
       const currentSlide = swiper.realIndex;
@@ -1767,7 +1758,7 @@
         paginationBarsCount: paginationBars.length
       });
       
-      // Hide pagination bars that aren't needed
+      // Update pagination bars
       paginationBars.forEach((bar, index) => {
         if (index < totalPages) {
           bar.style.display = 'block';
@@ -1784,15 +1775,7 @@
       });
     }
 
-    // Add click handlers for pagination bars
-    const paginationBars = document.querySelectorAll('.pagination-bar');
-    paginationBars.forEach((bar, index) => {
-      bar.addEventListener('click', () => {
-        const slidesPerView = swiper.params.slidesPerView;
-        const targetSlide = index * slidesPerView;
-        swiper.slideTo(targetSlide);
-      });
-    });
+    // Pagination bars are now set up separately in setupPaginationBars()
   }
 
   // Handle navigation link clicks for wiertla stats
@@ -1908,8 +1891,38 @@
   
   // Initialize swiper when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeSwiper);
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeSwiper();
+      setupPaginationBars();
+    });
   } else {
     initializeSwiper();
+    setupPaginationBars();
+  }
+
+  // Setup pagination bars after DOM is ready
+  function setupPaginationBars() {
+    const paginationBars = document.querySelectorAll('.pagination-bar');
+    console.log('Setting up pagination bars:', paginationBars.length);
+    
+    paginationBars.forEach((bar, index) => {
+      // Remove any existing event listeners
+      bar.replaceWith(bar.cloneNode(true));
+    });
+    
+    // Re-query after cloning
+    const newPaginationBars = document.querySelectorAll('.pagination-bar');
+    newPaginationBars.forEach((bar, index) => {
+      bar.addEventListener('click', () => {
+        console.log('Pagination bar clicked:', index);
+        const swiper = document.querySelector('.latest-products__swiper').swiper;
+        if (swiper) {
+          const slidesPerView = swiper.params.slidesPerView;
+          const targetSlide = index * slidesPerView;
+          console.log('Sliding to:', targetSlide);
+          swiper.slideTo(targetSlide);
+        }
+      });
+    });
   }
 </script>
