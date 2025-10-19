@@ -4989,24 +4989,24 @@
 <script>
   function toggleFullscreen() {
     const fullscreenView = document.querySelector('.wiertla-categories__fullscreen-view');
-    const fullscreenBtn = document.querySelector('.wiertla-categories__fullscreen-btn');
+    // Only target the button in the left column, not the one in the fullscreen header
+    const fullscreenBtn = document.querySelector('.wiertla-categories__left-column .wiertla-categories__fullscreen-btn');
 
     if (!fullscreenView || !fullscreenBtn) return;
 
     if (fullscreenView.style.display === 'none') {
       // Enter fullscreen
       fullscreenView.style.display = 'block';
-      fullscreenBtn.innerHTML = `
-        <img src="{{ 'zoom_out_map.svg' | asset_url }}" alt="Close fullscreen" class="wiertla-categories__fullscreen-icon" width="24" height="24">
-        <span>Zamknij tryb pełnoekranowy</span>
-      `;
+      // Don't change the button text here - it should remain as "open fullscreen" 
+      // The close button will be in the fullscreen header
       document.body.style.overflow = 'hidden';
     } else {
       // Exit fullscreen
       fullscreenView.style.display = 'none';
+      // Reset button to show "open fullscreen" text
       fullscreenBtn.innerHTML = `
-        <img src="{{ 'zoom_in_map.svg' | asset_url }}" alt="Fullscreen" class="wiertla-categories__fullscreen-icon">
-        <span>Wyświetl tabelę na całej stronie</span>
+        <img src="{{ 'zoom_in_map.svg' | asset_url }}" alt="Fullscreen" class="wiertla-categories__fullscreen-icon" width="24" height="24">
+        <span data-translate="wiertla_categories.fullscreen_open">Wyświetl tabelę na całej stronie</span>
       `;
       document.body.style.overflow = '';
     }
@@ -5014,7 +5014,8 @@
 
   // Add event listener to the fullscreen button
   document.addEventListener('DOMContentLoaded', function () {
-    const fullscreenBtn = document.querySelector('.wiertla-categories__fullscreen-btn');
+    // Only target the button in the left column, not the one in the fullscreen header
+    const fullscreenBtn = document.querySelector('.wiertla-categories__left-column .wiertla-categories__fullscreen-btn');
     if (fullscreenBtn) {
       fullscreenBtn.addEventListener('click', toggleFullscreen);
     }
