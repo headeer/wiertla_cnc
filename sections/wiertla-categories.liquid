@@ -5733,41 +5733,71 @@
 
   // Function to update pagination controls
   function updatePaginationControls(totalItems) {
+    console.log('updatePaginationControls called with:', totalItems);
+    
+    // Check if WiertlaCNC.filters exists
+    if (!window.WiertlaCNC || !window.WiertlaCNC.filters) {
+      console.error('WiertlaCNC.filters not found!');
+      return;
+    }
+    
     const totalPages = Math.ceil(totalItems / window.WiertlaCNC.filters.perPage);
-    const paginationContainer = document.querySelector('.wiertla-categories__pagination');
+    const paginationContainer = document.getElementById('wiertlaPagination');
+    
+    console.log('Pagination debug:', {
+      totalItems,
+      perPage: window.WiertlaCNC.filters.perPage,
+      totalPages,
+      currentPage: window.WiertlaCNC.filters.page,
+      paginationContainer: !!paginationContainer
+    });
 
     if (paginationContainer) {
-      let paginationHTML = '';
-
-      // Previous button (CSP-safe: use data-page, external handler binds click)
-      paginationHTML += `
-        <button class="wiertla-categories__pagination-btn ${window.WiertlaCNC.filters.page === 1 ? 'disabled' : ''}"
-                data-page="${window.WiertlaCNC.filters.page - 1}" aria-label="Poprzednia strona">
-          Poprzednia
-        </button>
-      `;
-
-      // Page numbers
-      for (let i = 1; i <= totalPages; i++) {
-        paginationHTML += `
-          <button class="wiertla-categories__pagination-btn ${window.WiertlaCNC.filters.page === i ? 'active' : ''}"
-                  data-page="${i}" aria-label="Strona ${i}">
-            ${i}
-          </button>
-        `;
+      // Hide pagination if only one page
+      if (totalPages <= 1) {
+        console.log('Hiding pagination - only one page');
+        paginationContainer.style.display = 'none';
+        return;
       }
 
-      // Next button (CSP-safe)
-      paginationHTML += `
-        <button class="wiertla-categories__pagination-btn ${
-          window.WiertlaCNC.filters.page === totalPages ? 'disabled' : ''
-        }" 
-                data-page="${window.WiertlaCNC.filters.page + 1}" aria-label="Następna strona">
-          Następna
-        </button>
+      console.log('Showing pagination - multiple pages');
+      paginationContainer.style.display = 'block';
+
+      let paginationHTML = `
+        <div class="wiertla-categories__simple-pagination">
+          <button class="wiertla-categories__pagination-button" id="prevPage" ${window.WiertlaCNC.filters.page === 1 ? 'disabled' : ''}>
+            <span class="desktop" data-mobile-text="POPRZEDNIE">POKAŻ POPRZEDNIE</span>
+            <span class="mobile">poprzednie</span>
+          </button>
+          <button class="wiertla-categories__pagination-button" id="nextPage" ${window.WiertlaCNC.filters.page === totalPages ? 'disabled' : ''}>
+            <span class="desktop" data-mobile-text="NASTĘPNE">POKAŻ NASTĘPNE</span>
+            <span class="mobile">następne</span>
+          </button>
+        </div>
       `;
 
       paginationContainer.innerHTML = paginationHTML;
+      console.log('Pagination HTML set:', paginationHTML);
+
+      // Add click handlers for the pagination buttons
+      const prevButton = document.getElementById('prevPage');
+      const nextButton = document.getElementById('nextPage');
+
+      if (prevButton) {
+        prevButton.addEventListener('click', function() {
+          if (window.WiertlaCNC.filters.page > 1) {
+            changePage(window.WiertlaCNC.filters.page - 1);
+          }
+        });
+      }
+
+      if (nextButton) {
+        nextButton.addEventListener('click', function() {
+          if (window.WiertlaCNC.filters.page < totalPages) {
+            changePage(window.WiertlaCNC.filters.page + 1);
+          }
+        });
+      }
     }
   }
 
