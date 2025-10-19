@@ -1723,9 +1723,9 @@
        const endIndex = startIndex + window.itemsPerPage;
        const productsToShow = filteredProducts.slice(startIndex, endIndex);
        
-       // Generate table with filtered and paginated products
-       generateTable(productsToShow);
-      updatePaginationButtons();
+      // Generate table with filtered and paginated products
+      generateTable(productsToShow);
+      updatePaginationControls(filteredProducts.length);
       
       // Update results count
       const resultsCount = document.querySelector('.wiertla-categories__results-count');
@@ -1773,8 +1773,9 @@
     // Make it globally available
     window.applyFilters = applyFilters;
     
-    // Update pagination to match standard Shopify pagination
-    function updatePaginationButtons() {
+    // OLD PAGINATION FUNCTION - DISABLED (was creating numbered pagination)
+    // Now using updatePaginationControls() which creates simple Previous/Next buttons
+    function updatePaginationButtons_DISABLED() {
       const paginationContainer = document.getElementById('wiertlaPagination');
       
       if (!paginationContainer || window.totalPages <= 1) {
