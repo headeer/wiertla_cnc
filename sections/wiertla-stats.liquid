@@ -423,13 +423,8 @@
 
     <div class="swiper-navigation">
       <div class="swiper-button-prev"></div>
-      <div class="pagination-container">
-        {% for i in (1..5) %}
-          <div
-            class="pagination-bar {% if forloop.first %}pagination-active{% else %}pagination-inactive{% endif %}"
-            data-index="{{ forloop.index0 }}"
-          ></div>
-        {% endfor %}
+      <div class="pagination-container" id="pagination-container">
+        <!-- Pagination bars will be dynamically created by JavaScript -->
       </div>
       <div class="swiper-button-next"></div>
     </div>
@@ -1742,9 +1737,6 @@
       const slidesPerView = swiper.params.slidesPerView;
       const currentSlide = swiper.realIndex;
       
-      // Calculate total pages needed
-      const totalPages = Math.ceil(totalSlides / slidesPerView);
-      
       // Calculate which pagination bar should be active
       const currentPage = Math.floor(currentSlide / slidesPerView);
       
@@ -1754,23 +1746,17 @@
         slidesPerView,
         currentSlide,
         currentPage,
-        totalPages,
         paginationBarsCount: paginationBars.length
       });
       
       // Update pagination bars
       paginationBars.forEach((bar, index) => {
-        if (index < totalPages) {
-          bar.style.display = 'block';
-          if (index === currentPage) {
-            bar.classList.add('pagination-active');
-            bar.classList.remove('pagination-inactive');
-          } else {
-            bar.classList.remove('pagination-active');
-            bar.classList.add('pagination-inactive');
-          }
+        if (index === currentPage) {
+          bar.classList.add('pagination-active');
+          bar.classList.remove('pagination-inactive');
         } else {
-          bar.style.display = 'none';
+          bar.classList.remove('pagination-active');
+          bar.classList.add('pagination-inactive');
         }
       });
     }
@@ -1900,29 +1886,54 @@
     setupPaginationBars();
   }
 
+  // Recreate pagination bars on window resize (breakpoint changes)
+  let resizeTimeout;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(function() {
+      const swiper = document.querySelector('.latest-products__swiper').swiper;
+      if (swiper) {
+        setupPaginationBars();
+        updatePaginationBars(swiper);
+      }
+    }, 250);
+  });
+
   // Setup pagination bars after DOM is ready
   function setupPaginationBars() {
-    const paginationBars = document.querySelectorAll('.pagination-bar');
-    console.log('Setting up pagination bars:', paginationBars.length);
+    const swiper = document.querySelector('.latest-products__swiper').swiper;
+    if (!swiper) {
+      console.warn('Swiper not found, retrying...');
+      setTimeout(setupPaginationBars, 100);
+      return;
+    }
     
-    paginationBars.forEach((bar, index) => {
-      // Remove any existing event listeners
-      bar.replaceWith(bar.cloneNode(true));
-    });
+    const totalSlides = swiper.slides.length;
+    const slidesPerView = swiper.params.slidesPerView;
+    const totalPages = Math.ceil(totalSlides / slidesPerView);
     
-    // Re-query after cloning
-    const newPaginationBars = document.querySelectorAll('.pagination-bar');
-    newPaginationBars.forEach((bar, index) => {
-      bar.addEventListener('click', () => {
-        console.log('Pagination bar clicked:', index);
-        const swiper = document.querySelector('.latest-products__swiper').swiper;
-        if (swiper) {
-          const slidesPerView = swiper.params.slidesPerView;
-          const targetSlide = index * slidesPerView;
-          console.log('Sliding to:', targetSlide);
-          swiper.slideTo(targetSlide);
-        }
+    console.log('Setting up pagination bars:', { totalSlides, slidesPerView, totalPages });
+    
+    // Clear existing pagination bars
+    const paginationContainer = document.getElementById('pagination-container');
+    paginationContainer.innerHTML = '';
+    
+    // Create pagination bars dynamically
+    for (let i = 0; i < totalPages; i++) {
+      const paginationBar = document.createElement('div');
+      paginationBar.className = `pagination-bar ${i === 0 ? 'pagination-active' : 'pagination-inactive'}`;
+      paginationBar.setAttribute('data-index', i);
+      
+      paginationBar.addEventListener('click', () => {
+        console.log('Pagination bar clicked:', i);
+        const targetSlide = i * slidesPerView;
+        console.log('Sliding to:', targetSlide);
+        swiper.slideTo(targetSlide);
       });
-    });
+      
+      paginationContainer.appendChild(paginationBar);
+    }
+    
+    console.log('Created', totalPages, 'pagination bars');
   }
 </script>
