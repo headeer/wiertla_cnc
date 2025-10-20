@@ -134,3 +134,4 @@
     tableRows: table?.querySelectorAll('tr:not([style*="display: none"])')?.length || 0
   };
 })();
+
