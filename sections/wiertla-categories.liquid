@@ -5307,6 +5307,9 @@
     // Update table with filtered products
     generateTable(filteredProducts);
     
+    // Update pagination controls
+    updatePaginationControls(filteredProducts.length);
+    
     // Update results count
     const resultsCount = document.querySelector('.wiertla-categories__results-count');
     if (resultsCount) {
